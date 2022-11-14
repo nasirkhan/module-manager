@@ -46,23 +46,14 @@ class ModuleBuildCommand extends Command
 
         // Module name | Single word | Ucfirst
         $moduleName = Str::ucfirst(Str::singular(Str::studly($this->argument('moduleName'))));
-        // $moduleNamePlural = Str::plural($moduleName);
-        // $moduleNameLower = Str::lower($moduleName);
-
-        // $this->info("moduleName: " . $moduleName);
 
         $this->generate($moduleName, $force);
-
-        // print_r($config);
-
-        // echo "\n\n TestCommand \n\n";
-
-        echo "\n\n";
+        
     }
 
     public function generate($moduleName, $force) 
     {
-        $this->info("Generating module: " . $moduleName);
+        $this->info("Generating module: " . $moduleName . "\n");
 
         $config = config("module-manager");
 
@@ -74,30 +65,26 @@ class ModuleBuildCommand extends Command
         $composerVendor = $config['composer']['vendor'];
         $composerAuthor = $config['composer']['author']['name'];
         $composerAuthorEmail = $config['composer']['author']['email'];
-        $this->line("$composerVendor | $composerAuthor | $composerAuthorEmail");
 
         $search = ['{{moduleName}}', '{{moduleNamePlural}}', '{{moduleNameLower}}', '{{moduleNameLowerPlural}}', '{{namespace}}', '{{composerVendor}}', '{{composerAuthor}}', '{{composerAuthorEmail}}'];
         $replace = [$moduleName, $moduleNamePlural, $moduleNameLower, $moduleNameLowerPlural, $namespace, $composerVendor, $composerAuthor, $composerAuthorEmail];
 
-
         $basePath = $namespace . '\\' . $moduleName;
-        // $this->line("basePath: " . $basePath);
 
         if (File::isDirectory($basePath)) {
             if ($force) {
                 $this->warn("Module already exists. Replacing...\n");
                 File::deleteDirectory($basePath);
                 File::makeDirectory($basePath);
-                $this->info("'$basePath' directory created");
+                $this->info("- '$basePath' - directory created");
                 $this->createFiles($moduleName, $basePath, $search, $replace, $force);
             } else {
-                $this->error("Module '$moduleName' already exists. Use --force to replace.");
+                $this->error(" Module '$moduleName' already exists. Use --force to replace. ");
                 return;
             }
         } else {
-            $this->info("'$basePath' directory does not exist");
             File::makeDirectory($basePath);
-            $this->info("'$basePath' directory created");
+            $this->info("- '$basePath' - directory created");
 
             $this->createFiles($moduleName, $basePath, $search, $replace, $force);            
         }
@@ -116,23 +103,15 @@ class ModuleBuildCommand extends Command
         $files_list = $config['module']['files'];
 
         foreach ($files_list as $file => $file_path) {
-            $this->newLine();
-
-            $this->line("Source | $file > $stubs_path/" . $file_path[0]);
 
             $content_stub = File::get("$stubs_path/" . $file_path[0]);
             $content = str_replace($search, $replace, $content_stub);
 
-            $this->line("$file > $basePath/" . $file_path[1]);
-
             $destination_value = $this->setFilePath($file, $file_path[1], $moduleName);
-            $this->warn("$destination_value");
 
-            $destination = "$basePath/" . $this->setFilePath($file, $file_path[1], $moduleName);            
-            $this->warn("$destination");
+            $destination = "$basePath/" . $this->setFilePath($file, $file_path[1], $moduleName);
 
             $pathToFile = $destination_value;
-            $this->warn("$pathToFile");
 
             if (count(explode('/', $pathToFile)) > 1) {
                 $fileName = basename($pathToFile);
@@ -152,19 +131,21 @@ class ModuleBuildCommand extends Command
             if (File::exists($destination)) {
                 if ($force) {
                     File::put($destination, $content);
-                    $this->info("'$destination' file replaced");
+                    $this->info("- '$destination' - file replaced");
                 } 
                 else 
                 {
-                    $this->error("'$destination' file already exists");
+                    $this->error("- '$destination' - file already exists");
                 }
             } 
             else 
             {
                 File::put($destination, $content);
-                $this->info("'$destination' file created");
+                $this->info("- '$destination' - file created");
             }
         }
+
+        $this->warn("\n'$moduleName' - Module Created Successfully!\n");
     }
 
     public function setFilePath($filetype, $filePath, $moduleName)
