@@ -48,7 +48,7 @@ class ModuleBuildCommand extends Command
 
         $this->generate($moduleName, $force);
 
-        $this->uenableModule($moduleName);
+        $this->enableModule($moduleName);
     }
 
     public function generate($moduleName, $force)
@@ -243,7 +243,7 @@ class ModuleBuildCommand extends Command
         return $filePath;
     }
 
-    public function uenableModule($moduleName)
+    public function enableModule($moduleName)
     {
         $content = File::get(base_path('modules_statuses.json'));
 
