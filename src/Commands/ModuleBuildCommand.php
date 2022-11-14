@@ -47,6 +47,8 @@ class ModuleBuildCommand extends Command
         $moduleName = Str::ucfirst(Str::singular(Str::studly($this->argument('moduleName'))));
 
         $this->generate($moduleName, $force);
+
+        $this->uenableModule($moduleName);
     }
 
     public function generate($moduleName, $force)
@@ -138,8 +140,6 @@ class ModuleBuildCommand extends Command
                 $this->info("- '$destination' - file created");
             }
         }
-
-        $this->warn("\n'$moduleName' - Module Created Successfully!\n");
     }
 
     public function setFilePath($filetype, $filePath, $moduleName)
@@ -241,5 +241,14 @@ class ModuleBuildCommand extends Command
         }
 
         return $filePath;
+    }
+
+    public function uenableModule($moduleName)
+    {
+        $content = File::get(base_path('modules_statuses.json'));
+
+       File::put('modules_statuses.json', json_encode(array_merge(json_decode($content, true), [$moduleName => true]), JSON_PRETTY_PRINT));
+        
+        $this->warn("\n'$moduleName' - Module Created Successfully!\n");
     }
 }
