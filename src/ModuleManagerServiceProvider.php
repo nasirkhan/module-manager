@@ -27,7 +27,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
             ], 'module-manager');
 
             $this->publishes([
-                __DIR__ . '/stubs' => base_path('stubs/laravel-starter-stubs'),
+                __DIR__.'/stubs' => base_path('stubs/laravel-starter-stubs'),
             ], 'module-manager');
 
             // Publishing the views.
@@ -47,7 +47,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
 
             /**
              * Registering package commands.
-             * Register the command if we are using the application via the CLI
+             * Register the command if we are using the application via the CLI.
              */
             if ($this->app->runningInConsole()) {
                 $this->commands([
@@ -68,7 +68,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('module-manager', function () {
-            return new ModuleManager;
+            return new ModuleManager();
         });
     }
 }
