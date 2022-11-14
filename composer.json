@@ -1,0 +1,53 @@
+{
+    "name": "nasirkhan/module-manager",
+    "description": "Module Manager & Generator for Laravel Starter Kit (https://github.com/nasirkhan/laravel-starter)",
+    "keywords": [
+        "nasirkhan",
+        "module-manager",
+        "laravel-starter",
+        "module-generator"
+    ],
+    "homepage": "https://github.com/nasirkhan/module-manager",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Nasir Khan",
+            "email": "nasir8891@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Nasirkhan\\ModuleManager\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Nasirkhan\\ModuleManager\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nasirkhan\\ModuleManager\\ModuleManagerServiceProvider"
+            ],
+            "aliases": {
+                "ModuleManager": "Nasirkhan\\ModuleManager\\ModuleManagerFacade"
+            }
+        }
+    }
+}
