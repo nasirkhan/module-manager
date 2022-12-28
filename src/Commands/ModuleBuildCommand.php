@@ -69,7 +69,7 @@ class ModuleBuildCommand extends Command
         $search = ['{{moduleName}}', '{{moduleNamePlural}}', '{{moduleNameLower}}', '{{moduleNameLowerPlural}}', '{{namespace}}', '{{composerVendor}}', '{{composerAuthor}}', '{{composerAuthorEmail}}'];
         $replace = [$moduleName, $moduleNamePlural, $moduleNameLower, $moduleNameLowerPlural, $namespace, $composerVendor, $composerAuthor, $composerAuthorEmail];
 
-        $basePath = $namespace.'\\'.$moduleName;
+        $basePath = $namespace.'/'.$moduleName;
 
         if (File::isDirectory($basePath)) {
             if ($force) {
