@@ -16,7 +16,7 @@ composer require nasirkhan/module-manager
 After installig the package, you need to publish the config file and the module stub files. You can do this by running the following command:
 
 ```php
-php artisan vendor:publish -tag=module-manager
+php artisan vendor:publish --tag=module-manager
 ```
 
 
