@@ -64,5 +64,5 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 
 ## Laravel Starter Boilerplate
 
-[Laravel Starter](https://github.com/nasirkhan/laravel-starter) is a CMS like modular starter application project built with Laravel 9.x. 
+[Laravel Starter](https://github.com/nasirkhan/laravel-starter) is a CMS like modular starter application project built with Laravel 10.x. 
 
