@@ -2,6 +2,7 @@
 
 namespace Nasirkhan\ModuleManager;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Nasirkhan\ModuleManager\Commands\ModuleBuildCommand;
 use Nasirkhan\ModuleManager\Commands\TestCommand;
@@ -13,6 +14,8 @@ class ModuleManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerModules();
+        
         /*
          * Optional methods to load your package assets
          */
@@ -70,5 +73,16 @@ class ModuleManagerServiceProvider extends ServiceProvider
         $this->app->singleton('module-manager', function () {
             return new ModuleManager();
         });
+    }
+
+    public function registerModules()
+    {
+        $modules = json_decode(File::get(config("module-manager.files.module-list")));
+
+        foreach ($modules as $module => $status) {
+            if ($status) {
+                $this->app->register('\Modules\\' . $module . '\Providers\\' . $module . 'ServiceProvider');
+            }
+        }
     }
 }

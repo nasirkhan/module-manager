@@ -12,7 +12,9 @@ return [
     'namespace' => 'Modules',
 
     'stubs' => [
-        'path' => base_path('stubs/laravel-starter-stubs'),
+        // 'path' => base_path('stubs/laravel-starter-stubs'),
+
+        'path' => base_path('vendor/nasirkhan/module-manager/src/stubs'),
     ],
 
     'module' => [
@@ -61,5 +63,9 @@ return [
             'name'  => 'Nasir Khan',
             'email' => 'nasir8891@gmail.com',
         ],
+    ],
+
+    'files' => [
+        'module-list' => base_path('modules_statuses.json'),
     ],
 ];
