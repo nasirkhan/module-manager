@@ -15,7 +15,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerModules();
-        
+
         /*
          * Optional methods to load your package assets
          */
@@ -77,11 +77,11 @@ class ModuleManagerServiceProvider extends ServiceProvider
 
     public function registerModules()
     {
-        $modules = json_decode(File::get(config("module-manager.files.module-list")));
+        $modules = json_decode(File::get(config('module-manager.files.module-list')));
 
         foreach ($modules as $module => $status) {
             if ($status) {
-                $this->app->register('\Modules\\' . $module . '\Providers\\' . $module . 'ServiceProvider');
+                $this->app->register('\Modules\\'.$module.'\Providers\\'.$module.'ServiceProvider');
             }
         }
     }
