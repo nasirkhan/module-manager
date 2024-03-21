@@ -5,9 +5,24 @@ namespace Nasirkhan\ModuleManager\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Filesystem\Filesystem;
 
 class ModuleBuildCommand extends Command
 {
+    /**
+     * The laravel filesystem instance.
+     *
+     * @var Filesystem
+     */
+    protected $filesystem;
+
+    /**
+     * The laravel component Factory instance.
+     *
+     * @var \Illuminate\Console\View\Components\Factory
+     */
+    protected $component;
+
     /**
      * The console command name.
      *
@@ -47,13 +62,12 @@ class ModuleBuildCommand extends Command
         $moduleName = Str::ucfirst(Str::singular(Str::studly($this->argument('moduleName'))));
 
         $this->generate($moduleName, $force);
-
-        $this->enableModule($moduleName);
     }
 
     public function generate($moduleName, $force)
     {
-        $this->info('Generating module: '.$moduleName."\n");
+        $this->components->info('Generating module: ' . $moduleName);
+        // $this->info('Generating module: '.$moduleName."\n");
 
         $config = config('module-manager');
 
@@ -73,22 +87,25 @@ class ModuleBuildCommand extends Command
 
         if (File::isDirectory($basePath)) {
             if ($force) {
-                $this->warn("Module already exists. Replacing...\n");
+                $this->components->warn("{$moduleName} - Module already exists. Replacing...");
                 File::deleteDirectory($basePath);
                 File::makeDirectory($basePath);
-                $this->info("- '$basePath' - directory created");
+                $this->info("  '$basePath' - new directory created");
                 $this->createFiles($moduleName, $basePath, $search, $replace, $force);
             } else {
-                $this->error(" Module '$moduleName' already exists. Use --force to replace. ");
+                $this->components->error("{$moduleName} - Module already exists! Use --force to replace.");
 
                 return;
             }
         } else {
-            File::makeDirectory($basePath);
-            $this->info("- '$basePath' - directory created");
+            $this->components->task("New Directory: $basePath", function () use ($basePath) {
+                File::makeDirectory();
+            });
 
             $this->createFiles($moduleName, $basePath, $search, $replace, $force);
         }
+
+        $this->enableModule($moduleName);
     }
 
     public function createFiles($moduleName, $basePath, $search, $replace, $force)
@@ -130,14 +147,16 @@ class ModuleBuildCommand extends Command
 
             if (File::exists($destination)) {
                 if ($force) {
-                    File::put($destination, $content);
-                    $this->info("- '$destination' - file replaced");
+                    $this->components->task("Replaced File: $destination", function () use ($destination, $content) {
+                        File::put($destination, $content);
+                    });
                 } else {
-                    $this->error("- '$destination' - file already exists");
+                    $this->components->error("{$destination} - file already exists!");
                 }
             } else {
-                File::put($destination, $content);
-                $this->info("- '$destination' - file created");
+                $this->components->task("New File: $destination", function () use ($destination, $content) {
+                    File::put($destination, $content);
+                });
             }
         }
     }
@@ -249,6 +268,6 @@ class ModuleBuildCommand extends Command
 
         File::put('modules_statuses.json', json_encode(array_merge(json_decode($content, true), [$moduleName => true]), JSON_PRETTY_PRINT));
 
-        $this->warn("\n'$moduleName' - Module Created Successfully!\n");
+        $this->components->info("{$moduleName} - Module Created Successfully!");
     }
 }
