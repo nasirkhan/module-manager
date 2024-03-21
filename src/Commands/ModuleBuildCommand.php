@@ -3,9 +3,9 @@
 namespace Nasirkhan\ModuleManager\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Illuminate\Filesystem\Filesystem;
 
 class ModuleBuildCommand extends Command
 {
@@ -66,7 +66,7 @@ class ModuleBuildCommand extends Command
 
     public function generate($moduleName, $force)
     {
-        $this->components->info('Generating module: ' . $moduleName);
+        $this->components->info('Generating module: '.$moduleName);
         // $this->info('Generating module: '.$moduleName."\n");
 
         $config = config('module-manager');
@@ -98,7 +98,7 @@ class ModuleBuildCommand extends Command
                 return;
             }
         } else {
-            $this->components->task("New Directory: $basePath", function () use ($basePath) {
+            $this->components->task("New Directory: $basePath", function () {
                 File::makeDirectory();
             });
 
