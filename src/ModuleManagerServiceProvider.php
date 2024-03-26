@@ -77,6 +77,10 @@ class ModuleManagerServiceProvider extends ServiceProvider
 
     public function registerModules()
     {
+        if (!File::exists(config('module-manager.files.module-list'))) {
+            return;
+        }
+
         $modules = json_decode(File::get(config('module-manager.files.module-list')));
 
         foreach ($modules as $module => $status) {
