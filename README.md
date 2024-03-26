@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/nasirkhan/module-manager.svg?style=flat-square)](https://packagist.org/packages/nasirkhan/module-manager)
 
-**Module Manager** is used to manage and generate `Module` for the [Laravel Starter](https://github.com/nasirkhan/laravel-starter). [Laravel Starter](https://github.com/nasirkhan/laravel-starter) is a CMS-like modular starter boilerplate application project, built with the latest release of Laravel. This package is preinstalled with the Laravel Starter. 
+**Module Manager** is used to manage and generate `Module` for the ***Laravel Starter***. [Laravel Starter](https://github.com/nasirkhan/laravel-starter) is a CMS-like modular starter boilerplate application project, built with the latest release of Laravel. This package is preinstalled with the Laravel Starter. 
 
 | **Laravel** | **module-manager** |
 |-------------|---------------------|
