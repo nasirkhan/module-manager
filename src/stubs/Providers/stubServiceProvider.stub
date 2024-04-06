@@ -30,10 +30,6 @@ class {{moduleName}}ServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->loadMigrationsFrom(base_path('{{namespace}}/{{moduleName}}/database/migrations'));
 
-        // adding global middleware
-        $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
-        $kernel->pushMiddleware('{{namespace}}\{{moduleName}}\Http\Middleware\GenerateMenus');
-
         // register commands
         $this->registerCommands('\{{namespace}}\{{moduleName}}\Console\Commands');
     }

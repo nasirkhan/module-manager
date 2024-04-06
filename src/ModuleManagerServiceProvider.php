@@ -27,11 +27,11 @@ class ModuleManagerServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('module-manager.php'),
-            ], 'module-manager');
+            ], 'config');
 
             $this->publishes([
                 __DIR__.'/stubs' => base_path('stubs/laravel-starter-stubs'),
-            ], 'module-manager');
+            ], 'stubs');
 
             // Publishing the views.
             /*$this->publishes([

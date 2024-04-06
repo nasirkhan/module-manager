@@ -98,8 +98,8 @@ class ModuleBuildCommand extends Command
                 return;
             }
         } else {
-            $this->components->task("New Directory: $basePath", function () {
-                File::makeDirectory();
+            $this->components->task("New Directory: $basePath", function () use ($basePath, $force) {
+                File::makeDirectory($basePath, 0755, true, $force);
             });
 
             $this->createFiles($moduleName, $basePath, $search, $replace, $force);
@@ -264,7 +264,9 @@ class ModuleBuildCommand extends Command
 
     public function enableModule($moduleName)
     {
-        $content = File::get(base_path('modules_statuses.json'));
+        $destination = base_path('modules_statuses.json');
+
+        $content = (File::exists($destination)) ? File::get($destination) : '{}';
 
         File::put('modules_statuses.json', json_encode(array_merge(json_decode($content, true), [$moduleName => true]), JSON_PRETTY_PRINT));
 
