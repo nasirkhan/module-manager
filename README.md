@@ -2,18 +2,23 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/nasirkhan/module-manager.svg?style=flat-square)](https://packagist.org/packages/nasirkhan/module-manager)
 
+**Module Manager** is used to manage and generate `Module` for the ***Laravel Starter***. [Laravel Starter](https://github.com/nasirkhan/laravel-starter) is a CMS-like modular starter boilerplate application project, built with the latest release of Laravel. This package is preinstalled with the Laravel Starter. 
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+| **Laravel** | **module-manager** |
+|-------------|---------------------|
+| 11.0        | ^2.0                |
+| 10.0        | ^1.0                |
+
 
 ## Installation
 
-You can install the package via composer:
+You can install the package via Composer:
 
 ```bash
 composer require nasirkhan/module-manager
 ```
 
-After installig the package, you need to publish the config file and the module stub files. You can do this by running the following command:
+After installing the package, you need to publish the config file and the module stub files. You can do this by running the following command:
 
 ```php
 php artisan vendor:publish --tag=module-manager
@@ -22,7 +27,7 @@ php artisan vendor:publish --tag=module-manager
 
 ## Usage
 
-To create a project use the following command, you have repalce the `MODULE_NAME` with the name of the module. 
+To create a project use the following command, you have to replace the `MODULE_NAME` with the name of the module. 
 
 ```php
 php artisan module:build MODULE_NAME
@@ -43,7 +48,7 @@ composer test
 
 ### Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
 ## Contributing
 
@@ -51,7 +56,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ### Security
 
-If you discover any security related issues, please email nasir8891@gmail.com instead of using the issue tracker.
+If you discover any security-related issues, please email nasir8891@gmail.com instead of using the issue tracker.
 
 ## Credits
 
@@ -60,9 +65,5 @@ If you discover any security related issues, please email nasir8891@gmail.com in
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Starter Boilerplate
-
-[Laravel Starter](https://github.com/nasirkhan/laravel-starter) is a CMS like modular starter application project built with Laravel 10.x. 
+The MIT License (MIT). Please have a look at [License File](LICENSE.md) for more information. 
 
