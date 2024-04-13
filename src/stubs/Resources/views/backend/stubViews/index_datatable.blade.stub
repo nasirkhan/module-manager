@@ -87,7 +87,6 @@
 @push ('after-styles')
 <!-- DataTables Core and Extensions -->
 <link rel="stylesheet" href="{{ asset('vendor/datatable/datatables.min.css') }}">
-
 @endpush
 
 @push ('after-scripts')
@@ -98,7 +97,6 @@
     $('#datatable').DataTable({
         processing: true,
         serverSide: true,
-        autoWidth: true,
         responsive: true,
         ajax: '{{ route("backend.$module_name.index_data") }}',
         columns: [{
