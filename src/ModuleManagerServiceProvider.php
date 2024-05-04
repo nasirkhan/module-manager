@@ -7,7 +7,6 @@ use Illuminate\Support\ServiceProvider;
 use Nasirkhan\ModuleManager\Commands\AuthPermissionCommand;
 use Nasirkhan\ModuleManager\Commands\InsertDemoDataCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleBuildCommand;
-use Nasirkhan\ModuleManager\Commands\TestCommand;
 
 class ModuleManagerServiceProvider extends ServiceProvider
 {
@@ -59,7 +58,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
 
                     // Insert Demo Data Command
                     InsertDemoDataCommand::class,
-                    
+
                     // Auth Permission Command
                     AuthPermissionCommand::class,
 
