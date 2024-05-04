@@ -6,12 +6,12 @@ use App\Models\Permission;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
-class AuthPermissionCommand extends Command
+class AuthPermissionsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      */
-    protected $signature = 'auth:permission {name} {--R|remove}';
+    protected $signature = 'auth:permissions {name} {--R|remove}';
 
     /**
      * The console command description.
