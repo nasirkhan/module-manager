@@ -4,7 +4,7 @@ namespace Nasirkhan\ModuleManager;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
-use Nasirkhan\ModuleManager\Commands\AuthPermissionCommand;
+use Nasirkhan\ModuleManager\Commands\AuthPermissionsCommand;
 use Nasirkhan\ModuleManager\Commands\InsertDemoDataCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleBuildCommand;
 
@@ -60,7 +60,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
                     InsertDemoDataCommand::class,
 
                     // Auth Permission Command
-                    AuthPermissionCommand::class,
+                    AuthPermissionsCommand::class,
 
                     // Module Build Command to Create Module
                     ModuleBuildCommand::class,

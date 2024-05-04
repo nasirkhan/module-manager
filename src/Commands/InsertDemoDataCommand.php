@@ -18,7 +18,7 @@ class InsertDemoDataCommand extends Command
     /**
      * The name and signature of the console command.
      */
-    protected $signature = 'starter:insert-demo-data {--fresh}';
+    protected $signature = 'laravel-starter:insert-demo-data {--fresh}';
 
     /**
      * The console command description.
