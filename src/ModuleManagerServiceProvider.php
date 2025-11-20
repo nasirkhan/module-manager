@@ -86,7 +86,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
 
     public function registerModules()
     {
-        if (!File::exists(config('module-manager.files.module-list'))) {
+        if (! File::exists(config('module-manager.files.module-list'))) {
             return;
         }
 
