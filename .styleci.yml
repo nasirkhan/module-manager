@@ -1,11 +1,5 @@
 preset: laravel
 
-enabled:
-  - alpha_ordered_imports
-  - no_unused_imports
-  - ordered_class_elements
-  - ordered_imports
-
 finder:
   exclude:
     - src/stubs
