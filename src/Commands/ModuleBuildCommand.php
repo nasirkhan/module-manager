@@ -121,7 +121,13 @@ class ModuleBuildCommand extends Command
         $files_list = $config['module']['files'];
 
         foreach ($files_list as $file => $file_path) {
-            $content_stub = File::get("$stubs_path/".$file_path[0]);
+            $stubFile = "$stubs_path/".$file_path[0];
+
+            if (!File::exists($stubFile) && File::exists($stubFile.'.php')) {
+                $stubFile .= '.php';
+            }
+
+            $content_stub = File::get($stubFile);
             $content = str_replace($search, $replace, $content_stub);
 
             $destination_value = $this->setFilePath($file, $file_path[1], $moduleName);
