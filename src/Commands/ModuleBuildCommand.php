@@ -66,7 +66,7 @@ class ModuleBuildCommand extends Command
 
     public function generate($moduleName, $force)
     {
-        $this->components->info('Generating module: '.$moduleName);
+        $this->components->info('Generating module: ' . $moduleName);
         // $this->info('Generating module: '.$moduleName."\n");
 
         $config = config('module-manager');
@@ -83,7 +83,7 @@ class ModuleBuildCommand extends Command
         $search = ['{{moduleName}}', '{{moduleNamePlural}}', '{{moduleNameLower}}', '{{moduleNameLowerPlural}}', '{{namespace}}', '{{composerVendor}}', '{{composerAuthor}}', '{{composerAuthorEmail}}'];
         $replace = [$moduleName, $moduleNamePlural, $moduleNameLower, $moduleNameLowerPlural, $namespace, $composerVendor, $composerAuthor, $composerAuthorEmail];
 
-        $basePath = $namespace.'/'.$moduleName;
+        $basePath = $namespace . '/' . $moduleName;
 
         if (File::isDirectory($basePath)) {
             if ($force) {
@@ -121,23 +121,29 @@ class ModuleBuildCommand extends Command
         $files_list = $config['module']['files'];
 
         foreach ($files_list as $file => $file_path) {
-            $content_stub = File::get("$stubs_path/".$file_path[0]);
+            $stubFile = "$stubs_path/" . $file_path[0];
+
+            if (! File::exists($stubFile) && File::exists($stubFile . '.php')) {
+                $stubFile .= '.php';
+            }
+
+            $content_stub = File::get($stubFile);
             $content = str_replace($search, $replace, $content_stub);
 
             $destination_value = $this->setFilePath($file, $file_path[1], $moduleName);
 
-            $destination = "$basePath/".$this->setFilePath($file, $file_path[1], $moduleName);
+            $destination = "$basePath/" . $this->setFilePath($file, $file_path[1], $moduleName);
 
             $pathToFile = $destination_value;
 
             if (count(explode('/', $pathToFile)) > 1) {
                 $fileName = basename($pathToFile);
 
-                $folders = explode('/', str_replace('/'.$fileName, '', $pathToFile));
+                $folders = explode('/', str_replace('/' . $fileName, '', $pathToFile));
 
                 $currentFolder = "$basePath/";
                 foreach ($folders as $folder) {
-                    $currentFolder .= $folder.DIRECTORY_SEPARATOR;
+                    $currentFolder .= $folder . DIRECTORY_SEPARATOR;
 
                     if (!File::isDirectory($currentFolder)) {
                         File::makeDirectory($currentFolder);
@@ -170,42 +176,42 @@ class ModuleBuildCommand extends Command
 
         switch ($filetype) {
             case 'command':
-                $value = $moduleName.'Command.php';
+                $value = $moduleName . 'Command.php';
                 $filePath = str_replace('StubCommand.php', $value, $filePath);
                 break;
 
             case 'database':
-                $value = date('Y_m_d_his_').'create_'.$moduleNameLowerPlural.'_table.php';
+                $value = date('Y_m_d_his_') . 'create_' . $moduleNameLowerPlural . '_table.php';
                 $filePath = str_replace('stubMigration.php', $value, $filePath);
                 break;
 
             case 'factories':
-                $value = $moduleName.'Factory.php';
+                $value = $moduleName . 'Factory.php';
                 $filePath = str_replace('stubFactory.php', $value, $filePath);
                 break;
 
             case 'seeders':
-                $value = $moduleName.'DatabaseSeeder.php';
+                $value = $moduleName . 'DatabaseSeeder.php';
                 $filePath = str_replace('stubSeeders.php', $value, $filePath);
                 break;
 
             case 'models':
-                $value = $moduleName.'.php';
+                $value = $moduleName . '.php';
                 $filePath = str_replace('stubModel.php', $value, $filePath);
                 break;
 
             case 'providers':
-                $value = $moduleName.'ServiceProvider.php';
+                $value = $moduleName . 'ServiceProvider.php';
                 $filePath = str_replace('stubServiceProvider.php', $value, $filePath);
                 break;
 
             case 'controller_backend':
-                $value = $moduleNamePlural.'Controller.php';
+                $value = $moduleNamePlural . 'Controller.php';
                 $filePath = str_replace('stubBackendController.php', $value, $filePath);
                 break;
 
             case 'controller_frontend':
-                $value = $moduleNamePlural.'Controller.php';
+                $value = $moduleNamePlural . 'Controller.php';
                 $filePath = str_replace('stubFrontendController.php', $value, $filePath);
                 break;
 

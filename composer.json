@@ -2,10 +2,11 @@
   "name": "nasirkhan/module-manager",
   "description": "Module Manager & Generator for Laravel Starter Kit (https://github.com/nasirkhan/laravel-starter)",
   "keywords": [
+    "laravel starter",
     "nasirkhan",
-    "module-manager",
-    "laravel-starter",
-    "module-generator"
+    "nasirkhansaikat",
+    "module manager",
+    "module generator"
   ],
   "homepage": "https://github.com/nasirkhan/module-manager",
   "license": "MIT",
