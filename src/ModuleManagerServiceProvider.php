@@ -27,11 +27,11 @@ class ModuleManagerServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('module-manager.php'),
-            ], 'config');
+                __DIR__ . '/../config/config.php' => config_path('module-manager.php'),
+            ], 'module-manager');
 
             $this->publishes([
-                __DIR__.'/stubs' => base_path('stubs/laravel-starter-stubs'),
+                __DIR__ . '/stubs' => base_path('stubs/laravel-starter-stubs'),
             ], 'stubs');
 
             // Publishing the views.
@@ -76,7 +76,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'module-manager');
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'module-manager');
 
         // Register the main class to use with the facade
         $this->app->singleton('module-manager', function () {
@@ -94,7 +94,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
 
         foreach ($modules as $module => $status) {
             if ($status) {
-                $this->app->register('\Modules\\'.$module.'\Providers\\'.$module.'ServiceProvider');
+                $this->app->register('\Modules\\' . $module . '\Providers\\' . $module . 'ServiceProvider');
             }
         }
     }
