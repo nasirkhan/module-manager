@@ -6,7 +6,7 @@
 
 | **Laravel** | **module-manager** |
 |-------------|---------------------|
-| 12.x        | ^3.0                |
+| 12.x        | ^4.0                |
 | 11.x        | ^2.0                |
 | 10.x        | ^1.0                |
 
@@ -19,7 +19,9 @@ You can install the package via Composer:
 composer require nasirkhan/module-manager
 ```
 
-After installing the package, you need to publish the config file and the module stub files. You can do this by running the following command:
+Now the `Module Manager` is installed and ready to use. 
+
+If you need to change the stub path and other config then use the following command to publish the config file and the module stub files.
 
 ```php
 php artisan vendor:publish --tag=module-manager
