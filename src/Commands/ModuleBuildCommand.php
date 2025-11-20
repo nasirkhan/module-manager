@@ -127,6 +127,11 @@ class ModuleBuildCommand extends Command
                 $stubFile .= '.php';
             }
 
+            if (! File::exists($stubFile)) {
+                $this->components->warn("Stub file not found: {$stubFile}. Skipping...");
+                continue;
+            }
+
             $content_stub = File::get($stubFile);
             $content = str_replace($search, $replace, $content_stub);
 
