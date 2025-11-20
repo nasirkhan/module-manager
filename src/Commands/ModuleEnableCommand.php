@@ -34,7 +34,8 @@ class ModuleEnableCommand extends Command
         $destination = base_path('modules_statuses.json');
 
         if (! File::exists($destination)) {
-            $this->components->error("Module status file not found.");
+            $this->components->error('Module status file not found.');
+
             return;
         }
 
@@ -42,11 +43,13 @@ class ModuleEnableCommand extends Command
 
         if (! isset($content[$moduleName])) {
             $this->components->error("Module {$moduleName} not found in status file.");
+
             return;
         }
 
         if ($content[$moduleName] === true) {
             $this->components->info("Module {$moduleName} is already enabled.");
+
             return;
         }
 
