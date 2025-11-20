@@ -8,4 +8,4 @@ enabled:
 
 excluded:
   - src/stubs/*
-  - *.stub.php
+  - "**/*.stub.php"
