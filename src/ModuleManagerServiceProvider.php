@@ -65,6 +65,15 @@ class ModuleManagerServiceProvider extends ServiceProvider
                     // Module Build Command to Create Module
                     ModuleBuildCommand::class,
 
+                    // Module Remove Command
+                    Commands\ModuleRemoveCommand::class,
+
+                    // Module Disable Command
+                    Commands\ModuleDisableCommand::class,
+
+                    // Module Enable Command
+                    Commands\ModuleEnableCommand::class,
+
                 ]);
             }
         }
