@@ -32,7 +32,6 @@ return [
             'providersEvent'                => ['Providers/EventServiceProvider.stub.php', 'Providers/EventServiceProvider.php'],
             'providers'                     => ['Providers/stubServiceProvider.stub.php', 'Providers/stubServiceProvider.php'],
             'route_web'                     => ['routes/web.stub.php', 'routes/web.php'],
-
             'controller_backend'            => ['Http/Controllers/Backend/stubBackendController.stub.php', 'Http/Controllers/Backend/stubBackendController.php'],
             'controller_frontend'           => ['Http/Controllers/Frontend/stubFrontendController.stub.php', 'Http/Controllers/Frontend/stubFrontendController.php'],
             'views_backend_index'           => ['Resources/views/backend/stubViews/index.blade.stub.php', 'Resources/views/backend/stubViews/index.blade.php'],
