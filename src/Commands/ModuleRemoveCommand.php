@@ -32,16 +32,18 @@ class ModuleRemoveCommand extends Command
         $moduleName = Str::ucfirst(Str::singular(Str::studly($this->argument('moduleName'))));
         $config = config('module-manager');
         $namespace = $config['namespace'];
-        $basePath = $namespace . '/' . $moduleName;
+        $basePath = $namespace.'/'.$moduleName;
 
         if (! File::isDirectory($basePath)) {
             $this->components->error("Module {$moduleName} does not exist.");
+
             return;
         }
 
         if (! $this->option('force')) {
             if (! $this->components->confirm("Are you sure you want to remove the module {$moduleName}? This will permanently delete all files and cannot be undone.")) {
                 $this->components->info('Operation cancelled.');
+
                 return;
             }
         }
