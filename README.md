@@ -43,6 +43,30 @@ You may want to use ` --force` option to overwrite the existing module. if you u
 php artisan module:build MODULE_NAME --force
 ```
 
+### Remove Module
+
+To remove a module, use the following command. This will permanently delete the module directory and remove it from the status file.
+
+```bash
+php artisan module:remove MODULE_NAME
+```
+
+### Disable Module
+
+To disable a module, use the following command. This will set the module status to `false` in the `modules_statuses.json` file.
+
+```bash
+php artisan module:disable MODULE_NAME
+```
+
+### Enable Module
+
+To enable a module, use the following command. This will set the module status to `true` in the `modules_statuses.json` file.
+
+```bash
+php artisan module:enable MODULE_NAME
+```
+
 ### Testing
 
 ```bash
