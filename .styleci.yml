@@ -6,6 +6,6 @@ enabled:
   - ordered_class_elements
   - ordered_imports
 
-excluded:
+exclude:
   - src/stubs/*
   - "**/*.stub.php"
