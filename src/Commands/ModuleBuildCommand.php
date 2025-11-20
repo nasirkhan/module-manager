@@ -123,7 +123,7 @@ class ModuleBuildCommand extends Command
         foreach ($files_list as $file => $file_path) {
             $stubFile = "$stubs_path/".$file_path[0];
 
-            if (!File::exists($stubFile) && File::exists($stubFile.'.php')) {
+            if (! File::exists($stubFile) && File::exists($stubFile.'.php')) {
                 $stubFile .= '.php';
             }
 
@@ -145,7 +145,7 @@ class ModuleBuildCommand extends Command
                 foreach ($folders as $folder) {
                     $currentFolder .= $folder.DIRECTORY_SEPARATOR;
 
-                    if (!File::isDirectory($currentFolder)) {
+                    if (! File::isDirectory($currentFolder)) {
                         File::makeDirectory($currentFolder);
                     }
                 }
