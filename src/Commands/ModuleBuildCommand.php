@@ -106,6 +106,12 @@ class ModuleBuildCommand extends Command
         }
 
         $this->enableModule($moduleName);
+
+        $this->call('auth:permissions', [
+            'name' => $moduleNameLowerPlural,
+        ]);
+
+        $this->call('permission:cache-reset');
     }
 
     public function createFiles($moduleName, $basePath, $search, $replace, $force)
@@ -129,6 +135,7 @@ class ModuleBuildCommand extends Command
 
             if (! File::exists($stubFile)) {
                 $this->components->warn("Stub file not found: {$stubFile}. Skipping...");
+
                 continue;
             }
 
