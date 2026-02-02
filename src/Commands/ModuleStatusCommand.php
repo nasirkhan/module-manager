@@ -36,7 +36,7 @@ class ModuleStatusCommand extends Command
     }
 
     /**
-     * Show status of all modules
+     * Show status of all modules.
      */
     protected function showAllModulesStatus(): int
     {
@@ -96,7 +96,7 @@ class ModuleStatusCommand extends Command
     }
 
     /**
-     * Show status of specific module
+     * Show status of specific module.
      */
     protected function showModuleStatus(string $module): int
     {
@@ -137,7 +137,7 @@ class ModuleStatusCommand extends Command
     }
 
     /**
-     * Get list of package modules
+     * Get list of package modules.
      */
     protected function getPackageModules(): array
     {
@@ -153,7 +153,7 @@ class ModuleStatusCommand extends Command
     }
 
     /**
-     * Get list of published modules
+     * Get list of published modules.
      */
     protected function getPublishedModules(): array
     {
@@ -169,7 +169,7 @@ class ModuleStatusCommand extends Command
     }
 
     /**
-     * Check if module is in package
+     * Check if module is in package.
      */
     protected function isInPackage(string $module): bool
     {
@@ -177,7 +177,7 @@ class ModuleStatusCommand extends Command
     }
 
     /**
-     * Check if module is published
+     * Check if module is published.
      */
     protected function isPublished(string $module): bool
     {

@@ -74,7 +74,7 @@ class ModulePublishCommand extends Command
     }
 
     /**
-     * Update module status in modules_statuses.json
+     * Update module status in modules_statuses.json.
      */
     protected function updateModuleStatus(string $module, bool $published): void
     {
@@ -94,7 +94,7 @@ class ModulePublishCommand extends Command
     }
 
     /**
-     * Get module version from composer.json or service provider
+     * Get module version from composer.json or service provider.
      */
     protected function getModuleVersion(string $module): string
     {
@@ -111,7 +111,7 @@ class ModulePublishCommand extends Command
     }
 
     /**
-     * List available modules in package
+     * List available modules in package.
      */
     protected function listAvailableModules(): void
     {
