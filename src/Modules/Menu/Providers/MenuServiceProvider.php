@@ -37,17 +37,17 @@ class MenuServiceProvider extends ServiceProvider
         $this->registerViews();
 
         // Load migrations from module
-        $this->loadMigrationsFrom(__DIR__.'/../migrations'));
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         // Publish migrations with proper tags
         if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__.'/../migrations') => database_path('migrations'),
+            $this->publishesMigrations([
+                __DIR__.'/../database/migrations' => database_path('migrations'),
             ], ['migrations', 'menu-migrations']);
         }
 
         // register commands
-        $this->registerCommands('\Modules\Menu\Console\Commands');
+        $this->registerCommands('\Nasirkhan\ModuleManager\Modules\Menu\Console\Commands');
 
         $this->registerLivewireComponents();
 
