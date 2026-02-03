@@ -5,7 +5,7 @@ namespace Nasirkhan\ModuleManager\Modules\Post\Models\Presenters;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Modules\Category\Models\Category;
+use Nasirkhan\ModuleManager\Modules\Category\Models\Category;
 use Nasirkhan\ModuleManager\Modules\Post\Enums\PostStatus;
 
 trait PostPresenter

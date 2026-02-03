@@ -44,7 +44,10 @@
     "laravel": {
       "providers": [
         "Nasirkhan\\ModuleManager\\ModuleManagerServiceProvider",
-        "Nasirkhan\\ModuleManager\\Modules\\Post\\Providers\\PostServiceProvider"
+        "Nasirkhan\\ModuleManager\\Modules\\Post\\Providers\\PostServiceProvider",
+        "Nasirkhan\\ModuleManager\\Modules\\Category\\Providers\\CategoryServiceProvider",
+        "Nasirkhan\\ModuleManager\\Modules\\Tag\\Providers\\TagServiceProvider",
+        "Nasirkhan\\ModuleManager\\Modules\\Menu\\Providers\\MenuServiceProvider"
       ],
       "aliases": {
         "ModuleManager": "Nasirkhan\\ModuleManager\\ModuleManagerFacade"
