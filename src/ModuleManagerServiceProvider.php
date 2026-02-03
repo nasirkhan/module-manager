@@ -19,7 +19,8 @@ class ModuleManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerModules();
+        // Modules are now auto-discovered via composer.json extra.laravel.providers
+        // $this->registerModules();
 
         /*
          * Optional methods to load your package assets
