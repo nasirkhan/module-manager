@@ -116,7 +116,7 @@ class ModuleDiffCommand extends Command
     }
 
     /**
-     * Get list of files in directory
+     * Get list of files in directory.
      */
     protected function getFileList(string $path): array
     {
@@ -131,7 +131,7 @@ class ModuleDiffCommand extends Command
     }
 
     /**
-     * Get list of modified files
+     * Get list of modified files.
      */
     protected function getModifiedFiles(string $packagePath, string $publishedPath, array $commonFiles): array
     {
@@ -155,7 +155,7 @@ class ModuleDiffCommand extends Command
     }
 
     /**
-     * Show simple diff between two files
+     * Show simple diff between two files.
      */
     protected function showFileDiff(string $file1, string $file2): void
     {
