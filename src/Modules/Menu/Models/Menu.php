@@ -350,6 +350,6 @@ class Menu extends BaseModel
      */
     protected static function newFactory()
     {
-        return \Modules\Menu\database\factories\MenuFactory::new();
+        return \Nasirkhan\ModuleManager\Modules\Menu\database\factories\MenuFactory::new();
     }
 }

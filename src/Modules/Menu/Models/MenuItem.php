@@ -267,6 +267,6 @@ class MenuItem extends BaseModel
      */
     protected static function newFactory()
     {
-        return \Modules\Menu\database\factories\MenuItemFactory::new();
+        return \Nasirkhan\ModuleManager\Modules\Menu\database\factories\MenuItemFactory::new();
     }
 }
