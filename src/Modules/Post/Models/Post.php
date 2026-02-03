@@ -33,12 +33,12 @@ class Post extends BaseModel
 
     public function category()
     {
-        return $this->belongsTo('Modules\Category\Models\Category');
+        return $this->belongsTo('Nasirkhan\ModuleManager\Modules\Category\Models\Category');
     }
 
     public function tags()
     {
-        return $this->morphToMany('Modules\Tag\Models\Tag', 'taggable');
+        return $this->morphToMany('Nasirkhan\ModuleManager\Modules\Tag\Models\Tag', 'taggable');
     }
 
     public function scopePublishedAndScheduled($query)
