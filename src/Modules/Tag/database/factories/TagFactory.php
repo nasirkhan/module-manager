@@ -16,7 +16,7 @@ class TagFactory extends Factory
      *
      * @var string
      */
-    protected $model = \Modules\Tag\Models\Tag::class;
+    protected $model = \Nasirkhan\ModuleManager\Modules\Tag\Models\Tag::class;
 
     /**
      * Define the model's default state.

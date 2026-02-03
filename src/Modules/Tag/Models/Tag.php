@@ -48,6 +48,6 @@ class Tag extends BaseModel
      */
     protected static function newFactory()
     {
-        return \Modules\Tag\database\factories\TagFactory::new();
+        return \Nasirkhan\ModuleManager\Modules\Tag\database\factories\TagFactory::new();
     }
 }

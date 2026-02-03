@@ -191,7 +191,7 @@ class MenuServiceProvider extends ServiceProvider
         // Register a console command for seeding
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \Modules\Menu\Console\Commands\SeedMenuCommand::class,
+                \Nasirkhan\ModuleManager\Modules\Menu\Console\Commands\SeedMenuCommand::class,
             ]);
         }
     }

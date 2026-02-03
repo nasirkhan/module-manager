@@ -48,6 +48,6 @@ class Category extends BaseModel
      */
     protected static function newFactory()
     {
-        return \Modules\Category\database\factories\CategoryFactory::new();
+        return \Nasirkhan\ModuleManager\Modules\Category\database\factories\CategoryFactory::new();
     }
 }

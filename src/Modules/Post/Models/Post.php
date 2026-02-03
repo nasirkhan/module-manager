@@ -88,6 +88,6 @@ class Post extends BaseModel
      */
     protected static function newFactory()
     {
-        return \Modules\Post\database\factories\PostFactory::new();
+        return \Nasirkhan\ModuleManager\Modules\Post\database\factories\PostFactory::new();
     }
 }

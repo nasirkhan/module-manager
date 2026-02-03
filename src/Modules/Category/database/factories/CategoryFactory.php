@@ -16,7 +16,7 @@ class CategoryFactory extends Factory
      *
      * @var string
      */
-    protected $model = \Modules\Category\Models\Category::class;
+    protected $model = \Nasirkhan\ModuleManager\Modules\Category\Models\Category::class;
 
     /**
      * Define the model's default state.

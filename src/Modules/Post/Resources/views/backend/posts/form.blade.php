@@ -128,7 +128,7 @@
             $field_lable = __("post::$module_name.$field_name");
             $field_placeholder = __("Select an option");
             $required = "required";
-            $select_options = \Modules\Post\Enums\PostType::toArray();
+            $select_options = \Nasirkhan\ModuleManager\Modules\Post\Enums\PostType::toArray();
             ?>
 
             {{ html()->label($field_lable, $field_name)->class("form-label")->for($field_name) }}
@@ -185,7 +185,7 @@
             $field_lable = __("post::$module_name.$field_name");
             $field_placeholder = __("Select an option");
             $required = "required";
-            $select_options = \Modules\Post\Enums\PostStatus::toArray();
+            $select_options = \Nasirkhan\ModuleManager\Modules\Post\Enums\PostStatus::toArray();
             ?>
 
             {{ html()->label($field_lable, $field_name)->class("form-label")->for($field_name) }}

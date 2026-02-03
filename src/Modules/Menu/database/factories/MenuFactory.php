@@ -15,7 +15,7 @@ class MenuFactory extends Factory
      *
      * @var string
      */
-    protected $model = \Modules\Menu\Models\Menu::class;
+    protected $model = \Nasirkhan\ModuleManager\Modules\Menu\Models\Menu::class;
 
     /**
      * Define the model's default state.

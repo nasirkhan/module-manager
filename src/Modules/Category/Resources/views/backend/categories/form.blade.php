@@ -152,7 +152,7 @@
             $field_lable = label_case($field_name);
             $field_placeholder = "-- Select an option --";
             $required = "required";
-            $select_options = \Modules\Category\Enums\CategoryStatus::toArray();
+            $select_options = \Nasirkhan\ModuleManager\Modules\Category\Enums\CategoryStatus::toArray();
             ?>
 
             {{ html()->label($field_lable, $field_name)->class("form-label") }} {!! field_required($required) !!}

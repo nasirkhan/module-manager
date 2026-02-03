@@ -17,7 +17,7 @@ class PostFactory extends Factory
      *
      * @var string
      */
-    protected $model = \Modules\Post\Models\Post::class;
+    protected $model = \Nasirkhan\ModuleManager\Modules\Post\Models\Post::class;
 
     /**
      * Define the model's default state.
