@@ -37,7 +37,7 @@ class ModuleCheckMigrationsCommand extends Command
     }
 
     /**
-     * Check all module migrations
+     * Check all module migrations.
      */
     protected function checkAllModuleMigrations(): int
     {
@@ -76,7 +76,7 @@ class ModuleCheckMigrationsCommand extends Command
     }
 
     /**
-     * Check migrations for a specific module
+     * Check migrations for a specific module.
      */
     protected function checkModuleMigrations(string $module): int
     {
@@ -99,7 +99,7 @@ class ModuleCheckMigrationsCommand extends Command
     }
 
     /**
-     * Get new migrations for a module
+     * Get new migrations for a module.
      */
     protected function getNewMigrations(string $module): array
     {
@@ -137,7 +137,7 @@ class ModuleCheckMigrationsCommand extends Command
     }
 
     /**
-     * Display module migrations
+     * Display module migrations.
      */
     protected function displayModuleMigrations(string $module, array $migrations): void
     {
