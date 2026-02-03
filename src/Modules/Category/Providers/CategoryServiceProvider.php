@@ -40,7 +40,7 @@ class CategoryServiceProvider extends ServiceProvider
         }
 
         // register commands
-        $this->registerCommands('\Modules\Category\Console\Commands');
+        $this->registerCommands('Nasirkhan\ModuleManager\Modules\Category\Console\Commands');
 
         // Register seeders
         $this->registerSeeders();

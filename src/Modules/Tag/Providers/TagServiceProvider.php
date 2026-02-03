@@ -40,7 +40,7 @@ class TagServiceProvider extends ServiceProvider
         }
 
         // register commands
-        $this->registerCommands('\Modules\Tag\Console\Commands');
+        $this->registerCommands('Nasirkhan\ModuleManager\Modules\Tag\Console\Commands');
 
         // Register seeders
         $this->registerSeeders();
