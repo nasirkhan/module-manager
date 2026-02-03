@@ -8,9 +8,16 @@ use Nasirkhan\ModuleManager\Commands\AuthPermissionsCommand;
 use Nasirkhan\ModuleManager\Commands\InsertDemoDataCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleBuildCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleCheckMigrationsCommand;
+use Nasirkhan\ModuleManager\Commands\ModuleDependenciesCommand;
+use Nasirkhan\ModuleManager\Commands\ModuleDetectUpdatesCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleDiffCommand;
+use Nasirkhan\ModuleManager\Commands\ModuleGenerateTestCommand;
+use Nasirkhan\ModuleManager\Commands\ModuleHelpCommand;
 use Nasirkhan\ModuleManager\Commands\ModulePublishCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleStatusCommand;
+use Nasirkhan\ModuleManager\Commands\ModuleTrackMigrationsCommand;
+use Nasirkhan\ModuleManager\Services\MigrationTracker;
+use Nasirkhan\ModuleManager\Services\ModuleVersion;
 
 class ModuleManagerServiceProvider extends ServiceProvider
 {
@@ -84,6 +91,11 @@ class ModuleManagerServiceProvider extends ServiceProvider
                     ModuleStatusCommand::class,
                     ModuleDiffCommand::class,
                     ModuleCheckMigrationsCommand::class,
+                    ModuleDependenciesCommand::class,
+                    ModuleTrackMigrationsCommand::class,
+                    ModuleDetectUpdatesCommand::class,
+                    ModuleGenerateTestCommand::class,
+                    ModuleHelpCommand::class,
 
                 ]);
             }
@@ -101,6 +113,16 @@ class ModuleManagerServiceProvider extends ServiceProvider
         // Register the main class to use with the facade
         $this->app->singleton('module-manager', function () {
             return new ModuleManager();
+        });
+
+        // Register ModuleVersion service
+        $this->app->singleton(ModuleVersion::class, function () {
+            return new ModuleVersion();
+        });
+
+        // Register MigrationTracker service
+        $this->app->singleton(MigrationTracker::class, function () {
+            return new MigrationTracker();
         });
     }
 

@@ -1,13 +1,14 @@
 {
     "name": "Post",
     "alias": "post",
-    "description": "",
-    "keywords": [],
+    "description": "Blog post management module with categories, tags, and moderation",
+    "version": "1.0.0",
+    "keywords": ["post", "blog", "article", "content"],
     "priority": 0,
     "providers": [
         "Modules\\Post\\Providers\\PostServiceProvider"
     ],
     "aliases": {},
     "files": [],
-    "requires": []
+    "requires": ["Category", "Tag"]
 }
