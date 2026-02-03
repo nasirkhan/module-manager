@@ -38,7 +38,7 @@ class Category extends BaseModel
      */
     public function posts()
     {
-        return $this->hasMany('Modules\Post\Models\Post');
+        return $this->hasMany('Nasirkhan\ModuleManager\Modules\Post\Models\Post');
     }
 
     /**

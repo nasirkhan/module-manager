@@ -26,7 +26,7 @@ class CategoriesController extends BackendBaseController
         $this->module_icon = 'fa-solid fa-diagram-project';
 
         // module model name, path
-        $this->module_model = "Modules\Category\Models\Category";
+        $this->module_model = "Nasirkhan\\ModuleManager\\Modules\\Category\\Models\\Category";
     }
 
     /**

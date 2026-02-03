@@ -33,7 +33,7 @@ class TagsController extends Controller
         $this->module_icon = 'fa-regular fa-sun';
 
         // module model name, path
-        $this->module_model = "Modules\Tag\Models\Tag";
+        $this->module_model = "Nasirkhan\\ModuleManager\\Modules\\Tag\\Models\\Tag";
     }
 
     /**

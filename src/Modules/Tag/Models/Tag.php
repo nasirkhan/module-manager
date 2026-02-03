@@ -38,7 +38,7 @@ class Tag extends BaseModel
      */
     public function posts()
     {
-        return $this->morphedByMany('Modules\Post\Models\Post', 'taggable');
+        return $this->morphedByMany('Nasirkhan\ModuleManager\Modules\Post\Models\Post', 'taggable');
     }
 
     /**
