@@ -32,12 +32,12 @@ class PostServiceProvider extends ServiceProvider
         $this->registerViews();
 
         // Load migrations from package
-        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         // Publish migrations with proper tags
         if ($this->app->runningInConsole()) {
             $this->publishesMigrations([
-                __DIR__.'/../../database/migrations' => database_path('migrations'),
+                __DIR__.'/../database/migrations' => database_path('migrations'),
             ], ['migrations', 'post-migrations']);
         }
 
@@ -71,7 +71,7 @@ class PostServiceProvider extends ServiceProvider
      */
     protected function registerConfig()
     {
-        $configPath = __DIR__.'/../../Config/config.php';
+        $configPath = __DIR__.'/../Config/config.php';
 
         // Merge config from module (package defaults)
         $this->mergeConfigFrom($configPath, $this->moduleNameLower);
@@ -91,7 +91,7 @@ class PostServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $sourcePath = __DIR__.'/../../Resources/views';
+        $sourcePath = __DIR__.'/../Resources/views';
 
         // Load views from module with 'post' namespace
         $this->loadViewsFrom($sourcePath, $this->moduleNameLower);
@@ -159,7 +159,7 @@ class PostServiceProvider extends ServiceProvider
         // Publish seeders so they can be customized
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../../database/seeders' => database_path('seeders/'.$this->moduleName),
+                __DIR__.'/../database/seeders' => database_path('seeders/'.$this->moduleName),
             ], ['seeders', 'post-seeders']);
         }
 
@@ -182,8 +182,8 @@ class PostServiceProvider extends ServiceProvider
         // Publish Livewire components (both class and view) for full customization
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../../Livewire' => app_path('Livewire/Post'),
-                __DIR__.'/../../Resources/views/livewire' => resource_path('views/livewire/post'),
+                __DIR__.'/../Livewire' => app_path('Livewire/Post'),
+                __DIR__.'/../Resources/views/livewire' => resource_path('views/livewire/post'),
             ], ['post-livewire-components']);
         }
     }
