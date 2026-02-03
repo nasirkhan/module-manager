@@ -40,7 +40,7 @@ abstract class AbstractField implements FieldInterface
     protected $rangeEnd;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -51,9 +51,9 @@ abstract class AbstractField implements FieldInterface
      * Check to see if a field is satisfied by a value.
      *
      * @internal
-     * @param int $dateValue Date value to check
-     * @param string $value Value to test
      *
+     * @param  int  $dateValue  Date value to check
+     * @param  string  $value  Value to test
      * @return bool
      */
     public function isSatisfied(int $dateValue, string $value): bool
@@ -73,8 +73,8 @@ abstract class AbstractField implements FieldInterface
      * Check if a value is a range.
      *
      * @internal
-     * @param string $value Value to test
      *
+     * @param  string  $value  Value to test
      * @return bool
      */
     public function isRange(string $value): bool
@@ -86,8 +86,8 @@ abstract class AbstractField implements FieldInterface
      * Check if a value is an increments of ranges.
      *
      * @internal
-     * @param string $value Value to test
      *
+     * @param  string  $value  Value to test
      * @return bool
      */
     public function isIncrementsOfRanges(string $value): bool
@@ -99,9 +99,9 @@ abstract class AbstractField implements FieldInterface
      * Test if a value is within a range.
      *
      * @internal
-     * @param int $dateValue Set date value
-     * @param string $value Value to test
      *
+     * @param  int  $dateValue  Set date value
+     * @param  string  $value  Value to test
      * @return bool
      */
     public function isInRange(int $dateValue, $value): bool
@@ -122,9 +122,9 @@ abstract class AbstractField implements FieldInterface
      * Test if a value is within an increments of ranges (offset[-to]/step size).
      *
      * @internal
-     * @param int $dateValue Set date value
-     * @param string $value Value to test
      *
+     * @param  int  $dateValue  Set date value
+     * @param  string  $value  Value to test
      * @return bool
      */
     public function isInIncrementsOfRanges(int $dateValue, string $value): bool
@@ -140,7 +140,7 @@ abstract class AbstractField implements FieldInterface
 
         // Expand the * to a full range
         if ('*' === $range) {
-            $range = $this->rangeStart . '-' . $this->rangeEnd;
+            $range = $this->rangeStart.'-'.$this->rangeEnd;
         }
 
         // Generate the requested small range
@@ -181,9 +181,8 @@ abstract class AbstractField implements FieldInterface
     /**
      * Returns a range of values for the given cron expression.
      *
-     * @param string $expression The expression to evaluate
-     * @param int $max Maximum offset for range
-     *
+     * @param  string  $expression  The expression to evaluate
+     * @param  int  $max  Maximum offset for range
      * @return array<int, int>
      */
     public function getRangeForExpression(string $expression, int $max): array
@@ -203,7 +202,7 @@ abstract class AbstractField implements FieldInterface
         }
 
         if ($this->isRange($expression) || $this->isIncrementsOfRanges($expression)) {
-            if (!$this->isIncrementsOfRanges($expression)) {
+            if (! $this->isIncrementsOfRanges($expression)) {
                 [$offset, $to] = explode('-', $expression);
                 $offset = $this->convertLiterals($offset);
                 $to = $this->convertLiterals($to);
@@ -235,8 +234,7 @@ abstract class AbstractField implements FieldInterface
     /**
      * Convert literal.
      *
-     * @param string $value
-     *
+     * @param  string  $value
      * @return string
      */
     protected function convertLiterals(string $value): string
@@ -254,8 +252,7 @@ abstract class AbstractField implements FieldInterface
     /**
      * Checks to see if a value is valid for the field.
      *
-     * @param string $value
-     *
+     * @param  string  $value
      * @return bool
      */
     public function validate(string $value): bool
@@ -270,7 +267,7 @@ abstract class AbstractField implements FieldInterface
         // Validate each chunk of a list individually
         if (false !== strpos($value, ',')) {
             foreach (explode(',', $value) as $listItem) {
-                if (!$this->validate($listItem)) {
+                if (! $this->validate($listItem)) {
                     return false;
                 }
             }
@@ -305,7 +302,7 @@ abstract class AbstractField implements FieldInterface
             return $this->validate($chunks[0]) && $this->validate($chunks[1]);
         }
 
-        if (!is_numeric($value)) {
+        if (! is_numeric($value)) {
             return false;
         }
 
@@ -322,22 +319,23 @@ abstract class AbstractField implements FieldInterface
     protected function timezoneSafeModify(DateTimeInterface $dt, string $modification): DateTimeInterface
     {
         $timezone = $dt->getTimezone();
-        $dt = $dt->setTimezone(new \DateTimeZone("UTC"));
+        $dt = $dt->setTimezone(new \DateTimeZone('UTC'));
         $dt = $dt->modify($modification);
         $dt = $dt->setTimezone($timezone);
+
         return $dt;
     }
 
     protected function setTimeHour(DateTimeInterface $date, bool $invert, int $originalTimestamp): DateTimeInterface
     {
-        $date = $date->setTime((int)$date->format('H'), ($invert ? 59 : 0));
+        $date = $date->setTime((int) $date->format('H'), $invert ? 59 : 0);
 
         // setTime caused the offset to change, moving time in the wrong direction
         $actualTimestamp = $date->format('U');
         if ((! $invert) && ($actualTimestamp <= $originalTimestamp)) {
-            $date = $this->timezoneSafeModify($date, "+1 hour");
+            $date = $this->timezoneSafeModify($date, '+1 hour');
         } elseif ($invert && ($actualTimestamp >= $originalTimestamp)) {
-            $date = $this->timezoneSafeModify($date, "-1 hour");
+            $date = $this->timezoneSafeModify($date, '-1 hour');
         }
 
         return $date;

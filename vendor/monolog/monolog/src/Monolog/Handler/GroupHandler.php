@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -12,11 +14,11 @@
 namespace Monolog\Handler;
 
 use Monolog\Formatter\FormatterInterface;
-use Monolog\ResettableInterface;
 use Monolog\LogRecord;
+use Monolog\ResettableInterface;
 
 /**
- * Forwards records to multiple handlers
+ * Forwards records to multiple handlers.
  *
  * @author Lenar Lõhmus <lenar@city.ee>
  */
@@ -29,15 +31,15 @@ class GroupHandler extends Handler implements ProcessableHandlerInterface, Reset
     protected bool $bubble;
 
     /**
-     * @param HandlerInterface[] $handlers Array of Handlers.
-     * @param bool               $bubble   Whether the messages that are handled can bubble up the stack or not
+     * @param  HandlerInterface[]  $handlers  Array of Handlers.
+     * @param  bool  $bubble  Whether the messages that are handled can bubble up the stack or not
      *
      * @throws \InvalidArgumentException if an unsupported handler is set
      */
     public function __construct(array $handlers, bool $bubble = true)
     {
         foreach ($handlers as $handler) {
-            if (!$handler instanceof HandlerInterface) {
+            if (! $handler instanceof HandlerInterface) {
                 throw new \InvalidArgumentException('The first argument of the GroupHandler must be an array of HandlerInterface instances.');
             }
         }

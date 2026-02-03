@@ -64,7 +64,7 @@ abstract class AbstractTransport implements TransportInterface
         $envelope = null !== $envelope ? clone $envelope : Envelope::create($message);
 
         try {
-            if (!$this->dispatcher) {
+            if (! $this->dispatcher) {
                 $sentMessage = new SentMessage($message, $envelope);
                 $this->doSend($sentMessage);
 
@@ -80,7 +80,7 @@ abstract class AbstractTransport implements TransportInterface
             $envelope = $event->getEnvelope();
             $message = $event->getMessage();
 
-            if ($message instanceof TemplatedEmail && !$message->isRendered()) {
+            if ($message instanceof TemplatedEmail && ! $message->isRendered()) {
                 throw new LogicException(\sprintf('You must configure a "%s" when a "%s" instance has a text or HTML template set.', BodyRendererInterface::class, get_debug_type($message)));
             }
 
@@ -106,8 +106,7 @@ abstract class AbstractTransport implements TransportInterface
     abstract protected function doSend(SentMessage $message): void;
 
     /**
-     * @param Address[] $addresses
-     *
+     * @param  Address[]  $addresses
      * @return string[]
      */
     protected function stringifyAddresses(array $addresses): array

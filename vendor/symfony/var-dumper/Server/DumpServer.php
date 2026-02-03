@@ -35,7 +35,7 @@ class DumpServer
         string $host,
         private ?LoggerInterface $logger = null,
     ) {
-        if (!str_contains($host, '://')) {
+        if (! str_contains($host, '://')) {
             $host = 'tcp://'.$host;
         }
 
@@ -44,7 +44,7 @@ class DumpServer
 
     public function start(): void
     {
-        if (!$this->socket = stream_socket_server($this->host, $errno, $errstr)) {
+        if (! $this->socket = stream_socket_server($this->host, $errno, $errstr)) {
             throw new \RuntimeException(\sprintf('Server start failed on "%s": ', $this->host).$errstr.' '.$errno);
         }
     }
@@ -67,7 +67,7 @@ class DumpServer
                 continue;
             }
 
-            if (!\is_array($payload) || \count($payload) < 2 || !$payload[0] instanceof Data || !\is_array($payload[1])) {
+            if (! \is_array($payload) || \count($payload) < 2 || ! $payload[0] instanceof Data || ! \is_array($payload[1])) {
                 $this->logger?->warning('Invalid payload from {clientId} client. Expected an array of two elements (Data $data, array $context)', ['clientId' => $clientId]);
 
                 continue;

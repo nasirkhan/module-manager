@@ -28,6 +28,6 @@ class ProfilerStateChecker
 
     public function isProfilerDisabled(): bool
     {
-        return !$this->isProfilerEnabled();
+        return ! $this->isProfilerEnabled();
     }
 }

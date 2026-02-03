@@ -30,7 +30,7 @@ class TextDescriptor extends Descriptor
 {
     protected function describeInputArgument(InputArgument $argument, array $options = []): void
     {
-        if (null !== $argument->getDefault() && (!\is_array($argument->getDefault()) || \count($argument->getDefault()))) {
+        if (null !== $argument->getDefault() && (! \is_array($argument->getDefault()) || \count($argument->getDefault()))) {
             $default = \sprintf('<comment> [default: %s]</comment>', $this->formatDefaultValue($argument->getDefault()));
         } else {
             $default = '';
@@ -50,7 +50,7 @@ class TextDescriptor extends Descriptor
 
     protected function describeInputOption(InputOption $option, array $options = []): void
     {
-        if ($option->acceptValue() && null !== $option->getDefault() && (!\is_array($option->getDefault()) || \count($option->getDefault()))) {
+        if ($option->acceptValue() && null !== $option->getDefault() && (! \is_array($option->getDefault()) || \count($option->getDefault()))) {
             $default = \sprintf('<comment> [default: %s]</comment>', $this->formatDefaultValue($option->getDefault()));
         } else {
             $default = '';
@@ -204,11 +204,11 @@ class TextDescriptor extends Descriptor
             foreach ($namespaces as $namespace) {
                 $namespace['commands'] = array_filter($namespace['commands'], fn ($name) => isset($commands[$name]));
 
-                if (!$namespace['commands']) {
+                if (! $namespace['commands']) {
                     continue;
                 }
 
-                if (!$describedNamespace && ApplicationDescription::GLOBAL_NAMESPACE !== $namespace['id']) {
+                if (! $describedNamespace && ApplicationDescription::GLOBAL_NAMESPACE !== $namespace['id']) {
                     $this->writeText("\n");
                     $this->writeText(' <comment>'.$namespace['id'].'</comment>', $options);
                 }
@@ -230,7 +230,7 @@ class TextDescriptor extends Descriptor
     {
         $this->write(
             isset($options['raw_text']) && $options['raw_text'] ? strip_tags($content) : $content,
-            isset($options['raw_output']) ? !$options['raw_output'] : true
+            isset($options['raw_output']) ? ! $options['raw_output'] : true
         );
     }
 
@@ -272,7 +272,7 @@ class TextDescriptor extends Descriptor
     }
 
     /**
-     * @param array<Command|string> $commands
+     * @param  array<Command|string>  $commands
      */
     private function getColumnWidth(array $commands): int
     {
@@ -293,7 +293,7 @@ class TextDescriptor extends Descriptor
     }
 
     /**
-     * @param InputOption[] $options
+     * @param  InputOption[]  $options
      */
     private function calculateTotalWidthForOptions(array $options): int
     {

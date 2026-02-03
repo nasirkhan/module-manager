@@ -41,12 +41,12 @@ class Ssi extends AbstractSurrogate
     public function process(Request $request, Response $response): Response
     {
         $type = $response->headers->get('Content-Type');
-        if (!$type) {
+        if (! $type) {
             $type = 'text/html';
         }
 
         $parts = explode(';', $type);
-        if (!\in_array($parts[0], $this->contentTypes, true)) {
+        if (! \in_array($parts[0], $this->contentTypes, true)) {
             return $response;
         }
 
@@ -63,7 +63,7 @@ class Ssi extends AbstractSurrogate
                 $options[$set[1]] = $set[2];
             }
 
-            if (!isset($options['virtual'])) {
+            if (! isset($options['virtual'])) {
                 throw new \RuntimeException('Unable to process an SSI tag without a "virtual" attribute.');
             }
 

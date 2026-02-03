@@ -22,7 +22,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class MarkRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param Mark $node
+     * @param  Mark  $node
      *
      * {@inheritDoc}
      *

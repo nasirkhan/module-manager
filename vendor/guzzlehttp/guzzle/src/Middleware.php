@@ -29,7 +29,7 @@ final class Middleware
             return static function ($request, array $options) use ($handler) {
                 if (empty($options['cookies'])) {
                     return $handler($request, $options);
-                } elseif (!($options['cookies'] instanceof CookieJarInterface)) {
+                } elseif (! ($options['cookies'] instanceof CookieJarInterface)) {
                     throw new \InvalidArgumentException('cookies must be an instance of GuzzleHttp\Cookie\CookieJarInterface');
                 }
                 $cookieJar = $options['cookies'];
@@ -51,8 +51,7 @@ final class Middleware
      * Middleware that throws exceptions for 4xx or 5xx responses when the
      * "http_errors" request option is set to true.
      *
-     * @param BodySummarizerInterface|null $bodySummarizer The body summarizer to use in exception messages.
-     *
+     * @param  BodySummarizerInterface|null  $bodySummarizer  The body summarizer to use in exception messages.
      * @return callable(callable): callable Returns a function that accepts the next handler.
      */
     public static function httpErrors(?BodySummarizerInterface $bodySummarizer = null): callable
@@ -79,15 +78,14 @@ final class Middleware
     /**
      * Middleware that pushes history data to an ArrayAccess container.
      *
-     * @param array|\ArrayAccess<int, array> $container Container to hold the history (by reference).
-     *
+     * @param  array|\ArrayAccess<int, array>  $container  Container to hold the history (by reference).
      * @return callable(callable): callable Returns a function that accepts the next handler.
      *
      * @throws \InvalidArgumentException if container is not an array or ArrayAccess.
      */
     public static function history(&$container): callable
     {
-        if (!\is_array($container) && !$container instanceof \ArrayAccess) {
+        if (! \is_array($container) && ! $container instanceof \ArrayAccess) {
             throw new \InvalidArgumentException('history container must be an array or object implementing ArrayAccess');
         }
 
@@ -127,9 +125,8 @@ final class Middleware
      * before listener accepts a request and options array, and the after
      * listener accepts a request, options array, and response promise.
      *
-     * @param callable $before Function to invoke before forwarding the request.
-     * @param callable $after  Function invoked after forwarding.
-     *
+     * @param  callable  $before  Function to invoke before forwarding the request.
+     * @param  callable  $after  Function invoked after forwarding.
      * @return callable Returns a function that accepts the next handler.
      */
     public static function tap(?callable $before = null, ?callable $after = null): callable
@@ -168,12 +165,11 @@ final class Middleware
      * If no delay function is provided, a simple implementation of exponential
      * backoff will be utilized.
      *
-     * @param callable $decider Function that accepts the number of retries,
-     *                          a request, [response], and [exception] and
-     *                          returns true if the request is to be retried.
-     * @param callable $delay   Function that accepts the number of retries and
-     *                          returns the number of milliseconds to delay.
-     *
+     * @param  callable  $decider  Function that accepts the number of retries,
+     *                             a request, [response], and [exception] and
+     *                             returns true if the request is to be retried.
+     * @param  callable  $delay  Function that accepts the number of retries and
+     *                           returns the number of milliseconds to delay.
      * @return callable Returns a function that accepts the next handler.
      */
     public static function retry(callable $decider, ?callable $delay = null): callable
@@ -187,9 +183,9 @@ final class Middleware
      * Middleware that logs requests, responses, and errors using a message
      * formatter.
      *
-     * @param LoggerInterface                            $logger    Logs messages.
-     * @param MessageFormatterInterface|MessageFormatter $formatter Formatter used to create message strings.
-     * @param string                                     $logLevel  Level at which to log requests.
+     * @param  LoggerInterface  $logger  Logs messages.
+     * @param  MessageFormatterInterface|MessageFormatter  $formatter  Formatter used to create message strings.
+     * @param  string  $logLevel  Level at which to log requests.
      *
      * @phpstan-param \Psr\Log\LogLevel::* $logLevel Level at which to log requests.
      *
@@ -198,7 +194,7 @@ final class Middleware
     public static function log(LoggerInterface $logger, $formatter, string $logLevel = 'info'): callable
     {
         // To be compatible with Guzzle 7.1.x we need to allow users to pass a MessageFormatter
-        if (!$formatter instanceof MessageFormatter && !$formatter instanceof MessageFormatterInterface) {
+        if (! $formatter instanceof MessageFormatter && ! $formatter instanceof MessageFormatterInterface) {
             throw new \LogicException(sprintf('Argument 2 to %s::log() must be of type %s', self::class, MessageFormatterInterface::class));
         }
 
@@ -238,8 +234,8 @@ final class Middleware
      * Middleware that applies a map function to the request before passing to
      * the next handler.
      *
-     * @param callable $fn Function that accepts a RequestInterface and returns
-     *                     a RequestInterface.
+     * @param  callable  $fn  Function that accepts a RequestInterface and returns
+     *                        a RequestInterface.
      */
     public static function mapRequest(callable $fn): callable
     {
@@ -254,8 +250,8 @@ final class Middleware
      * Middleware that applies a map function to the resolved promise's
      * response.
      *
-     * @param callable $fn Function that accepts a ResponseInterface and
-     *                     returns a ResponseInterface.
+     * @param  callable  $fn  Function that accepts a ResponseInterface and
+     *                        returns a ResponseInterface.
      */
     public static function mapResponse(callable $fn): callable
     {

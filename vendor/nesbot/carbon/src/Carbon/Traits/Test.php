@@ -48,7 +48,7 @@ trait Test
      *
      * /!\ Use this method for unit tests only.
      *
-     * @param DateTimeInterface|Closure|static|string|false|null $testNow real or mock Carbon instance
+     * @param  DateTimeInterface|Closure|static|string|false|null  $testNow  real or mock Carbon instance
      */
     public static function setTestNow(mixed $testNow = null): void
     {
@@ -72,7 +72,7 @@ trait Test
      *
      * /!\ Use this method for unit tests only.
      *
-     * @param DateTimeInterface|Closure|static|string|false|null $testNow real or mock Carbon instance
+     * @param  DateTimeInterface|Closure|static|string|false|null  $testNow  real or mock Carbon instance
      */
     public static function setTestNowAndTimezone($testNow = null, $timezone = null): void
     {
@@ -88,9 +88,8 @@ trait Test
      *
      * @template T
      *
-     * @param DateTimeInterface|Closure|static|string|false|null $testNow  real or mock Carbon instance
-     * @param Closure(): T                                       $callback
-     *
+     * @param  DateTimeInterface|Closure|static|string|false|null  $testNow  real or mock Carbon instance
+     * @param  Closure(): T  $callback
      * @return T
      */
     public static function withTestNow(mixed $testNow, callable $callback): mixed
@@ -144,7 +143,7 @@ trait Test
             : $this->nowFromClock($timezone);
         $testInstance = $now ?? self::getMockedTestNowClone($timezone);
 
-        if (!$testInstance) {
+        if (! $testInstance) {
             return;
         }
 
@@ -158,7 +157,7 @@ trait Test
 
         $factory = $this->getClock()?->unwrap();
 
-        if (!($factory instanceof Factory)) {
+        if (! ($factory instanceof Factory)) {
             $factory = FactoryImmutable::getInstance();
         }
 

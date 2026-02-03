@@ -32,12 +32,12 @@ use League\Config\Exception\InvalidConfigurationException;
 
 final class TableOfContentsGenerator implements TableOfContentsGeneratorInterface
 {
-    public const STYLE_BULLET  = ListBlock::TYPE_BULLET;
+    public const STYLE_BULLET = ListBlock::TYPE_BULLET;
     public const STYLE_ORDERED = ListBlock::TYPE_ORDERED;
 
     public const NORMALIZE_DISABLED = 'as-is';
     public const NORMALIZE_RELATIVE = 'relative';
-    public const NORMALIZE_FLAT     = 'flat';
+    public const NORMALIZE_FLAT = 'flat';
 
     /** @psalm-readonly */
     private string $style;
@@ -56,11 +56,11 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
 
     public function __construct(string $style, string $normalizationStrategy, int $minHeadingLevel, int $maxHeadingLevel, string $fragmentPrefix)
     {
-        $this->style                 = $style;
+        $this->style = $style;
         $this->normalizationStrategy = $normalizationStrategy;
-        $this->minHeadingLevel       = $minHeadingLevel;
-        $this->maxHeadingLevel       = $maxHeadingLevel;
-        $this->fragmentPrefix        = $fragmentPrefix;
+        $this->minHeadingLevel = $minHeadingLevel;
+        $this->maxHeadingLevel = $maxHeadingLevel;
+        $this->fragmentPrefix = $fragmentPrefix;
 
         if ($fragmentPrefix !== '') {
             $this->fragmentPrefix .= '-';
@@ -95,7 +95,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
             $toc->setEndLine($heading->getEndLine());
 
             // Create the new link
-            $link = new Link('#' . $this->fragmentPrefix . $headingLink->getSlug(), StringContainerHelper::getChildText($heading, [RawMarkupContainerInterface::class]));
+            $link = new Link('#'.$this->fragmentPrefix.$headingLink->getSlug(), StringContainerHelper::getChildText($heading, [RawMarkupContainerInterface::class]));
 
             $listItem = new ListItem($toc->getListData());
             $listItem->setStartLine($heading->getStartLine());

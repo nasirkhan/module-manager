@@ -32,12 +32,12 @@ class FileProfilerStorage implements ProfilerStorageInterface
      */
     public function __construct(string $dsn)
     {
-        if (!str_starts_with($dsn, 'file:')) {
+        if (! str_starts_with($dsn, 'file:')) {
             throw new \RuntimeException(\sprintf('Please check your configuration. You are trying to use FileStorage with an invalid dsn "%s". The expected format is "file:/path/to/the/storage/folder".', $dsn));
         }
         $this->folder = substr($dsn, 5);
 
-        if (!is_dir($this->folder) && false === @mkdir($this->folder, 0o777, true) && !is_dir($this->folder)) {
+        if (! is_dir($this->folder) && false === @mkdir($this->folder, 0o777, true) && ! is_dir($this->folder)) {
             throw new \RuntimeException(\sprintf('Unable to create the storage directory (%s).', $this->folder));
         }
     }
@@ -46,7 +46,7 @@ class FileProfilerStorage implements ProfilerStorageInterface
     {
         $file = $this->getIndexFilename();
 
-        if (!file_exists($file)) {
+        if (! file_exists($file)) {
             return [];
         }
 
@@ -67,10 +67,10 @@ class FileProfilerStorage implements ProfilerStorageInterface
 
             $urlFilter = false;
             if ($url) {
-                $urlFilter = str_starts_with($url, '!') ? str_contains($csvUrl, substr($url, 1)) : !str_contains($csvUrl, $url);
+                $urlFilter = str_starts_with($url, '!') ? str_contains($csvUrl, substr($url, 1)) : ! str_contains($csvUrl, $url);
             }
 
-            if ($ip && !str_contains($csvIp, $ip) || $urlFilter || $method && !str_contains($csvMethod, $method) || $statusCode && !str_contains($csvStatusCode, $statusCode)) {
+            if ($ip && ! str_contains($csvIp, $ip) || $urlFilter || $method && ! str_contains($csvMethod, $method) || $statusCode && ! str_contains($csvStatusCode, $statusCode)) {
                 continue;
             }
 
@@ -93,7 +93,7 @@ class FileProfilerStorage implements ProfilerStorageInterface
                 'virtual_type' => $csvVirtualType ?: 'request',
             ];
 
-            if ($filter && !$filter($profile)) {
+            if ($filter && ! $filter($profile)) {
                 continue;
             }
 
@@ -133,10 +133,10 @@ class FileProfilerStorage implements ProfilerStorageInterface
         $file = $this->getFilename($profile->getToken());
 
         $profileIndexed = is_file($file);
-        if (!$profileIndexed) {
+        if (! $profileIndexed) {
             // Create directory
             $dir = \dirname($file);
-            if (!is_dir($dir) && false === @mkdir($dir, 0o777, true) && !is_dir($dir)) {
+            if (! is_dir($dir) && false === @mkdir($dir, 0o777, true) && ! is_dir($dir)) {
                 throw new \RuntimeException(\sprintf('Unable to create the storage directory (%s).', $dir));
             }
         }
@@ -171,7 +171,7 @@ class FileProfilerStorage implements ProfilerStorageInterface
             return false;
         }
 
-        if (!$profileIndexed) {
+        if (! $profileIndexed) {
             // Add to index
             if (false === $file = fopen($this->getIndexFilename(), 'a')) {
                 return false;
@@ -222,7 +222,7 @@ class FileProfilerStorage implements ProfilerStorageInterface
      *
      * This function automatically skips the empty lines and do not include the line return in result value.
      *
-     * @param resource $file The file resource, with the pointer placed at the end of the line to read
+     * @param  resource  $file  The file resource, with the pointer placed at the end of the line to read
      */
     protected function readLineFromFile($file): mixed
     {
@@ -273,7 +273,7 @@ class FileProfilerStorage implements ProfilerStorageInterface
         $profile->setVirtualType($data['virtual_type'] ?: 'request');
         $profile->setCollectors($data['data']);
 
-        if (!$parent && $data['parent']) {
+        if (! $parent && $data['parent']) {
             $parent = $this->read($data['parent']);
         }
 
@@ -292,7 +292,7 @@ class FileProfilerStorage implements ProfilerStorageInterface
 
     private function doRead($token, ?Profile $profile = null): ?Profile
     {
-        if (!$token || !file_exists($file = $this->getFilename($token))) {
+        if (! $token || ! file_exists($file = $this->getFilename($token))) {
             return null;
         }
 
@@ -306,7 +306,7 @@ class FileProfilerStorage implements ProfilerStorageInterface
             $data = @gzdecode($data) ?: $data;
         }
 
-        if (!$data = unserialize($data)) {
+        if (! $data = unserialize($data)) {
             return null;
         }
 

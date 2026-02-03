@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -13,11 +15,11 @@ namespace Monolog\Handler;
 
 use Monolog\Level;
 use Monolog\Logger;
-use Psr\Log\LogLevel;
 use Monolog\LogRecord;
+use Psr\Log\LogLevel;
 
 /**
- * Simple handler wrapper that deduplicates log records across multiple requests
+ * Simple handler wrapper that deduplicates log records across multiple requests.
  *
  * It also includes the BufferHandler functionality and will buffer
  * all messages until the end of the request or flush() is called.
@@ -46,11 +48,11 @@ class DeduplicationHandler extends BufferHandler
     protected bool $gc = false;
 
     /**
-     * @param HandlerInterface             $handler            Handler.
-     * @param string|null                  $deduplicationStore The file/path where the deduplication log should be kept
-     * @param int|string|Level|LogLevel::* $deduplicationLevel The minimum logging level for log records to be looked at for deduplication purposes
-     * @param int                          $time               The period (in seconds) during which duplicate entries should be suppressed after a given log is sent through
-     * @param bool                         $bubble             Whether the messages that are handled can bubble up the stack or not
+     * @param  HandlerInterface  $handler  Handler.
+     * @param  string|null  $deduplicationStore  The file/path where the deduplication log should be kept
+     * @param  int|string|Level|LogLevel::*  $deduplicationLevel  The minimum logging level for log records to be looked at for deduplication purposes
+     * @param  int  $time  The period (in seconds) during which duplicate entries should be suppressed after a given log is sent through
+     * @param  bool  $bubble  Whether the messages that are handled can bubble up the stack or not
      *
      * @phpstan-param value-of<Level::VALUES>|value-of<Level::NAMES>|Level|LogLevel::* $deduplicationLevel
      */
@@ -58,7 +60,7 @@ class DeduplicationHandler extends BufferHandler
     {
         parent::__construct($handler, 0, Level::Debug, $bubble, false);
 
-        $this->deduplicationStore = $deduplicationStore === null ? sys_get_temp_dir() . '/monolog-dedup-' . substr(md5(__FILE__), 0, 20) .'.log' : $deduplicationStore;
+        $this->deduplicationStore = $deduplicationStore === null ? sys_get_temp_dir().'/monolog-dedup-'.substr(md5(__FILE__), 0, 20).'.log' : $deduplicationStore;
         $this->deduplicationLevel = Logger::toMonologLevel($deduplicationLevel);
         $this->time = $time;
     }
@@ -79,11 +81,11 @@ class DeduplicationHandler extends BufferHandler
 
         foreach ($this->buffer as $record) {
             if ($record->level->value >= $this->deduplicationLevel->value) {
-                $passthru = $passthru === true || !\is_array($store) || !$this->isDuplicate($store, $record);
+                $passthru = $passthru === true || ! \is_array($store) || ! $this->isDuplicate($store, $record);
                 if ($passthru) {
                     $line = $this->buildDeduplicationStoreEntry($record);
-                    file_put_contents($this->deduplicationStore, $line . "\n", FILE_APPEND);
-                    if (!\is_array($store)) {
+                    file_put_contents($this->deduplicationStore, $line."\n", FILE_APPEND);
+                    if (! \is_array($store)) {
                         $store = [];
                     }
                     $store[] = $line;
@@ -105,7 +107,8 @@ class DeduplicationHandler extends BufferHandler
 
     /**
      * If there is a store entry older than e.g. a day, this method should set `$this->gc` to `true` to trigger garbage collection.
-     * @param string[] $store The deduplication store
+     *
+     * @param  string[]  $store  The deduplication store
      */
     protected function isDuplicate(array $store, LogRecord $record): bool
     {
@@ -114,7 +117,7 @@ class DeduplicationHandler extends BufferHandler
         $yesterday = time() - 86400;
 
         for ($i = \count($store) - 1; $i >= 0; $i--) {
-            list($timestamp, $level, $message) = explode(':', $store[$i], 3);
+            [$timestamp, $level, $message] = explode(':', $store[$i], 3);
 
             if ($level === $record->level->getName() && $message === $expectedMessage && $timestamp > $timestampValidity) {
                 return true;
@@ -133,19 +136,19 @@ class DeduplicationHandler extends BufferHandler
      */
     protected function buildDeduplicationStoreEntry(LogRecord $record): string
     {
-        return $record->datetime->getTimestamp() . ':' . $record->level->getName() . ':' . preg_replace('{[\r\n].*}', '', $record->message);
+        return $record->datetime->getTimestamp().':'.$record->level->getName().':'.preg_replace('{[\r\n].*}', '', $record->message);
     }
 
     private function collectLogs(): void
     {
-        if (!file_exists($this->deduplicationStore)) {
+        if (! file_exists($this->deduplicationStore)) {
             return;
         }
 
         $handle = fopen($this->deduplicationStore, 'rw+');
 
         if (false === $handle) {
-            throw new \RuntimeException('Failed to open file for reading and writing: ' . $this->deduplicationStore);
+            throw new \RuntimeException('Failed to open file for reading and writing: '.$this->deduplicationStore);
         }
 
         if (false === flock($handle, LOCK_EX)) {
@@ -155,7 +158,7 @@ class DeduplicationHandler extends BufferHandler
 
         $timestampValidity = time() - $this->time;
 
-        while (!feof($handle)) {
+        while (! feof($handle)) {
             $log = fgets($handle);
             if (\is_string($log) && '' !== $log && substr($log, 0, 10) >= $timestampValidity) {
                 $validLogs[] = $log;

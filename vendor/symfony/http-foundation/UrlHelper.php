@@ -43,7 +43,7 @@ final class UrlHelper
             $path = $request->getPathInfo().$path;
         }
 
-        if (!$path || '/' !== $path[0]) {
+        if (! $path || '/' !== $path[0]) {
             $prefix = $request->getPathInfo();
             $last = \strlen($prefix) - 1;
             if ($last !== $pos = strrpos($prefix, '/')) {

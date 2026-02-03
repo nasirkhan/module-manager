@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,14 +17,14 @@ namespace Ramsey\Uuid\Rfc4122;
 use Ramsey\Uuid\Uuid;
 
 /**
- * Provides common functionality for handling the version, as defined by RFC 9562 (formerly RFC 4122)
+ * Provides common functionality for handling the version, as defined by RFC 9562 (formerly RFC 4122).
  *
  * @immutable
  */
 trait VersionTrait
 {
     /**
-     * Returns the UUID version
+     * Returns the UUID version.
      *
      * The version number describes how the UUID was generated and has the following meaning:
      *
@@ -47,17 +47,17 @@ trait VersionTrait
     abstract public function getVersion(): ?int;
 
     /**
-     * Returns true if these fields represent a max UUID
+     * Returns true if these fields represent a max UUID.
      */
     abstract public function isMax(): bool;
 
     /**
-     * Returns true if these fields represent a nil UUID
+     * Returns true if these fields represent a nil UUID.
      */
     abstract public function isNil(): bool;
 
     /**
-     * Returns true if the version matches one of those defined by RFC 9562 (formerly RFC 4122)
+     * Returns true if the version matches one of those defined by RFC 9562 (formerly RFC 4122).
      *
      * @return bool True if the UUID version is valid, false otherwise
      */
@@ -69,9 +69,9 @@ trait VersionTrait
 
         return match ($this->getVersion()) {
             Uuid::UUID_TYPE_TIME, Uuid::UUID_TYPE_DCE_SECURITY,
-                Uuid::UUID_TYPE_HASH_MD5, Uuid::UUID_TYPE_RANDOM,
-                Uuid::UUID_TYPE_HASH_SHA1, Uuid::UUID_TYPE_REORDERED_TIME,
-                Uuid::UUID_TYPE_UNIX_TIME, Uuid::UUID_TYPE_CUSTOM => true,
+            Uuid::UUID_TYPE_HASH_MD5, Uuid::UUID_TYPE_RANDOM,
+            Uuid::UUID_TYPE_HASH_SHA1, Uuid::UUID_TYPE_REORDERED_TIME,
+            Uuid::UUID_TYPE_UNIX_TIME, Uuid::UUID_TYPE_CUSTOM => true,
             default => false,
         };
     }

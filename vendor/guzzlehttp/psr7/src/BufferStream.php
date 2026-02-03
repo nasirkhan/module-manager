@@ -23,11 +23,11 @@ final class BufferStream implements StreamInterface
     private $buffer = '';
 
     /**
-     * @param int $hwm High water mark, representing the preferred maximum
-     *                 buffer size. If the size of the buffer exceeds the high
-     *                 water mark, then calls to write will continue to succeed
-     *                 but will return 0 to inform writers to slow down
-     *                 until the buffer has been drained by reading from it.
+     * @param  int  $hwm  High water mark, representing the preferred maximum
+     *                    buffer size. If the size of the buffer exceeds the high
+     *                    water mark, then calls to write will continue to succeed
+     *                    but will return 0 to inform writers to slow down
+     *                    until the buffer has been drained by reading from it.
      */
     public function __construct(int $hwm = 16384)
     {

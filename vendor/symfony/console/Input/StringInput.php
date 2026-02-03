@@ -28,7 +28,7 @@ class StringInput extends ArgvInput
     public const REGEX_QUOTED_STRING = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\'\\\\]*(?:\\\\.[^\'\\\\]*)*)\')';
 
     /**
-     * @param string $input A string representing the parameters from the CLI
+     * @param  string  $input  A string representing the parameters from the CLI
      */
     public function __construct(string $input)
     {
@@ -53,7 +53,7 @@ class StringInput extends ArgvInput
         while ($cursor < $length) {
             if ('\\' === $input[$cursor]) {
                 $token .= $input[++$cursor] ?? '';
-                ++$cursor;
+                $cursor++;
                 continue;
             }
 

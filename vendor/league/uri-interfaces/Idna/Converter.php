@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -210,7 +210,7 @@ final class Converter
         // delimiter. This also means we don't need to check the last label's length for being too
         // long.
         if ($length > 1 && '' === $labels[$length - 1]) {
-            ++$maxDomainSize;
+            $maxDomainSize++;
             array_pop($labels);
         }
 

@@ -39,7 +39,6 @@ final class DelimiterStack
      */
     private $missingIndexCache;
 
-
     private int $remainingDelimiters = 0;
 
     public function __construct(int $maximumStackSize = PHP_INT_MAX)
@@ -92,12 +91,12 @@ final class DelimiterStack
     private function findEarliest(int $stackBottom): ?DelimiterInterface
     {
         // Move back to first relevant delim.
-        $delimiter   = $this->top;
+        $delimiter = $this->top;
         $lastChecked = null;
 
         while ($delimiter !== null && self::getIndex($delimiter) > $stackBottom) {
             $lastChecked = $delimiter;
-            $delimiter   = $delimiter->getPrevious();
+            $delimiter = $delimiter->getPrevious();
         }
 
         return $lastChecked;
@@ -156,7 +155,7 @@ final class DelimiterStack
 
     private function removeDelimitersBetween(DelimiterInterface $opener, DelimiterInterface $closer): void
     {
-        $delimiter      = $closer->getPrevious();
+        $delimiter = $closer->getPrevious();
         $openerPosition = self::getIndex($opener);
         while ($delimiter !== null && self::getIndex($delimiter) > $openerPosition) {
             $previous = $delimiter->getPrevious();
@@ -166,7 +165,7 @@ final class DelimiterStack
     }
 
     /**
-     * @param DelimiterInterface|int|null $stackBottom
+     * @param  DelimiterInterface|int|null  $stackBottom
      */
     public function removeAll($stackBottom = null): void
     {
@@ -207,7 +206,7 @@ final class DelimiterStack
     /**
      * @deprecated This method is no longer used internally and will be removed in 3.0
      *
-     * @param string|string[] $characters
+     * @param  string|string[]  $characters
      */
     public function searchByCharacter($characters): ?DelimiterInterface
     {
@@ -228,7 +227,7 @@ final class DelimiterStack
     }
 
     /**
-     * @param DelimiterInterface|int|null $stackBottom
+     * @param  DelimiterInterface|int|null  $stackBottom
      *
      * @todo change $stackBottom to an int in 3.0
      */
@@ -260,14 +259,14 @@ final class DelimiterStack
 
             $openingDelimiterChar = $delimiterProcessor->getOpeningCharacter();
 
-            $useDelims            = 0;
-            $openerFound          = false;
+            $useDelims = 0;
+            $openerFound = false;
             $potentialOpenerFound = false;
-            $opener               = $closer->getPrevious();
+            $opener = $closer->getPrevious();
             while ($opener !== null && ($openerPosition = self::getIndex($opener)) > $stackBottomPosition && $openerPosition >= ($openersBottom[$openersBottomCacheKey] ?? 0)) {
                 if ($opener->canOpen() && $opener->getChar() === $openingDelimiterChar) {
                     $potentialOpenerFound = true;
-                    $useDelims            = $delimiterProcessor->getDelimiterUse($opener, $closer);
+                    $useDelims = $delimiterProcessor->getDelimiterUse($opener, $closer);
                     if ($useDelims > 0) {
                         $openerFound = true;
                         break;

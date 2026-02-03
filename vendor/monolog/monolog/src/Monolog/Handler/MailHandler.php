@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -16,7 +18,7 @@ use Monolog\Formatter\HtmlFormatter;
 use Monolog\LogRecord;
 
 /**
- * Base class for all mail handlers
+ * Base class for all mail handlers.
  *
  * @author Gyula Sallai
  */
@@ -44,10 +46,10 @@ abstract class MailHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Send a mail with the given content
+     * Send a mail with the given content.
      *
-     * @param string $content formatted email body to be sent
-     * @param array  $records the array of log records that formed this content
+     * @param  string  $content  formatted email body to be sent
+     * @param  array  $records  the array of log records that formed this content
      *
      * @phpstan-param non-empty-array<LogRecord> $records
      */

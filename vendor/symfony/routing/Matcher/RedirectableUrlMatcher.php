@@ -24,7 +24,7 @@ abstract class RedirectableUrlMatcher extends UrlMatcher implements Redirectable
         try {
             return parent::match($pathinfo);
         } catch (ResourceNotFoundException $e) {
-            if (!\in_array($this->context->getMethod(), ['HEAD', 'GET'], true)) {
+            if (! \in_array($this->context->getMethod(), ['HEAD', 'GET'], true)) {
                 throw $e;
             }
 

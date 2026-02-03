@@ -50,7 +50,7 @@ trait Converter
             ?? $this->getFactory()->getSettings()['formatFunction']
             ?? static::$formatFunction;
 
-        if (!$function) {
+        if (! $function) {
             return $this->rawFormat($format);
         }
 
@@ -70,7 +70,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as a string using the set format
+     * Format the instance as a string using the set format.
      *
      * @example
      * ```
@@ -93,7 +93,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as date
+     * Format the instance as date.
      *
      * @example
      * ```
@@ -106,7 +106,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as a readable date
+     * Format the instance as a readable date.
      *
      * @example
      * ```
@@ -119,7 +119,7 @@ trait Converter
     }
 
     /**
-     * Format the instance with the day, and a readable date
+     * Format the instance with the day, and a readable date.
      *
      * @example
      * ```
@@ -132,7 +132,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as time
+     * Format the instance as time.
      *
      * @example
      * ```
@@ -145,7 +145,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as date and time
+     * Format the instance as date and time.
      *
      * @example
      * ```
@@ -160,7 +160,7 @@ trait Converter
     /**
      * Return a format from H:i to H:i:s.u according to given unit precision.
      *
-     * @param string $unitPrecision "minute", "second", "millisecond" or "microsecond"
+     * @param  string  $unitPrecision  "minute", "second", "millisecond" or "microsecond"
      */
     public static function getTimeFormatByPrecision(string $unitPrecision): string
     {
@@ -174,7 +174,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as date and time T-separated with no timezone
+     * Format the instance as date and time T-separated with no timezone.
      *
      * @example
      * ```
@@ -189,7 +189,7 @@ trait Converter
     }
 
     /**
-     * Format the instance with day, date and time
+     * Format the instance with day, date and time.
      *
      * @example
      * ```
@@ -202,7 +202,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as ATOM
+     * Format the instance as ATOM.
      *
      * @example
      * ```
@@ -215,7 +215,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as COOKIE
+     * Format the instance as COOKIE.
      *
      * @example
      * ```
@@ -228,7 +228,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as ISO8601
+     * Format the instance as ISO8601.
      *
      * @example
      * ```
@@ -241,7 +241,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as RFC822
+     * Format the instance as RFC822.
      *
      * @example
      * ```
@@ -254,7 +254,7 @@ trait Converter
     }
 
     /**
-     * Convert the instance to UTC and return as Zulu ISO8601
+     * Convert the instance to UTC and return as Zulu ISO8601.
      *
      * @example
      * ```
@@ -269,7 +269,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as RFC850
+     * Format the instance as RFC850.
      *
      * @example
      * ```
@@ -282,7 +282,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as RFC1036
+     * Format the instance as RFC1036.
      *
      * @example
      * ```
@@ -295,7 +295,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as RFC1123
+     * Format the instance as RFC1123.
      *
      * @example
      * ```
@@ -308,7 +308,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as RFC2822
+     * Format the instance as RFC2822.
      *
      * @example
      * ```
@@ -335,7 +335,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as RSS
+     * Format the instance as RSS.
      *
      * @example
      * ```
@@ -348,7 +348,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as W3C
+     * Format the instance as W3C.
      *
      * @example
      * ```
@@ -361,7 +361,7 @@ trait Converter
     }
 
     /**
-     * Format the instance as RFC7231
+     * Format the instance as RFC7231.
      *
      * @example
      * ```
@@ -437,11 +437,11 @@ trait Converter
      * echo Carbon::now('America/Toronto')->toISOString(true) . "\n";
      * ```
      *
-     * @param bool $keepOffset Pass true to keep the date offset. Else forced to UTC.
+     * @param  bool  $keepOffset  Pass true to keep the date offset. Else forced to UTC.
      */
     public function toISOString(bool $keepOffset = false): ?string
     {
-        if (!$this->isValid()) {
+        if (! $this->isValid()) {
             return null;
         }
 
@@ -511,9 +511,9 @@ trait Converter
     /**
      * Create a iterable CarbonPeriod object from current date to a given end date (and optional interval).
      *
-     * @param \DateTimeInterface|Carbon|CarbonImmutable|int|null $end      period end date or recurrences count if int
-     * @param int|\DateInterval|string|null                      $interval period default interval or number of the given $unit
-     * @param string|null                                        $unit     if specified, $interval must be an integer
+     * @param  \DateTimeInterface|Carbon|CarbonImmutable|int|null  $end  period end date or recurrences count if int
+     * @param  int|\DateInterval|string|null  $interval  period default interval or number of the given $unit
+     * @param  string|null  $unit  if specified, $interval must be an integer
      */
     public function toPeriod($end = null, $interval = null, $unit = null): CarbonPeriod
     {
@@ -521,7 +521,7 @@ trait Converter
             $interval = CarbonInterval::make("$interval ".static::pluralUnit($unit));
         }
 
-        $isDefaultInterval = !$interval;
+        $isDefaultInterval = ! $interval;
         $interval ??= CarbonInterval::day();
         $class = $this->isMutable() ? CarbonPeriod::class : CarbonPeriodImmutable::class;
 
@@ -531,7 +531,7 @@ trait Converter
 
         $end ??= 1;
 
-        if (!\is_int($end)) {
+        if (! \is_int($end)) {
             $end = $this->resolveCarbon($end);
         }
 
@@ -545,9 +545,9 @@ trait Converter
     /**
      * Create a iterable CarbonPeriod object from current date to a given end date (and optional interval).
      *
-     * @param \DateTimeInterface|Carbon|CarbonImmutable|null $end      period end date
-     * @param int|\DateInterval|string|null                  $interval period default interval or number of the given $unit
-     * @param string|null                                    $unit     if specified, $interval must be an integer
+     * @param  \DateTimeInterface|Carbon|CarbonImmutable|null  $end  period end date
+     * @param  int|\DateInterval|string|null  $interval  period default interval or number of the given $unit
+     * @param  string|null  $unit  if specified, $interval must be an integer
      */
     public function range($end = null, $interval = null, $unit = null): CarbonPeriod
     {

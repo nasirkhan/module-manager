@@ -41,11 +41,11 @@ class NodeExtension extends AbstractExtension
      */
     public function setFlag(int $flag, bool $on): static
     {
-        if ($on && !$this->hasFlag($flag)) {
+        if ($on && ! $this->hasFlag($flag)) {
             $this->flags += $flag;
         }
 
-        if (!$on && $this->hasFlag($flag)) {
+        if (! $on && $this->hasFlag($flag)) {
             $this->flags -= $flag;
         }
 
@@ -202,7 +202,7 @@ class NodeExtension extends AbstractExtension
 
         $xpath = new XPathExpr('', $element);
 
-        if (!$safe) {
+        if (! $safe) {
             $xpath->addNameTest();
         }
 

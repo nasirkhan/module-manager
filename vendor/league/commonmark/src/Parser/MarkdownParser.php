@@ -74,8 +74,8 @@ final class MarkdownParser implements MarkdownParserInterface
 
     private function initialize(): void
     {
-        $this->referenceMap       = new ReferenceMap();
-        $this->lineNumber         = 0;
+        $this->referenceMap = new ReferenceMap();
+        $this->lineNumber = 0;
         $this->activeBlockParsers = [];
         $this->closedBlockParsers = [];
 
@@ -127,7 +127,7 @@ final class MarkdownParser implements MarkdownParserInterface
         }
 
         $unmatchedBlocks = \count($this->activeBlockParsers) - $matches;
-        $blockParser     = $this->activeBlockParsers[$matches - 1];
+        $blockParser = $this->activeBlockParsers[$matches - 1];
         $startedNewBlock = false;
 
         // Unless last matched container is a code block, try new container starts,
@@ -168,7 +168,7 @@ final class MarkdownParser implements MarkdownParserInterface
             }
 
             foreach ($blockStart->getBlockParsers() as $newBlockParser) {
-                $blockParser    = $this->addChild($newBlockParser, $oldBlockLineStart);
+                $blockParser = $this->addChild($newBlockParser, $oldBlockLineStart);
                 $tryBlockStarts = $newBlockParser->isContainer();
             }
         }
@@ -199,7 +199,7 @@ final class MarkdownParser implements MarkdownParserInterface
         // The document will always match, so we can skip the first block parser and start at 1 matches
         $matches = 1;
         for ($i = 1; $i < \count($this->activeBlockParsers); $i++) {
-            $blockParser   = $this->activeBlockParsers[$i];
+            $blockParser = $this->activeBlockParsers[$i];
             $blockContinue = $blockParser->tryContinue(clone $this->cursor, $this->getActiveBlockParser());
             if ($blockContinue === null) {
                 break;
@@ -330,7 +330,7 @@ final class MarkdownParser implements MarkdownParserInterface
     }
 
     /**
-     * @param ReferenceInterface[] $references
+     * @param  ReferenceInterface[]  $references
      */
     private function updateReferenceMap(iterable $references): void
     {

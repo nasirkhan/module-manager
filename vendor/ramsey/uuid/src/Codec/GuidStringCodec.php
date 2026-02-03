@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -22,7 +22,7 @@ use function sprintf;
 use function substr;
 
 /**
- * GuidStringCodec encodes and decodes globally unique identifiers (GUID)
+ * GuidStringCodec encodes and decodes globally unique identifiers (GUID).
  *
  * @see Guid
  *
@@ -67,12 +67,12 @@ class GuidStringCodec extends StringCodec
     }
 
     /**
-     * Swaps bytes according to the GUID rules
+     * Swaps bytes according to the GUID rules.
      */
     private function swapBytes(string $bytes): string
     {
-        return $bytes[3] . $bytes[2] . $bytes[1] . $bytes[0]
-            . $bytes[5] . $bytes[4] . $bytes[7] . $bytes[6]
-            . substr($bytes, 8);
+        return $bytes[3].$bytes[2].$bytes[1].$bytes[0]
+            .$bytes[5].$bytes[4].$bytes[7].$bytes[6]
+            .substr($bytes, 8);
     }
 }

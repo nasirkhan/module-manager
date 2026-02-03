@@ -24,7 +24,7 @@ class FileBag extends ParameterBag
     private const FILE_KEYS = ['error', 'full_path', 'name', 'size', 'tmp_name', 'type'];
 
     /**
-     * @param array|UploadedFile[] $parameters An array of HTTP files
+     * @param  array|UploadedFile[]  $parameters  An array of HTTP files
      */
     public function __construct(array $parameters = [])
     {
@@ -39,7 +39,7 @@ class FileBag extends ParameterBag
 
     public function set(string $key, mixed $value): void
     {
-        if (!\is_array($value) && !$value instanceof UploadedFile) {
+        if (! \is_array($value) && ! $value instanceof UploadedFile) {
             throw new \InvalidArgumentException('An uploaded file must be an array or an instance of UploadedFile.');
         }
 
@@ -101,7 +101,7 @@ class FileBag extends ParameterBag
         $keys = array_keys($data + ['full_path' => null]);
         sort($keys);
 
-        if (self::FILE_KEYS !== $keys || !isset($data['name']) || !\is_array($data['name'])) {
+        if (self::FILE_KEYS !== $keys || ! isset($data['name']) || ! \is_array($data['name'])) {
             return $data;
         }
 

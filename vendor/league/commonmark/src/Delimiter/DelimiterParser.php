@@ -13,7 +13,7 @@ use League\CommonMark\Parser\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
 /**
- * Delimiter parsing is implemented as an Inline Parser with the lowest-possible priority
+ * Delimiter parsing is implemented as an Inline Parser with the lowest-possible priority.
  *
  * @internal
  */
@@ -35,7 +35,7 @@ final class DelimiterParser implements InlineParserInterface
     {
         $character = $inlineContext->getFullMatch();
         $numDelims = 0;
-        $cursor    = $inlineContext->getCursor();
+        $cursor = $inlineContext->getCursor();
         $processor = $this->collection->getDelimiterProcessor($character);
 
         \assert($processor !== null); // Delimiter processor should never be null here
@@ -46,7 +46,7 @@ final class DelimiterParser implements InlineParserInterface
         }
 
         while ($cursor->peek($numDelims) === $character) {
-            ++$numDelims;
+            $numDelims++;
         }
 
         if ($numDelims < $processor->getMinLength()) {
@@ -85,19 +85,19 @@ final class DelimiterParser implements InlineParserInterface
      */
     private static function determineCanOpenOrClose(string $charBefore, string $charAfter, string $character, DelimiterProcessorInterface $delimiterProcessor): array
     {
-        $afterIsWhitespace   = \preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charAfter);
-        $afterIsPunctuation  = \preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
-        $beforeIsWhitespace  = \preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charBefore);
+        $afterIsWhitespace = \preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charAfter);
+        $afterIsPunctuation = \preg_match(RegexHelper::REGEX_PUNCTUATION, $charAfter);
+        $beforeIsWhitespace = \preg_match(RegexHelper::REGEX_UNICODE_WHITESPACE_CHAR, $charBefore);
         $beforeIsPunctuation = \preg_match(RegexHelper::REGEX_PUNCTUATION, $charBefore);
 
-        $leftFlanking  = ! $afterIsWhitespace && (! $afterIsPunctuation || $beforeIsWhitespace || $beforeIsPunctuation);
+        $leftFlanking = ! $afterIsWhitespace && (! $afterIsPunctuation || $beforeIsWhitespace || $beforeIsPunctuation);
         $rightFlanking = ! $beforeIsWhitespace && (! $beforeIsPunctuation || $afterIsWhitespace || $afterIsPunctuation);
 
         if ($character === '_') {
-            $canOpen  = $leftFlanking && (! $rightFlanking || $beforeIsPunctuation);
+            $canOpen = $leftFlanking && (! $rightFlanking || $beforeIsPunctuation);
             $canClose = $rightFlanking && (! $leftFlanking || $afterIsPunctuation);
         } else {
-            $canOpen  = $leftFlanking && $character === $delimiterProcessor->getOpeningCharacter();
+            $canOpen = $leftFlanking && $character === $delimiterProcessor->getOpeningCharacter();
             $canClose = $rightFlanking && $character === $delimiterProcessor->getClosingCharacter();
         }
 

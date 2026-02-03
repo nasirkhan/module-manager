@@ -20,14 +20,15 @@ use League\CommonMark\Node\Block\AbstractBlock;
 final class TableCell extends AbstractBlock
 {
     public const TYPE_HEADER = 'header';
-    public const TYPE_DATA   = 'data';
+    public const TYPE_DATA = 'data';
 
-    public const ALIGN_LEFT   = 'left';
-    public const ALIGN_RIGHT  = 'right';
+    public const ALIGN_LEFT = 'left';
+    public const ALIGN_RIGHT = 'right';
     public const ALIGN_CENTER = 'center';
 
     /**
      * @psalm-var self::TYPE_*
+     *
      * @phpstan-var self::TYPE_*
      *
      * @psalm-readonly-allow-private-mutation
@@ -36,6 +37,7 @@ final class TableCell extends AbstractBlock
 
     /**
      * @psalm-var self::ALIGN_*|null
+     *
      * @phpstan-var self::ALIGN_*|null
      *
      * @psalm-readonly-allow-private-mutation
@@ -53,7 +55,7 @@ final class TableCell extends AbstractBlock
     {
         parent::__construct();
 
-        $this->type  = $type;
+        $this->type = $type;
         $this->align = $align;
     }
 

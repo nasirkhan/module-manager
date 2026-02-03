@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Carbon\Doctrine;
 
 use Carbon\CarbonImmutable;
-use DateTimeImmutable;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\VarDateTimeImmutableType;
 

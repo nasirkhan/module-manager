@@ -125,9 +125,9 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
         $variables = $compiledRoute->getVariables();
 
         if (isset($defaults['_canonical_route']) && isset($defaults['_locale'])) {
-            if (!\in_array('_locale', $variables, true)) {
+            if (! \in_array('_locale', $variables, true)) {
                 unset($parameters['_locale']);
-            } elseif (!isset($parameters['_locale'])) {
+            } elseif (! isset($parameters['_locale'])) {
                 $parameters['_locale'] = $defaults['_locale'];
             }
         }
@@ -137,8 +137,8 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
 
     /**
      * @throws MissingMandatoryParametersException When some parameters are missing that are mandatory for the route
-     * @throws InvalidParameterException           When a parameter value for a placeholder is not correct because
-     *                                             it does not match the requirement
+     * @throws InvalidParameterException When a parameter value for a placeholder is not correct because
+     *                                   it does not match the requirement
      */
     protected function doGenerate(array $variables, array $defaults, array $requirements, array $tokens, array $parameters, string $name, int $referenceType, array $hostTokens, array $requiredSchemes = []): string
     {
@@ -171,9 +171,9 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
                 // variable is not important by default
                 $important = $token[5] ?? false;
 
-                if (!$optional || $important || !\array_key_exists($varName, $defaults) || (null !== $mergedParams[$varName] && (string) $mergedParams[$varName] !== (string) $defaults[$varName])) {
+                if (! $optional || $important || ! \array_key_exists($varName, $defaults) || (null !== $mergedParams[$varName] && (string) $mergedParams[$varName] !== (string) $defaults[$varName])) {
                     // check requirement (while ignoring look-around patterns)
-                    if (null !== $this->strictRequirements && !preg_match('#^'.preg_replace('/\(\?(?:=|<=|!|<!)((?:[^()\\\\]+|\\\\.|\((?1)\))*)\)/', '', $token[2]).'$#i'.(empty($token[4]) ? '' : 'u'), $mergedParams[$token[3]] ?? '')) {
+                    if (null !== $this->strictRequirements && ! preg_match('#^'.preg_replace('/\(\?(?:=|<=|!|<!)((?:[^()\\\\]+|\\\\.|\((?1)\))*)\)/', '', $token[2]).'$#i'.(empty($token[4]) ? '' : 'u'), $mergedParams[$token[3]] ?? '')) {
                         if ($this->strictRequirements) {
                             throw new InvalidParameterException(strtr($message, ['{parameter}' => $varName, '{route}' => $name, '{expected}' => $token[2], '{given}' => $mergedParams[$varName]]));
                         }
@@ -215,7 +215,7 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
         $scheme = $this->context->getScheme();
 
         if ($requiredSchemes) {
-            if (!\in_array($scheme, $requiredSchemes, true)) {
+            if (! \in_array($scheme, $requiredSchemes, true)) {
                 $referenceType = self::ABSOLUTE_URL;
                 $scheme = current($requiredSchemes);
             }
@@ -226,7 +226,7 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
             foreach ($hostTokens as $token) {
                 if ('variable' === $token[0]) {
                     // check requirement (while ignoring look-around patterns)
-                    if (null !== $this->strictRequirements && !preg_match('#^'.preg_replace('/\(\?(?:=|<=|!|<!)((?:[^()\\\\]+|\\\\.|\((?1)\))*)\)/', '', $token[2]).'$#i'.(empty($token[4]) ? '' : 'u'), $mergedParams[$token[3]])) {
+                    if (null !== $this->strictRequirements && ! preg_match('#^'.preg_replace('/\(\?(?:=|<=|!|<!)((?:[^()\\\\]+|\\\\.|\((?1)\))*)\)/', '', $token[2]).'$#i'.(empty($token[4]) ? '' : 'u'), $mergedParams[$token[3]])) {
                         if ($this->strictRequirements) {
                             throw new InvalidParameterException(strtr($message, ['{parameter}' => $token[3], '{route}' => $name, '{expected}' => $token[2], '{given}' => $mergedParams[$token[3]]]));
                         }
@@ -319,8 +319,8 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
      * - "/a/b/c/other" -> "other"
      * - "/a/x/y"       -> "../../x/y"
      *
-     * @param string $basePath   The base path
-     * @param string $targetPath The target path
+     * @param  string  $basePath  The base path
+     * @param  string  $targetPath  The target path
      */
     public static function getRelativePath(string $basePath, string $targetPath): string
     {

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -12,21 +14,22 @@
 namespace Monolog\Handler;
 
 use Monolog\Formatter\FormatterInterface;
-use Monolog\Level;
-use Monolog\Utils;
 use Monolog\Handler\Slack\SlackRecord;
+use Monolog\Level;
 use Monolog\LogRecord;
+use Monolog\Utils;
 
 /**
- * Sends notifications through Slack API
+ * Sends notifications through Slack API.
  *
  * @author Greg Kedzierski <greg@gregkedzierski.com>
+ *
  * @see    https://api.slack.com/
  */
 class SlackHandler extends SocketHandler
 {
     /**
-     * Slack API token
+     * Slack API token.
      */
     private string $token;
 
@@ -36,14 +39,15 @@ class SlackHandler extends SocketHandler
     private SlackRecord $slackRecord;
 
     /**
-     * @param  string                    $token                  Slack API token
-     * @param  string                    $channel                Slack channel (encoded ID or name)
-     * @param  string|null               $username               Name of a bot
-     * @param  bool                      $useAttachment          Whether the message should be added to Slack as attachment (plain text otherwise)
-     * @param  string|null               $iconEmoji              The emoji name to use (or null)
-     * @param  bool                      $useShortAttachment     Whether the context/extra messages added to Slack as attachments are in a short style
-     * @param  bool                      $includeContextAndExtra Whether the attachment should include context and extra data
-     * @param  string[]                  $excludeFields          Dot separated list of fields to exclude from slack message. E.g. ['context.field1', 'extra.field2']
+     * @param  string  $token  Slack API token
+     * @param  string  $channel  Slack channel (encoded ID or name)
+     * @param  string|null  $username  Name of a bot
+     * @param  bool  $useAttachment  Whether the message should be added to Slack as attachment (plain text otherwise)
+     * @param  string|null  $iconEmoji  The emoji name to use (or null)
+     * @param  bool  $useShortAttachment  Whether the context/extra messages added to Slack as attachments are in a short style
+     * @param  bool  $includeContextAndExtra  Whether the attachment should include context and extra data
+     * @param  string[]  $excludeFields  Dot separated list of fields to exclude from slack message. E.g. ['context.field1', 'extra.field2']
+     *
      * @throws MissingExtensionException If no OpenSSL PHP extension configured
      */
     public function __construct(
@@ -63,7 +67,7 @@ class SlackHandler extends SocketHandler
         ?float $connectionTimeout = null,
         ?int $chunkSize = null
     ) {
-        if (!\extension_loaded('openssl')) {
+        if (! \extension_loaded('openssl')) {
             throw new MissingExtensionException('The OpenSSL PHP extension is required to use the SlackHandler');
         }
 
@@ -108,11 +112,11 @@ class SlackHandler extends SocketHandler
     {
         $content = $this->buildContent($record);
 
-        return $this->buildHeader($content) . $content;
+        return $this->buildHeader($content).$content;
     }
 
     /**
-     * Builds the body of API call
+     * Builds the body of API call.
      */
     private function buildContent(LogRecord $record): string
     {
@@ -137,14 +141,14 @@ class SlackHandler extends SocketHandler
     }
 
     /**
-     * Builds the header of the API Call
+     * Builds the header of the API Call.
      */
     private function buildHeader(string $content): string
     {
         $header = "POST /api/chat.postMessage HTTP/1.1\r\n";
         $header .= "Host: slack.com\r\n";
         $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-        $header .= "Content-Length: " . \strlen($content) . "\r\n";
+        $header .= 'Content-Length: '.\strlen($content)."\r\n";
         $header .= "\r\n";
 
         return $header;
@@ -160,7 +164,7 @@ class SlackHandler extends SocketHandler
     }
 
     /**
-     * Finalizes the request by reading some bytes and then closing the socket
+     * Finalizes the request by reading some bytes and then closing the socket.
      *
      * If we do not read some but close the socket too early, slack sometimes
      * drops the request entirely.
@@ -191,7 +195,7 @@ class SlackHandler extends SocketHandler
     }
 
     /**
-     * Channel used by the bot when posting
+     * Channel used by the bot when posting.
      *
      * @return $this
      */
@@ -203,7 +207,7 @@ class SlackHandler extends SocketHandler
     }
 
     /**
-     * Username used by the bot when posting
+     * Username used by the bot when posting.
      *
      * @return $this
      */
@@ -255,7 +259,7 @@ class SlackHandler extends SocketHandler
     }
 
     /**
-     * @param  string[] $excludeFields
+     * @param  string[]  $excludeFields
      * @return $this
      */
     public function excludeFields(array $excludeFields): self

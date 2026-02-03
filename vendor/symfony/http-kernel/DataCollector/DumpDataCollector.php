@@ -52,7 +52,7 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
         $fileLinkFormat = $fileLinkFormat ?: \ini_get('xdebug.file_link_format') ?: get_cfg_var('xdebug.file_link_format');
         $this->fileLinkFormat = $fileLinkFormat instanceof FileLinkFormatter && false === $fileLinkFormat->format('', 0) ? false : $fileLinkFormat;
         $this->charset = $charset ?: \ini_get('php.output_encoding') ?: \ini_get('default_charset') ?: 'UTF-8';
-        $this->webMode = $webMode ?? !\in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true);
+        $this->webMode = $webMode ?? ! \in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true);
 
         // All clones share these properties by reference:
         $this->rootRefs = [
@@ -76,7 +76,7 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
 
         ['name' => $name, 'file' => $file, 'line' => $line, 'file_excerpt' => $fileExcerpt] = $this->sourceContextProvider->getContext();
 
-        if (!$this->dumper || $this->dumper instanceof Connection && !$this->dumper->write($data)) {
+        if (! $this->dumper || $this->dumper instanceof Connection && ! $this->dumper->write($data)) {
             $this->isCollected = false;
         }
 
@@ -85,15 +85,15 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
         unset($context['label']);
         $data = $data->withContext($context);
 
-        if ($this->dumper && !$this->dumper instanceof Connection) {
+        if ($this->dumper && ! $this->dumper instanceof Connection) {
             $this->doDump($this->dumper, $data, $name, $file, $line, $label);
         }
 
-        if (!$this->dataCount) {
+        if (! $this->dataCount) {
             $this->data = [];
         }
         $this->data[] = compact('data', 'name', 'file', 'line', 'fileExcerpt', 'label');
-        ++$this->dataCount;
+        $this->dataCount++;
 
         $this->stopwatch?->stop('dump');
 
@@ -102,7 +102,7 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
 
     public function collect(Request $request, Response $response, ?\Throwable $exception = null): void
     {
-        if (!$this->dataCount) {
+        if (! $this->dataCount) {
             $this->data = [];
         }
 
@@ -112,10 +112,10 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
         }
 
         // In all other conditions that remove the web debug toolbar, dumps are written on the output.
-        if (!$this->requestStack
-            || !$response->headers->has('X-Debug-Token')
+        if (! $this->requestStack
+            || ! $response->headers->has('X-Debug-Token')
             || $response->isRedirection()
-            || ($response->headers->has('Content-Type') && !str_contains($response->headers->get('Content-Type') ?? '', 'html'))
+            || ($response->headers->has('Content-Type') && ! str_contains($response->headers->get('Content-Type') ?? '', 'html'))
             || 'html' !== $request->getRequestFormat()
             || false === strripos($response->getContent(), '</body>')
         ) {
@@ -145,7 +145,7 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
 
     public function __serialize(): array
     {
-        if (!$this->dataCount) {
+        if (! $this->dataCount) {
             $this->data = [];
         }
 
@@ -168,7 +168,7 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
         $fileLinkFormat = array_pop($this->data);
         $this->dataCount = \count($this->data);
         foreach ($this->data as $dump) {
-            if (!\is_string($dump['name']) || !\is_string($dump['file']) || !\is_int($dump['line'])) {
+            if (! \is_string($dump['name']) || ! \is_string($dump['file']) || ! \is_int($dump['line'])) {
                 throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
             }
         }
@@ -193,7 +193,7 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
         }
         $dumps = [];
 
-        if (!$this->dataCount) {
+        if (! $this->dataCount) {
             return $this->data = [];
         }
 
@@ -215,7 +215,7 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
 
     public function __destruct()
     {
-        if (0 === $this->clonesCount-- && !$this->isCollected && $this->dataCount) {
+        if (0 === $this->clonesCount-- && ! $this->isCollected && $this->dataCount) {
             $this->clonesCount = 0;
             $this->isCollected = true;
 
@@ -223,7 +223,7 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
             $i = \count($h);
             array_unshift($h, 'Content-Type: '.\ini_get('default_mimetype'));
             while (0 !== stripos($h[$i], 'Content-Type:')) {
-                --$i;
+                $i--;
             }
 
             if ($this->webMode) {

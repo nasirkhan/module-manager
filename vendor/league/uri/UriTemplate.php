@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -38,8 +38,9 @@ use function class_exists;
  * Defines the URI Template syntax and the process for expanding a URI Template into a URI reference.
  *
  * @link    https://tools.ietf.org/html/rfc6570
- * @package League\Uri
+ *
  * @author  Ignace Nyamagana Butera <nyamsprod@gmail.com>
+ *
  * @since   6.1.0
  *
  * @phpstan-import-type InputValue from VariableBag
@@ -61,7 +62,7 @@ final class UriTemplate implements Stringable
 
     private function filterVariables(iterable $variables): VariableBag
     {
-        if (!$variables instanceof VariableBag) {
+        if (! $variables instanceof VariableBag) {
             $variables = new VariableBag($variables);
         }
 
@@ -159,7 +160,7 @@ final class UriTemplate implements Stringable
      * @throws InvalidUrlException if the base URI cannot be converted to a Uri\Whatwg\Url instance
      * @throws InvalidUrlException if the resulting expansion cannot be converted to a Uri\Whatwg\Url instance
      */
-    public function expandToUrl(iterable $variables = [], Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string|null $baseUrl = null, array|null &$errors = []): WhatWgUrl
+    public function expandToUrl(iterable $variables = [], Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string|null $baseUrl = null, ?array &$errors = []): WhatWgUrl
     {
         class_exists(WhatWgUrl::class) || throw new MissingFeature('Support for '.WhatWgUrl::class.' requires PHP8.5+ or a polyfill. Run "composer require league/uri-polyfill" or use you own polyfill.');
 
@@ -218,7 +219,7 @@ final class UriTemplate implements Stringable
      * @throws InvalidUrlException if the base URI cannot be converted to a Uri\Whatwg\Url instance
      * @throws InvalidUrlException if the resulting expansion cannot be converted to a Uri\Whatwg\Url instance
      */
-    public function expandToUrlOrFail(iterable $variables = [], Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string|null $baseUrl = null, array|null &$errors = []): WhatWgUrl
+    public function expandToUrlOrFail(iterable $variables = [], Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string|null $baseUrl = null, ?array &$errors = []): WhatWgUrl
     {
         class_exists(WhatWgUrl::class) || throw new MissingFeature('Support for '.WhatWgUrl::class.' requires PHP8.5+ or a polyfill. Run "composer require league/uri-polyfill" or use you own polyfill.');
 
@@ -279,7 +280,9 @@ final class UriTemplate implements Stringable
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
      * @deprecated Since version 7.6.0
+     *
      * @codeCoverageIgnore
+     *
      * @see UriTemplate::toString()
      *
      * Create a new instance from the environment.

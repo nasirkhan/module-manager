@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -25,6 +25,7 @@ use function implode;
 
 /**
  * @internal The class exposes the internal representation of an Expression and its usage
+ *
  * @link https://www.rfc-editor.org/rfc/rfc6570#section-2.2
  */
 final class Expression
@@ -67,9 +68,10 @@ final class Expression
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
      * @throws SyntaxError if the expression is invalid
-     * @see Expression::new()
      *
+     * @see Expression::new()
      * @deprecated Since version 7.0.0
+     *
      * @codeCoverageIgnore
      */
     #[Deprecated(message:'use League\Uri\UriTemplate\Exppression::new() instead', since:'league/uri:7.0.0')]

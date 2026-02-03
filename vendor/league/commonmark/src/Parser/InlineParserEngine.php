@@ -36,14 +36,16 @@ final class InlineParserEngine implements InlineParserEngineInterface
 
     /**
      * @var array<int, InlineParserInterface|string|bool>
+     *
      * @psalm-var list<array{0: InlineParserInterface, 1: non-empty-string, 2: bool}>
+     *
      * @phpstan-var array<int, array{0: InlineParserInterface, 1: non-empty-string, 2: bool}>
      */
     private array $parsers = [];
 
     public function __construct(EnvironmentInterface $environment, ReferenceMapInterface $referenceMap)
     {
-        $this->environment  = $environment;
+        $this->environment = $environment;
         $this->referenceMap = $referenceMap;
 
         foreach ($environment->getInlineParsers() as $parser) {
@@ -57,7 +59,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
     public function parse(string $contents, AbstractBlock $block): void
     {
         $contents = \trim($contents);
-        $cursor   = new Cursor($contents);
+        $cursor = new Cursor($contents);
 
         $inlineParserContext = new InlineParserContext($cursor, $block, $this->referenceMap, $this->environment->getConfiguration()->get('max_delimiters_per_line'));
 
@@ -133,7 +135,7 @@ final class InlineParserEngine implements InlineParserEngineInterface
      */
     private function matchParsers(string $contents): array
     {
-        $contents    = \trim($contents);
+        $contents = \trim($contents);
         $isMultibyte = ! \mb_check_encoding($contents, 'ASCII');
 
         $ret = [];

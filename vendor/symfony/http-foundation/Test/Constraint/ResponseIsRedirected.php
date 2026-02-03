@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class ResponseIsRedirected extends Constraint
 {
     /**
-     * @param bool $verbose If true, the entire response is printed on failure. If false, the response body is omitted.
+     * @param  bool  $verbose  If true, the entire response is printed on failure. If false, the response body is omitted.
      */
     public function __construct(private readonly bool $verbose = true)
     {
@@ -29,7 +29,7 @@ final class ResponseIsRedirected extends Constraint
     }
 
     /**
-     * @param Response $response
+     * @param  Response  $response
      */
     protected function matches($response): bool
     {
@@ -37,7 +37,7 @@ final class ResponseIsRedirected extends Constraint
     }
 
     /**
-     * @param Response $response
+     * @param  Response  $response
      */
     protected function failureDescription($response): string
     {
@@ -45,7 +45,7 @@ final class ResponseIsRedirected extends Constraint
     }
 
     /**
-     * @param Response $response
+     * @param  Response  $response
      */
     protected function additionalFailureDescription($response): string
     {

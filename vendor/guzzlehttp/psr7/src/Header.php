@@ -12,7 +12,7 @@ final class Header
      * of the header. When a parameter does not contain a value, but just
      * contains a key, this function will inject a key with a '' string value.
      *
-     * @param string|array $header Header to parse into components.
+     * @param  string|array  $header  Header to parse into components.
      */
     public static function parse($header): array
     {
@@ -45,7 +45,7 @@ final class Header
      * Converts an array of header values that may contain comma separated
      * headers into an array of headers with no comma separated values.
      *
-     * @param string|array $header Header to normalize.
+     * @param  string|array  $header  Header to normalize.
      *
      * @deprecated Use self::splitList() instead.
      */
@@ -70,26 +70,25 @@ final class Header
      * This method must not be used to parse headers that are not defined as
      * a list, such as 'user-agent' or 'set-cookie'.
      *
-     * @param string|string[] $values Header value as returned by MessageInterface::getHeader()
-     *
+     * @param  string|string[]  $values  Header value as returned by MessageInterface::getHeader()
      * @return string[]
      */
     public static function splitList($values): array
     {
-        if (!\is_array($values)) {
+        if (! \is_array($values)) {
             $values = [$values];
         }
 
         $result = [];
         foreach ($values as $value) {
-            if (!\is_string($value)) {
+            if (! \is_string($value)) {
                 throw new \TypeError('$header must either be a string or an array containing strings.');
             }
 
             $v = '';
             $isQuoted = false;
             $isEscaped = false;
-            for ($i = 0, $max = \strlen($value); $i < $max; ++$i) {
+            for ($i = 0, $max = \strlen($value); $i < $max; $i++) {
                 if ($isEscaped) {
                     $v .= $value[$i];
                     $isEscaped = false;
@@ -97,7 +96,7 @@ final class Header
                     continue;
                 }
 
-                if (!$isQuoted && $value[$i] === ',') {
+                if (! $isQuoted && $value[$i] === ',') {
                     $v = \trim($v);
                     if ($v !== '') {
                         $result[] = $v;
@@ -114,7 +113,7 @@ final class Header
                     continue;
                 }
                 if ($value[$i] === '"') {
-                    $isQuoted = !$isQuoted;
+                    $isQuoted = ! $isQuoted;
                     $v .= $value[$i];
 
                     continue;

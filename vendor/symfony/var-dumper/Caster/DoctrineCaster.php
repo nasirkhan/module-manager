@@ -32,7 +32,7 @@ class DoctrineCaster
         foreach (['__cloner__', '__initializer__'] as $k) {
             if (\array_key_exists($k, $a)) {
                 unset($a[$k]);
-                ++$stub->cut;
+                $stub->cut++;
             }
         }
 
@@ -44,7 +44,7 @@ class DoctrineCaster
         foreach (['_entityPersister', '_identifier'] as $k) {
             if (\array_key_exists($k = "\0Doctrine\\ORM\\Proxy\\Proxy\0".$k, $a)) {
                 unset($a[$k]);
-                ++$stub->cut;
+                $stub->cut++;
             }
         }
 

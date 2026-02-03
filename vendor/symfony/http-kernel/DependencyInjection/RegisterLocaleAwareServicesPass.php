@@ -25,7 +25,7 @@ class RegisterLocaleAwareServicesPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->hasDefinition('locale_aware_listener')) {
+        if (! $container->hasDefinition('locale_aware_listener')) {
             return;
         }
 
@@ -35,7 +35,7 @@ class RegisterLocaleAwareServicesPass implements CompilerPassInterface
             $services[] = new Reference($id);
         }
 
-        if (!$services) {
+        if (! $services) {
             $container->removeDefinition('locale_aware_listener');
 
             return;
@@ -43,7 +43,6 @@ class RegisterLocaleAwareServicesPass implements CompilerPassInterface
 
         $container
             ->getDefinition('locale_aware_listener')
-            ->setArgument(0, new IteratorArgument($services))
-        ;
+            ->setArgument(0, new IteratorArgument($services));
     }
 }

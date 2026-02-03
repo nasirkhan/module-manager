@@ -39,7 +39,7 @@ class HashHandler implements HandlerInterface
     {
         $match = $reader->findPattern($this->patterns->getHashPattern());
 
-        if (!$match) {
+        if (! $match) {
             return false;
         }
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -27,7 +27,7 @@ use function substr;
 use const STR_PAD_LEFT;
 
 /**
- * CombGenerator generates COMBs (combined UUID/timestamp)
+ * CombGenerator generates COMBs (combined UUID/timestamp).
  *
  * The CombGenerator, when used with the StringCodec (and, by proxy, the TimestampLastCombCodec) or the
  * TimestampFirstCombCodec, combines the current timestamp with a UUID (hence the name "COMB"). The timestamp either
@@ -53,7 +53,6 @@ use const STR_PAD_LEFT;
  * ```
  *
  * @deprecated Please migrate to {@link https://uuid.ramsey.dev/en/stable/rfc4122/version7.html Version 7, Unix Epoch Time UUIDs}.
- *
  * @link https://web.archive.org/web/20240118030355/https://www.informit.com/articles/printerfriendly/25862 The Cost of GUIDs as Primary Keys
  */
 class CombGenerator implements RandomGeneratorInterface
@@ -75,7 +74,7 @@ class CombGenerator implements RandomGeneratorInterface
     {
         if ($length < self::TIMESTAMP_BYTES) {
             throw new InvalidArgumentException(
-                'Length must be a positive integer greater than or equal to ' . self::TIMESTAMP_BYTES
+                'Length must be a positive integer greater than or equal to '.self::TIMESTAMP_BYTES
             );
         }
 
@@ -97,16 +96,16 @@ class CombGenerator implements RandomGeneratorInterface
             STR_PAD_LEFT,
         );
 
-        return (string) hex2bin(str_pad(bin2hex($hash), $length - self::TIMESTAMP_BYTES, '0') . $lsbTime);
+        return (string) hex2bin(str_pad(bin2hex($hash), $length - self::TIMESTAMP_BYTES, '0').$lsbTime);
     }
 
     /**
-     * Returns the current timestamp as a string integer, precise to 0.00001 seconds
+     * Returns the current timestamp as a string integer, precise to 0.00001 seconds.
      */
     private function timestamp(): string
     {
         $time = explode(' ', microtime(false));
 
-        return $time[1] . substr($time[0], 2, 5);
+        return $time[1].substr($time[0], 2, 5);
     }
 }

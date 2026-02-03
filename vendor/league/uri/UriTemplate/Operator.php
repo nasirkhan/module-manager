@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -94,11 +94,11 @@ enum Operator: string
     }
 
     /**
+     * @return array{operator:Operator, variables:string}
+     *
      * @throws SyntaxError if the expression is invalid
      * @throws SyntaxError if the operator used in the expression is invalid
      * @throws SyntaxError if the contained variable specifiers are invalid
-     *
-     * @return array{operator:Operator, variables:string}
      */
     public static function parseExpression(Stringable|string $expression): array
     {
@@ -133,7 +133,7 @@ enum Operator: string
         }
 
         [$expanded, $actualQuery] = $this->inject($value, $varSpecifier);
-        if (!$actualQuery) {
+        if (! $actualQuery) {
             return $expanded;
         }
 
@@ -145,8 +145,7 @@ enum Operator: string
     }
 
     /**
-     * @param string|array<string> $value
-     *
+     * @param  string|array<string>  $value
      * @return array{0:string, 1:bool}
      */
     private function inject(array|string $value, VarSpecifier $varSpec): array
@@ -165,11 +164,10 @@ enum Operator: string
     /**
      * Expands an expression using a list of values.
      *
-     * @param array<string> $value
+     * @param  array<string>  $value
+     * @return array{0:string, 1:bool}
      *
      * @throws TemplateCanNotBeExpanded if the variables is an array and a ":" modifier needs to be applied
-     *
-     * @return array{0:string, 1:bool}
      */
     private function replaceList(array $value, VarSpecifier $varSpec): array
     {
@@ -185,13 +183,13 @@ enum Operator: string
         $isList = array_is_list($value);
         $useQuery = $this->isNamed();
         foreach ($value as $key => $var) {
-            if (!$isList) {
+            if (! $isList) {
                 $key = rawurlencode((string) $key);
             }
 
             $var = $this->decode($var);
             if ('*' === $varSpec->modifier) {
-                if (!$isList) {
+                if (! $isList) {
                     $var = $key.'='.$var;
                 } elseif ($key > 0 && $useQuery) {
                     $var = $varSpec->name.'='.$var;
@@ -202,7 +200,7 @@ enum Operator: string
         }
 
         if ('*' === $varSpec->modifier) {
-            if (!$isList) {
+            if (! $isList) {
                 // Don't prepend the value name when using the `explode` modifier with an associative array.
                 $useQuery = false;
             }
@@ -210,7 +208,7 @@ enum Operator: string
             return [implode($this->separator(), $pairs), $useQuery];
         }
 
-        if (!$isList) {
+        if (! $isList) {
             // When an associative array is encountered and the `explode` modifier is not set, then
             // the result must be a comma separated list of keys followed by their respective values.
             $retVal = [];

@@ -82,8 +82,8 @@ abstract class AbstractHeader implements HeaderInterface
     /**
      * Produces a compliant, formatted RFC 2822 'phrase' based on the string given.
      *
-     * @param string $string  as displayed
-     * @param bool   $shorten the first line to make remove for header name
+     * @param  string  $string  as displayed
+     * @param  bool  $shorten  the first line to make remove for header name
      */
     protected function createPhrase(HeaderInterface $header, string $string, string $charset, bool $shorten = false): string
     {
@@ -91,7 +91,7 @@ abstract class AbstractHeader implements HeaderInterface
         $phraseStr = $string;
 
         // If it's not valid
-        if (!preg_match('/^'.self::PHRASE_PATTERN.'$/D', $phraseStr)) {
+        if (! preg_match('/^'.self::PHRASE_PATTERN.'$/D', $phraseStr)) {
             // .. but it is just ascii text, try escaping some characters
             // and make it a quoted-string
             if (preg_match('/^[\x00-\x08\x0B\x0C\x0E-\x7F]*$/D', $phraseStr)) {
@@ -263,7 +263,7 @@ abstract class AbstractHeader implements HeaderInterface
      * Takes an array of tokens which appear in the header and turns them into
      * an RFC 2822 compliant string, adding FWSP where needed.
      *
-     * @param string[] $tokens
+     * @param  string[]  $tokens
      */
     private function tokensToString(array $tokens): string
     {

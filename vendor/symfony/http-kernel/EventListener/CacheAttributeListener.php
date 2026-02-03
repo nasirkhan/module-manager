@@ -52,7 +52,7 @@ class CacheAttributeListener implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        if (!$attributes = $request->attributes->get('_cache') ?? $event->getAttributes(Cache::class)) {
+        if (! $attributes = $request->attributes->get('_cache') ?? $event->getAttributes(Cache::class)) {
             return;
         }
 
@@ -97,24 +97,24 @@ class CacheAttributeListener implements EventSubscriberInterface
         $request = $event->getRequest();
 
         /** @var Cache[] $attributes */
-        if (!\is_array($attributes = $request->attributes->get('_cache'))) {
+        if (! \is_array($attributes = $request->attributes->get('_cache'))) {
             return;
         }
         $response = $event->getResponse();
 
         // http://tools.ietf.org/html/draft-ietf-httpbis-p4-conditional-12#section-3.1
-        if (!\in_array($response->getStatusCode(), [200, 203, 300, 301, 302, 304, 404, 410], true)) {
+        if (! \in_array($response->getStatusCode(), [200, 203, 300, 301, 302, 304, 404, 410], true)) {
             unset($this->lastModified[$request]);
             unset($this->etags[$request]);
 
             return;
         }
 
-        if (isset($this->lastModified[$request]) && !$response->headers->has('Last-Modified')) {
+        if (isset($this->lastModified[$request]) && ! $response->headers->has('Last-Modified')) {
             $response->setLastModified($this->lastModified[$request]);
         }
 
-        if (isset($this->etags[$request]) && !$response->headers->has('Etag')) {
+        if (isset($this->etags[$request]) && ! $response->headers->has('Etag')) {
             $response->setEtag($this->etags[$request]);
         }
 
@@ -122,9 +122,10 @@ class CacheAttributeListener implements EventSubscriberInterface
         unset($this->etags[$request]);
         // Check if the response has a Vary header that should be considered, ignoring cases where
         // it's only 'Accept-Language' and the request has the '_vary_by_language' attribute
-        $hasVary = ['Accept-Language'] === $response->getVary() ? !$request->attributes->get('_vary_by_language') : $response->hasVary();
+        $hasVary = ['Accept-Language'] === $response->getVary() ? ! $request->attributes->get('_vary_by_language') : $response->hasVary();
         //Check if cache-control directive was set manually in cacheControl (not auto computed)
-        $hasCacheControlDirective = new class($response->headers) extends HeaderBag {
+        $hasCacheControlDirective = new class($response->headers) extends HeaderBag
+        {
             public function __construct(private parent $headerBag)
             {
             }
@@ -136,7 +137,7 @@ class CacheAttributeListener implements EventSubscriberInterface
         };
 
         foreach (array_reverse($attributes) as $cache) {
-            if (null !== $cache->smaxage && !$hasCacheControlDirective('s-maxage')) {
+            if (null !== $cache->smaxage && ! $hasCacheControlDirective('s-maxage')) {
                 $response->setSharedMaxAge($this->toSeconds($cache->smaxage));
             }
 
@@ -144,27 +145,27 @@ class CacheAttributeListener implements EventSubscriberInterface
                 $response->headers->addCacheControlDirective('must-revalidate');
             }
 
-            if (null !== $cache->maxage && !$hasCacheControlDirective('max-age')) {
+            if (null !== $cache->maxage && ! $hasCacheControlDirective('max-age')) {
                 $response->setMaxAge($this->toSeconds($cache->maxage));
             }
 
-            if (null !== $cache->maxStale && !$hasCacheControlDirective('max-stale')) {
+            if (null !== $cache->maxStale && ! $hasCacheControlDirective('max-stale')) {
                 $response->headers->addCacheControlDirective('max-stale', $this->toSeconds($cache->maxStale));
             }
 
-            if (null !== $cache->staleWhileRevalidate && !$hasCacheControlDirective('stale-while-revalidate')) {
+            if (null !== $cache->staleWhileRevalidate && ! $hasCacheControlDirective('stale-while-revalidate')) {
                 $response->headers->addCacheControlDirective('stale-while-revalidate', $this->toSeconds($cache->staleWhileRevalidate));
             }
 
-            if (null !== $cache->staleIfError && !$hasCacheControlDirective('stale-if-error')) {
+            if (null !== $cache->staleIfError && ! $hasCacheControlDirective('stale-if-error')) {
                 $response->headers->addCacheControlDirective('stale-if-error', $this->toSeconds($cache->staleIfError));
             }
 
-            if (null !== $cache->expires && !$response->headers->has('Expires')) {
+            if (null !== $cache->expires && ! $response->headers->has('Expires')) {
                 $response->setExpires(new \DateTimeImmutable('@'.strtotime($cache->expires, time())));
             }
 
-            if (!$hasVary && $cache->vary) {
+            if (! $hasVary && $cache->vary) {
                 $response->setVary($cache->vary, false);
             }
         }
@@ -172,11 +173,11 @@ class CacheAttributeListener implements EventSubscriberInterface
         $hasPublicOrPrivateCacheControlDirective = $hasCacheControlDirective('public') || $hasCacheControlDirective('private');
 
         foreach ($attributes as $cache) {
-            if (true === $cache->public && !$hasPublicOrPrivateCacheControlDirective) {
+            if (true === $cache->public && ! $hasPublicOrPrivateCacheControlDirective) {
                 $response->setPublic();
             }
 
-            if (false === $cache->public && !$hasPublicOrPrivateCacheControlDirective) {
+            if (false === $cache->public && ! $hasPublicOrPrivateCacheControlDirective) {
                 $response->setPrivate();
             }
 
@@ -213,7 +214,7 @@ class CacheAttributeListener implements EventSubscriberInterface
 
     private function toSeconds(int|string $time): int
     {
-        if (!is_numeric($time)) {
+        if (! is_numeric($time)) {
             $now = time();
             $time = strtotime($time, $now) - $now;
         }

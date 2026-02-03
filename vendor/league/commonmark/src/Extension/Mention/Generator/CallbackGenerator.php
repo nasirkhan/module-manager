@@ -20,7 +20,7 @@ use League\CommonMark\Node\Inline\AbstractInline;
 final class CallbackGenerator implements MentionGeneratorInterface
 {
     /**
-     * A callback function which sets the URL on the passed mention and returns the mention, return a new AbstractInline based object or null if the mention is not a match
+     * A callback function which sets the URL on the passed mention and returns the mention, return a new AbstractInline based object or null if the mention is not a match.
      *
      * @var callable(Mention): ?AbstractInline
      */

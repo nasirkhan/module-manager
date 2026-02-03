@@ -38,8 +38,7 @@ class RouteConfigurator
     /**
      * Sets the host to use for all child routes.
      *
-     * @param string|array $host the host, or the localized hosts
-     *
+     * @param  string|array  $host  the host, or the localized hosts
      * @return $this
      */
     final public function host(string|array $host): static
@@ -47,7 +46,7 @@ class RouteConfigurator
         $previousRoutes = clone $this->route;
         $this->addHost($this->route, $host);
         foreach ($previousRoutes as $name => $route) {
-            if (!$this->route->get($name)) {
+            if (! $this->route->get($name)) {
                 $this->collection->remove($name);
             }
         }

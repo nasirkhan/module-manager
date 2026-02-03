@@ -47,7 +47,7 @@ echo <<<EOPHP
 while (false !== $file = fgets(\STDIN)) {
     $code = file_get_contents(substr($file, 0, -1));
 
-    if (!str_contains($code, '@tentative-return-type')) {
+    if (! str_contains($code, '@tentative-return-type')) {
         continue;
     }
 
@@ -60,7 +60,7 @@ while (false !== $file = fgets(\STDIN)) {
     for ($i = 1; null !== $class = $code[$i] ?? null; $i += 2) {
         $methods = $code[1 + $i];
 
-        if (!str_contains($methods, '@tentative-return-type')) {
+        if (! str_contains($methods, '@tentative-return-type')) {
             continue;
         }
 
@@ -77,7 +77,7 @@ while (false !== $file = fgets(\STDIN)) {
     }
 }
 
-echo <<<EOPHP
+echo <<<'EOPHP'
         ];
     }
 

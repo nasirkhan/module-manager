@@ -42,7 +42,7 @@ class UnsupportedSchemeException extends LogicException
             $provider = substr($provider, 0, $pos);
         }
         $package = self::SCHEME_TO_PACKAGE_MAP[$provider] ?? null;
-        if ($package && !class_exists($package['class'])) {
+        if ($package && ! class_exists($package['class'])) {
             parent::__construct(\sprintf('Unable to synchronize translations via "%s" as the provider is not installed. Try running "composer require %s".', $provider, $package['package']));
 
             return;

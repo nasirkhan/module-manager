@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Dflydev\DotAccessData\Exception;
 
 /**
- * Thrown when trying to access an invalid path in the data array
+ * Thrown when trying to access an invalid path in the data array.
  */
 class InvalidPathException extends DataException
 {

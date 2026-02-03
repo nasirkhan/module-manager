@@ -16,12 +16,12 @@ namespace League\CommonMark\Renderer;
 use League\CommonMark\Node\Node;
 
 /**
- * Renders multiple nodes by delegating to the individual node renderers and adding spacing where needed
+ * Renders multiple nodes by delegating to the individual node renderers and adding spacing where needed.
  */
 interface ChildNodeRendererInterface
 {
     /**
-     * @param Node[] $nodes
+     * @param  Node[]  $nodes
      */
     public function renderNodes(iterable $nodes): string;
 

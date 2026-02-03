@@ -27,8 +27,8 @@ class SchemeRequestMatcher implements RequestMatcherInterface
     private array $schemes;
 
     /**
-     * @param string[]|string $schemes A scheme or a list of schemes
-     *                                 Strings can contain a comma-delimited list of schemes
+     * @param  string[]|string  $schemes  A scheme or a list of schemes
+     *                                    Strings can contain a comma-delimited list of schemes
      */
     public function __construct(array|string $schemes)
     {
@@ -37,7 +37,7 @@ class SchemeRequestMatcher implements RequestMatcherInterface
 
     public function matches(Request $request): bool
     {
-        if (!$this->schemes) {
+        if (! $this->schemes) {
             return true;
         }
 

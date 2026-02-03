@@ -49,7 +49,7 @@ final class ControllerEvent extends KernelEvent
     }
 
     /**
-     * @param array<class-string, list<object>>|null $attributes
+     * @param  array<class-string, list<object>>|null  $attributes
      */
     public function setController(callable $controller, ?array $attributes = null): void
     {
@@ -81,8 +81,7 @@ final class ControllerEvent extends KernelEvent
     /**
      * @template T of object
      *
-     * @param class-string<T>|null $className
-     *
+     * @param  class-string<T>|null  $className
      * @return ($className is null ? array<class-string, list<object>> : list<T>)
      */
     public function getAttributes(?string $className = null): array

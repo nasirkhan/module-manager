@@ -9,8 +9,7 @@ interface RepositoryInterface
     /**
      * Determine if the given environment variable is defined.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return bool
      */
     public function has(string $name);
@@ -18,34 +17,31 @@ interface RepositoryInterface
     /**
      * Get an environment variable.
      *
-     * @param string $name
+     * @param  string  $name
+     * @return string|null
      *
      * @throws \InvalidArgumentException
-     *
-     * @return string|null
      */
     public function get(string $name);
 
     /**
      * Set an environment variable.
      *
-     * @param string $name
-     * @param string $value
+     * @param  string  $name
+     * @param  string  $value
+     * @return bool
      *
      * @throws \InvalidArgumentException
-     *
-     * @return bool
      */
     public function set(string $name, string $value);
 
     /**
      * Clear an environment variable.
      *
-     * @param string $name
+     * @param  string  $name
+     * @return bool
      *
      * @throws \InvalidArgumentException
-     *
-     * @return bool
      */
     public function clear(string $name);
 }

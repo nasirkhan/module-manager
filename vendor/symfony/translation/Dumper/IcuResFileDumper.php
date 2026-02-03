@@ -40,8 +40,7 @@ class IcuResFileDumper extends FileDumper
 
             $data .= pack('V', \strlen($target))
                 .mb_convert_encoding($target."\0", 'UTF-16LE', 'UTF-8')
-                .$this->writePadding($data)
-            ;
+                .$this->writePadding($data);
         }
 
         $resOffset = $this->getPosition($data);
@@ -49,8 +48,7 @@ class IcuResFileDumper extends FileDumper
         $data .= pack('v', \count($messages->all($domain)))
             .$indexes
             .$this->writePadding($data)
-            .$resources
-        ;
+            .$resources;
 
         $bundleTop = $this->getPosition($data);
 

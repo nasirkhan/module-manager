@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,11 +13,11 @@
 
 namespace Monolog\Handler;
 
-use Throwable;
 use Monolog\LogRecord;
+use Throwable;
 
 /**
- * Forwards records to at most one handler
+ * Forwards records to at most one handler.
  *
  * If a handler fails, the exception is suppressed and the record is forwarded to the next handler.
  *

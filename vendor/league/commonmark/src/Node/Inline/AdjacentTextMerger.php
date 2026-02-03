@@ -48,7 +48,7 @@ final class AdjacentTextMerger
     public static function mergeWithDirectlyAdjacentNodes(Text $node): void
     {
         $start = ($previous = $node->previous()) instanceof Text ? $previous : $node;
-        $end   = ($next = $node->next()) instanceof Text ? $next : $node;
+        $end = ($next = $node->next()) instanceof Text ? $next : $node;
 
         self::mergeIfNeeded($start, $end);
     }
@@ -56,7 +56,7 @@ final class AdjacentTextMerger
     private static function mergeTextNodesInclusive(Node $fromNode, Node $toNode): void
     {
         $first = null;
-        $last  = null;
+        $last = null;
 
         $node = $fromNode;
         while ($node !== null) {
@@ -69,7 +69,7 @@ final class AdjacentTextMerger
             } else {
                 self::mergeIfNeeded($first, $last);
                 $first = null;
-                $last  = null;
+                $last = null;
             }
 
             if ($node === $toNode) {
@@ -94,9 +94,9 @@ final class AdjacentTextMerger
         $node = $first->next();
         $stop = $last->next();
         while ($node !== $stop && $node instanceof Text) {
-            $s     .= $node->getLiteral();
+            $s .= $node->getLiteral();
             $unlink = $node;
-            $node   = $node->next();
+            $node = $node->next();
             $unlink->detach();
         }
 

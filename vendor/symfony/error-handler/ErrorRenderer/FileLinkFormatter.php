@@ -27,7 +27,7 @@ class FileLinkFormatter
     private array|false $fileLinkFormat;
 
     /**
-     * @param string|\Closure $urlFormat The URL format, or a closure that returns it on-demand
+     * @param  string|\Closure  $urlFormat  The URL format, or a closure that returns it on-demand
      */
     public function __construct(
         string|array|null $fileLinkFormat = null,
@@ -37,7 +37,7 @@ class FileLinkFormatter
     ) {
         $fileLinkFormat ??= $_ENV['SYMFONY_IDE'] ?? $_SERVER['SYMFONY_IDE'] ?? '';
 
-        if (!\is_array($f = $fileLinkFormat)) {
+        if (! \is_array($f = $fileLinkFormat)) {
             $f = (ErrorRendererInterface::IDE_LINK_FORMATS[$f] ?? $f) ?: \ini_get('xdebug.file_link_format') ?: get_cfg_var('xdebug.file_link_format') ?: 'file://%f#L%l';
             $i = strpos($f, '&', max(strrpos($f, '%f'), strrpos($f, '%l'))) ?: \strlen($f);
             $fileLinkFormat = [substr($f, 0, $i)] + preg_split('/&([^>]++)>/', substr($f, $i), -1, \PREG_SPLIT_DELIM_CAPTURE);
@@ -49,7 +49,7 @@ class FileLinkFormatter
     public function format(string $file, int $line): string|false
     {
         if ($fmt = $this->getFileLinkFormat()) {
-            for ($i = 1; isset($fmt[$i]); ++$i) {
+            for ($i = 1; isset($fmt[$i]); $i++) {
                 if (str_starts_with($file, $k = $fmt[$i++])) {
                     $file = substr_replace($file, $fmt[$i], 0, \strlen($k));
                     break;
@@ -90,7 +90,7 @@ class FileLinkFormatter
         if ($this->requestStack && $this->baseDir && $this->urlFormat) {
             $request = $this->requestStack->getMainRequest();
 
-            if ($request instanceof Request && (!$this->urlFormat instanceof \Closure || $this->urlFormat = ($this->urlFormat)())) {
+            if ($request instanceof Request && (! $this->urlFormat instanceof \Closure || $this->urlFormat = ($this->urlFormat)())) {
                 return [
                     $request->getSchemeAndHttpHost().$this->urlFormat,
                     $this->baseDir.\DIRECTORY_SEPARATOR, '',

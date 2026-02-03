@@ -35,7 +35,7 @@ abstract class ObjectLoader extends Loader
      */
     public function load(mixed $resource, ?string $type = null): RouteCollection
     {
-        if (!preg_match('/^[^\:]+(?:::(?:[^\:]+))?$/', $resource)) {
+        if (! preg_match('/^[^\:]+(?:::(?:[^\:]+))?$/', $resource)) {
             throw new \InvalidArgumentException(\sprintf('Invalid resource "%s" passed to the %s route loader: use the format "object_id::method" or "object_id" if your object class has an "__invoke" method.', $resource, \is_string($type) ? '"'.$type.'"' : 'object'));
         }
 
@@ -44,13 +44,13 @@ abstract class ObjectLoader extends Loader
 
         $loaderObject = $this->getObject($parts[0]);
 
-        if (!\is_callable([$loaderObject, $method])) {
+        if (! \is_callable([$loaderObject, $method])) {
             throw new \BadMethodCallException(\sprintf('Method "%s" not found on "%s" when importing routing resource "%s".', $method, get_debug_type($loaderObject), $resource));
         }
 
         $routeCollection = $loaderObject->$method($this, $this->env);
 
-        if (!$routeCollection instanceof RouteCollection) {
+        if (! $routeCollection instanceof RouteCollection) {
             $type = get_debug_type($routeCollection);
 
             throw new \LogicException(\sprintf('The "%s::%s()" method must return a RouteCollection: "%s" returned.', get_debug_type($loaderObject), $method, $type));

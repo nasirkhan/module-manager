@@ -21,8 +21,8 @@ use Symfony\Component\VarDumper\Cloner\Stub;
 class ClassStub extends ConstStub
 {
     /**
-     * @param string   $identifier A PHP identifier, e.g. a class, method, interface, etc. name
-     * @param callable $callable   The callable targeted by the identifier when it is ambiguous or not a real PHP identifier
+     * @param  string  $identifier  A PHP identifier, e.g. a class, method, interface, etc. name
+     * @param  callable  $callable  The callable targeted by the identifier when it is ambiguous or not a real PHP identifier
      */
     public function __construct(string $identifier, callable|array|string|null $callable = null)
     {
@@ -87,11 +87,11 @@ class ClassStub extends ConstStub
 
     public static function wrapCallable(mixed $callable): mixed
     {
-        if (\is_object($callable) || !\is_callable($callable)) {
+        if (\is_object($callable) || ! \is_callable($callable)) {
             return $callable;
         }
 
-        if (!\is_array($callable)) {
+        if (! \is_array($callable)) {
             $callable = new static($callable, $callable);
         } elseif (\is_string($callable[0])) {
             $callable[0] = new static($callable[0], $callable);

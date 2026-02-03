@@ -29,7 +29,7 @@ class UuidFactory
 
     public function __construct(string|int $defaultClass = UuidV7::class, string|int $timeBasedClass = UuidV7::class, string|int $nameBasedClass = UuidV5::class, string|int $randomBasedClass = UuidV4::class, Uuid|string|null $timeBasedNode = null, Uuid|string|null $nameBasedNamespace = null)
     {
-        if (null !== $timeBasedNode && !$timeBasedNode instanceof Uuid) {
+        if (null !== $timeBasedNode && ! $timeBasedNode instanceof Uuid) {
             $timeBasedNode = Uuid::fromString($timeBasedNode);
         }
 
@@ -61,7 +61,7 @@ class UuidFactory
     {
         $node ??= $this->timeBasedNode;
 
-        if (null !== $node && !$node instanceof Uuid) {
+        if (null !== $node && ! $node instanceof Uuid) {
             $node = Uuid::fromString($node);
         }
 

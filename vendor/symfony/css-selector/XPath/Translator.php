@@ -57,17 +57,16 @@ class Translator implements TranslatorInterface
             ->registerExtension(new Extension\CombinationExtension())
             ->registerExtension(new Extension\FunctionExtension())
             ->registerExtension(new Extension\PseudoClassExtension())
-            ->registerExtension(new Extension\AttributeMatchingExtension())
-        ;
+            ->registerExtension(new Extension\AttributeMatchingExtension());
     }
 
     public static function getXpathLiteral(string $element): string
     {
-        if (!str_contains($element, "'")) {
+        if (! str_contains($element, "'")) {
             return "'".$element."'";
         }
 
-        if (!str_contains($element, '"')) {
+        if (! str_contains($element, '"')) {
             return '"'.$element.'"';
         }
 
@@ -128,7 +127,7 @@ class Translator implements TranslatorInterface
      */
     public function getExtension(string $name): Extension\ExtensionInterface
     {
-        if (!isset($this->extensions[$name])) {
+        if (! isset($this->extensions[$name])) {
             throw new ExpressionErrorException(\sprintf('Extension "%s" not registered.', $name));
         }
 
@@ -150,7 +149,7 @@ class Translator implements TranslatorInterface
      */
     public function nodeToXPath(NodeInterface $node): XPathExpr
     {
-        if (!isset($this->nodeTranslators[$node->getNodeName()])) {
+        if (! isset($this->nodeTranslators[$node->getNodeName()])) {
             throw new ExpressionErrorException(\sprintf('Node "%s" not supported.', $node->getNodeName()));
         }
 
@@ -162,7 +161,7 @@ class Translator implements TranslatorInterface
      */
     public function addCombination(string $combiner, NodeInterface $xpath, NodeInterface $combinedXpath): XPathExpr
     {
-        if (!isset($this->combinationTranslators[$combiner])) {
+        if (! isset($this->combinationTranslators[$combiner])) {
             throw new ExpressionErrorException(\sprintf('Combiner "%s" not supported.', $combiner));
         }
 
@@ -174,7 +173,7 @@ class Translator implements TranslatorInterface
      */
     public function addFunction(XPathExpr $xpath, FunctionNode $function): XPathExpr
     {
-        if (!isset($this->functionTranslators[$function->getName()])) {
+        if (! isset($this->functionTranslators[$function->getName()])) {
             throw new ExpressionErrorException(\sprintf('Function "%s" not supported.', $function->getName()));
         }
 
@@ -186,7 +185,7 @@ class Translator implements TranslatorInterface
      */
     public function addPseudoClass(XPathExpr $xpath, string $pseudoClass): XPathExpr
     {
-        if (!isset($this->pseudoClassTranslators[$pseudoClass])) {
+        if (! isset($this->pseudoClassTranslators[$pseudoClass])) {
             throw new ExpressionErrorException(\sprintf('Pseudo-class "%s" not supported.', $pseudoClass));
         }
 
@@ -198,7 +197,7 @@ class Translator implements TranslatorInterface
      */
     public function addAttributeMatching(XPathExpr $xpath, string $operator, string $attribute, ?string $value): XPathExpr
     {
-        if (!isset($this->attributeMatchingTranslators[$operator])) {
+        if (! isset($this->attributeMatchingTranslators[$operator])) {
             throw new ExpressionErrorException(\sprintf('Attribute matcher operator "%s" not supported.', $operator));
         }
 

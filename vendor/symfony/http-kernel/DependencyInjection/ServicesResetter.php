@@ -25,8 +25,8 @@ use Symfony\Component\VarExporter\LazyObjectInterface;
 class ServicesResetter implements ServicesResetterInterface
 {
     /**
-     * @param \Traversable<string, object>   $resettableServices
-     * @param array<string, string|string[]> $resetMethods
+     * @param  \Traversable<string, object>  $resettableServices
+     * @param  array<string, string|string[]>  $resetMethods
      */
     public function __construct(
         private \Traversable $resettableServices,
@@ -37,11 +37,11 @@ class ServicesResetter implements ServicesResetterInterface
     public function reset(): void
     {
         foreach ($this->resettableServices as $id => $service) {
-            if ($service instanceof LazyObjectInterface && !$service->isLazyObjectInitialized(true)) {
+            if ($service instanceof LazyObjectInterface && ! $service->isLazyObjectInitialized(true)) {
                 continue;
             }
 
-            if ($service instanceof LazyLoadingInterface && !$service->isProxyInitialized()) {
+            if ($service instanceof LazyLoadingInterface && ! $service->isProxyInitialized()) {
                 continue;
             }
 
@@ -50,7 +50,7 @@ class ServicesResetter implements ServicesResetterInterface
             }
 
             foreach ((array) $this->resetMethods[$id] as $resetMethod) {
-                if ('?' === $resetMethod[0] && !method_exists($service, $resetMethod = substr($resetMethod, 1))) {
+                if ('?' === $resetMethod[0] && ! method_exists($service, $resetMethod = substr($resetMethod, 1))) {
                     continue;
                 }
 

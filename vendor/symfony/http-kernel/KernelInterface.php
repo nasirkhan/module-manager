@@ -85,7 +85,7 @@ interface KernelInterface extends HttpKernelInterface
      * and the remaining part is the relative path in the bundle.
      *
      * @throws \InvalidArgumentException if the file cannot be found or the name is not valid
-     * @throws \RuntimeException         if the name contains invalid/unsafe characters
+     * @throws \RuntimeException if the name contains invalid/unsafe characters
      */
     public function locateResource(string $name): string;
 

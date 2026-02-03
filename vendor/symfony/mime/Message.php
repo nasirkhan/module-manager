@@ -73,27 +73,27 @@ class Message extends RawMessage
     {
         $headers = clone $this->headers;
 
-        if (!$headers->has('From')) {
-            if (!$headers->has('Sender')) {
+        if (! $headers->has('From')) {
+            if (! $headers->has('Sender')) {
                 throw new LogicException('An email must have a "From" or a "Sender" header.');
             }
             $headers->addMailboxListHeader('From', [$headers->get('Sender')->getAddress()]);
         }
 
-        if (!$headers->has('MIME-Version')) {
+        if (! $headers->has('MIME-Version')) {
             $headers->addTextHeader('MIME-Version', '1.0');
         }
 
-        if (!$headers->has('Date')) {
+        if (! $headers->has('Date')) {
             $headers->addDateHeader('Date', new \DateTimeImmutable());
         }
 
         // determine the "real" sender
-        if (!$headers->has('Sender') && \count($froms = $headers->get('From')->getAddresses()) > 1) {
+        if (! $headers->has('Sender') && \count($froms = $headers->get('From')->getAddresses()) > 1) {
             $headers->addMailboxHeader('Sender', $froms[0]);
         }
 
-        if (!$headers->has('Message-ID')) {
+        if (! $headers->has('Message-ID')) {
             $headers->addIdHeader('Message-ID', $this->generateMessageId());
         }
 
@@ -124,11 +124,11 @@ class Message extends RawMessage
 
     public function ensureValidity(): void
     {
-        if (!$this->headers->get('To')?->getBody() && !$this->headers->get('Cc')?->getBody() && !$this->headers->get('Bcc')?->getBody()) {
+        if (! $this->headers->get('To')?->getBody() && ! $this->headers->get('Cc')?->getBody() && ! $this->headers->get('Bcc')?->getBody()) {
             throw new LogicException('An email must have a "To", "Cc", or "Bcc" header.');
         }
 
-        if (!$this->headers->get('From')?->getBody() && !$this->headers->get('Sender')?->getBody()) {
+        if (! $this->headers->get('From')?->getBody() && ! $this->headers->get('Sender')?->getBody()) {
             throw new LogicException('An email must have a "From" or a "Sender" header.');
         }
 
@@ -140,7 +140,7 @@ class Message extends RawMessage
         if ($this->headers->has('Sender')) {
             $sender = $this->headers->get('Sender')->getAddress();
         } elseif ($this->headers->has('From')) {
-            if (!$froms = $this->headers->get('From')->getAddresses()) {
+            if (! $froms = $this->headers->get('From')->getAddresses()) {
                 throw new LogicException('A "From" header must have at least one email address.');
             }
             $sender = $froms[0];

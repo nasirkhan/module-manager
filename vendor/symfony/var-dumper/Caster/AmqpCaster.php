@@ -168,7 +168,7 @@ class AmqpCaster
             return $a;
         }
 
-        if (!($filter & Caster::EXCLUDE_VERBOSE)) {
+        if (! ($filter & Caster::EXCLUDE_VERBOSE)) {
             $a += [$prefix.'body' => $c->getBody()];
         }
 
@@ -205,7 +205,7 @@ class AmqpCaster
             }
         }
 
-        if (!$flagsArray) {
+        if (! $flagsArray) {
             $flagsArray = ['AMQP_NOPARAM'];
         }
 

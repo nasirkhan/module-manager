@@ -3,10 +3,10 @@
 namespace Egulias\EmailValidator\Parser;
 
 use Egulias\EmailValidator\EmailLexer;
-use Egulias\EmailValidator\Result\Result;
-use Egulias\EmailValidator\Result\ValidEmail;
 use Egulias\EmailValidator\Result\InvalidEmail;
 use Egulias\EmailValidator\Result\Reason\ExpectingATEXT;
+use Egulias\EmailValidator\Result\Result;
+use Egulias\EmailValidator\Result\ValidEmail;
 
 class IDRightPart extends DomainPart
 {
@@ -22,8 +22,9 @@ class IDRightPart extends DomainPart
         ];
 
         if (isset($invalidDomainTokens[$this->lexer->current->type])) {
-            return new InvalidEmail(new ExpectingATEXT('Invalid token in domain: ' . $this->lexer->current->value), $this->lexer->current->value);
+            return new InvalidEmail(new ExpectingATEXT('Invalid token in domain: '.$this->lexer->current->value), $this->lexer->current->value);
         }
+
         return new ValidEmail();
     }
 }

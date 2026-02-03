@@ -54,7 +54,7 @@ final class Callback
     {
         $type = $this->getParameterType($index);
 
-        if (!($type instanceof ReflectionNamedType)) {
+        if (! ($type instanceof ReflectionNamedType)) {
             return $value;
         }
 
@@ -64,7 +64,7 @@ final class Callback
             $name = $value instanceof DateTime ? Carbon::class : CarbonImmutable::class;
         }
 
-        if (!class_exists($name) || is_a($value, $name)) {
+        if (! class_exists($name) || is_a($value, $name)) {
             return $value;
         }
 

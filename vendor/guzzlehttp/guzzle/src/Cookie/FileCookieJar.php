@@ -5,7 +5,7 @@ namespace GuzzleHttp\Cookie;
 use GuzzleHttp\Utils;
 
 /**
- * Persists non-session cookies using a JSON formatted file
+ * Persists non-session cookies using a JSON formatted file.
  */
 class FileCookieJar extends CookieJar
 {
@@ -20,11 +20,11 @@ class FileCookieJar extends CookieJar
     private $storeSessionCookies;
 
     /**
-     * Create a new FileCookieJar object
+     * Create a new FileCookieJar object.
      *
-     * @param string $cookieFile          File to store the cookie data
-     * @param bool   $storeSessionCookies Set to true to store session cookies
-     *                                    in the cookie jar.
+     * @param  string  $cookieFile  File to store the cookie data
+     * @param  bool  $storeSessionCookies  Set to true to store session cookies
+     *                                     in the cookie jar.
      *
      * @throws \RuntimeException if the file cannot be found or created
      */
@@ -40,7 +40,7 @@ class FileCookieJar extends CookieJar
     }
 
     /**
-     * Saves the file when shutting down
+     * Saves the file when shutting down.
      */
     public function __destruct()
     {
@@ -50,7 +50,7 @@ class FileCookieJar extends CookieJar
     /**
      * Saves the cookies to a file.
      *
-     * @param string $filename File to save
+     * @param  string  $filename  File to save
      *
      * @throws \RuntimeException if the file cannot be found or created
      */
@@ -75,7 +75,7 @@ class FileCookieJar extends CookieJar
      *
      * Old cookies are kept unless overwritten by newly loaded ones.
      *
-     * @param string $filename Cookie file to load.
+     * @param  string  $filename  Cookie file to load.
      *
      * @throws \RuntimeException if the file cannot be loaded.
      */
@@ -94,7 +94,7 @@ class FileCookieJar extends CookieJar
             foreach ($data as $cookie) {
                 $this->setCookie(new SetCookie($cookie));
             }
-        } elseif (\is_scalar($data) && !empty($data)) {
+        } elseif (\is_scalar($data) && ! empty($data)) {
             throw new \RuntimeException("Invalid cookie file: {$filename}");
         }
     }

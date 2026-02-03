@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,10 +13,10 @@
 
 namespace Monolog\Handler;
 
-use Monolog\Level;
-use Monolog\ResettableInterface;
 use Monolog\Formatter\FormatterInterface;
+use Monolog\Level;
 use Monolog\LogRecord;
+use Monolog\ResettableInterface;
 
 /**
  * Buffers all records until closing the handler and then pass them as batch.
@@ -42,9 +44,9 @@ class BufferHandler extends AbstractHandler implements ProcessableHandlerInterfa
     protected bool $initialized = false;
 
     /**
-     * @param HandlerInterface $handler         Handler.
-     * @param int              $bufferLimit     How many entries should be buffered at most, beyond that the oldest items are removed from the buffer.
-     * @param bool             $flushOnOverflow If true, the buffer is flushed when the max size has been reached, by default oldest entries are discarded
+     * @param  HandlerInterface  $handler  Handler.
+     * @param  int  $bufferLimit  How many entries should be buffered at most, beyond that the oldest items are removed from the buffer.
+     * @param  bool  $flushOnOverflow  If true, the buffer is flushed when the max size has been reached, by default oldest entries are discarded
      */
     public function __construct(HandlerInterface $handler, int $bufferLimit = 0, int|string|Level $level = Level::Debug, bool $bubble = true, bool $flushOnOverflow = false)
     {
@@ -63,7 +65,7 @@ class BufferHandler extends AbstractHandler implements ProcessableHandlerInterfa
             return false;
         }
 
-        if (!$this->initialized) {
+        if (! $this->initialized) {
             // __destructor() doesn't get called on Fatal errors
             register_shutdown_function([$this, 'close']);
             $this->initialized = true;

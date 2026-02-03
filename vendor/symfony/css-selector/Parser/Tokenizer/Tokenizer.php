@@ -55,7 +55,7 @@ class Tokenizer
     {
         $stream = new TokenStream();
 
-        while (!$reader->isEOF()) {
+        while (! $reader->isEOF()) {
             foreach ($this->handlers as $handler) {
                 if ($handler->handle($reader, $stream)) {
                     continue 2;

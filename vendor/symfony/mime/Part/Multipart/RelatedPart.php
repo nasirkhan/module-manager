@@ -47,7 +47,7 @@ final class RelatedPart extends AbstractMultipartPart
     private function prepareParts(AbstractPart ...$parts): void
     {
         foreach ($parts as $part) {
-            if (!$part->getHeaders()->has('Content-ID')) {
+            if (! $part->getHeaders()->has('Content-ID')) {
                 $part->getHeaders()->setHeaderBody('Id', 'Content-ID', $this->generateContentId());
             }
         }

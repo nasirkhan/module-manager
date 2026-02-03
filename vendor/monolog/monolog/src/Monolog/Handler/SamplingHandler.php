@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -16,7 +18,7 @@ use Monolog\Formatter\FormatterInterface;
 use Monolog\LogRecord;
 
 /**
- * Sampling handler
+ * Sampling handler.
  *
  * A sampled event stream can be useful for logging high frequency events in
  * a production environment where you only need an idea of what is happening
@@ -34,7 +36,7 @@ class SamplingHandler extends AbstractHandler implements ProcessableHandlerInter
     use ProcessableHandlerTrait;
 
     /**
-     * Handler or factory Closure($record, $this)
+     * Handler or factory Closure($record, $this).
      *
      * @phpstan-var (Closure(LogRecord|null, HandlerInterface): HandlerInterface)|HandlerInterface
      */
@@ -45,8 +47,8 @@ class SamplingHandler extends AbstractHandler implements ProcessableHandlerInter
     /**
      * @phpstan-param (Closure(LogRecord|null, HandlerInterface): HandlerInterface)|HandlerInterface $handler
      *
-     * @param Closure|HandlerInterface $handler Handler or factory Closure($record|null, $samplingHandler).
-     * @param int                      $factor  Sample factor (e.g. 10 means every ~10th record is sampled)
+     * @param  Closure|HandlerInterface  $handler  Handler or factory Closure($record|null, $samplingHandler).
+     * @param  int  $factor  Sample factor (e.g. 10 means every ~10th record is sampled)
      */
     public function __construct(Closure|HandlerInterface $handler, int $factor)
     {
@@ -74,16 +76,16 @@ class SamplingHandler extends AbstractHandler implements ProcessableHandlerInter
     }
 
     /**
-     * Return the nested handler
+     * Return the nested handler.
      *
      * If the handler was provided as a factory, this will trigger the handler's instantiation.
      */
-    public function getHandler(LogRecord|null $record = null): HandlerInterface
+    public function getHandler(?LogRecord $record = null): HandlerInterface
     {
-        if (!$this->handler instanceof HandlerInterface) {
+        if (! $this->handler instanceof HandlerInterface) {
             $handler = ($this->handler)($record, $this);
-            if (!$handler instanceof HandlerInterface) {
-                throw new \RuntimeException("The factory Closure should return a HandlerInterface");
+            if (! $handler instanceof HandlerInterface) {
+                throw new \RuntimeException('The factory Closure should return a HandlerInterface');
             }
             $this->handler = $handler;
         }

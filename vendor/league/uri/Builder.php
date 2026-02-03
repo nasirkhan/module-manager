@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -207,7 +207,7 @@ final class Builder implements Conditionable, Transformable
      * Executes the given callback with the current instance
      * and returns the current instance.
      *
-     * @param callable(self): self $callback
+     * @param  callable(self): self  $callback
      */
     public function transform(callable $callback): static
     {
@@ -216,7 +216,7 @@ final class Builder implements Conditionable, Transformable
 
     public function when(callable|bool $condition, callable $onSuccess, ?callable $onFail = null): static
     {
-        if (!is_bool($condition)) {
+        if (! is_bool($condition)) {
             $condition = $condition($this);
         }
 

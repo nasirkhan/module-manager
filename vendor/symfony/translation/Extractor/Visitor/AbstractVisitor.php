@@ -48,7 +48,7 @@ abstract class AbstractVisitor
 
         $args = $node instanceof Node\Expr\CallLike ? $node->getRawArgs() : $node->args;
 
-        if (!($arg = $args[$index] ?? null) instanceof Node\Arg) {
+        if (! ($arg = $args[$index] ?? null) instanceof Node\Arg) {
             return [];
         }
 
@@ -87,7 +87,7 @@ abstract class AbstractVisitor
         $argumentValues = [];
 
         foreach ($args as $arg) {
-            if (!$isArgumentNamePattern && $arg->name?->toString() === $argumentName) {
+            if (! $isArgumentNamePattern && $arg->name?->toString() === $argumentName) {
                 $argumentValues[] = $this->getStringValue($arg->value);
             } elseif ($isArgumentNamePattern && preg_match($argumentName, $arg->name?->toString() ?? '') > 0) {
                 $argumentValues[] = $this->getStringValue($arg->value);

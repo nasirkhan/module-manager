@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -21,14 +21,14 @@ use function preg_match;
 use function str_replace;
 
 /**
- * Rfc4122\Validator validates strings as UUIDs of the RFC 9562 (formerly RFC 4122) variant
+ * Rfc4122\Validator validates strings as UUIDs of the RFC 9562 (formerly RFC 4122) variant.
  *
  * @immutable
  */
 final class Validator implements ValidatorInterface
 {
     private const VALID_PATTERN = '\A[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-'
-        . '[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}\z';
+        .'[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}\z';
 
     /**
      * @return non-empty-string
@@ -44,6 +44,6 @@ final class Validator implements ValidatorInterface
         $uuid = strtolower(str_replace(['urn:', 'uuid:', 'URN:', 'UUID:', '{', '}'], '', $uuid));
 
         /** @phpstan-ignore possiblyImpure.functionCall */
-        return $uuid === Uuid::NIL || $uuid === Uuid::MAX || preg_match('/' . self::VALID_PATTERN . '/Dms', $uuid);
+        return $uuid === Uuid::NIL || $uuid === Uuid::MAX || preg_match('/'.self::VALID_PATTERN.'/Dms', $uuid);
     }
 }

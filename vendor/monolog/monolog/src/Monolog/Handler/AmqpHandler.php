@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,14 +13,14 @@
 
 namespace Monolog\Handler;
 
+use AMQPExchange;
 use Gelf\Message as GelfMessage;
-use Monolog\Level;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\JsonFormatter;
-use PhpAmqpLib\Message\AMQPMessage;
-use PhpAmqpLib\Channel\AMQPChannel;
-use AMQPExchange;
+use Monolog\Level;
 use Monolog\LogRecord;
+use PhpAmqpLib\Channel\AMQPChannel;
+use PhpAmqpLib\Message\AMQPMessage;
 
 class AmqpHandler extends AbstractProcessingHandler
 {
@@ -30,8 +32,8 @@ class AmqpHandler extends AbstractProcessingHandler
     protected string $exchangeName;
 
     /**
-     * @param AMQPExchange|AMQPChannel $exchange     AMQPExchange (php AMQP ext) or PHP AMQP lib channel, ready for use
-     * @param string|null              $exchangeName Optional exchange name, for AMQPChannel (PhpAmqpLib) only
+     * @param  AMQPExchange|AMQPChannel  $exchange  AMQPExchange (php AMQP ext) or PHP AMQP lib channel, ready for use
+     * @param  string|null  $exchangeName  Optional exchange name, for AMQPChannel (PhpAmqpLib) only
      */
     public function __construct(AMQPExchange|AMQPChannel $exchange, ?string $exchangeName = null, int|string|Level $level = Level::Debug, bool $bubble = true)
     {
@@ -54,12 +56,12 @@ class AmqpHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Configure extra attributes to pass to the AMQPExchange (if you are using the amqp extension)
+     * Configure extra attributes to pass to the AMQPExchange (if you are using the amqp extension).
      *
-     * @param  array<string, mixed> $extraAttributes One of content_type, content_encoding,
-     *                                               message_id, user_id, app_id, delivery_mode,
-     *                                               priority, timestamp, expiration, type
-     *                                               or reply_to, headers.
+     * @param  array<string, mixed>  $extraAttributes  One of content_type, content_encoding,
+     *                                                 message_id, user_id, app_id, delivery_mode,
+     *                                                 priority, timestamp, expiration, type
+     *                                                 or reply_to, headers.
      * @return $this
      */
     public function setExtraAttributes(array $extraAttributes): self
@@ -77,14 +79,14 @@ class AmqpHandler extends AbstractProcessingHandler
         $data = $record->formatted;
         $routingKey = $this->getRoutingKey($record);
 
-        if($data instanceof GelfMessage) {
+        if ($data instanceof GelfMessage) {
             $data = json_encode($data->toArray());
         }
 
         if ($this->exchange instanceof AMQPExchange) {
             $attributes = [
                 'delivery_mode' => 2,
-                'content_type'  => 'application/json',
+                'content_type' => 'application/json',
             ];
             if (\count($this->extraAttributes) > 0) {
                 $attributes = array_merge($attributes, $this->extraAttributes);
@@ -116,14 +118,14 @@ class AmqpHandler extends AbstractProcessingHandler
         }
 
         foreach ($records as $record) {
-            if (!$this->isHandling($record)) {
+            if (! $this->isHandling($record)) {
                 continue;
             }
 
             $record = $this->processRecord($record);
             $data = $this->getFormatter()->format($record);
 
-            if($data instanceof GelfMessage) {
+            if ($data instanceof GelfMessage) {
                 $data = json_encode($data->toArray());
             }
 
@@ -138,7 +140,7 @@ class AmqpHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Gets the routing key for the AMQP exchange
+     * Gets the routing key for the AMQP exchange.
      */
     protected function getRoutingKey(LogRecord $record): string
     {

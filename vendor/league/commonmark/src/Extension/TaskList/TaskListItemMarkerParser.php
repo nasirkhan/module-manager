@@ -35,7 +35,7 @@ final class TaskListItemMarkerParser implements InlineParserInterface
             return false;
         }
 
-        $cursor   = $inlineContext->getCursor();
+        $cursor = $inlineContext->getCursor();
         $oldState = $cursor->saveState();
 
         $cursor->advanceBy(3);

@@ -45,10 +45,9 @@ trait Week
      * day of year included in the first week. Or use ISO format if no settings
      * given.
      *
-     * @param int|null $year      if null, act as a getter, if not null, set the year and return current instance.
-     * @param int|null $dayOfWeek first date of week from 0 (Sunday) to 6 (Saturday)
-     * @param int|null $dayOfYear first day of year included in the week #1
-     *
+     * @param  int|null  $year  if null, act as a getter, if not null, set the year and return current instance.
+     * @param  int|null  $dayOfWeek  first date of week from 0 (Sunday) to 6 (Saturday)
+     * @param  int|null  $dayOfYear  first day of year included in the week #1
      * @return int|static
      */
     public function isoWeekYear($year = null, $dayOfWeek = null, $dayOfYear = null)
@@ -65,10 +64,9 @@ trait Week
      * day of year included in the first week. Or use US format if no settings
      * given (Sunday / Jan 6).
      *
-     * @param int|null $year      if null, act as a getter, if not null, set the year and return current instance.
-     * @param int|null $dayOfWeek first date of week from 0 (Sunday) to 6 (Saturday)
-     * @param int|null $dayOfYear first day of year included in the week #1
-     *
+     * @param  int|null  $year  if null, act as a getter, if not null, set the year and return current instance.
+     * @param  int|null  $dayOfWeek  first date of week from 0 (Sunday) to 6 (Saturday)
+     * @param  int|null  $dayOfYear  first day of year included in the week #1
      * @return int|static
      */
     public function weekYear($year = null, $dayOfWeek = null, $dayOfYear = null)
@@ -126,9 +124,8 @@ trait Week
      * day of year included in the first week. Or use ISO format if no settings
      * given.
      *
-     * @param int|null $dayOfWeek first date of week from 0 (Sunday) to 6 (Saturday)
-     * @param int|null $dayOfYear first day of year included in the week #1
-     *
+     * @param  int|null  $dayOfWeek  first date of week from 0 (Sunday) to 6 (Saturday)
+     * @param  int|null  $dayOfYear  first day of year included in the week #1
      * @return int
      */
     public function isoWeeksInYear($dayOfWeek = null, $dayOfYear = null)
@@ -144,9 +141,8 @@ trait Week
      * day of year included in the first week. Or use US format if no settings
      * given (Sunday / Jan 6).
      *
-     * @param int|null $dayOfWeek first date of week from 0 (Sunday) to 6 (Saturday)
-     * @param int|null $dayOfYear first day of year included in the week #1
-     *
+     * @param  int|null  $dayOfWeek  first date of week from 0 (Sunday) to 6 (Saturday)
+     * @param  int|null  $dayOfYear  first day of year included in the week #1
      * @return int
      */
     public function weeksInYear($dayOfWeek = null, $dayOfYear = null)
@@ -173,10 +169,9 @@ trait Week
      * day of year included in the first week. Or use US format if no settings
      * given (Sunday / Jan 6).
      *
-     * @param int|null $week
-     * @param int|null $dayOfWeek
-     * @param int|null $dayOfYear
-     *
+     * @param  int|null  $week
+     * @param  int|null  $dayOfWeek
+     * @param  int|null  $dayOfYear
      * @return int|static
      */
     public function week($week = null, $dayOfWeek = null, $dayOfYear = null)
@@ -206,10 +201,9 @@ trait Week
      * day of year included in the first week. Or use ISO format if no settings
      * given.
      *
-     * @param int|null $week
-     * @param int|null $dayOfWeek
-     * @param int|null $dayOfYear
-     *
+     * @param  int|null  $week
+     * @param  int|null  $dayOfWeek
+     * @param  int|null  $dayOfYear
      * @return int|static
      */
     public function isoWeek($week = null, $dayOfWeek = null, $dayOfYear = null)

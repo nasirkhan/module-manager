@@ -9,4 +9,6 @@ use InvalidArgumentException;
 /**
  * @internal
  */
-final class InvalidStyle extends InvalidArgumentException {}
+final class InvalidStyle extends InvalidArgumentException
+{
+}

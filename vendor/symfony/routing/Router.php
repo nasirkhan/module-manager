@@ -116,7 +116,7 @@ class Router implements RouterInterface, RequestMatcherInterface
      */
     public function setOption(string $key, mixed $value): void
     {
-        if (!\array_key_exists($key, $this->options)) {
+        if (! \array_key_exists($key, $this->options)) {
             throw new \InvalidArgumentException(\sprintf('The Router does not support the "%s" option.', $key));
         }
 
@@ -130,7 +130,7 @@ class Router implements RouterInterface, RequestMatcherInterface
      */
     public function getOption(string $key): mixed
     {
-        if (!\array_key_exists($key, $this->options)) {
+        if (! \array_key_exists($key, $this->options)) {
             throw new \InvalidArgumentException(\sprintf('The Router does not support the "%s" option.', $key));
         }
 
@@ -180,7 +180,7 @@ class Router implements RouterInterface, RequestMatcherInterface
     public function matchRequest(Request $request): array
     {
         $matcher = $this->getMatcher();
-        if (!$matcher instanceof RequestMatcherInterface) {
+        if (! $matcher instanceof RequestMatcherInterface) {
             // fallback to the default UrlMatcherInterface
             return $matcher->match($request->getPathInfo());
         }
@@ -293,7 +293,7 @@ class Router implements RouterInterface, RequestMatcherInterface
 
     private static function getCompiledRoutes(string $path): array
     {
-        if ([] === self::$cache && \function_exists('opcache_invalidate') && filter_var(\ini_get('opcache.enable'), \FILTER_VALIDATE_BOOL) && (!\in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true) || filter_var(\ini_get('opcache.enable_cli'), \FILTER_VALIDATE_BOOL))) {
+        if ([] === self::$cache && \function_exists('opcache_invalidate') && filter_var(\ini_get('opcache.enable'), \FILTER_VALIDATE_BOOL) && (! \in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true) || filter_var(\ini_get('opcache.enable_cli'), \FILTER_VALIDATE_BOOL))) {
             self::$cache = null;
         }
 

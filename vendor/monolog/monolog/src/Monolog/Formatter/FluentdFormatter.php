@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,11 +13,11 @@
 
 namespace Monolog\Formatter;
 
-use Monolog\Utils;
 use Monolog\LogRecord;
+use Monolog\Utils;
 
 /**
- * Class FluentdFormatter
+ * Class FluentdFormatter.
  *
  * Serializes a log message to Fluentd unix socket protocol
  *
@@ -38,7 +40,7 @@ use Monolog\LogRecord;
 class FluentdFormatter implements FormatterInterface
 {
     /**
-     * @var bool $levelTag should message level be a part of the fluentd tag
+     * @var bool should message level be a part of the fluentd tag
      */
     protected bool $levelTag = false;
 
@@ -56,7 +58,7 @@ class FluentdFormatter implements FormatterInterface
     {
         $tag = $record->channel;
         if ($this->levelTag) {
-            $tag .= '.' . $record->level->toPsrLogLevel();
+            $tag .= '.'.$record->level->toPsrLogLevel();
         }
 
         $message = [
@@ -65,7 +67,7 @@ class FluentdFormatter implements FormatterInterface
             'extra' => $record->extra,
         ];
 
-        if (!$this->levelTag) {
+        if (! $this->levelTag) {
             $message['level'] = $record->level->value;
             $message['level_name'] = $record->level->getName();
         }

@@ -57,12 +57,12 @@ final class AddressInfoCaster
     {
         static $resolvedMaps;
 
-        if (!$resolvedMaps) {
+        if (! $resolvedMaps) {
             foreach (self::MAPS as $k => $map) {
                 foreach ($map as $v => $name) {
                     if (\defined($name)) {
                         $resolvedMaps[$k][\constant($name)] = $name;
-                    } elseif (!isset($resolvedMaps[$k][$v])) {
+                    } elseif (! isset($resolvedMaps[$k][$v])) {
                         $resolvedMaps[$k][$v] = $name;
                     }
                 }

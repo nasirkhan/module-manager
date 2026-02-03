@@ -29,7 +29,7 @@ trait VarDumperTestTrait
     ];
 
     /**
-     * @param array<string, callable> $casters
+     * @param  array<string, callable>  $casters
      */
     protected function setUpVarDumper(array $casters, ?int $flags = null): void
     {
@@ -86,7 +86,7 @@ trait VarDumperTestTrait
 
     private function prepareExpectation(mixed $expected, int $filter): string
     {
-        if (!\is_string($expected)) {
+        if (! \is_string($expected)) {
             $expected = $this->getDump($expected, null, $filter);
         }
 

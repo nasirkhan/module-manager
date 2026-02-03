@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -15,7 +17,7 @@ use DateTimeInterface;
 use Monolog\LogRecord;
 
 /**
- * Format a log message into an Elasticsearch record
+ * Format a log message into an Elasticsearch record.
  *
  * @author Avtandil Kikabidze <akalongman@gmail.com>
  */
@@ -32,8 +34,8 @@ class ElasticsearchFormatter extends NormalizerFormatter
     protected string $type;
 
     /**
-     * @param string $index Elasticsearch index name
-     * @param string $type  Elasticsearch record type
+     * @param  string  $index  Elasticsearch index name
+     * @param  string  $type  Elasticsearch record type
      */
     public function __construct(string $index, string $type)
     {
@@ -55,7 +57,7 @@ class ElasticsearchFormatter extends NormalizerFormatter
     }
 
     /**
-     * Getter index
+     * Getter index.
      */
     public function getIndex(): string
     {
@@ -63,7 +65,7 @@ class ElasticsearchFormatter extends NormalizerFormatter
     }
 
     /**
-     * Getter type
+     * Getter type.
      */
     public function getType(): string
     {
@@ -71,9 +73,9 @@ class ElasticsearchFormatter extends NormalizerFormatter
     }
 
     /**
-     * Convert a log message into an Elasticsearch record
+     * Convert a log message into an Elasticsearch record.
      *
-     * @param  mixed[] $record Log message
+     * @param  mixed[]  $record  Log message
      * @return mixed[]
      */
     protected function getDocument(array $record): array

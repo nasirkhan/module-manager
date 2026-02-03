@@ -128,7 +128,7 @@ class ErrorHandler
             $handler = $prev[0];
             $replace = false;
         }
-        if (!$replace && $prev) {
+        if (! $replace && $prev) {
             restore_error_handler();
             $handlerIsRegistered = \is_array($prev) && $handler === $prev[0];
         } else {
@@ -136,7 +136,7 @@ class ErrorHandler
         }
         if (\is_array($prev = set_exception_handler([$handler, 'handleException'])) && $prev[0] instanceof self) {
             restore_exception_handler();
-            if (!$handlerIsRegistered) {
+            if (! $handlerIsRegistered) {
                 $handler = $prev[0];
             } elseif ($handler !== $prev[0] && $replace) {
                 set_exception_handler([$handler, 'handleException']);
@@ -202,9 +202,9 @@ class ErrorHandler
     /**
      * Sets a logger to non assigned errors levels.
      *
-     * @param LoggerInterface $logger  A PSR-3 logger to put as default for the given levels
-     * @param array|int|null  $levels  An array map of E_* to LogLevel::* or an integer bit field of E_* constants
-     * @param bool            $replace Whether to replace or not any existing logger
+     * @param  LoggerInterface  $logger  A PSR-3 logger to put as default for the given levels
+     * @param  array|int|null  $levels  An array map of E_* to LogLevel::* or an integer bit field of E_* constants
+     * @param  bool  $replace  Whether to replace or not any existing logger
      */
     public function setDefaultLogger(LoggerInterface $logger, array|int|null $levels = \E_ALL, bool $replace = false): void
     {
@@ -232,7 +232,7 @@ class ErrorHandler
     /**
      * Sets a logger for each error level.
      *
-     * @param array $loggers Error levels to [LoggerInterface|null, LogLevel::*] map
+     * @param  array  $loggers  Error levels to [LoggerInterface|null, LogLevel::*] map
      *
      * @throws \InvalidArgumentException
      */
@@ -243,12 +243,12 @@ class ErrorHandler
         $flush = [];
 
         foreach ($loggers as $type => $log) {
-            if (!isset($prev[$type])) {
+            if (! isset($prev[$type])) {
                 throw new \InvalidArgumentException('Unknown error type: '.$type);
             }
-            if (!\is_array($log)) {
+            if (! \is_array($log)) {
                 $log = [$log];
-            } elseif (!\array_key_exists(0, $log)) {
+            } elseif (! \array_key_exists(0, $log)) {
                 throw new \InvalidArgumentException('No logger provided.');
             }
             if (null === $log[0]) {
@@ -269,7 +269,7 @@ class ErrorHandler
         if ($flush) {
             foreach ($this->bootstrappingLogger->cleanLogs() as $log) {
                 $type = ThrowableUtils::getSeverity($log[2]['exception']);
-                if (!isset($flush[$type])) {
+                if (! isset($flush[$type])) {
                     $this->bootstrappingLogger->log($log[0], $log[1], $log[2]);
                 } elseif ($this->loggers[$type][0]) {
                     $this->loggers[$type][0]->log($this->loggers[$type][1], $log[1], $log[2]);
@@ -291,14 +291,14 @@ class ErrorHandler
     /**
      * Sets the PHP error levels that throw an exception when a PHP error occurs.
      *
-     * @param int  $levels  A bit field of E_* constants for thrown errors
-     * @param bool $replace Replace or amend the previous value
+     * @param  int  $levels  A bit field of E_* constants for thrown errors
+     * @param  bool  $replace  Replace or amend the previous value
      */
     public function throwAt(int $levels, bool $replace = false): int
     {
         $prev = $this->thrownErrors;
         $this->thrownErrors = ($levels | \E_RECOVERABLE_ERROR | \E_USER_ERROR) & ~\E_USER_DEPRECATED & ~\E_DEPRECATED;
-        if (!$replace) {
+        if (! $replace) {
             $this->thrownErrors |= $prev;
         }
         $this->reRegister($prev | $this->loggedErrors);
@@ -309,14 +309,14 @@ class ErrorHandler
     /**
      * Sets the PHP error levels for which local variables are preserved.
      *
-     * @param int  $levels  A bit field of E_* constants for scoped errors
-     * @param bool $replace Replace or amend the previous value
+     * @param  int  $levels  A bit field of E_* constants for scoped errors
+     * @param  bool  $replace  Replace or amend the previous value
      */
     public function scopeAt(int $levels, bool $replace = false): int
     {
         $prev = $this->scopedErrors;
         $this->scopedErrors = $levels;
-        if (!$replace) {
+        if (! $replace) {
             $this->scopedErrors |= $prev;
         }
 
@@ -326,14 +326,14 @@ class ErrorHandler
     /**
      * Sets the PHP error levels for which the stack trace is preserved.
      *
-     * @param int  $levels  A bit field of E_* constants for traced errors
-     * @param bool $replace Replace or amend the previous value
+     * @param  int  $levels  A bit field of E_* constants for traced errors
+     * @param  bool  $replace  Replace or amend the previous value
      */
     public function traceAt(int $levels, bool $replace = false): int
     {
         $prev = $this->tracedErrors;
         $this->tracedErrors = $levels;
-        if (!$replace) {
+        if (! $replace) {
             $this->tracedErrors |= $prev;
         }
 
@@ -343,14 +343,14 @@ class ErrorHandler
     /**
      * Sets the error levels where the @-operator is ignored.
      *
-     * @param int  $levels  A bit field of E_* constants for screamed errors
-     * @param bool $replace Replace or amend the previous value
+     * @param  int  $levels  A bit field of E_* constants for screamed errors
+     * @param  bool  $replace  Replace or amend the previous value
      */
     public function screamAt(int $levels, bool $replace = false): int
     {
         $prev = $this->screamedErrors;
         $this->screamedErrors = $levels;
-        if (!$replace) {
+        if (! $replace) {
             $this->screamedErrors |= $prev;
         }
 
@@ -405,20 +405,20 @@ class ErrorHandler
             $throw = 0;
         }
 
-        if (!$type || (!$log && !$throw)) {
+        if (! $type || (! $log && ! $throw)) {
             return false;
         }
 
         $logMessage = $this->levels[$type].': '.$message;
 
-        if (!$throw && !($type & $level)) {
-            if (!isset(self::$silencedErrorCache[$id = $file.':'.$line])) {
+        if (! $throw && ! ($type & $level)) {
+            if (! isset(self::$silencedErrorCache[$id = $file.':'.$line])) {
                 $lightTrace = $this->tracedErrors & $type ? $this->cleanTrace(debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS, 5), $type, $file, $line, false) : [];
                 $errorAsException = new SilencedErrorContext($type, $file, $line, isset($lightTrace[1]) ? [$lightTrace[0]] : $lightTrace);
             } elseif (isset(self::$silencedErrorCache[$id][$message])) {
                 $lightTrace = null;
                 $errorAsException = self::$silencedErrorCache[$id][$message];
-                ++$errorAsException->count;
+                $errorAsException->count++;
             } else {
                 $lightTrace = [];
                 $errorAsException = null;
@@ -438,7 +438,7 @@ class ErrorHandler
             if (\PHP_VERSION_ID < 80303 && str_contains($message, '@anonymous')) {
                 $backtrace = debug_backtrace(false, 5);
 
-                for ($i = 1; isset($backtrace[$i]); ++$i) {
+                for ($i = 1; isset($backtrace[$i]); $i++) {
                     if (isset($backtrace[$i]['function'], $backtrace[$i]['args'][0])
                         && ('trigger_error' === $backtrace[$i]['function'] || 'user_error' === $backtrace[$i]['function'])
                     ) {
@@ -483,7 +483,7 @@ class ErrorHandler
             }
         }
 
-        return !$silenced && $type && $log;
+        return ! $silenced && $type && $log;
     }
 
     /**
@@ -495,7 +495,7 @@ class ErrorHandler
     {
         $handlerException = null;
 
-        if (!$exception instanceof FatalError) {
+        if (! $exception instanceof FatalError) {
             self::$exitCode = 255;
 
             $type = ThrowableUtils::getSeverity($exception);
@@ -562,7 +562,7 @@ class ErrorHandler
     /**
      * Shutdown registered function for handling PHP fatal errors.
      *
-     * @param array|null $error An array as returned by error_get_last()
+     * @param  array|null  $error  An array as returned by error_get_last()
      *
      * @internal
      */
@@ -577,11 +577,11 @@ class ErrorHandler
         $previousHandler = null;
         $sameHandlerLimit = 10;
 
-        while (!\is_array($handler) || !$handler[0] instanceof self) {
+        while (! \is_array($handler) || ! $handler[0] instanceof self) {
             $handler = set_exception_handler('is_int');
             restore_exception_handler();
 
-            if (!$handler) {
+            if (! $handler) {
                 break;
             }
             restore_exception_handler();
@@ -597,9 +597,11 @@ class ErrorHandler
         foreach ($handlers as $h) {
             set_exception_handler($h);
         }
-        if (!$handler) {
+        if (! $handler) {
             if (null === $error && $exitCode = self::$exitCode) {
-                register_shutdown_function('register_shutdown_function', function () use ($exitCode) { exit($exitCode); });
+                register_shutdown_function('register_shutdown_function', function () use ($exitCode) {
+                    exit($exitCode);
+                });
             }
 
             return;
@@ -638,7 +640,9 @@ class ErrorHandler
         }
 
         if ($exit && $exitCode = self::$exitCode) {
-            register_shutdown_function('register_shutdown_function', function () use ($exitCode) { exit($exitCode); });
+            register_shutdown_function('register_shutdown_function', function () use ($exitCode) {
+                exit($exitCode);
+            });
         }
     }
 
@@ -654,7 +658,7 @@ class ErrorHandler
 
         $exception = $renderer->render($exception);
 
-        if (!headers_sent()) {
+        if (! headers_sent()) {
             http_response_code($exception->getStatusCode());
 
             foreach ($exception->getHeaders() as $name => $value) {
@@ -701,18 +705,18 @@ class ErrorHandler
     {
         $lightTrace = $backtrace;
 
-        for ($i = 0; isset($backtrace[$i]); ++$i) {
+        for ($i = 0; isset($backtrace[$i]); $i++) {
             if (isset($backtrace[$i]['file'], $backtrace[$i]['line']) && $backtrace[$i]['line'] === $line && $backtrace[$i]['file'] === $file) {
                 $lightTrace = \array_slice($lightTrace, 1 + $i);
                 break;
             }
         }
         if (\E_USER_DEPRECATED === $type) {
-            for ($i = 0; isset($lightTrace[$i]); ++$i) {
-                if (!isset($lightTrace[$i]['file'], $lightTrace[$i]['line'], $lightTrace[$i]['function'])) {
+            for ($i = 0; isset($lightTrace[$i]); $i++) {
+                if (! isset($lightTrace[$i]['file'], $lightTrace[$i]['line'], $lightTrace[$i]['function'])) {
                     continue;
                 }
-                if (!isset($lightTrace[$i]['class']) && 'trigger_deprecation' === $lightTrace[$i]['function']) {
+                if (! isset($lightTrace[$i]['class']) && 'trigger_deprecation' === $lightTrace[$i]['function']) {
                     $file = $lightTrace[$i]['file'];
                     $line = $lightTrace[$i]['line'];
                     $lightTrace = \array_slice($lightTrace, 1 + $i);
@@ -721,14 +725,14 @@ class ErrorHandler
             }
         }
         if (class_exists(DebugClassLoader::class, false)) {
-            for ($i = \count($lightTrace) - 2; 0 < $i; --$i) {
+            for ($i = \count($lightTrace) - 2; 0 < $i; $i--) {
                 if (DebugClassLoader::class === ($lightTrace[$i]['class'] ?? null)) {
                     array_splice($lightTrace, --$i, 2);
                 }
             }
         }
-        if (!($throw || $this->scopedErrors & $type)) {
-            for ($i = 0; isset($lightTrace[$i]); ++$i) {
+        if (! ($throw || $this->scopedErrors & $type)) {
+            for ($i = 0; isset($lightTrace[$i]); $i++) {
                 unset($lightTrace[$i]['args'], $lightTrace[$i]['object']);
             }
         }

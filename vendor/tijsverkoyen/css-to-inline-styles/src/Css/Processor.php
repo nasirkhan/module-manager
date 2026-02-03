@@ -8,14 +8,13 @@ use TijsVerkoyen\CssToInlineStyles\Css\Rule\Rule;
 class Processor
 {
     /**
-     * Get the rules from a given CSS-string
+     * Get the rules from a given CSS-string.
      *
-     * @param string $css
-     * @param Rule[] $existingRules
-     *
+     * @param  string  $css
+     * @param  Rule[]  $existingRules
      * @return Rule[]
      */
-    public function getRules($css, $existingRules = array())
+    public function getRules($css, $existingRules = [])
     {
         $css = $this->doCleanup($css);
         $rulesProcessor = new RuleProcessor();
@@ -25,22 +24,21 @@ class Processor
     }
 
     /**
-     * Get the CSS from the style-tags in the given HTML-string
+     * Get the CSS from the style-tags in the given HTML-string.
      *
-     * @param string $html
-     *
+     * @param  string  $html
      * @return string
      */
     public function getCssFromStyleTags($html)
     {
         $css = '';
-        $matches = array();
+        $matches = [];
         $htmlNoComments = preg_replace('|<!--.*?-->|s', '', $html) ?? $html;
         preg_match_all('|<style(?:\s.*)?>(.*)</style>|isU', $htmlNoComments, $matches);
 
-        if (!empty($matches[1])) {
+        if (! empty($matches[1])) {
             foreach ($matches[1] as $match) {
-                $css .= trim($match) . "\n";
+                $css .= trim($match)."\n";
             }
         }
 
@@ -48,8 +46,7 @@ class Processor
     }
 
     /**
-     * @param string $css
-     *
+     * @param  string  $css
      * @return string
      */
     private function doCleanup($css)
@@ -59,8 +56,8 @@ class Processor
         // remove media queries
         $css = preg_replace('/@media [^{]*+{([^{}]++|{[^{}]*+})*+}/', '', $css) ?? $css;
 
-        $css = str_replace(array("\r", "\n"), '', $css);
-        $css = str_replace(array("\t"), ' ', $css);
+        $css = str_replace(["\r", "\n"], '', $css);
+        $css = str_replace(["\t"], ' ', $css);
         $css = str_replace('"', '\'', $css);
         $css = preg_replace('|/\*.*?\*/|', '', $css) ?? $css;
         $css = preg_replace('/\s\s++/', ' ', $css) ?? $css;

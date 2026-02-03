@@ -31,7 +31,7 @@ final class IsSignatureValid
     public readonly array $methods;
 
     /**
-     * @param string[]|string $methods HTTP methods that require signature validation. An empty array means that no method filtering is done
+     * @param  string[]|string  $methods  HTTP methods that require signature validation. An empty array means that no method filtering is done
      */
     public function __construct(
         array|string $methods = [],

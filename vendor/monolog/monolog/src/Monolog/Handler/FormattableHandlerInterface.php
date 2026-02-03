@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -14,7 +16,7 @@ namespace Monolog\Handler;
 use Monolog\Formatter\FormatterInterface;
 
 /**
- * Interface to describe loggers that have a formatter
+ * Interface to describe loggers that have a formatter.
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */

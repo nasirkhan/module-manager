@@ -37,8 +37,8 @@ namespace Symfony\Component\HttpFoundation;
 class EventStreamResponse extends StreamedResponse
 {
     /**
-     * @param int|null $retry The number of milliseconds the client should wait
-     *                        before reconnecting in case of network failure
+     * @param  int|null  $retry  The number of milliseconds the client should wait
+     *                           before reconnecting in case of network failure
      */
     public function __construct(?callable $callback = null, int $status = 200, array $headers = [], private ?int $retry = null)
     {
@@ -82,14 +82,14 @@ class EventStreamResponse extends StreamedResponse
      */
     public function sendEvent(ServerEvent $event): static
     {
-        if ($this->retry > 0 && !$event->getRetry()) {
+        if ($this->retry > 0 && ! $event->getRetry()) {
             $event->setRetry($this->retry);
         }
 
         foreach ($event as $part) {
             echo $part;
 
-            if (!\in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
+            if (! \in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
                 static::closeOutputBuffers(0, true);
                 flush();
             }

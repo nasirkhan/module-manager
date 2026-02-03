@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -14,9 +16,10 @@ namespace Monolog\Processor;
 use Monolog\LogRecord;
 
 /**
- * Injects memory_get_peak_usage in all records
+ * Injects memory_get_peak_usage in all records.
  *
  * @see Monolog\Processor\MemoryProcessor::__construct() for options
+ *
  * @author Rob Jensen
  */
 class MemoryPeakUsageProcessor extends MemoryProcessor

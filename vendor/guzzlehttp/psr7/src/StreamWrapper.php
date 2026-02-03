@@ -25,8 +25,7 @@ final class StreamWrapper
     /**
      * Returns a resource representing the stream.
      *
-     * @param StreamInterface $stream The stream to get a resource for
-     *
+     * @param  StreamInterface  $stream  The stream to get a resource for
      * @return resource
      *
      * @throws \InvalidArgumentException if stream is not readable or writable
@@ -60,11 +59,11 @@ final class StreamWrapper
     }
 
     /**
-     * Registers the stream wrapper if needed
+     * Registers the stream wrapper if needed.
      */
     public static function register(): void
     {
-        if (!in_array('guzzle', stream_get_wrappers())) {
+        if (! in_array('guzzle', stream_get_wrappers())) {
             stream_wrapper_register('guzzle', __CLASS__);
         }
     }
@@ -73,7 +72,7 @@ final class StreamWrapper
     {
         $options = stream_context_get_options($this->context);
 
-        if (!isset($options['guzzle']['stream'])) {
+        if (! isset($options['guzzle']['stream'])) {
             return false;
         }
 

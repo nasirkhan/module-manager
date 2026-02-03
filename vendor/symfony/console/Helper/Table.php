@@ -105,8 +105,7 @@ class Table
     /**
      * Sets table column style.
      *
-     * @param TableStyle|string $name The style name or a TableStyle instance
-     *
+     * @param  TableStyle|string  $name  The style name or a TableStyle instance
      * @return $this
      */
     public function setColumnStyle(int $columnIndex, TableStyle|string $name): static
@@ -163,7 +162,7 @@ class Table
      */
     public function setColumnMaxWidth(int $columnIndex, int $width): static
     {
-        if (!$this->output->getFormatter() instanceof WrappableOutputFormatterInterface) {
+        if (! $this->output->getFormatter() instanceof WrappableOutputFormatterInterface) {
             throw new \LogicException(\sprintf('Setting a maximum column width is only supported when using a "%s" formatter, got "%s".', WrappableOutputFormatterInterface::class, get_debug_type($this->output->getFormatter())));
         }
 
@@ -178,7 +177,7 @@ class Table
     public function setHeaders(array $headers): static
     {
         $headers = array_values($headers);
-        if ($headers && !\is_array($headers[0])) {
+        if ($headers && ! \is_array($headers[0])) {
             $headers = [$headers];
         }
 
@@ -232,7 +231,7 @@ class Table
      */
     public function appendRow(TableSeparator|array $row): static
     {
-        if (!$this->output instanceof ConsoleSectionOutput) {
+        if (! $this->output instanceof ConsoleSectionOutput) {
             throw new RuntimeException(\sprintf('Output should be an instance of "%s" when calling "%s".', ConsoleSectionOutput::class, __METHOD__));
         }
 
@@ -356,13 +355,13 @@ class Table
 
                 $headers = $this->headers[0] ?? [];
                 $maxRows = max(\count($headers), \count($row));
-                for ($i = 0; $i < $maxRows; ++$i) {
+                for ($i = 0; $i < $maxRows; $i++) {
                     $cell = (string) ($row[$i] ?? '');
 
                     $eol = str_contains($cell, "\r\n") ? "\r\n" : "\n";
                     $parts = explode($eol, $cell);
                     foreach ($parts as $idx => $part) {
-                        if ($headers && !$containsColspan) {
+                        if ($headers && ! $containsColspan) {
                             if (0 === $idx) {
                                 $rows[] = [\sprintf(
                                     '<comment>%s%s</>: %s',
@@ -392,7 +391,7 @@ class Table
         $rowGroups = $this->buildTableRows($rows);
         $this->calculateColumnsWidth($rowGroups);
 
-        $isHeader = !$horizontal;
+        $isHeader = ! $horizontal;
         $isFirstRow = $horizontal;
         $hasTitle = (bool) $this->headerTitle;
 
@@ -413,11 +412,11 @@ class Table
                     continue;
                 }
 
-                if (!$row) {
+                if (! $row) {
                     continue;
                 }
 
-                if ($isHeader && !$isHeaderSeparatorRendered && $this->style->displayOutsideBorder()) {
+                if ($isHeader && ! $isHeaderSeparatorRendered && $this->style->displayOutsideBorder()) {
                     $this->renderRowSeparator(
                         self::SEPARATOR_TOP,
                         $hasTitle ? $this->headerTitle : null,
@@ -467,12 +466,12 @@ class Table
      */
     private function renderRowSeparator(int $type = self::SEPARATOR_MID, ?string $title = null, ?string $titleFormat = null): void
     {
-        if (!$count = $this->numberOfColumns) {
+        if (! $count = $this->numberOfColumns) {
             return;
         }
 
         $borders = $this->style->getBorderChars();
-        if (!$borders[0] && !$borders[2] && !$this->style->getCrossingChar()) {
+        if (! $borders[0] && ! $borders[2] && ! $this->style->getCrossingChar()) {
             return;
         }
 
@@ -488,7 +487,7 @@ class Table
         }
 
         $markup = $leftChar;
-        for ($column = 0; $column < $count; ++$column) {
+        for ($column = 0; $column < $count; $column++) {
             $markup .= str_repeat($horizontal, $this->effectiveColumnWidths[$column]);
             $markup .= $column === $count - 1 ? $rightChar : $midChar;
         }
@@ -573,10 +572,10 @@ class Table
 
         $padType = $style->getPadType();
         if ($cell instanceof TableCell && $cell->getStyle() instanceof TableCellStyle) {
-            $isNotStyledByTag = !preg_match('/^<(\w+|(\w+=[\w,]+;?)*)>.+<\/(\w+|(\w+=\w+;?)*)?>$/', $cell);
+            $isNotStyledByTag = ! preg_match('/^<(\w+|(\w+=[\w,]+;?)*)>.+<\/(\w+|(\w+=\w+;?)*)?>$/', $cell);
             if ($isNotStyledByTag) {
                 $cellFormat = $cell->getStyle()->getCellFormat();
-                if (!\is_string($cellFormat)) {
+                if (! \is_string($cellFormat)) {
                     $tag = http_build_query($cell->getStyle()->getTagOptions(), '', ';');
                     $cellFormat = '<'.$tag.'>%s</>';
                 }
@@ -619,7 +618,7 @@ class Table
         /** @var WrappableOutputFormatterInterface $formatter */
         $formatter = $this->output->getFormatter();
         $unmergedRows = [];
-        for ($rowKey = 0; $rowKey < \count($rows); ++$rowKey) {
+        for ($rowKey = 0; $rowKey < \count($rows); $rowKey++) {
             $rows = $this->fillNextRows($rows, $rowKey);
 
             // Remove any new line breaks and replace it with a new line
@@ -629,7 +628,7 @@ class Table
                 $minWrappedWidth = 0;
                 $widthApplied = [];
                 $lengthColumnBorder = $this->getColumnSeparatorWidth() + Helper::width($this->style->getCellRowContentFormat()) - 2;
-                for ($i = $column; $i < ($column + $colspan); ++$i) {
+                for ($i = $column; $i < ($column + $colspan); $i++) {
                     if (isset($this->columnMaxWidths[$i])) {
                         $minWrappedWidth += $this->columnMaxWidths[$i];
                         $widthApplied[] = ['type' => 'max', 'column' => $i];
@@ -662,14 +661,14 @@ class Table
                             $cellWidth -= $minWidthColumn + $lengthColumnBorder;
                         }
                     }
-                    for ($i = $column; $i < ($column + $colspan); ++$i) {
+                    for ($i = $column; $i < ($column + $colspan); $i++) {
                         if (isset($columnsMinWidthProcessed[$i])) {
                             continue;
                         }
                         $this->columnWidths[$i] = $cellWidth + $lengthColumnBorder;
                     }
                 }
-                if (!str_contains($cell ?? '', "\n")) {
+                if (! str_contains($cell ?? '', "\n")) {
                     continue;
                 }
                 $eol = str_contains($cell ?? '', "\r\n") ? "\r\n" : "\n";
@@ -683,7 +682,7 @@ class Table
                     if (0 === $lineKey) {
                         $rows[$rowKey][$column] = $line;
                     } else {
-                        if (!\array_key_exists($rowKey, $unmergedRows) || !\array_key_exists($lineKey, $unmergedRows[$rowKey])) {
+                        if (! \array_key_exists($rowKey, $unmergedRows) || ! \array_key_exists($lineKey, $unmergedRows[$rowKey])) {
                             $unmergedRows[$rowKey][$lineKey] = $this->copyRow($rows, $rowKey);
                         }
                         $unmergedRows[$rowKey][$lineKey][$column] = $line;
@@ -711,11 +710,11 @@ class Table
         $numberOfRows = \count(iterator_to_array($this->buildTableRows(array_merge($this->headers, [new TableSeparator()], $this->rows))));
 
         if ($this->headers) {
-            ++$numberOfRows; // Add row for header separator
+            $numberOfRows++; // Add row for header separator
         }
 
         if ($this->rows) {
-            ++$numberOfRows; // Add row for footer separator
+            $numberOfRows++; // Add row for footer separator
         }
 
         return $numberOfRows;
@@ -730,7 +729,7 @@ class Table
     {
         $unmergedRows = [];
         foreach ($rows[$line] as $column => $cell) {
-            if (null !== $cell && !$cell instanceof TableCell && !\is_scalar($cell) && !$cell instanceof \Stringable) {
+            if (null !== $cell && ! $cell instanceof TableCell && ! \is_scalar($cell) && ! $cell instanceof \Stringable) {
                 throw new InvalidArgumentException(\sprintf('A cell must be a TableCell, a scalar or an object implementing "__toString()", "%s" given.', get_debug_type($cell)));
             }
             if ($cell instanceof TableCell && $cell->getRowspan() > 1) {
@@ -845,7 +844,7 @@ class Table
      */
     private function calculateColumnsWidth(iterable $groups): void
     {
-        for ($column = 0; $column < $this->numberOfColumns; ++$column) {
+        for ($column = 0; $column < $this->numberOfColumns; $column++) {
             $lengths = [];
             foreach ($groups as $group) {
                 foreach ($group as $row) {
@@ -911,43 +910,37 @@ class Table
         $markdown = new TableStyle();
         $markdown
             ->setDefaultCrossingChar('|')
-            ->setDisplayOutsideBorder(false)
-        ;
+            ->setDisplayOutsideBorder(false);
 
         $borderless = new TableStyle();
         $borderless
             ->setHorizontalBorderChars('=')
             ->setVerticalBorderChars(' ')
-            ->setDefaultCrossingChar(' ')
-        ;
+            ->setDefaultCrossingChar(' ');
 
         $compact = new TableStyle();
         $compact
             ->setHorizontalBorderChars('')
             ->setVerticalBorderChars('')
             ->setDefaultCrossingChar('')
-            ->setCellRowContentFormat('%s ')
-        ;
+            ->setCellRowContentFormat('%s ');
 
         $styleGuide = new TableStyle();
         $styleGuide
             ->setHorizontalBorderChars('-')
             ->setVerticalBorderChars(' ')
             ->setDefaultCrossingChar(' ')
-            ->setCellHeaderFormat('%s')
-        ;
+            ->setCellHeaderFormat('%s');
 
         $box = (new TableStyle())
             ->setHorizontalBorderChars('─')
             ->setVerticalBorderChars('│')
-            ->setCrossingChars('┼', '┌', '┬', '┐', '┤', '┘', '┴', '└', '├')
-        ;
+            ->setCrossingChars('┼', '┌', '┬', '┐', '┤', '┘', '┴', '└', '├');
 
         $boxDouble = (new TableStyle())
             ->setHorizontalBorderChars('═', '─')
             ->setVerticalBorderChars('║', '│')
-            ->setCrossingChars('┼', '╔', '╤', '╗', '╢', '╝', '╧', '╚', '╟', '╠', '╪', '╣')
-        ;
+            ->setCrossingChars('┼', '╔', '╤', '╗', '╢', '╝', '╧', '╚', '╟', '╠', '╪', '╣');
 
         return [
             'default' => new TableStyle(),

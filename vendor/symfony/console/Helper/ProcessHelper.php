@@ -28,13 +28,13 @@ class ProcessHelper extends Helper
     /**
      * Runs an external process.
      *
-     * @param array|Process $cmd      An instance of Process or an array of the command and arguments
-     * @param callable|null $callback A PHP callback to run whenever there is some
-     *                                output available on STDOUT or STDERR
+     * @param  array|Process  $cmd  An instance of Process or an array of the command and arguments
+     * @param  callable|null  $callback  A PHP callback to run whenever there is some
+     *                                   output available on STDOUT or STDERR
      */
     public function run(OutputInterface $output, array|Process $cmd, ?string $error = null, ?callable $callback = null, int $verbosity = OutputInterface::VERBOSITY_VERY_VERBOSE): Process
     {
-        if (!class_exists(Process::class)) {
+        if (! class_exists(Process::class)) {
             throw new \LogicException('The ProcessHelper cannot be run as the Process component is not installed. Try running "compose require symfony/process".');
         }
 
@@ -73,7 +73,7 @@ class ProcessHelper extends Helper
             $output->write($formatter->stop(spl_object_hash($process), $message, $process->isSuccessful()));
         }
 
-        if (!$process->isSuccessful() && null !== $error) {
+        if (! $process->isSuccessful() && null !== $error) {
             $output->writeln(\sprintf('<error>%s</error>', $this->escapeString($error)));
         }
 
@@ -86,9 +86,9 @@ class ProcessHelper extends Helper
      * This is identical to run() except that an exception is thrown if the process
      * exits with a non-zero exit code.
      *
-     * @param array|Process $cmd      An instance of Process or a command to run
-     * @param callable|null $callback A PHP callback to run whenever there is some
-     *                                output available on STDOUT or STDERR
+     * @param  array|Process  $cmd  An instance of Process or a command to run
+     * @param  callable|null  $callback  A PHP callback to run whenever there is some
+     *                                   output available on STDOUT or STDERR
      *
      * @throws ProcessFailedException
      *
@@ -98,7 +98,7 @@ class ProcessHelper extends Helper
     {
         $process = $this->run($output, $cmd, $error, $callback, $verbosity);
 
-        if (!$process->isSuccessful()) {
+        if (! $process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
 

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -25,9 +27,9 @@ class InsightOpsHandler extends SocketHandler
     protected string $logToken;
 
     /**
-     * @param string $token  Log token supplied by InsightOps
-     * @param string $region Region where InsightOps account is hosted. Could be 'us' or 'eu'.
-     * @param bool   $useSSL Whether or not SSL encryption should be used
+     * @param  string  $token  Log token supplied by InsightOps
+     * @param  string  $region  Region where InsightOps account is hosted. Could be 'us' or 'eu'.
+     * @param  bool  $useSSL  Whether or not SSL encryption should be used
      *
      * @throws MissingExtensionException If SSL encryption is set to true and OpenSSL is missing
      */
@@ -43,13 +45,13 @@ class InsightOpsHandler extends SocketHandler
         ?float $connectionTimeout = null,
         ?int $chunkSize = null
     ) {
-        if ($useSSL && !\extension_loaded('openssl')) {
+        if ($useSSL && ! \extension_loaded('openssl')) {
             throw new MissingExtensionException('The OpenSSL PHP plugin is required to use SSL encrypted connection for InsightOpsHandler');
         }
 
         $endpoint = $useSSL
-            ? 'ssl://' . $region . '.data.logs.insight.rapid7.com:443'
-            : $region . '.data.logs.insight.rapid7.com:80';
+            ? 'ssl://'.$region.'.data.logs.insight.rapid7.com:443'
+            : $region.'.data.logs.insight.rapid7.com:80';
 
         parent::__construct(
             $endpoint,
@@ -69,6 +71,6 @@ class InsightOpsHandler extends SocketHandler
      */
     protected function generateDataStream(LogRecord $record): string
     {
-        return $this->logToken . ' ' . $record->formatted;
+        return $this->logToken.' '.$record->formatted;
     }
 }

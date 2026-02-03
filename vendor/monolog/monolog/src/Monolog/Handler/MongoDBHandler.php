@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -15,9 +17,9 @@ use MongoDB\Client;
 use MongoDB\Collection;
 use MongoDB\Driver\BulkWrite;
 use MongoDB\Driver\Manager;
-use Monolog\Level;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\MongoDBFormatter;
+use Monolog\Level;
 use Monolog\LogRecord;
 
 /**
@@ -39,14 +41,14 @@ class MongoDBHandler extends AbstractProcessingHandler
 
     private Client|Manager $manager;
 
-    private string|null $namespace = null;
+    private ?string $namespace = null;
 
     /**
      * Constructor.
      *
-     * @param Client|Manager $mongodb    MongoDB library or driver client
-     * @param string         $database   Database name
-     * @param string         $collection Collection name
+     * @param  Client|Manager  $mongodb  MongoDB library or driver client
+     * @param  string  $database  Database name
+     * @param  string  $collection  Collection name
      */
     public function __construct(Client|Manager $mongodb, string $database, string $collection, int|string|Level $level = Level::Debug, bool $bubble = true)
     {
@@ -54,7 +56,7 @@ class MongoDBHandler extends AbstractProcessingHandler
             $this->collection = method_exists($mongodb, 'getCollection') ? $mongodb->getCollection($database, $collection) : $mongodb->selectCollection($database, $collection);
         } else {
             $this->manager = $mongodb;
-            $this->namespace = $database . '.' . $collection;
+            $this->namespace = $database.'.'.$collection;
         }
 
         parent::__construct($level, $bubble);

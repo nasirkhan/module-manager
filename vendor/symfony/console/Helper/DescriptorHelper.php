@@ -39,8 +39,7 @@ class DescriptorHelper extends Helper
             ->register('xml', new XmlDescriptor())
             ->register('json', new JsonDescriptor())
             ->register('md', new MarkdownDescriptor())
-            ->register('rst', new ReStructuredTextDescriptor())
-        ;
+            ->register('rst', new ReStructuredTextDescriptor());
     }
 
     /**
@@ -59,7 +58,7 @@ class DescriptorHelper extends Helper
             'format' => 'txt',
         ], $options);
 
-        if (!isset($this->descriptors[$options['format']])) {
+        if (! isset($this->descriptors[$options['format']])) {
             throw new InvalidArgumentException(\sprintf('Unsupported format "%s".', $options['format']));
         }
 

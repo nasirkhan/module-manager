@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,7 +23,7 @@ use function uuid_generate_sha1;
 use function uuid_parse;
 
 /**
- * PeclUuidNameGenerator generates strings of binary data from a namespace and a name, using ext-uuid
+ * PeclUuidNameGenerator generates strings of binary data from a namespace and a name, using ext-uuid.
  *
  * @link https://pecl.php.net/package/uuid ext-uuid
  */

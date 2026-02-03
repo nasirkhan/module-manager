@@ -21,8 +21,8 @@ class Promise implements PromiseInterface
     private $handlers = [];
 
     /**
-     * @param callable $waitFn   Fn that when invoked resolves the promise.
-     * @param callable $cancelFn Fn that when invoked cancels the promise.
+     * @param  callable  $waitFn  Fn that when invoked resolves the promise.
+     * @param  callable  $cancelFn  Fn that when invoked cancels the promise.
      */
     public function __construct(
         ?callable $waitFn = null,
@@ -144,13 +144,13 @@ class Promise implements PromiseInterface
         $this->waitList = $this->waitFn = null;
         $this->cancelFn = null;
 
-        if (!$handlers) {
+        if (! $handlers) {
             return;
         }
 
         // If the value was not a settled promise or a thenable, then resolve
         // it in the task queue using the correct ID.
-        if (!is_object($value) || !method_exists($value, 'then')) {
+        if (! is_object($value) || ! method_exists($value, 'then')) {
             $id = $state === self::FULFILLED ? 1 : 2;
             // It's a success, so resolve the handlers in the queue.
             Utils::queue()->add(static function () use ($id, $value, $handlers): void {
@@ -181,9 +181,9 @@ class Promise implements PromiseInterface
     /**
      * Call a stack of handlers using a specific callback index and value.
      *
-     * @param int   $index   1 (resolve) or 2 (reject).
-     * @param mixed $value   Value to pass to the callback.
-     * @param array $handler Array of handler data (promise and callbacks).
+     * @param  int  $index  1 (resolve) or 2 (reject).
+     * @param  mixed  $value  Value to pass to the callback.
+     * @param  array  $handler  Array of handler data (promise and callbacks).
      */
     private static function callHandler(int $index, $value, array $handler): void
     {

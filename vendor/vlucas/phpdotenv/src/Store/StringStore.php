@@ -16,8 +16,7 @@ final class StringStore implements StoreInterface
     /**
      * Create a new string store instance.
      *
-     * @param string $content
-     *
+     * @param  string  $content
      * @return void
      */
     public function __construct(string $content)

@@ -75,8 +75,7 @@ final class DumpCompletionCommand extends Command
                 EOH
             )
             ->addArgument('shell', InputArgument::OPTIONAL, 'The shell type (e.g. "bash"), the value of the "$SHELL" env var will be used if this is not given', null, $this->getSupportedShells(...))
-            ->addOption('debug', null, InputOption::VALUE_NONE, 'Tail the completion debug log')
-        ;
+            ->addOption('debug', null, InputOption::VALUE_NONE, 'Tail the completion debug log');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -91,7 +90,7 @@ final class DumpCompletionCommand extends Command
 
         $shell = $input->getArgument('shell') ?? self::guessShell();
         $completionFile = __DIR__.'/../Resources/completion.'.$shell;
-        if (!file_exists($completionFile)) {
+        if (! file_exists($completionFile)) {
             $supportedShells = $this->getSupportedShells();
 
             if ($output instanceof ConsoleOutputInterface) {
@@ -119,7 +118,7 @@ final class DumpCompletionCommand extends Command
     private function tailDebugLog(string $commandName, OutputInterface $output): void
     {
         $debugFile = sys_get_temp_dir().'/sf_'.$commandName.'.log';
-        if (!file_exists($debugFile)) {
+        if (! file_exists($debugFile)) {
             touch($debugFile);
         }
         $process = new Process(['tail', '-f', $debugFile], null, null, null, 0);

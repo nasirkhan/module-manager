@@ -27,7 +27,7 @@ class FragmentRendererPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->hasDefinition('fragment.handler')) {
+        if (! $container->hasDefinition('fragment.handler')) {
             return;
         }
 
@@ -37,10 +37,10 @@ class FragmentRendererPass implements CompilerPassInterface
             $def = $container->getDefinition($id);
             $class = $container->getParameterBag()->resolveValue($def->getClass());
 
-            if (!$r = $container->getReflectionClass($class)) {
+            if (! $r = $container->getReflectionClass($class)) {
                 throw new InvalidArgumentException(\sprintf('Class "%s" used for service "%s" cannot be found.', $class, $id));
             }
-            if (!$r->isSubclassOf(FragmentRendererInterface::class)) {
+            if (! $r->isSubclassOf(FragmentRendererInterface::class)) {
                 throw new InvalidArgumentException(\sprintf('Service "%s" must implement interface "%s".', $id, FragmentRendererInterface::class));
             }
 

@@ -106,7 +106,7 @@ abstract class OutputStyle implements OutputInterface, StyleInterface
 
     protected function getErrorOutput(): OutputInterface
     {
-        if (!$this->output instanceof ConsoleOutputInterface) {
+        if (! $this->output instanceof ConsoleOutputInterface) {
             return $this->output;
         }
 

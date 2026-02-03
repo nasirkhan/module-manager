@@ -31,8 +31,8 @@ final class AttributesBlockContinueParser extends AbstractBlockContinueParser
     private bool $hasSubsequentLine = false;
 
     /**
-     * @param array<string, mixed> $attributes The attributes identified by the block start parser
-     * @param AbstractBlock        $container  The node we were in when these attributes were discovered
+     * @param  array<string, mixed>  $attributes  The attributes identified by the block start parser
+     * @param  AbstractBlock  $container  The node we were in when these attributes were discovered
      */
     public function __construct(array $attributes, AbstractBlock $container)
     {

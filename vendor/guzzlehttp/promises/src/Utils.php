@@ -19,7 +19,7 @@ final class Utils
      * }
      * </code>
      *
-     * @param TaskQueueInterface|null $assign Optionally specify a new queue instance.
+     * @param  TaskQueueInterface|null  $assign  Optionally specify a new queue instance.
      */
     public static function queue(?TaskQueueInterface $assign = null): TaskQueueInterface
     {
@@ -27,7 +27,7 @@ final class Utils
 
         if ($assign) {
             $queue = $assign;
-        } elseif (!$queue) {
+        } elseif (! $queue) {
             $queue = new TaskQueue();
         }
 
@@ -38,7 +38,7 @@ final class Utils
      * Adds a function to run in the task queue when it is next `run()` and
      * returns a promise that is fulfilled or rejected with the result.
      *
-     * @param callable $task Task function to run.
+     * @param  callable  $task  Task function to run.
      */
     public static function task(callable $task): PromiseInterface
     {
@@ -67,7 +67,7 @@ final class Utils
      * promise. If the promise is rejected, the array will contain a "reason"
      * key mapping to the rejection reason of the promise.
      *
-     * @param PromiseInterface $promise Promise or value.
+     * @param  PromiseInterface  $promise  Promise or value.
      */
     public static function inspect(PromiseInterface $promise): array
     {
@@ -91,7 +91,7 @@ final class Utils
      *
      * @see inspect for the inspection state array format.
      *
-     * @param PromiseInterface[] $promises Traversable of promises to wait upon.
+     * @param  PromiseInterface[]  $promises  Traversable of promises to wait upon.
      */
     public static function inspectAll($promises): array
     {
@@ -110,7 +110,7 @@ final class Utils
      * order the promises were provided). An exception is thrown if any of the
      * promises are rejected.
      *
-     * @param iterable<PromiseInterface> $promises Iterable of PromiseInterface objects to wait on.
+     * @param  iterable<PromiseInterface>  $promises  Iterable of PromiseInterface objects to wait on.
      *
      * @throws \Throwable on error
      */
@@ -132,8 +132,8 @@ final class Utils
      * respective positions to the original array. If any promise in the array
      * rejects, the returned promise is rejected with the rejection reason.
      *
-     * @param mixed $promises  Promises or values.
-     * @param bool  $recursive If true, resolves new promises that might have been added to the stack during its own resolution.
+     * @param  mixed  $promises  Promises or values.
+     * @param  bool  $recursive  If true, resolves new promises that might have been added to the stack during its own resolution.
      */
     public static function all($promises, bool $recursive = false): PromiseInterface
     {
@@ -180,8 +180,8 @@ final class Utils
      * This promise is rejected with a {@see AggregateException} if the number
      * of fulfilled promises is less than the desired $count.
      *
-     * @param int   $count    Total number of promises.
-     * @param mixed $promises Promises or values.
+     * @param  int  $count  Total number of promises.
+     * @param  mixed  $promises  Promises or values.
      */
     public static function some(int $count, $promises): PromiseInterface
     {
@@ -221,7 +221,7 @@ final class Utils
      * Like some(), with 1 as count. However, if the promise fulfills, the
      * fulfillment value is not an array of 1 but the value directly.
      *
-     * @param mixed $promises Promises or values.
+     * @param  mixed  $promises  Promises or values.
      */
     public static function any($promises): PromiseInterface
     {
@@ -238,7 +238,7 @@ final class Utils
      *
      * @see inspect for the inspection state array format.
      *
-     * @param mixed $promises Promises or values.
+     * @param  mixed  $promises  Promises or values.
      */
     public static function settle($promises): PromiseInterface
     {

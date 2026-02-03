@@ -38,9 +38,9 @@ final class AnonymousFootnotesListener implements ConfigurationAwareInterface
 
             // Anonymous footnote needs to create a footnote from its content
             $existingReference = $node->getReference();
-            $newReference      = new Reference(
+            $newReference = new Reference(
                 $existingReference->getLabel(),
-                '#' . $this->config->get('footnote/ref_id_prefix') . $existingReference->getLabel(),
+                '#'.$this->config->get('footnote/ref_id_prefix').$existingReference->getLabel(),
                 $existingReference->getTitle()
             );
 

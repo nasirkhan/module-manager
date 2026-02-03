@@ -37,7 +37,7 @@ final class CursorState
     /**
      * @internal
      *
-     * @param array<int, mixed> $state
+     * @param  array<int, mixed>  $state
      */
     public function __construct(array $state)
     {

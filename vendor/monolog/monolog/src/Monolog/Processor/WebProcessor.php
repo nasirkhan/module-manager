@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -15,7 +17,7 @@ use ArrayAccess;
 use Monolog\LogRecord;
 
 /**
- * Injects url/method and remote IP of the current web request in all records
+ * Injects url/method and remote IP of the current web request in all records.
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
@@ -27,26 +29,26 @@ class WebProcessor implements ProcessorInterface
     protected array|ArrayAccess $serverData;
 
     /**
-     * Default fields
+     * Default fields.
      *
      * Array is structured as [key in record.extra => key in $serverData]
      *
      * @var array<string, string>
      */
     protected array $extraFields = [
-        'url'         => 'REQUEST_URI',
-        'ip'          => 'REMOTE_ADDR',
+        'url' => 'REQUEST_URI',
+        'ip' => 'REMOTE_ADDR',
         'http_method' => 'REQUEST_METHOD',
-        'server'      => 'SERVER_NAME',
-        'referrer'    => 'HTTP_REFERER',
-        'user_agent'  => 'HTTP_USER_AGENT',
+        'server' => 'SERVER_NAME',
+        'referrer' => 'HTTP_REFERER',
+        'user_agent' => 'HTTP_USER_AGENT',
     ];
 
     /**
-     * @param array<string, mixed>|ArrayAccess<string, mixed>|null $serverData  Array or object w/ ArrayAccess that provides access to the $_SERVER data
-     * @param array<string, string>|array<string>|null             $extraFields Field names and the related key inside $serverData to be added (or just a list of field names to use the default configured $serverData mapping). If not provided it defaults to: [url, ip, http_method, server, referrer] + unique_id if present in server data
+     * @param  array<string, mixed>|ArrayAccess<string, mixed>|null  $serverData  Array or object w/ ArrayAccess that provides access to the $_SERVER data
+     * @param  array<string, string>|array<string>|null  $extraFields  Field names and the related key inside $serverData to be added (or just a list of field names to use the default configured $serverData mapping). If not provided it defaults to: [url, ip, http_method, server, referrer] + unique_id if present in server data
      */
-    public function __construct(array|ArrayAccess|null $serverData = null, array|null $extraFields = null)
+    public function __construct(array|ArrayAccess|null $serverData = null, ?array $extraFields = null)
     {
         if (null === $serverData) {
             $this->serverData = &$_SERVER;
@@ -65,7 +67,7 @@ class WebProcessor implements ProcessorInterface
         }
         if (isset($extraFields[0])) {
             foreach (array_keys($this->extraFields) as $fieldName) {
-                if (!\in_array($fieldName, $extraFields, true)) {
+                if (! \in_array($fieldName, $extraFields, true)) {
                     unset($this->extraFields[$fieldName]);
                 }
             }
@@ -81,7 +83,7 @@ class WebProcessor implements ProcessorInterface
     {
         // skip processing if for some reason request data
         // is not present (CLI or wonky SAPIs)
-        if (!isset($this->serverData['REQUEST_URI'])) {
+        if (! isset($this->serverData['REQUEST_URI'])) {
             return $record;
         }
 
@@ -101,7 +103,7 @@ class WebProcessor implements ProcessorInterface
     }
 
     /**
-     * @param  mixed[] $extra
+     * @param  mixed[]  $extra
      * @return mixed[]
      */
     private function appendExtraFields(array $extra): array

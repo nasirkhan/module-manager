@@ -34,9 +34,9 @@ abstract class Output implements OutputInterface
     private OutputFormatterInterface $formatter;
 
     /**
-     * @param int|null                      $verbosity The verbosity level (one of the VERBOSITY constants in OutputInterface)
-     * @param bool                          $decorated Whether to decorate messages
-     * @param OutputFormatterInterface|null $formatter Output formatter instance (null to use default OutputFormatter)
+     * @param  int|null  $verbosity  The verbosity level (one of the VERBOSITY constants in OutputInterface)
+     * @param  bool  $decorated  Whether to decorate messages
+     * @param  OutputFormatterInterface|null  $formatter  Output formatter instance (null to use default OutputFormatter)
      */
     public function __construct(?int $verbosity = self::VERBOSITY_NORMAL, bool $decorated = false, ?OutputFormatterInterface $formatter = null)
     {
@@ -107,7 +107,7 @@ abstract class Output implements OutputInterface
 
     public function write(string|iterable $messages, bool $newline = false, int $options = self::OUTPUT_NORMAL): void
     {
-        if (!is_iterable($messages)) {
+        if (! is_iterable($messages)) {
             $messages = [$messages];
         }
 

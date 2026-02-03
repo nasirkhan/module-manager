@@ -22,7 +22,7 @@ use League\Config\ConfigurationAwareInterface;
 use League\Config\ConfigurationInterface;
 
 /**
- * Renders the HeadingPermalink elements
+ * Renders the HeadingPermalink elements.
  */
 final class HeadingPermalinkRenderer implements NodeRendererInterface, XmlNodeRendererInterface, ConfigurationAwareInterface
 {
@@ -37,7 +37,7 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, XmlNodeRe
     }
 
     /**
-     * @param HeadingPermalink $node
+     * @param  HeadingPermalink  $node
      *
      * {@inheritDoc}
      *
@@ -54,7 +54,7 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, XmlNodeRe
             $fragmentPrefix .= '-';
         }
 
-        $attrs    = $node->data->getData('attributes');
+        $attrs = $node->data->getData('attributes');
         $appendId = ! $this->config->get('heading_permalink/apply_id_to_heading');
 
         if ($appendId) {
@@ -64,10 +64,10 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, XmlNodeRe
                 $idPrefix .= '-';
             }
 
-            $attrs->set('id', $idPrefix . $slug);
+            $attrs->set('id', $idPrefix.$slug);
         }
 
-        $attrs->set('href', '#' . $fragmentPrefix . $slug);
+        $attrs->set('href', '#'.$fragmentPrefix.$slug);
         $attrs->append('class', $this->config->get('heading_permalink/html_class'));
 
         $hidden = $this->config->get('heading_permalink/aria_hidden');
@@ -89,8 +89,7 @@ final class HeadingPermalinkRenderer implements NodeRendererInterface, XmlNodeRe
     }
 
     /**
-     * @param HeadingPermalink $node
-     *
+     * @param  HeadingPermalink  $node
      * @return array<string, scalar>
      *
      * @psalm-suppress MoreSpecificImplementedParamType

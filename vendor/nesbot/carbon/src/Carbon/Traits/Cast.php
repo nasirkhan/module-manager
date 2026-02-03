@@ -28,13 +28,12 @@ trait Cast
      *
      * @template T
      *
-     * @param class-string<T> $className The $className::instance() method will be called to cast the current object.
-     *
+     * @param  class-string<T>  $className  The $className::instance() method will be called to cast the current object.
      * @return T
      */
     public function cast(string $className): mixed
     {
-        if (!method_exists($className, 'instance')) {
+        if (! method_exists($className, 'instance')) {
             if (is_a($className, DateTimeInterface::class, true)) {
                 return $className::createFromFormat('U.u', $this->rawFormat('U.u'))
                     ->setTimezone($this->getTimezone());

@@ -27,11 +27,11 @@ class DataPart extends TextPart
     private ?string $cid = null;
 
     /**
-     * @param resource|string|File $body Use a File instance to defer loading the file until rendering
+     * @param  resource|string|File  $body  Use a File instance to defer loading the file until rendering
      */
     public function __construct($body, ?string $filename = null, ?string $contentType = null, ?string $encoding = null)
     {
-        if ($body instanceof File && !$filename) {
+        if ($body instanceof File && ! $filename) {
             $filename = $body->getFilename();
         }
 
@@ -65,7 +65,7 @@ class DataPart extends TextPart
      */
     public function setContentId(string $cid): static
     {
-        if (!str_contains($cid, '@')) {
+        if (! str_contains($cid, '@')) {
             throw new InvalidArgumentException(\sprintf('The "%s" CID is invalid as it doesn\'t contain an "@".', $cid));
         }
 
@@ -231,11 +231,11 @@ class DataPart extends TextPart
         $r->setValue($this, $this->_headers);
         unset($this->_headers);
 
-        if (!\is_array($this->_parent)) {
+        if (! \is_array($this->_parent)) {
             throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
         }
         foreach (['body', 'charset', 'subtype', 'disposition', 'name', 'encoding'] as $name) {
-            if (null !== $this->_parent[$name] && !\is_string($this->_parent[$name]) && !$this->_parent[$name] instanceof File) {
+            if (null !== $this->_parent[$name] && ! \is_string($this->_parent[$name]) && ! $this->_parent[$name] instanceof File) {
                 throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
             }
             $r = new \ReflectionProperty(TextPart::class, $name);

@@ -69,7 +69,7 @@ final class ProcessStream extends AbstractStream
 
         parent::terminate();
 
-        if (!$this->interactive && isset($errorMessage)) {
+        if (! $this->interactive && isset($errorMessage)) {
             throw new TransportException($errorMessage);
         }
     }

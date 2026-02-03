@@ -94,7 +94,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     /**
      * Adds a Loader.
      *
-     * @param string $format The name of the loader (@see addResource())
+     * @param  string  $format  The name of the loader (@see addResource())
      */
     public function addLoader(string $format, LoaderInterface $loader): void
     {
@@ -104,8 +104,8 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     /**
      * Adds a Resource.
      *
-     * @param string $format   The name of the loader (@see addLoader())
-     * @param mixed  $resource The resource name
+     * @param  string  $format  The name of the loader (@see addLoader())
+     * @param  mixed  $resource  The resource name
      *
      * @throws InvalidArgumentException If the locale contains invalid characters
      */
@@ -139,7 +139,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     /**
      * Sets the fallback locales.
      *
-     * @param string[] $locales
+     * @param  string[]  $locales
      *
      * @throws InvalidArgumentException If a locale contains invalid characters
      */
@@ -186,7 +186,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
 
         $catalogue = $this->getCatalogue($locale);
         $locale = $catalogue->getLocale();
-        while (!$catalogue->defines($id, $domain)) {
+        while (! $catalogue->defines($id, $domain)) {
             if ($cat = $catalogue->getFallbackCatalogue()) {
                 $catalogue = $cat;
                 $locale = $catalogue->getLocale();
@@ -227,13 +227,13 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
 
     public function getCatalogue(?string $locale = null): MessageCatalogueInterface
     {
-        if (!$locale) {
+        if (! $locale) {
             $locale = $this->getLocale();
         } else {
             $this->assertValidLocale($locale);
         }
 
-        if (!isset($this->catalogues[$locale])) {
+        if (! isset($this->catalogues[$locale])) {
             $this->loadCatalogue($locale);
         }
 
@@ -271,7 +271,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
         try {
             $this->doLoadCatalogue($locale);
         } catch (NotFoundResourceException $e) {
-            if (!$this->computeFallbackLocales($locale)) {
+            if (! $this->computeFallbackLocales($locale)) {
                 throw $e;
             }
         }
@@ -368,7 +368,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
 
         if (isset($this->resources[$locale])) {
             foreach ($this->resources[$locale] as $resource) {
-                if (!isset($this->loaders[$resource[0]])) {
+                if (! isset($this->loaders[$resource[0]])) {
                     if (\is_string($resource[1])) {
                         throw new RuntimeException(\sprintf('No loader is registered for the "%s" format when loading the "%s" resource.', $resource[0], $resource[1]));
                     }
@@ -385,7 +385,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
         $current = $this->catalogues[$locale];
 
         foreach ($this->computeFallbackLocales($locale) as $fallback) {
-            if (!isset($this->catalogues[$fallback])) {
+            if (! isset($this->catalogues[$fallback])) {
                 $this->initializeCatalogue($fallback);
             }
 
@@ -446,7 +446,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
      */
     protected function assertValidLocale(string $locale): void
     {
-        if (!preg_match('/^[a-z0-9@_\\.\\-]*$/i', $locale)) {
+        if (! preg_match('/^[a-z0-9@_\\.\\-]*$/i', $locale)) {
             throw new InvalidArgumentException(\sprintf('Invalid "%s" locale.', $locale));
         }
     }

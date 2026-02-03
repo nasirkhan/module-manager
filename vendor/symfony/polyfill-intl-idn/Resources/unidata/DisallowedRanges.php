@@ -17,8 +17,7 @@ namespace Symfony\Polyfill\Intl\Idn\Resources\unidata;
 final class DisallowedRanges
 {
     /**
-     * @param int $codePoint
-     *
+     * @param  int  $codePoint
      * @return bool
      */
     public static function inRange($codePoint)

@@ -36,10 +36,10 @@ final class MentionParser implements InlineParserInterface
 
     public function __construct(string $name, string $prefix, string $identifierPattern, MentionGeneratorInterface $mentionGenerator)
     {
-        $this->name              = $name;
-        $this->prefix            = $prefix;
+        $this->name = $name;
+        $this->prefix = $prefix;
         $this->identifierPattern = $identifierPattern;
-        $this->mentionGenerator  = $mentionGenerator;
+        $this->mentionGenerator = $mentionGenerator;
     }
 
     public function getMatchDefinition(): InlineParserMatch

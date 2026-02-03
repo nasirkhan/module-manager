@@ -35,7 +35,7 @@ final class ResponseFormatSame extends Constraint
     }
 
     /**
-     * @param Response $response
+     * @param  Response  $response
      */
     protected function matches($response): bool
     {
@@ -43,7 +43,7 @@ final class ResponseFormatSame extends Constraint
     }
 
     /**
-     * @param Response $response
+     * @param  Response  $response
      */
     protected function failureDescription($response): string
     {
@@ -51,7 +51,7 @@ final class ResponseFormatSame extends Constraint
     }
 
     /**
-     * @param Response $response
+     * @param  Response  $response
      */
     protected function additionalFailureDescription($response): string
     {

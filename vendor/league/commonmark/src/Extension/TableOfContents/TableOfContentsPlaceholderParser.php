@@ -46,7 +46,8 @@ final class TableOfContentsPlaceholderParser extends AbstractBlockContinueParser
 
     public static function blockStartParser(): BlockStartParserInterface
     {
-        return new class () implements BlockStartParserInterface, ConfigurationAwareInterface {
+        return new class() implements BlockStartParserInterface, ConfigurationAwareInterface
+        {
             /** @psalm-readonly-allow-private-mutation */
             private ConfigurationInterface $config;
 
@@ -58,7 +59,7 @@ final class TableOfContentsPlaceholderParser extends AbstractBlockContinueParser
                 }
 
                 // The placeholder must be the only thing on the line
-                if ($cursor->match('/^' . \preg_quote($placeholder, '/') . '$/') === null) {
+                if ($cursor->match('/^'.\preg_quote($placeholder, '/').'$/') === null) {
                     return BlockStart::none();
                 }
 

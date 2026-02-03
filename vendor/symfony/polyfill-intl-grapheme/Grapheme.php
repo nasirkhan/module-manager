@@ -49,9 +49,11 @@ final class Grapheme
             $start = \strlen($s) + $start;
         }
 
-        if (!\is_scalar($s)) {
+        if (! \is_scalar($s)) {
             $hasError = false;
-            set_error_handler(function () use (&$hasError) { $hasError = true; });
+            set_error_handler(function () use (&$hasError) {
+                $hasError = true;
+            });
             $next = substr($s, $start);
             restore_error_handler();
             if ($hasError) {
@@ -75,7 +77,7 @@ final class Grapheme
             throw new \ValueError('grapheme_extract(): Argument #3 ($type) must be one of GRAPHEME_EXTR_COUNT, GRAPHEME_EXTR_MAXBYTES, or GRAPHEME_EXTR_MAXCHARS');
         }
 
-        if (!isset($s[0]) || 0 > $size || 0 > $start) {
+        if (! isset($s[0]) || 0 > $size || 0 > $start) {
             return false;
         }
         if (0 === $size) {
@@ -86,7 +88,7 @@ final class Grapheme
 
         $s = preg_split('/('.SYMFONY_GRAPHEME_CLUSTER_RX.')/u', "\r\n".$s, $size + 1, \PREG_SPLIT_NO_EMPTY | \PREG_SPLIT_DELIM_CAPTURE);
 
-        if (!isset($s[1])) {
+        if (! isset($s[1])) {
             return false;
         }
 
@@ -95,7 +97,7 @@ final class Grapheme
 
         do {
             if (\GRAPHEME_EXTR_COUNT === $type) {
-                --$size;
+                $size--;
             } elseif (\GRAPHEME_EXTR_MAXBYTES === $type) {
                 $size -= \strlen($s[$i]);
             } else {
@@ -206,7 +208,7 @@ final class Grapheme
             return [];
         }
 
-        if (!preg_match_all('/('.SYMFONY_GRAPHEME_CLUSTER_RX.')/u', $s, $matches)) {
+        if (! preg_match_all('/('.SYMFONY_GRAPHEME_CLUSTER_RX.')/u', $s, $matches)) {
             return false;
         }
 
@@ -226,11 +228,11 @@ final class Grapheme
     private static function grapheme_position($s, $needle, $offset, $mode)
     {
         $needle = (string) $needle;
-        if (80000 > \PHP_VERSION_ID && !preg_match('/./us', $needle)) {
+        if (80000 > \PHP_VERSION_ID && ! preg_match('/./us', $needle)) {
             return false;
         }
         $s = (string) $s;
-        if (!preg_match('/./us', $s)) {
+        if (! preg_match('/./us', $s)) {
             return false;
         }
         if ($offset > 0) {
@@ -263,7 +265,7 @@ final class Grapheme
             $s = mb_convert_case($s, $mode, 'UTF-8');
             $needle = mb_convert_case($needle, $mode, 'UTF-8');
 
-            if (!\defined('MB_CASE_FOLD_SIMPLE')) {
+            if (! \defined('MB_CASE_FOLD_SIMPLE')) {
                 $s = str_replace(self::CASE_FOLD[0], self::CASE_FOLD[1], $s);
                 $needle = str_replace(self::CASE_FOLD[0], self::CASE_FOLD[1], $needle);
             }

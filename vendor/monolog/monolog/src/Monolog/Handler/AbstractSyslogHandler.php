@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,12 +13,12 @@
 
 namespace Monolog\Handler;
 
-use Monolog\Level;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\LineFormatter;
+use Monolog\Level;
 
 /**
- * Common syslog functionality
+ * Common syslog functionality.
  */
 abstract class AbstractSyslogHandler extends AbstractProcessingHandler
 {
@@ -24,20 +26,21 @@ abstract class AbstractSyslogHandler extends AbstractProcessingHandler
 
     /**
      * List of valid log facility names.
+     *
      * @var array<string, int>
      */
     protected array $facilities = [
-        'auth'     => \LOG_AUTH,
+        'auth' => \LOG_AUTH,
         'authpriv' => \LOG_AUTHPRIV,
-        'cron'     => \LOG_CRON,
-        'daemon'   => \LOG_DAEMON,
-        'kern'     => \LOG_KERN,
-        'lpr'      => \LOG_LPR,
-        'mail'     => \LOG_MAIL,
-        'news'     => \LOG_NEWS,
-        'syslog'   => \LOG_SYSLOG,
-        'user'     => \LOG_USER,
-        'uucp'     => \LOG_UUCP,
+        'cron' => \LOG_CRON,
+        'daemon' => \LOG_DAEMON,
+        'kern' => \LOG_KERN,
+        'lpr' => \LOG_LPR,
+        'mail' => \LOG_MAIL,
+        'news' => \LOG_NEWS,
+        'syslog' => \LOG_SYSLOG,
+        'user' => \LOG_USER,
+        'uucp' => \LOG_UUCP,
     ];
 
     /**
@@ -49,13 +52,13 @@ abstract class AbstractSyslogHandler extends AbstractProcessingHandler
     }
 
     /**
-     * @param string|int $facility Either one of the names of the keys in $this->facilities, or a LOG_* facility constant
+     * @param  string|int  $facility  Either one of the names of the keys in $this->facilities, or a LOG_* facility constant
      */
     public function __construct(string|int $facility = \LOG_USER, int|string|Level $level = Level::Debug, bool $bubble = true)
     {
         parent::__construct($level, $bubble);
 
-        if (!\defined('PHP_WINDOWS_VERSION_BUILD')) {
+        if (! \defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->facilities['local0'] = \LOG_LOCAL0;
             $this->facilities['local1'] = \LOG_LOCAL1;
             $this->facilities['local2'] = \LOG_LOCAL2;
@@ -78,7 +81,7 @@ abstract class AbstractSyslogHandler extends AbstractProcessingHandler
         // convert textual description of facility to syslog constant
         if (\is_string($facility) && \array_key_exists(strtolower($facility), $this->facilities)) {
             $facility = $this->facilities[strtolower($facility)];
-        } elseif (!\in_array($facility, array_values($this->facilities), true)) {
+        } elseif (! \in_array($facility, array_values($this->facilities), true)) {
             throw new \UnexpectedValueException('Unknown facility value "'.$facility.'" given');
         }
 

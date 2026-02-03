@@ -25,12 +25,12 @@ final class SessionValueResolver implements ValueResolverInterface
 {
     public function resolve(Request $request, ArgumentMetadata $argument): array
     {
-        if (!$request->hasSession()) {
+        if (! $request->hasSession()) {
             return [];
         }
 
         $type = $argument->getType();
-        if (SessionInterface::class !== $type && !is_subclass_of($type, SessionInterface::class)) {
+        if (SessionInterface::class !== $type && ! is_subclass_of($type, SessionInterface::class)) {
             return [];
         }
 

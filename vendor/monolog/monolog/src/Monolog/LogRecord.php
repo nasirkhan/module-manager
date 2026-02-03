@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -14,9 +16,10 @@ namespace Monolog;
 use ArrayAccess;
 
 /**
- * Monolog log record
+ * Monolog log record.
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
+ *
  * @template-implements ArrayAccess<'message'|'level'|'context'|'level_name'|'channel'|'datetime'|'extra'|'formatted', int|string|\DateTimeImmutable|array<mixed>>
  */
 class LogRecord implements ArrayAccess
@@ -42,7 +45,7 @@ class LogRecord implements ArrayAccess
     public function offsetSet(mixed $offset, mixed $value): void
     {
         if ($offset === 'extra') {
-            if (!\is_array($value)) {
+            if (! \is_array($value)) {
                 throw new \InvalidArgumentException('extra must be an array');
             }
 

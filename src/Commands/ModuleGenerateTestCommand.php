@@ -4,7 +4,6 @@ namespace Nasirkhan\ModuleManager\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 
 class ModuleGenerateTestCommand extends Command
 {
@@ -37,6 +36,7 @@ class ModuleGenerateTestCommand extends Command
 
         if (! File::exists($modulePath)) {
             $this->components->error("Module '{$module}' not found.");
+
             return self::FAILURE;
         }
 
@@ -50,6 +50,7 @@ class ModuleGenerateTestCommand extends Command
 
         if (File::exists($testFile)) {
             $this->components->error("Test '{$name}' already exists.");
+
             return self::FAILURE;
         }
 
@@ -59,7 +60,7 @@ class ModuleGenerateTestCommand extends Command
         File::put($testFile, $content);
 
         $this->components->info("Test [{$testFile}] created successfully.");
-        
+
         return self::SUCCESS;
     }
 

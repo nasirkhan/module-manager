@@ -53,8 +53,7 @@ class ListCommand extends Command
 
                   <info>%command.full_name% --raw</info>
                 EOF
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

@@ -38,7 +38,7 @@ use Carbon\WeekDay;
 trait Boundaries
 {
     /**
-     * Resets the time to 00:00:00 start of day
+     * Resets the time to 00:00:00 start of day.
      *
      * @example
      * ```
@@ -53,7 +53,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the time to 23:59:59.999999 end of day
+     * Resets the time to 23:59:59.999999 end of day.
      *
      * @example
      * ```
@@ -68,7 +68,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the date to the first day of the month and the time to 00:00:00
+     * Resets the date to the first day of the month and the time to 00:00:00.
      *
      * @example
      * ```
@@ -83,7 +83,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the date to end of the month and time to 23:59:59.999999
+     * Resets the date to end of the month and time to 23:59:59.999999.
      *
      * @example
      * ```
@@ -98,7 +98,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the date to the first day of the quarter and the time to 00:00:00
+     * Resets the date to the first day of the quarter and the time to 00:00:00.
      *
      * @example
      * ```
@@ -115,7 +115,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the date to end of the quarter and time to 23:59:59.999999
+     * Resets the date to end of the quarter and time to 23:59:59.999999.
      *
      * @example
      * ```
@@ -130,7 +130,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the date to the first day of the year and the time to 00:00:00
+     * Resets the date to the first day of the year and the time to 00:00:00.
      *
      * @example
      * ```
@@ -145,7 +145,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the date to end of the year and time to 23:59:59.999999
+     * Resets the date to end of the year and time to 23:59:59.999999.
      *
      * @example
      * ```
@@ -160,7 +160,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the date to the first day of the decade and the time to 00:00:00
+     * Resets the date to the first day of the decade and the time to 00:00:00.
      *
      * @example
      * ```
@@ -177,7 +177,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the date to end of the decade and time to 23:59:59.999999
+     * Resets the date to end of the decade and time to 23:59:59.999999.
      *
      * @example
      * ```
@@ -194,7 +194,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the date to the first day of the century and the time to 00:00:00
+     * Resets the date to the first day of the century and the time to 00:00:00.
      *
      * @example
      * ```
@@ -211,7 +211,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the date to end of the century and time to 23:59:59.999999
+     * Resets the date to end of the century and time to 23:59:59.999999.
      *
      * @example
      * ```
@@ -228,7 +228,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the date to the first day of the millennium and the time to 00:00:00
+     * Resets the date to the first day of the millennium and the time to 00:00:00.
      *
      * @example
      * ```
@@ -245,7 +245,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the date to end of the millennium and time to 23:59:59.999999
+     * Resets the date to end of the millennium and time to 23:59:59.999999.
      *
      * @example
      * ```
@@ -262,7 +262,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the date to the first day of week (defined in $weekStartsAt) and the time to 00:00:00
+     * Resets the date to the first day of week (defined in $weekStartsAt) and the time to 00:00:00.
      *
      * @example
      * ```
@@ -271,8 +271,7 @@ trait Boundaries
      * echo Carbon::parse('2018-07-25 12:45:16')->startOfWeek(Carbon::SUNDAY) . "\n";
      * ```
      *
-     * @param WeekDay|int|null $weekStartsAt optional start allow you to specify the day of week to use to start the week
-     *
+     * @param  WeekDay|int|null  $weekStartsAt  optional start allow you to specify the day of week to use to start the week
      * @return static
      */
     public function startOfWeek(WeekDay|int|null $weekStartsAt = null): static
@@ -286,7 +285,7 @@ trait Boundaries
     }
 
     /**
-     * Resets the date to end of week (defined in $weekEndsAt) and time to 23:59:59.999999
+     * Resets the date to end of week (defined in $weekEndsAt) and time to 23:59:59.999999.
      *
      * @example
      * ```
@@ -295,8 +294,7 @@ trait Boundaries
      * echo Carbon::parse('2018-07-25 12:45:16')->endOfWeek(Carbon::SATURDAY) . "\n";
      * ```
      *
-     * @param WeekDay|int|null $weekEndsAt optional end allow you to specify the day of week to use to end the week
-     *
+     * @param  WeekDay|int|null  $weekEndsAt  optional end allow you to specify the day of week to use to end the week
      * @return static
      */
     public function endOfWeek(WeekDay|int|null $weekEndsAt = null): static
@@ -310,7 +308,7 @@ trait Boundaries
     }
 
     /**
-     * Modify to start of current hour, minutes and seconds become 0
+     * Modify to start of current hour, minutes and seconds become 0.
      *
      * @example
      * ```
@@ -323,7 +321,7 @@ trait Boundaries
     }
 
     /**
-     * Modify to end of current hour, minutes and seconds become 59
+     * Modify to end of current hour, minutes and seconds become 59.
      *
      * @example
      * ```
@@ -336,7 +334,7 @@ trait Boundaries
     }
 
     /**
-     * Modify to start of current minute, seconds become 0
+     * Modify to start of current minute, seconds become 0.
      *
      * @example
      * ```
@@ -349,7 +347,7 @@ trait Boundaries
     }
 
     /**
-     * Modify to end of current minute, seconds become 59
+     * Modify to end of current minute, seconds become 59.
      *
      * @example
      * ```
@@ -362,7 +360,7 @@ trait Boundaries
     }
 
     /**
-     * Modify to start of current second, microseconds become 0
+     * Modify to start of current second, microseconds become 0.
      *
      * @example
      * ```
@@ -377,7 +375,7 @@ trait Boundaries
     }
 
     /**
-     * Modify to end of current second, microseconds become 999999
+     * Modify to end of current second, microseconds become 999999.
      *
      * @example
      * ```
@@ -392,7 +390,7 @@ trait Boundaries
     }
 
     /**
-     * Modify to start of current millisecond, microseconds such as 12345 become 123000
+     * Modify to start of current millisecond, microseconds such as 12345 become 123000.
      *
      * @example
      * ```
@@ -409,7 +407,7 @@ trait Boundaries
     }
 
     /**
-     * Modify to end of current millisecond, microseconds such as 12345 become 123999
+     * Modify to end of current millisecond, microseconds such as 12345 become 123999.
      *
      * @example
      * ```
@@ -439,7 +437,7 @@ trait Boundaries
     {
         $ucfUnit = ucfirst($unit instanceof Unit ? $unit->value : static::singularUnit($unit));
         $method = "startOf$ucfUnit";
-        if (!method_exists($this, $method)) {
+        if (! method_exists($this, $method)) {
             throw new UnknownUnitException($unit);
         }
 
@@ -460,7 +458,7 @@ trait Boundaries
     {
         $ucfUnit = ucfirst($unit instanceof Unit ? $unit->value : static::singularUnit($unit));
         $method = "endOf$ucfUnit";
-        if (!method_exists($this, $method)) {
+        if (! method_exists($this, $method)) {
             throw new UnknownUnitException($unit);
         }
 

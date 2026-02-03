@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -35,7 +35,7 @@ use function strlen;
 use const STR_PAD_LEFT;
 
 /**
- * DefaultTimeGenerator generates strings of binary data based on a node ID, clock sequence, and the current time
+ * DefaultTimeGenerator generates strings of binary data based on a node ID, clock sequence, and the current time.
  */
 class DefaultTimeGenerator implements TimeGeneratorInterface
 {
@@ -63,7 +63,7 @@ class DefaultTimeGenerator implements TimeGeneratorInterface
         if ($clockSeq === null) {
             try {
                 // This does not use "stable storage"; see RFC 9562, section 6.3.
-                $clockSeq = random_int(0, 0x3fff);
+                $clockSeq = random_int(0, 0x3FFF);
             } catch (Throwable $exception) {
                 throw new RandomSourceException($exception->getMessage(), (int) $exception->getCode(), $exception);
             }
@@ -84,21 +84,20 @@ class DefaultTimeGenerator implements TimeGeneratorInterface
 
         $timeBytes = (string) hex2bin($timeHex);
 
-        return $timeBytes[4] . $timeBytes[5] . $timeBytes[6] . $timeBytes[7]
-            . $timeBytes[2] . $timeBytes[3] . $timeBytes[0] . $timeBytes[1]
-            . pack('n*', $clockSeq) . $node;
+        return $timeBytes[4].$timeBytes[5].$timeBytes[6].$timeBytes[7]
+            .$timeBytes[2].$timeBytes[3].$timeBytes[0].$timeBytes[1]
+            .pack('n*', $clockSeq).$node;
     }
 
     /**
-     * Uses the node provider given when constructing this instance to get the node ID (usually a MAC address)
+     * Uses the node provider given when constructing this instance to get the node ID (usually a MAC address).
      *
-     * @param int | string | null $node A node value that may be used to override the node provider
-     *
+     * @param  int | string | null  $node  A node value that may be used to override the node provider
      * @return string 6-byte binary string representation of the node
      *
      * @throws InvalidArgumentException
      */
-    private function getValidNode(int | string | null $node): string
+    private function getValidNode(int|string|null $node): string
     {
         if ($node === null) {
             $node = $this->nodeProvider->getNode();
@@ -109,7 +108,7 @@ class DefaultTimeGenerator implements TimeGeneratorInterface
             $node = dechex($node);
         }
 
-        if (!preg_match('/^[A-Fa-f0-9]+$/', (string) $node) || strlen((string) $node) > 12) {
+        if (! preg_match('/^[A-Fa-f0-9]+$/', (string) $node) || strlen((string) $node) > 12) {
             throw new InvalidArgumentException('Invalid node value');
         }
 

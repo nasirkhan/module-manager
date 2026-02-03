@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/collection library
+ * This file is part of the ramsey/collection library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -95,6 +95,7 @@ use RuntimeException;
  * `poll()` method to indicate that the queue contains no elements.
  *
  * @template T
+ *
  * @extends ArrayInterface<T>
  */
 interface QueueInterface extends ArrayInterface
@@ -120,14 +121,13 @@ interface QueueInterface extends ArrayInterface
      *
      * @see self::offer()
      *
-     * @param T $element The element to add to this queue.
-     *
+     * @param  T  $element  The element to add to this queue.
      * @return bool `true` if this queue changed as a result of the call.
      *
      * @throws RuntimeException if a queue refuses to add a particular element
-     *     for any reason other than that it already contains the element.
-     *     Implementations should use a more-specific exception that extends
-     *     `\RuntimeException`.
+     *                          for any reason other than that it already contains the element.
+     *                          Implementations should use a more-specific exception that extends
+     *                          `\RuntimeException`.
      */
     public function add(mixed $element): bool;
 
@@ -155,8 +155,7 @@ interface QueueInterface extends ArrayInterface
      *
      * @see self::add()
      *
-     * @param T $element The element to add to this queue.
-     *
+     * @param  T  $element  The element to add to this queue.
      * @return bool `true` if the element was added to this queue, else `false`.
      */
     public function offer(mixed $element): bool;

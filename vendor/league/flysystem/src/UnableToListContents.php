@@ -11,8 +11,8 @@ final class UnableToListContents extends RuntimeException implements FilesystemO
 {
     public static function atLocation(string $location, bool $deep, Throwable $previous): UnableToListContents
     {
-        $message = "Unable to list contents for '$location', " . ($deep ? 'deep' : 'shallow') . " listing\n\n"
-            . 'Reason: ' . $previous->getMessage();
+        $message = "Unable to list contents for '$location', ".($deep ? 'deep' : 'shallow')." listing\n\n"
+            .'Reason: '.$previous->getMessage();
 
         return new UnableToListContents($message, 0, $previous);
     }

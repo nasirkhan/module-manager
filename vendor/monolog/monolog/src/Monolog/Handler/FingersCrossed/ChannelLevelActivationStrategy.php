@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -13,8 +15,8 @@ namespace Monolog\Handler\FingersCrossed;
 
 use Monolog\Level;
 use Monolog\Logger;
-use Psr\Log\LogLevel;
 use Monolog\LogRecord;
+use Psr\Log\LogLevel;
 
 /**
  * Channel and Error level based monolog activation strategy. Allows to trigger activation
@@ -46,8 +48,8 @@ class ChannelLevelActivationStrategy implements ActivationStrategyInterface
     private array $channelToActionLevel;
 
     /**
-     * @param int|string|Level|LogLevel::*                $defaultActionLevel   The default action level to be used if the record's category doesn't match any
-     * @param array<string, int|string|Level|LogLevel::*> $channelToActionLevel An array that maps channel names to action levels.
+     * @param  int|string|Level|LogLevel::*  $defaultActionLevel  The default action level to be used if the record's category doesn't match any
+     * @param  array<string, int|string|Level|LogLevel::*>  $channelToActionLevel  An array that maps channel names to action levels.
      *
      * @phpstan-param value-of<Level::VALUES>|value-of<Level::NAMES>|Level|LogLevel::* $defaultActionLevel
      * @phpstan-param array<string, value-of<Level::VALUES>|value-of<Level::NAMES>|Level|LogLevel::*> $channelToActionLevel

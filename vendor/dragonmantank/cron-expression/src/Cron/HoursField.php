@@ -50,22 +50,24 @@ class HoursField extends AbstractField
 
         // Are we on the edge of a transition
         $lastTransition = $this->getPastTransition($date);
-        if (($lastTransition !== null) && ($lastTransition["ts"] > ((int) $date->format('U') - 3600))) {
+        if (($lastTransition !== null) && ($lastTransition['ts'] > ((int) $date->format('U') - 3600))) {
             $dtLastOffset = clone $date;
-            $this->timezoneSafeModify($dtLastOffset, "-1 hour");
+            $this->timezoneSafeModify($dtLastOffset, '-1 hour');
             $lastOffset = $dtLastOffset->getOffset();
 
             $dtNextOffset = clone $date;
-            $this->timezoneSafeModify($dtNextOffset, "+1 hour");
+            $this->timezoneSafeModify($dtNextOffset, '+1 hour');
             $nextOffset = $dtNextOffset->getOffset();
 
             $offsetChange = $nextOffset - $lastOffset;
             if ($offsetChange >= 3600) {
                 $checkValue -= 1;
+
                 return $this->isSatisfied($checkValue, $value);
             }
             if ((! $invert) && ($offsetChange <= -3600)) {
                 $checkValue += 1;
+
                 return $this->isSatisfied($checkValue, $value);
             }
         }
@@ -87,7 +89,7 @@ class HoursField extends AbstractField
             // We start a day before current time so we can differentiate between the first transition entry
             // and a change that happens now
             $dtLimitStart = clone $date;
-            $dtLimitStart = $dtLimitStart->modify("-12 months");
+            $dtLimitStart = $dtLimitStart->modify('-12 months');
             $dtLimitEnd = clone $date;
             $dtLimitEnd = $dtLimitEnd->modify('+12 months');
 
@@ -104,24 +106,24 @@ class HoursField extends AbstractField
 
         $nextTransition = null;
         foreach ($this->transitions as $transition) {
-            if ($transition["ts"] > $currentTimestamp) {
+            if ($transition['ts'] > $currentTimestamp) {
                 continue;
             }
 
-            if (($nextTransition !== null) && ($transition["ts"] < $nextTransition["ts"])) {
+            if (($nextTransition !== null) && ($transition['ts'] < $nextTransition['ts'])) {
                 continue;
             }
 
             $nextTransition = $transition;
         }
 
-        return ($nextTransition ?? null);
+        return $nextTransition ?? null;
     }
 
     /**
      * {@inheritdoc}
      *
-     * @param string|null                  $parts
+     * @param  string|null  $parts
      */
     public function increment(DateTimeInterface &$date, $invert = false, $parts = null): FieldInterface
     {
@@ -138,6 +140,7 @@ class HoursField extends AbstractField
             }
 
             $date = $this->setTimeHour($date, $invert, $originalTimestamp);
+
             return $this;
         }
 
@@ -151,8 +154,8 @@ class HoursField extends AbstractField
         $position = $invert ? \count($hours) - 1 : 0;
         $countHours = \count($hours);
         if ($countHours > 1) {
-            for ($i = 0; $i < $countHours - 1; ++$i) {
-                if ((!$invert && $current_hour >= $hours[$i] && $current_hour < $hours[$i + 1]) ||
+            for ($i = 0; $i < $countHours - 1; $i++) {
+                if ((! $invert && $current_hour >= $hours[$i] && $current_hour < $hours[$i + 1]) ||
                     ($invert && $current_hour > $hours[$i] && $current_hour <= $hours[$i + 1])) {
                     $position = $invert ? $i : $i + 1;
 
@@ -162,10 +165,10 @@ class HoursField extends AbstractField
         }
 
         $target = (int) $hours[$position];
-        $originalHour = (int)$date->format('H');
-        $originalDst = (int)$date->format('I');
+        $originalHour = (int) $date->format('H');
+        $originalDst = (int) $date->format('I');
 
-        $originalDay = (int)$date->format('d');
+        $originalDay = (int) $date->format('d');
         $previousOffset = $date->getOffset();
 
         if (! $invert) {
@@ -173,14 +176,14 @@ class HoursField extends AbstractField
                 $distance = 24 - $originalHour;
                 $date = $this->timezoneSafeModify($date, "+{$distance} hours");
 
-                $actualDay = (int)$date->format('d');
-                $actualHour = (int)$date->format('H');
+                $actualDay = (int) $date->format('d');
+                $actualHour = (int) $date->format('H');
                 if (($actualDay !== ($originalDay + 1)) && ($actualHour !== 0)) {
                     $offsetChange = ($previousOffset - $date->getOffset());
                     $date = $this->timezoneSafeModify($date, "+{$offsetChange} seconds");
                 }
 
-                $originalHour = (int)$date->format('H');
+                $originalHour = (int) $date->format('H');
             }
 
             $distance = $target - $originalHour;
@@ -188,32 +191,32 @@ class HoursField extends AbstractField
         } else {
             if ($originalHour <= $target) {
                 $distance = ($originalHour + 1);
-                $date = $this->timezoneSafeModify($date, "-" . $distance . " hours");
+                $date = $this->timezoneSafeModify($date, '-'.$distance.' hours');
 
-                $actualDay = (int)$date->format('d');
-                $actualHour = (int)$date->format('H');
+                $actualDay = (int) $date->format('d');
+                $actualHour = (int) $date->format('H');
                 if (($actualDay !== ($originalDay - 1)) && ($actualHour !== 23)) {
                     $offsetChange = ($previousOffset - $date->getOffset());
                     $date = $this->timezoneSafeModify($date, "+{$offsetChange} seconds");
                 }
 
-                $originalHour = (int)$date->format('H');
+                $originalHour = (int) $date->format('H');
             }
 
             $distance = $originalHour - $target;
             $date = $this->timezoneSafeModify($date, "-{$distance} hours");
         }
 
-        $actualDst = (int)$date->format('I');
+        $actualDst = (int) $date->format('I');
         if ($originalDst < $actualDst) {
-            $date = $this->timezoneSafeModify($date, "-1 hours");
+            $date = $this->timezoneSafeModify($date, '-1 hours');
         }
 
         $date = $this->setTimeHour($date, $invert, $originalTimestamp);
 
-        $actualHour = (int)$date->format('H');
+        $actualHour = (int) $date->format('H');
         if ($invert && ($actualHour === ($target - 1) || (($actualHour === 23) && ($target === 0)))) {
-            $date = $this->timezoneSafeModify($date, "+1 hour");
+            $date = $this->timezoneSafeModify($date, '+1 hour');
         }
 
         return $this;

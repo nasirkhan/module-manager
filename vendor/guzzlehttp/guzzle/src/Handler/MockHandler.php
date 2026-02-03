@@ -48,9 +48,9 @@ class MockHandler implements \Countable
      * Creates a new MockHandler that uses the default handler stack list of
      * middlewares.
      *
-     * @param array|null    $queue       Array of responses, callables, or exceptions.
-     * @param callable|null $onFulfilled Callback to invoke when the return value is fulfilled.
-     * @param callable|null $onRejected  Callback to invoke when the return value is rejected.
+     * @param  array|null  $queue  Array of responses, callables, or exceptions.
+     * @param  callable|null  $onFulfilled  Callback to invoke when the return value is fulfilled.
+     * @param  callable|null  $onRejected  Callback to invoke when the return value is rejected.
      */
     public static function createWithMiddleware(?array $queue = null, ?callable $onFulfilled = null, ?callable $onRejected = null): HandlerStack
     {
@@ -62,9 +62,9 @@ class MockHandler implements \Countable
      * {@see ResponseInterface} objects, Exceptions,
      * callables, or Promises.
      *
-     * @param array<int, mixed>|null $queue       The parameters to be passed to the append function, as an indexed array.
-     * @param callable|null          $onFulfilled Callback to invoke when the return value is fulfilled.
-     * @param callable|null          $onRejected  Callback to invoke when the return value is rejected.
+     * @param  array<int, mixed>|null  $queue  The parameters to be passed to the append function, as an indexed array.
+     * @param  callable|null  $onFulfilled  Callback to invoke when the return value is fulfilled.
+     * @param  callable|null  $onRejected  Callback to invoke when the return value is rejected.
      */
     public function __construct(?array $queue = null, ?callable $onFulfilled = null, ?callable $onRejected = null)
     {
@@ -79,7 +79,7 @@ class MockHandler implements \Countable
 
     public function __invoke(RequestInterface $request, array $options): PromiseInterface
     {
-        if (!$this->queue) {
+        if (! $this->queue) {
             throw new \OutOfBoundsException('Mock queue is empty');
         }
 
@@ -92,7 +92,7 @@ class MockHandler implements \Countable
         $response = \array_shift($this->queue);
 
         if (isset($options['on_headers'])) {
-            if (!\is_callable($options['on_headers'])) {
+            if (! \is_callable($options['on_headers'])) {
                 throw new \InvalidArgumentException('on_headers must be callable');
             }
             try {
@@ -148,7 +148,7 @@ class MockHandler implements \Countable
      * Adds one or more variadic requests, exceptions, callables, or promises
      * to the queue.
      *
-     * @param mixed ...$values
+     * @param  mixed  ...$values
      */
     public function append(...$values): void
     {
@@ -195,7 +195,7 @@ class MockHandler implements \Countable
     }
 
     /**
-     * @param mixed $reason Promise or reason.
+     * @param  mixed  $reason  Promise or reason.
      */
     private function invokeStats(
         RequestInterface $request,

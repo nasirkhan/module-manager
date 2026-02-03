@@ -61,7 +61,7 @@ class RedisSessionHandler extends AbstractSessionHandler
         $ttl = ($this->ttl instanceof \Closure ? ($this->ttl)() : $this->ttl) ?? \ini_get('session.gc_maxlifetime');
         $result = $this->redis->setEx($this->prefix.$sessionId, (int) $ttl, $data);
 
-        return $result && !$result instanceof ErrorInterface;
+        return $result && ! $result instanceof ErrorInterface;
     }
 
     protected function doDestroy(#[\SensitiveParameter] string $sessionId): bool
@@ -76,7 +76,7 @@ class RedisSessionHandler extends AbstractSessionHandler
             }
         }
 
-        if (!$unlink) {
+        if (! $unlink) {
             $this->redis->del($this->prefix.$sessionId);
         }
 

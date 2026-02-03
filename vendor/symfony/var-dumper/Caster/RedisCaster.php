@@ -53,7 +53,7 @@ class RedisCaster
     {
         $prefix = Caster::PREFIX_VIRTUAL;
 
-        if (!$connected = $c->isConnected()) {
+        if (! $connected = $c->isConnected()) {
             return $a + [
                 $prefix.'isConnected' => $connected,
             ];

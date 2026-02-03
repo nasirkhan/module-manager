@@ -168,7 +168,7 @@ class Profile
     /**
      * Sets children profiler.
      *
-     * @param Profile[] $children
+     * @param  Profile[]  $children
      */
     public function setChildren(array $children): void
     {
@@ -205,7 +205,7 @@ class Profile
      */
     public function getCollector(string $name): DataCollectorInterface
     {
-        if (!isset($this->collectors[$name])) {
+        if (! isset($this->collectors[$name])) {
             throw new \InvalidArgumentException(\sprintf('Collector "%s" does not exist.', $name));
         }
 
@@ -225,7 +225,7 @@ class Profile
     /**
      * Sets the Collectors associated with this profile.
      *
-     * @param DataCollectorInterface[] $collectors
+     * @param  DataCollectorInterface[]  $collectors
      */
     public function setCollectors(array $collectors): void
     {

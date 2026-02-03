@@ -17,12 +17,12 @@ use League\Config\Exception\UnknownOptionException;
 use League\Config\Exception\ValidationException;
 
 /**
- * Interface for reading configuration values
+ * Interface for reading configuration values.
  */
 interface ConfigurationInterface
 {
     /**
-     * @param string $key Configuration option path/key
+     * @param  string  $key  Configuration option path/key
      *
      * @psalm-param non-empty-string $key
      *
@@ -34,7 +34,7 @@ interface ConfigurationInterface
     public function get(string $key);
 
     /**
-     * @param string $key Configuration option path/key
+     * @param  string  $key  Configuration option path/key
      *
      * @psalm-param non-empty-string $key
      *

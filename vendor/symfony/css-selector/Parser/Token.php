@@ -32,7 +32,7 @@ class Token
     public const TYPE_STRING = 'string';
 
     /**
-     * @param self::TYPE_*|null $type
+     * @param  self::TYPE_*|null  $type
      */
     public function __construct(
         private ?string $type,
@@ -70,7 +70,7 @@ class Token
             return false;
         }
 
-        if (!$values) {
+        if (! $values) {
             return true;
         }
 

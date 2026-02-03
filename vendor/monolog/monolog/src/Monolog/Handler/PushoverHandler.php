@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -13,14 +15,15 @@ namespace Monolog\Handler;
 
 use Monolog\Level;
 use Monolog\Logger;
+use Monolog\LogRecord;
 use Monolog\Utils;
 use Psr\Log\LogLevel;
-use Monolog\LogRecord;
 
 /**
- * Sends notifications through the pushover api to mobile phones
+ * Sends notifications through the pushover api to mobile phones.
  *
  * @author Sebastian Göttschkes <sebastian.goettschkes@googlemail.com>
+ *
  * @see    https://www.pushover.net/api
  */
 class PushoverHandler extends SocketHandler
@@ -45,8 +48,10 @@ class PushoverHandler extends SocketHandler
     private bool $useFormattedMessage = false;
 
     /**
-     * All parameters that can be sent to Pushover
+     * All parameters that can be sent to Pushover.
+     *
      * @see https://pushover.net/api
+     *
      * @var array<string, bool>
      */
     private array $parameterNames = [
@@ -66,8 +71,10 @@ class PushoverHandler extends SocketHandler
     ];
 
     /**
-     * Sounds the api supports by default
+     * Sounds the api supports by default.
+     *
      * @see https://pushover.net/api#sounds
+     *
      * @var string[]
      */
     private array $sounds = [
@@ -77,21 +84,19 @@ class PushoverHandler extends SocketHandler
     ];
 
     /**
-     * @param string       $token  Pushover api token
-     * @param string|array $users  Pushover user id or array of ids the message will be sent to
-     * @param string|null  $title  Title sent to the Pushover API
-     * @param bool         $useSSL Whether to connect via SSL. Required when pushing messages to users that are not
-     *                             the pushover.net app owner. OpenSSL is required for this option.
-     * @param int          $retry  The retry parameter specifies how often (in seconds) the Pushover servers will
-     *                             send the same notification to the user.
-     * @param int          $expire The expire parameter specifies how many seconds your notification will continue
-     *                             to be retried for (every retry seconds).
-     *
-     * @param int|string|Level|LogLevel::* $highPriorityLevel The minimum logging level at which this handler will start
-     *                                                        sending "high priority" requests to the Pushover API
-     * @param int|string|Level|LogLevel::* $emergencyLevel    The minimum logging level at which this handler will start
+     * @param  string  $token  Pushover api token
+     * @param  string|array  $users  Pushover user id or array of ids the message will be sent to
+     * @param  string|null  $title  Title sent to the Pushover API
+     * @param  bool  $useSSL  Whether to connect via SSL. Required when pushing messages to users that are not
+     *                        the pushover.net app owner. OpenSSL is required for this option.
+     * @param  int  $retry  The retry parameter specifies how often (in seconds) the Pushover servers will
+     *                      send the same notification to the user.
+     * @param  int  $expire  The expire parameter specifies how many seconds your notification will continue
+     *                       to be retried for (every retry seconds).
+     * @param  int|string|Level|LogLevel::*  $highPriorityLevel  The minimum logging level at which this handler will start
+     *                                                           sending "high priority" requests to the Pushover API
+     * @param  int|string|Level|LogLevel::*  $emergencyLevel  The minimum logging level at which this handler will start
      *                                                        sending "emergency" requests to the Pushover API
-     *
      *
      * @phpstan-param string|array<int|string>    $users
      * @phpstan-param value-of<Level::VALUES>|value-of<Level::NAMES>|Level|LogLevel::* $highPriorityLevel
@@ -139,7 +144,7 @@ class PushoverHandler extends SocketHandler
     {
         $content = $this->buildContent($record);
 
-        return $this->buildHeader($content) . $content;
+        return $this->buildHeader($content).$content;
     }
 
     private function buildContent(LogRecord $record): string
@@ -176,7 +181,7 @@ class PushoverHandler extends SocketHandler
         $dataArray = array_merge($extra, $context, $dataArray);
 
         // Only pass sounds that are supported by the API
-        if (isset($dataArray['sound']) && !\in_array($dataArray['sound'], $this->sounds, true)) {
+        if (isset($dataArray['sound']) && ! \in_array($dataArray['sound'], $this->sounds, true)) {
             unset($dataArray['sound']);
         }
 
@@ -188,7 +193,7 @@ class PushoverHandler extends SocketHandler
         $header = "POST /1/messages.json HTTP/1.1\r\n";
         $header .= "Host: api.pushover.net\r\n";
         $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-        $header .= "Content-Length: " . \strlen($content) . "\r\n";
+        $header .= 'Content-Length: '.\strlen($content)."\r\n";
         $header .= "\r\n";
 
         return $header;
@@ -207,7 +212,7 @@ class PushoverHandler extends SocketHandler
     }
 
     /**
-     * @param  int|string|Level|LogLevel::* $level
+     * @param  int|string|Level|LogLevel::*  $level
      * @return $this
      *
      * @phpstan-param value-of<Level::VALUES>|value-of<Level::NAMES>|Level|LogLevel::* $level
@@ -220,7 +225,7 @@ class PushoverHandler extends SocketHandler
     }
 
     /**
-     * @param  int|string|Level|LogLevel::* $level
+     * @param  int|string|Level|LogLevel::*  $level
      * @return $this
      *
      * @phpstan-param value-of<Level::VALUES>|value-of<Level::NAMES>|Level|LogLevel::* $level

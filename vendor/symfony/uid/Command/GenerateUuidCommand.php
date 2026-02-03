@@ -78,8 +78,7 @@ class GenerateUuidCommand extends Command
 
                     <info>php %command.full_name% --format=base58</info>
                 EOF
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -134,7 +133,7 @@ class GenerateUuidCommand extends Command
                 break;
 
             case null !== $name:
-                if ($namespace && !\in_array($namespace, ['dns', 'url', 'oid', 'x500'], true)) {
+                if ($namespace && ! \in_array($namespace, ['dns', 'url', 'oid', 'x500'], true)) {
                     try {
                         $namespace = Uuid::fromString($namespace);
                     } catch (\InvalidArgumentException $e) {
@@ -176,7 +175,7 @@ class GenerateUuidCommand extends Command
 
         $count = (int) $input->getOption('count');
         try {
-            for ($i = 0; $i < $count; ++$i) {
+            for ($i = 0; $i < $count; $i++) {
                 $output->writeln($create()->$format());
             }
         } catch (\Exception $e) {

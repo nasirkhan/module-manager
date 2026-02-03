@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -33,9 +33,9 @@ final class Converter
     private const REGEXP_INVALID_CHARS = '/[\x00-\x1f\x7f]/';
 
     /**
-     * @param non-empty-string $separator the query string separator
-     * @param array<string> $fromRfc3986 contains all the RFC3986 encoded characters to be converted
-     * @param array<string> $toEncoding contains all the expected encoded characters
+     * @param  non-empty-string  $separator  the query string separator
+     * @param  array<string>  $fromRfc3986  contains all the RFC3986 encoded characters to be converted
+     * @param  array<string>  $toEncoding  contains all the expected encoded characters
      */
     private function __construct(
         private readonly string $separator,
@@ -48,7 +48,7 @@ final class Converter
     }
 
     /**
-     * @param non-empty-string $separator
+     * @param  non-empty-string  $separator
      */
     public static function new(string $separator): self
     {
@@ -56,7 +56,7 @@ final class Converter
     }
 
     /**
-     * @param non-empty-string $separator
+     * @param  non-empty-string  $separator
      */
     public static function fromRFC3986(string $separator = '&'): self
     {
@@ -64,7 +64,7 @@ final class Converter
     }
 
     /**
-     * @param non-empty-string $separator
+     * @param  non-empty-string  $separator
      */
     public static function fromRFC1738(string $separator = '&'): self
     {
@@ -73,7 +73,7 @@ final class Converter
     }
 
     /**
-     * @param non-empty-string $separator
+     * @param  non-empty-string  $separator
      *
      * @see https://url.spec.whatwg.org/#application/x-www-form-urlencoded
      */
@@ -130,14 +130,14 @@ final class Converter
     }
 
     /**
-     * @param iterable<array{0:string|null, 1:BackedEnum|Stringable|string|bool|int|float|null}> $pairs
+     * @param  iterable<array{0:string|null, 1:BackedEnum|Stringable|string|bool|int|float|null}>  $pairs
      */
     public function toValue(iterable $pairs): ?string
     {
         $filteredPairs = [];
         foreach ($pairs as $pair) {
             $filteredPairs[] = match (true) {
-                !is_string($pair[0]) => throw new SyntaxError('the pair key MUST be a string;, `'.gettype($pair[0]).'` given.'),
+                ! is_string($pair[0]) => throw new SyntaxError('the pair key MUST be a string;, `'.gettype($pair[0]).'` given.'),
                 null === $pair[1] => StringCoercionMode::Native->coerce($pair[0]),
                 default => StringCoercionMode::Native->coerce($pair[0]).'='.StringCoercionMode::Native->coerce($pair[1]),
             };
@@ -150,7 +150,7 @@ final class Converter
     }
 
     /**
-     * @param non-empty-string $separator
+     * @param  non-empty-string  $separator
      */
     public function withSeparator(string $separator): self
     {
@@ -172,7 +172,7 @@ final class Converter
         $toEncoding = [];
         foreach ($encodingMap as $from => $to) {
             [$fromRfc3986[], $toEncoding[]] = match (true) {
-                !is_string($from) => throw new SyntaxError('The encoding output must be a string; `'.gettype($from).'` given.'),
+                ! is_string($from) => throw new SyntaxError('The encoding output must be a string; `'.gettype($from).'` given.'),
                 $to instanceof Stringable,
                 is_string($to) => [$from, (string) $to],
                 default => throw new SyntaxError('The encoding output must be a string; `'.gettype($to).'` given.'),

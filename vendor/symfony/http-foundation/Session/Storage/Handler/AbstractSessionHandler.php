@@ -31,7 +31,7 @@ abstract class AbstractSessionHandler implements \SessionHandlerInterface, \Sess
     public function open(string $savePath, string $sessionName): bool
     {
         $this->sessionName = $sessionName;
-        if (!headers_sent() && !\ini_get('session.cache_limiter') && '0' !== \ini_get('session.cache_limiter')) {
+        if (! headers_sent() && ! \ini_get('session.cache_limiter') && '0' !== \ini_get('session.cache_limiter')) {
             header(\sprintf('Cache-Control: max-age=%d, private, must-revalidate', 60 * (int) \ini_get('session.cache_expire')));
         }
 
@@ -86,8 +86,8 @@ abstract class AbstractSessionHandler implements \SessionHandlerInterface, \Sess
 
     public function destroy(#[\SensitiveParameter] string $sessionId): bool
     {
-        if (!headers_sent() && filter_var(\ini_get('session.use_cookies'), \FILTER_VALIDATE_BOOL)) {
-            if (!isset($this->sessionName)) {
+        if (! headers_sent() && filter_var(\ini_get('session.use_cookies'), \FILTER_VALIDATE_BOOL)) {
+            if (! isset($this->sessionName)) {
                 throw new \LogicException(\sprintf('Session name cannot be empty, did you forget to call "parent::open()" in "%s"?.', static::class));
             }
             $cookie = SessionUtils::popSessionCookie($this->sessionName, $sessionId);

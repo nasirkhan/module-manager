@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -14,7 +16,7 @@ namespace Monolog\Handler;
 use Monolog\LogRecord;
 
 /**
- * Base Handler class providing the Handler structure, including processors and formatters
+ * Base Handler class providing the Handler structure, including processors and formatters.
  *
  * Classes extending it should (in most cases) only implement write($record)
  *
@@ -31,7 +33,7 @@ abstract class AbstractProcessingHandler extends AbstractHandler implements Proc
      */
     public function handle(LogRecord $record): bool
     {
-        if (!$this->isHandling($record)) {
+        if (! $this->isHandling($record)) {
             return false;
         }
 
@@ -47,7 +49,7 @@ abstract class AbstractProcessingHandler extends AbstractHandler implements Proc
     }
 
     /**
-     * Writes the (already formatted) record down to the log of the implementing handler
+     * Writes the (already formatted) record down to the log of the implementing handler.
      */
     abstract protected function write(LogRecord $record): void;
 

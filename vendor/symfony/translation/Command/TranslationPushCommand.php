@@ -100,15 +100,14 @@ final class TranslationPushCommand extends Command
                 Provider translations for the specified domains and locale are deleted if they're not present locally and overwritten if it's the case.
                 Provider translations for others domains and locales are ignored.
                 EOF
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $provider = $this->providers->get($input->getArgument('provider'));
 
-        if (!$this->enabledLocales) {
+        if (! $this->enabledLocales) {
             throw new InvalidArgumentException(\sprintf('You must define "framework.enabled_locales" or "framework.translator.providers.%s.locales" config key in order to work with translation providers.', parse_url($provider, \PHP_URL_SCHEME)));
         }
 
@@ -118,7 +117,7 @@ final class TranslationPushCommand extends Command
         $force = $input->getOption('force');
         $deleteMissing = $input->getOption('delete-missing');
 
-        if (!$domains && $provider instanceof FilteringProvider) {
+        if (! $domains && $provider instanceof FilteringProvider) {
             $domains = $provider->getDomains();
         }
 
@@ -126,11 +125,11 @@ final class TranslationPushCommand extends Command
         // in order to manage only translations from configured domains
         $localTranslations = $this->readLocalTranslations($locales, $domains, $this->transPaths);
 
-        if (!$domains) {
+        if (! $domains) {
             $domains = $this->getDomainsFromTranslatorBag($localTranslations);
         }
 
-        if (!$deleteMissing && $force) {
+        if (! $deleteMissing && $force) {
             $provider->write($localTranslations);
 
             $io->success(\sprintf('All local translations has been sent to "%s" (for "%s" locale(s), and "%s" domain(s)).', parse_url($provider, \PHP_URL_SCHEME), implode(', ', $locales), implode(', ', $domains)));

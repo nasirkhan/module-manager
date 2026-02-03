@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -26,7 +26,7 @@ use function hexdec;
 
 /**
  * DCE Security version, or version 2, UUIDs include local domain identifier, local ID for the specified domain, and
- * node values that are combined into a 128-bit unsigned integer
+ * node values that are combined into a 128-bit unsigned integer.
  *
  * It is important to note that a version 2 UUID suffers from some loss of timestamp fidelity, due to replacing the
  * time_low field with the local identifier. When constructing the timestamp value for date purposes, we replace the
@@ -52,13 +52,13 @@ final class UuidV2 extends Uuid implements UuidInterface
     use TimeTrait;
 
     /**
-     * Creates a version 2 (DCE Security) UUID
+     * Creates a version 2 (DCE Security) UUID.
      *
-     * @param Rfc4122FieldsInterface $fields The fields from which to construct a UUID
-     * @param NumberConverterInterface $numberConverter The number converter to use for converting hex values to/from integers
-     * @param CodecInterface $codec The codec to use when encoding or decoding UUID strings
-     * @param TimeConverterInterface $timeConverter The time converter to use for converting timestamps extracted from a
-     *     UUID to unix timestamps
+     * @param  Rfc4122FieldsInterface  $fields  The fields from which to construct a UUID
+     * @param  NumberConverterInterface  $numberConverter  The number converter to use for converting hex values to/from integers
+     * @param  CodecInterface  $codec  The codec to use when encoding or decoding UUID strings
+     * @param  TimeConverterInterface  $timeConverter  The time converter to use for converting timestamps extracted from a
+     *                                                 UUID to unix timestamps
      */
     public function __construct(
         Rfc4122FieldsInterface $fields,
@@ -76,7 +76,7 @@ final class UuidV2 extends Uuid implements UuidInterface
     }
 
     /**
-     * Returns the local domain used to create this version 2 UUID
+     * Returns the local domain used to create this version 2 UUID.
      */
     public function getLocalDomain(): int
     {
@@ -87,7 +87,7 @@ final class UuidV2 extends Uuid implements UuidInterface
     }
 
     /**
-     * Returns the string name of the local domain
+     * Returns the string name of the local domain.
      */
     public function getLocalDomainName(): string
     {
@@ -95,7 +95,7 @@ final class UuidV2 extends Uuid implements UuidInterface
     }
 
     /**
-     * Returns the local identifier for the domain used to create this version 2 UUID
+     * Returns the local identifier for the domain used to create this version 2 UUID.
      */
     public function getLocalIdentifier(): IntegerObject
     {

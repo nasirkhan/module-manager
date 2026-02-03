@@ -26,7 +26,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class EmphasisRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param Emphasis $node
+     * @param  Emphasis  $node
      *
      * {@inheritDoc}
      *

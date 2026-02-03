@@ -7,8 +7,7 @@ interface UriFactoryInterface
     /**
      * Create a new URI.
      *
-     * @param string $uri
-     *
+     * @param  string  $uri
      * @return UriInterface
      *
      * @throws \InvalidArgumentException If the given URI cannot be parsed.

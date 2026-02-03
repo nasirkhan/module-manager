@@ -33,7 +33,7 @@ class TableCell
             throw new InvalidArgumentException(\sprintf('The TableCell does not support the following options: \'%s\'.', implode('\', \'', $diff)));
         }
 
-        if (isset($options['style']) && !$options['style'] instanceof TableCellStyle) {
+        if (isset($options['style']) && ! $options['style'] instanceof TableCellStyle) {
             throw new InvalidArgumentException('The style option must be an instance of "TableCellStyle".');
         }
 

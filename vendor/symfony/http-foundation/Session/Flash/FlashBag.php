@@ -22,7 +22,7 @@ class FlashBag implements FlashBagInterface
     private array $flashes = [];
 
     /**
-     * @param string $storageKey The key used to store flashes in the session
+     * @param  string  $storageKey  The key used to store flashes in the session
      */
     public function __construct(
         private string $storageKey = '_symfony_flashes',
@@ -61,7 +61,7 @@ class FlashBag implements FlashBagInterface
 
     public function get(string $type, array $default = []): array
     {
-        if (!$this->has($type)) {
+        if (! $this->has($type)) {
             return $default;
         }
 

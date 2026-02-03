@@ -16,7 +16,7 @@ namespace League\CommonMark\Event;
 use League\CommonMark\Node\Block\Document;
 
 /**
- * Event dispatched when the document has been fully parsed
+ * Event dispatched when the document has been fully parsed.
  */
 final class DocumentParsedEvent extends AbstractEvent
 {

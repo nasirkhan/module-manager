@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -27,7 +27,7 @@ use function str_pad;
 use const STR_PAD_LEFT;
 
 /**
- * GenericTimeConverter uses the provided calculator to calculate and convert time values
+ * GenericTimeConverter uses the provided calculator to calculate and convert time values.
  *
  * @immutable
  */
@@ -75,6 +75,7 @@ class GenericTimeConverter implements TimeConverterInterface
          * the Gregorian calendar epoch for the given seconds and microseconds.
          *
          * @var IntegerObject $uuidTime
+         *
          * @phpstan-ignore possiblyImpure.new
          */
         $uuidTime = $this->calculator->add($sec, $usec, new IntegerObject(self::GREGORIAN_TO_UNIX_INTERVALS));

@@ -55,7 +55,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->updateLocale();
         $this->updateFallbackLocale();
 
-        if (!$this->app->bound('events')) {
+        if (! $this->app->bound('events')) {
             return;
         }
 

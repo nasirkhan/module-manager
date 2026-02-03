@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -25,7 +25,7 @@ use Ramsey\Uuid\Type\Integer as IntegerObject;
 use Ramsey\Uuid\Type\NumberInterface;
 
 /**
- * A calculator using the brick/math library for arbitrary-precision arithmetic
+ * A calculator using the brick/math library for arbitrary-precision arithmetic.
  *
  * @immutable
  */
@@ -109,7 +109,7 @@ final class BrickMathCalculator implements CalculatorInterface
         try {
             /** @phpstan-ignore possiblyImpure.new */
             return new IntegerObject((string) BigInteger::fromBase($value, $base));
-        } catch (MathException | \InvalidArgumentException $exception) {
+        } catch (MathException|\InvalidArgumentException $exception) {
             throw new InvalidArgumentException(
                 $exception->getMessage(),
                 (int) $exception->getCode(),
@@ -122,7 +122,7 @@ final class BrickMathCalculator implements CalculatorInterface
     {
         try {
             return BigInteger::of($value->toString())->toBase($base);
-        } catch (MathException | \InvalidArgumentException $exception) {
+        } catch (MathException|\InvalidArgumentException $exception) {
             throw new InvalidArgumentException(
                 $exception->getMessage(),
                 (int) $exception->getCode(),
@@ -143,7 +143,7 @@ final class BrickMathCalculator implements CalculatorInterface
     }
 
     /**
-     * Maps ramsey/uuid rounding modes to those used by brick/math
+     * Maps ramsey/uuid rounding modes to those used by brick/math.
      *
      * @return BrickMathRounding::*
      */

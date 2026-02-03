@@ -3,15 +3,15 @@
 namespace Egulias\EmailValidator\Parser;
 
 use Egulias\EmailValidator\EmailLexer;
-use Egulias\EmailValidator\Result\Result;
-use Egulias\EmailValidator\Result\ValidEmail;
+use Egulias\EmailValidator\Parser\CommentStrategy\LocalComment;
 use Egulias\EmailValidator\Result\InvalidEmail;
-use Egulias\EmailValidator\Warning\LocalTooLong;
+use Egulias\EmailValidator\Result\Reason\ConsecutiveDot;
 use Egulias\EmailValidator\Result\Reason\DotAtEnd;
 use Egulias\EmailValidator\Result\Reason\DotAtStart;
-use Egulias\EmailValidator\Result\Reason\ConsecutiveDot;
 use Egulias\EmailValidator\Result\Reason\ExpectingATEXT;
-use Egulias\EmailValidator\Parser\CommentStrategy\LocalComment;
+use Egulias\EmailValidator\Result\Result;
+use Egulias\EmailValidator\Result\ValidEmail;
+use Egulias\EmailValidator\Warning\LocalTooLong;
 
 class LocalPart extends PartParser
 {
@@ -23,7 +23,7 @@ class LocalPart extends PartParser
         EmailLexer::S_LOWERTHAN => EmailLexer::S_LOWERTHAN,
         EmailLexer::S_COLON => EmailLexer::S_COLON,
         EmailLexer::S_SEMICOLON => EmailLexer::S_SEMICOLON,
-        EmailLexer::INVALID => EmailLexer::INVALID
+        EmailLexer::INVALID => EmailLexer::INVALID,
     ];
 
     /**
@@ -31,13 +31,12 @@ class LocalPart extends PartParser
      */
     private $localPart = '';
 
-
     public function parse(): Result
     {
         $this->lexer->clearRecorded();
         $this->lexer->startRecording();
 
-        while (!$this->lexer->current->isA(EmailLexer::S_AT) && !$this->lexer->current->isA(EmailLexer::S_EMPTY)) {
+        while (! $this->lexer->current->isA(EmailLexer::S_AT) && ! $this->lexer->current->isA(EmailLexer::S_EMPTY)) {
             if ($this->hasDotAtStart()) {
                 return new InvalidEmail(new DotAtStart(), $this->lexer->current->value);
             }
@@ -106,6 +105,7 @@ class LocalPart extends PartParser
         if (isset(self::INVALID_TOKENS[$this->lexer->current->type])) {
             return new InvalidEmail(new ExpectingATEXT('Invalid token found'), $this->lexer->current->value);
         }
+
         return new ValidEmail();
     }
 
@@ -121,6 +121,7 @@ class LocalPart extends PartParser
         if ($resultFWS->isValid()) {
             $this->warnings = [...$this->warnings, ...$foldingWS->getWarnings()];
         }
+
         return $resultFWS;
     }
 
@@ -150,7 +151,7 @@ class LocalPart extends PartParser
     private function validateEscaping(): Result
     {
         //Backslash found
-        if (!$this->lexer->current->isA(EmailLexer::S_BACKSLASH)) {
+        if (! $this->lexer->current->isA(EmailLexer::S_BACKSLASH)) {
             return new ValidEmail();
         }
 

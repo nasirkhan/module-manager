@@ -22,7 +22,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class StrikethroughRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param Strikethrough $node
+     * @param  Strikethrough  $node
      *
      * {@inheritDoc}
      *

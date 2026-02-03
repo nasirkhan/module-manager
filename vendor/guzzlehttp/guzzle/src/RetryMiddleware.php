@@ -31,14 +31,14 @@ class RetryMiddleware
     private $delay;
 
     /**
-     * @param callable                                            $decider     Function that accepts the number of retries,
-     *                                                                         a request, [response], and [exception] and
-     *                                                                         returns true if the request is to be
-     *                                                                         retried.
-     * @param callable(RequestInterface, array): PromiseInterface $nextHandler Next handler to invoke.
-     * @param (callable(int): int)|null                           $delay       Function that accepts the number of retries
-     *                                                                         and returns the number of
-     *                                                                         milliseconds to delay.
+     * @param  callable  $decider  Function that accepts the number of retries,
+     *                             a request, [response], and [exception] and
+     *                             returns true if the request is to be
+     *                             retried.
+     * @param  callable(RequestInterface, array): PromiseInterface  $nextHandler  Next handler to invoke.
+     * @param  (callable(int): int)|null  $delay  Function that accepts the number of retries
+     *                                            and returns the number of
+     *                                            milliseconds to delay.
      */
     public function __construct(callable $decider, callable $nextHandler, ?callable $delay = null)
     {
@@ -59,7 +59,7 @@ class RetryMiddleware
 
     public function __invoke(RequestInterface $request, array $options): PromiseInterface
     {
-        if (!isset($options['retries'])) {
+        if (! isset($options['retries'])) {
             $options['retries'] = 0;
         }
 
@@ -73,12 +73,12 @@ class RetryMiddleware
     }
 
     /**
-     * Execute fulfilled closure
+     * Execute fulfilled closure.
      */
     private function onFulfilled(RequestInterface $request, array $options): callable
     {
         return function ($value) use ($request, $options) {
-            if (!($this->decider)(
+            if (! ($this->decider)(
                 $options['retries'],
                 $request,
                 $value,
@@ -92,12 +92,12 @@ class RetryMiddleware
     }
 
     /**
-     * Execute rejected closure
+     * Execute rejected closure.
      */
     private function onRejected(RequestInterface $req, array $options): callable
     {
         return function ($reason) use ($req, $options) {
-            if (!($this->decider)(
+            if (! ($this->decider)(
                 $options['retries'],
                 $req,
                 null,

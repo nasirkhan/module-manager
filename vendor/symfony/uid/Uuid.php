@@ -46,7 +46,7 @@ class Uuid extends AbstractUid
 
         $this->uid = strtolower($uuid);
 
-        if ($checkVariant && !\in_array($this->uid[19], ['8', '9', 'a', 'b'], true)) {
+        if ($checkVariant && ! \in_array($this->uid[19], ['8', '9', 'a', 'b'], true)) {
             throw new InvalidArgumentException(\sprintf('Invalid UUID%s.', static::TYPE ? 'v'.static::TYPE : ''));
         }
     }
@@ -67,7 +67,7 @@ class Uuid extends AbstractUid
             return new MaxUuid();
         }
 
-        if (!\in_array($uuid[19], ['8', '9', 'a', 'b', 'A', 'B'], true)) {
+        if (! \in_array($uuid[19], ['8', '9', 'a', 'b', 'A', 'B'], true)) {
             return new self($uuid);
         }
 
@@ -125,13 +125,13 @@ class Uuid extends AbstractUid
     }
 
     /**
-     * @param int-mask-of<Uuid::FORMAT_*> $format
+     * @param  int-mask-of<Uuid::FORMAT_*>  $format
      */
     public static function isValid(string $uuid /* , int $format = self::FORMAT_RFC_9562 */): bool
     {
         $format = 1 < \func_num_args() ? func_get_arg(1) : self::FORMAT_RFC_9562;
 
-        if (36 === \strlen($uuid) && !($format & self::FORMAT_RFC_9562)) {
+        if (36 === \strlen($uuid) && ! ($format & self::FORMAT_RFC_9562)) {
             return false;
         }
 
@@ -147,7 +147,7 @@ class Uuid extends AbstractUid
             return true;
         }
 
-        if (!preg_match('{^[0-9a-f]{8}(?:-[0-9a-f]{4}){2}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$}Di', $uuid)) {
+        if (! preg_match('{^[0-9a-f]{8}(?:-[0-9a-f]{4}){2}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$}Di', $uuid)) {
             return false;
         }
 
@@ -193,8 +193,7 @@ class Uuid extends AbstractUid
     /**
      * Transforms a binary string, a base-32 string or a base-58 string to a RFC9562 string.
      *
-     * @param int-mask-of<Uuid::FORMAT_*> $format
-     *
+     * @param  int-mask-of<Uuid::FORMAT_*>  $format
      * @return string|false The RFC9562 string or false if the format doesn't match the input
      */
     private static function transformToRfc9562(string $uuid, int $format): string|false
@@ -220,7 +219,7 @@ class Uuid extends AbstractUid
             $uuid = $ulid->toRfc4122();
         }
 
-        if ($inputUuid === $uuid && !($format & self::FORMAT_RFC_9562)) {
+        if ($inputUuid === $uuid && ! ($format & self::FORMAT_RFC_9562)) {
             // input format doesn't match the input string
             return false;
         }

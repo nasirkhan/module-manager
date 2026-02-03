@@ -48,8 +48,7 @@ final class PutenvAdapter implements AdapterInterface
     /**
      * Read an environment variable, if it exists.
      *
-     * @param non-empty-string $name
-     *
+     * @param  non-empty-string  $name
      * @return \PhpOption\Option<string>
      */
     public function read(string $name)
@@ -63,9 +62,8 @@ final class PutenvAdapter implements AdapterInterface
     /**
      * Write to an environment variable, if possible.
      *
-     * @param non-empty-string $name
-     * @param string           $value
-     *
+     * @param  non-empty-string  $name
+     * @param  string  $value
      * @return bool
      */
     public function write(string $name, string $value)
@@ -78,8 +76,7 @@ final class PutenvAdapter implements AdapterInterface
     /**
      * Delete an environment variable, if possible.
      *
-     * @param non-empty-string $name
-     *
+     * @param  non-empty-string  $name
      * @return bool
      */
     public function delete(string $name)

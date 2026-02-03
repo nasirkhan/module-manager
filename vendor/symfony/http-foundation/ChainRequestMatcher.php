@@ -19,7 +19,7 @@ namespace Symfony\Component\HttpFoundation;
 class ChainRequestMatcher implements RequestMatcherInterface
 {
     /**
-     * @param iterable<RequestMatcherInterface> $matchers
+     * @param  iterable<RequestMatcherInterface>  $matchers
      */
     public function __construct(private iterable $matchers)
     {
@@ -28,7 +28,7 @@ class ChainRequestMatcher implements RequestMatcherInterface
     public function matches(Request $request): bool
     {
         foreach ($this->matchers as $matcher) {
-            if (!$matcher->matches($request)) {
+            if (! $matcher->matches($request)) {
                 return false;
             }
         }

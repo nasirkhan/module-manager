@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -241,7 +241,6 @@ final class Uri implements Conditionable, UriInterface, Transformable
         || UriString::isValidScheme($formattedScheme)
         || throw new SyntaxError('The scheme `'.$scheme.'` is invalid.');
 
-
         $cache[$formattedScheme] = 1;
         if (self::MAXIMUM_CACHED_ITEMS < count($cache)) {
             array_shift($cache);
@@ -388,7 +387,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
      * Create a new instance from a hash representation of the URI similar
      * to PHP parse_url function result.
      *
-     * @param InputComponentMap $components a hash representation of the URI similar to PHP parse_url function result
+     * @param  InputComponentMap  $components  a hash representation of the URI similar to PHP parse_url function result
      */
     public static function fromComponents(array $components = []): self
     {
@@ -416,8 +415,8 @@ final class Uri implements Conditionable, UriInterface, Transformable
     /**
      * Create a new instance from a data file path.
      *
-     * @param SplFileInfo|SplFileObject|resource|Stringable|string $path
-     * @param ?resource $context
+     * @param  SplFileInfo|SplFileObject|resource|Stringable|string  $path
+     * @param  ?resource  $context
      *
      * @throws MissingFeature If ext/fileinfo is not installed
      * @throws SyntaxError If the file does not exist or is not readable
@@ -434,7 +433,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
             false !== $raw || throw new SyntaxError('The file `'.$path.'` does not exist or is not readable.');
 
             $mimetype = (string) $finfo->buffer($raw);
-            while (!$path->eof()) {
+            while (! $path->eof()) {
                 $raw .= $path->fread($bufferSize);
             }
 
@@ -448,7 +447,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
             false !== $raw || throw new SyntaxError('The file `'.$path.'` does not exist or is not readable.');
 
             $mimetype = (string) $finfo->buffer($raw);
-            while (!feof($stream)) {
+            while (! feof($stream)) {
                 $raw .= fread($stream, $bufferSize);
             }
             restore_error_handler();
@@ -494,7 +493,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
 
         $mimetype = match (true) {
             '' === $mimetype => 'text/plain',
-            1 === preg_match($regexpMimetype, $mimetype) =>  $mimetype,
+            1 === preg_match($regexpMimetype, $mimetype) => $mimetype,
             default => throw new SyntaxError('Invalid mimeType, `'.$mimetype.'`.'),
         };
 
@@ -570,7 +569,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
         }
 
         //UNC Windows Path
-        if (!str_starts_with($path, '//')) {
+        if (! str_starts_with($path, '//')) {
             return Uri::fromComponents(['path' => $path]);
         }
 
@@ -656,9 +655,9 @@ final class Uri implements Conditionable, UriInterface, Transformable
     /**
      * Returns the environment host.
      *
-     * @throws SyntaxError If the host cannot be detected
-     *
      * @return array{0:string|null, 1:int|null}
+     *
+     * @throws SyntaxError If the host cannot be detected
      */
     private static function fetchHostname(array $server): array
     {
@@ -757,7 +756,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
             return 'text/plain;charset=us-ascii,';
         }
 
-        if (strlen($path) !== strspn($path, self::ASCII) || !str_contains($path, ',')) {
+        if (strlen($path) !== strspn($path, self::ASCII) || ! str_contains($path, ',')) {
             throw new SyntaxError('The path `'.$path.'` is invalid according to RFC2937.');
         }
 
@@ -791,12 +790,12 @@ final class Uri implements Conditionable, UriInterface, Transformable
         1 === preg_match(self::REGEXP_MIMETYPE, $mimetype) || throw new SyntaxError('The path mimetype `'.$mimetype.'` is invalid.');
         $isBinary = 1 === preg_match(self::REGEXP_BINARY, $parameters, $matches);
         if ($isBinary) {
-            $parameters = substr($parameters, 0, - strlen($matches[0]));
+            $parameters = substr($parameters, 0, -strlen($matches[0]));
         }
 
         $res = array_filter(array_filter(explode(';', $parameters), self::validateParameter(...)));
         [] === $res || throw new SyntaxError('The path parameters `'.$parameters.'` is invalid.');
-        if (!$isBinary) {
+        if (! $isBinary) {
             return;
         }
 
@@ -850,7 +849,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
         if (null === $this->authority
             && null === $this->scheme
             && false !== $pos
-            && !str_contains(substr($this->path, 0, $pos), '/')
+            && ! str_contains(substr($this->path, 0, $pos), '/')
         ) {
             throw new SyntaxError('In absence of a scheme and an authority the first path segment cannot contain a colon (":") character.');
         }
@@ -908,7 +907,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
             UriScheme::Urn => null !== Urn::parse($this->uriAsciiString),
             UriScheme::Telnet,
             UriScheme::Tn3270 => null === $this->fragment && null === $this->query && in_array($this->path, ['', '/'], true),
-            UriScheme::Vnc => null !==  $this->authority && null === $this->fragment && '' === $this->path,
+            UriScheme::Vnc => null !== $this->authority && null === $this->fragment && '' === $this->path,
             default => $schemeType->isUnknown()
                 || ($schemeType->isOpaque() && null === $this->authority)
                 || ($schemeType->isHierarchical() && null !== $this->authority),
@@ -919,9 +918,9 @@ final class Uri implements Conditionable, UriInterface, Transformable
     {
         static $regexpUuidRfc4122 = '/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i';
 
-        if (!$this->isUriWithSchemeAndPathOnly()
+        if (! $this->isUriWithSchemeAndPathOnly()
             || '' === $this->path
-            || !str_contains($this->path, '/')
+            || ! str_contains($this->path, '/')
             || str_ends_with($this->path, '/')
             || 1 !== preg_match($regexpUuidRfc4122, basename($this->path))
         ) {
@@ -963,11 +962,11 @@ final class Uri implements Conditionable, UriInterface, Transformable
         foreach ($pairs as [$name, $value]) {
             $headerName = strtolower($name);
             if (in_array($headerName, $mailHeaders, true)) {
-                if (null === $value || !self::validateEmailList($value)) {
+                if (null === $value || ! self::validateEmailList($value)) {
                     return false;
                 }
 
-                if (!$hasTo && 'to' === $headerName) {
+                if (! $hasTo && 'to' === $headerName) {
                     $hasTo = true;
                 }
                 continue;
@@ -1002,7 +1001,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
     {
         try {
             if ('blob' !== $this->scheme) {
-                if (!(UriScheme::tryFrom($this->scheme ?? '')?->isWhatWgSpecial() ?? false)) {
+                if (! (UriScheme::tryFrom($this->scheme ?? '')?->isWhatWgSpecial() ?? false)) {
                     return null;
                 }
 
@@ -1065,7 +1064,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
             && null === $this->port
             && null === $this->query
             && null === $this->fragment
-            && !('' != $this->scheme && null === $this->host);
+            && ! ('' != $this->scheme && null === $this->host);
     }
 
     /**
@@ -1074,7 +1073,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
     private function isNonEmptyHostUri(): bool
     {
         return '' !== $this->host
-            && !(null !== $this->scheme && null === $this->host);
+            && ! (null !== $this->scheme && null === $this->host);
     }
 
     /**
@@ -1173,7 +1172,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
     {
         static $regexpWindowsPath = ',^(?<root>[a-zA-Z]:),';
 
-        if (!in_array($this->scheme, ['file', null], true)) {
+        if (! in_array($this->scheme, ['file', null], true)) {
             return null;
         }
 
@@ -1226,8 +1225,8 @@ final class Uri implements Conditionable, UriInterface, Transformable
      * The method returns the number of bytes written to the file
      * or null for any other scheme except the data scheme
      *
-     * @param SplFileInfo|SplFileObject|resource|Stringable|string $destination
-     * @param ?resource $context
+     * @param  SplFileInfo|SplFileObject|resource|Stringable|string  $destination
+     * @param  ?resource  $context
      *
      * @throws RuntimeException if the content cannot be stored.
      */
@@ -1397,7 +1396,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
 
     public function when(callable|bool $condition, callable $onSuccess, ?callable $onFail = null): static
     {
-        if (!is_bool($condition)) {
+        if (! is_bool($condition)) {
             $condition = $condition($this);
         }
 
@@ -1615,7 +1614,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
 
     public function equals(Rfc3986Uri|WhatWgUrl|UriInterface|Stringable|Urn|string $uri, UriComparisonMode $uriComparisonMode = UriComparisonMode::ExcludeFragment): bool
     {
-        if (!$uri instanceof UriInterface && !$uri instanceof Rfc3986Uri && !$uri instanceof WhatWgUrl) {
+        if (! $uri instanceof UriInterface && ! $uri instanceof Rfc3986Uri && ! $uri instanceof WhatWgUrl) {
             $uri = self::tryNew($uri);
         }
 
@@ -1741,7 +1740,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
         $targetBasename = array_pop($targetSegments);
         array_pop($baseSegments);
         foreach ($baseSegments as $offset => $segment) {
-            if (!isset($targetSegments[$offset]) || $segment !== $targetSegments[$offset]) {
+            if (! isset($targetSegments[$offset]) || $segment !== $targetSegments[$offset]) {
                 break;
             }
             unset($baseSegments[$offset], $targetSegments[$offset]);
@@ -1770,7 +1769,7 @@ final class Uri implements Conditionable, UriInterface, Transformable
             },
             false === $colonPosition => $path,
             false === $slashPosition,
-            $colonPosition < $slashPosition  =>  "./$path",
+            $colonPosition < $slashPosition => "./$path",
             default => $path,
         };
     }
@@ -1801,7 +1800,9 @@ final class Uri implements Conditionable, UriInterface, Transformable
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
      * @deprecated Since version 7.6.0
+     *
      * @codeCoverageIgnore
+     *
      * @see Uri::parse()
      *
      * Creates a new instance from a URI and a Base URI.
@@ -1829,7 +1830,9 @@ final class Uri implements Conditionable, UriInterface, Transformable
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
      * @deprecated Since version 7.5.0
+     *
      * @codeCoverageIgnore
+     *
      * @see Uri::toComponents()
      *
      * @return ComponentMap
@@ -1844,7 +1847,9 @@ final class Uri implements Conditionable, UriInterface, Transformable
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
      * @deprecated Since version 7.0.0
+     *
      * @codeCoverageIgnore
+     *
      * @see Uri::new()
      */
     #[Deprecated(message:'use League\Uri\Uri::new() instead', since:'league/uri:7.0.0')]
@@ -1857,10 +1862,12 @@ final class Uri implements Conditionable, UriInterface, Transformable
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
      * @deprecated Since version 7.0.0
+     *
      * @codeCoverageIgnore
+     *
      * @see Uri::fromComponents()
      *
-     * @param InputComponentMap $components a hash representation of the URI similar to PHP parse_url function result
+     * @param  InputComponentMap  $components  a hash representation of the URI similar to PHP parse_url function result
      */
     #[Deprecated(message:'use League\Uri\Uri::fromComponents() instead', since:'league/uri:7.0.0')]
     public static function createFromComponents(array $components = []): self
@@ -1871,13 +1878,14 @@ final class Uri implements Conditionable, UriInterface, Transformable
     /**
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
-     * @param resource|null $context
+     * @param  resource|null  $context
      *
      * @throws MissingFeature If ext/fileinfo is not installed
      * @throws SyntaxError If the file does not exist or is not readable
-     * @see Uri::fromFileContents()
      *
+     * @see Uri::fromFileContents()
      * @deprecated Since version 7.0.0
+     *
      * @codeCoverageIgnore
      */
     #[Deprecated(message:'use League\Uri\Uri::fromDataPath() instead', since:'league/uri:7.0.0')]
@@ -1890,7 +1898,9 @@ final class Uri implements Conditionable, UriInterface, Transformable
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
      * @deprecated Since version 7.0.0
+     *
      * @codeCoverageIgnore
+     *
      * @see Uri::fromBaseUri()
      *
      * Creates a new instance from a URI and a Base URI.
@@ -1899,8 +1909,8 @@ final class Uri implements Conditionable, UriInterface, Transformable
      */
     #[Deprecated(message:'use League\Uri\Uri::fromBaseUri() instead', since:'league/uri:7.0.0')]
     public static function createFromBaseUri(
-        Stringable|UriInterface|String $uri,
-        Stringable|UriInterface|String|null $baseUri = null
+        Stringable|UriInterface|string $uri,
+        Stringable|UriInterface|string|null $baseUri = null
     ): static {
         return self::fromBaseUri($uri, $baseUri);
     }
@@ -1909,7 +1919,9 @@ final class Uri implements Conditionable, UriInterface, Transformable
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
      * @deprecated Since version 7.0.0
+     *
      * @codeCoverageIgnore
+     *
      * @see Uri::fromUnixPath()
      *
      * Create a new instance from a Unix path string.
@@ -1924,7 +1936,9 @@ final class Uri implements Conditionable, UriInterface, Transformable
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
      * @deprecated Since version 7.0.0
+     *
      * @codeCoverageIgnore
+     *
      * @see Uri::fromWindowsPath()
      *
      * Create a new instance from a local Windows path string.
@@ -1939,7 +1953,9 @@ final class Uri implements Conditionable, UriInterface, Transformable
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
      * @deprecated Since version 7.0.0
+     *
      * @codeCoverageIgnore
+     *
      * @see Uri::new()
      *
      * Create a new instance from a URI object.
@@ -1954,7 +1970,9 @@ final class Uri implements Conditionable, UriInterface, Transformable
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
      * @deprecated Since version 7.0.0
+     *
      * @codeCoverageIgnore
+     *
      * @see Uri::fromServer()
      *
      * Create a new instance from the environment.

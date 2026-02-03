@@ -17,14 +17,14 @@ use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Output\RenderedContentInterface;
 
 /**
- * Renders a parsed Document AST
+ * Renders a parsed Document AST.
  *
  * @deprecated since 2.3; use {@link DocumentRendererInterface} instead
  */
 interface MarkdownRendererInterface
 {
     /**
-     * Render the given Document node (and all of its children)
+     * Render the given Document node (and all of its children).
      */
     public function renderDocument(Document $document): RenderedContentInterface;
 }

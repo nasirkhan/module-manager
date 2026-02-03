@@ -20,7 +20,7 @@ class ControllerDoesNotReturnResponseException extends \LogicException
     {
         parent::__construct($message);
 
-        if (!$controllerDefinition = $this->parseControllerDefinition($controller)) {
+        if (! $controllerDefinition = $this->parseControllerDefinition($controller)) {
             return;
         }
 

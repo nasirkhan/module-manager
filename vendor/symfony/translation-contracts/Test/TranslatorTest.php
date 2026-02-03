@@ -48,7 +48,8 @@ class TranslatorTest extends TestCase
 
     public function getTranslator(): TranslatorInterface
     {
-        return new class implements TranslatorInterface {
+        return new class implements TranslatorInterface
+        {
             use TranslatorTrait;
         };
     }
@@ -365,8 +366,8 @@ class TranslatorTest extends TestCase
     /**
      * We validate only on the plural coverage. Thus the real rules is not tested.
      *
-     * @param string $nplural Plural expected
-     * @param array  $matrix  Containing langcodes and their plural index values
+     * @param  string  $nplural  Plural expected
+     * @param  array  $matrix  Containing langcodes and their plural index values
      */
     protected function validateMatrix(string $nplural, array $matrix, bool $expectSuccess = true)
     {
@@ -382,7 +383,8 @@ class TranslatorTest extends TestCase
 
     protected function generateTestData($langCodes)
     {
-        $translator = new class {
+        $translator = new class
+        {
             use TranslatorTrait {
                 getPluralizationRule as public;
             }
@@ -390,7 +392,7 @@ class TranslatorTest extends TestCase
 
         $matrix = [];
         foreach ($langCodes as $langCode) {
-            for ($count = 0; $count < 200; ++$count) {
+            for ($count = 0; $count < 200; $count++) {
                 $plural = $translator->getPluralizationRule($count, $langCode);
                 $matrix[$langCode][$count] = $plural;
             }

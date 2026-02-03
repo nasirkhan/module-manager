@@ -22,7 +22,7 @@ final class Cursor
     private $input;
 
     /**
-     * @param resource|null $input
+     * @param  resource|null  $input
      */
     public function __construct(
         private OutputInterface $output,
@@ -184,7 +184,7 @@ final class Cursor
     {
         static $isTtySupported;
 
-        if (!$isTtySupported ??= '/' === \DIRECTORY_SEPARATOR && stream_isatty(\STDOUT)) {
+        if (! $isTtySupported ??= '/' === \DIRECTORY_SEPARATOR && stream_isatty(\STDOUT)) {
             return [1, 1];
         }
 

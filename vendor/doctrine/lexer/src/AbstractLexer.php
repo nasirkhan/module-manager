@@ -51,21 +51,21 @@ abstract class AbstractLexer
      *
      * @var Token<T, V>|null
      */
-    public Token|null $lookahead;
+    public ?Token $lookahead;
 
     /**
      * The last matched/seen token.
      *
      * @var Token<T, V>|null
      */
-    public Token|null $token;
+    public ?Token $token;
 
     /**
      * Composed regex for input parsing.
      *
      * @var non-empty-string|null
      */
-    private string|null $regex = null;
+    private ?string $regex = null;
 
     /**
      * Sets the input data to be tokenized.
@@ -73,13 +73,12 @@ abstract class AbstractLexer
      * The Lexer is immediately reset and the new input tokenized.
      * Any unprocessed tokens from any previous input are lost.
      *
-     * @param string $input The input to be tokenized.
-     *
+     * @param  string  $input  The input to be tokenized.
      * @return void
      */
     public function setInput(string $input)
     {
-        $this->input  = $input;
+        $this->input = $input;
         $this->tokens = [];
 
         $this->reset();
@@ -94,9 +93,9 @@ abstract class AbstractLexer
     public function reset()
     {
         $this->lookahead = null;
-        $this->token     = null;
-        $this->peek      = 0;
-        $this->position  = 0;
+        $this->token = null;
+        $this->peek = 0;
+        $this->position = 0;
     }
 
     /**
@@ -112,8 +111,7 @@ abstract class AbstractLexer
     /**
      * Resets the lexer position on the input to the given position.
      *
-     * @param int $position Position to place the lexical scanner.
-     *
+     * @param  int  $position  Position to place the lexical scanner.
      * @return void
      */
     public function resetPosition(int $position = 0)
@@ -134,8 +132,7 @@ abstract class AbstractLexer
     /**
      * Checks whether a given token matches the current lookahead.
      *
-     * @param T $type
-     *
+     * @param  T  $type
      * @return bool
      *
      * @psalm-assert-if-true !=null $this->lookahead
@@ -148,8 +145,7 @@ abstract class AbstractLexer
     /**
      * Checks whether any of the given tokens matches the current lookahead.
      *
-     * @param list<T> $types
-     *
+     * @param  list<T>  $types
      * @return bool
      *
      * @psalm-assert-if-true !=null $this->lookahead
@@ -168,8 +164,8 @@ abstract class AbstractLexer
      */
     public function moveNext()
     {
-        $this->peek      = 0;
-        $this->token     = $this->lookahead;
+        $this->peek = 0;
+        $this->token = $this->lookahead;
         $this->lookahead = isset($this->tokens[$this->position])
             ? $this->tokens[$this->position++] : null;
 
@@ -179,8 +175,7 @@ abstract class AbstractLexer
     /**
      * Tells the lexer to skip input tokens until it sees a token with the given value.
      *
-     * @param T $type The token type to skip until.
-     *
+     * @param  T  $type  The token type to skip until.
      * @return void
      */
     public function skipUntil(int|string|UnitEnum $type)
@@ -221,7 +216,7 @@ abstract class AbstractLexer
      */
     public function glimpse()
     {
-        $peek       = $this->peek();
+        $peek = $this->peek();
         $this->peek = 0;
 
         return $peek;
@@ -230,8 +225,7 @@ abstract class AbstractLexer
     /**
      * Scans the input string for tokens.
      *
-     * @param string $input A query string.
-     *
+     * @param  string  $input  A query string.
      * @return void
      */
     protected function scan(string $input)
@@ -245,7 +239,7 @@ abstract class AbstractLexer
             );
         }
 
-        $flags   = PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_OFFSET_CAPTURE;
+        $flags = PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_OFFSET_CAPTURE;
         $matches = preg_split($this->regex, $input, -1, $flags);
 
         if ($matches === false) {
@@ -256,7 +250,7 @@ abstract class AbstractLexer
         foreach ($matches as $match) {
             // Must remain before 'value' assignment since it can change content
             $firstMatch = $match[0];
-            $type       = $this->getType($firstMatch);
+            $type = $this->getType($firstMatch);
 
             $this->tokens[] = new Token(
                 $firstMatch,
@@ -269,14 +263,13 @@ abstract class AbstractLexer
     /**
      * Gets the literal for a given token.
      *
-     * @param T $token
-     *
+     * @param  T  $token
      * @return int|string
      */
     public function getLiteral(int|string|UnitEnum $token)
     {
         if ($token instanceof UnitEnum) {
-            return $token::class . '::' . $token->name;
+            return $token::class.'::'.$token->name;
         }
 
         $className = static::class;
@@ -286,7 +279,7 @@ abstract class AbstractLexer
 
         foreach ($constants as $name => $value) {
             if ($value === $token) {
-                return $className . '::' . $name;
+                return $className.'::'.$name;
             }
         }
 
@@ -294,7 +287,7 @@ abstract class AbstractLexer
     }
 
     /**
-     * Regex modifiers
+     * Regex modifiers.
      *
      * @return string
      */

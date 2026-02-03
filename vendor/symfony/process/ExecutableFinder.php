@@ -51,9 +51,9 @@ class ExecutableFinder
     /**
      * Finds an executable by name.
      *
-     * @param string      $name      The executable name (without the extension)
-     * @param string|null $default   The default to return if no executable is found
-     * @param array       $extraDirs Additional dirs to check into
+     * @param  string  $name  The executable name (without the extension)
+     * @param  string|null  $default  The default to return if no executable is found
+     * @param  array  $extraDirs  Additional dirs to check into
      */
     public function find(string $name, ?string $default = null, array $extraDirs = []): ?string
     {
@@ -82,13 +82,13 @@ class ExecutableFinder
                     return $file;
                 }
 
-                if (!@is_dir($dir) && basename($dir) === $name.$suffix && @is_executable($dir)) {
+                if (! @is_dir($dir) && basename($dir) === $name.$suffix && @is_executable($dir)) {
                     return $dir;
                 }
             }
         }
 
-        if ('\\' === \DIRECTORY_SEPARATOR || !\function_exists('exec') || \strlen($name) !== strcspn($name, '/'.\DIRECTORY_SEPARATOR)) {
+        if ('\\' === \DIRECTORY_SEPARATOR || ! \function_exists('exec') || \strlen($name) !== strcspn($name, '/'.\DIRECTORY_SEPARATOR)) {
             return $default;
         }
 

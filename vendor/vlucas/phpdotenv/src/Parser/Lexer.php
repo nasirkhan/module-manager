@@ -31,8 +31,7 @@ final class Lexer
      * Multibyte string processing is not needed here, and nether is error
      * handling, for performance reasons.
      *
-     * @param string $content
-     *
+     * @param  string  $content
      * @return \Generator<string>
      */
     public static function lex(string $content)
@@ -46,7 +45,7 @@ final class Lexer
         $offset = 0;
 
         while (isset($content[$offset])) {
-            if (!\preg_match($regex, $content, $matches, 0, $offset)) {
+            if (! \preg_match($regex, $content, $matches, 0, $offset)) {
                 throw new \Error(\sprintf('Lexer encountered unexpected character [%s].', $content[$offset]));
             }
 

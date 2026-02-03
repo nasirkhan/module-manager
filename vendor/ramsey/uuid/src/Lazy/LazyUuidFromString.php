@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -55,7 +55,7 @@ final class LazyUuidFromString implements UuidInterface
     private ?UuidInterface $unwrapped = null;
 
     /**
-     * @param non-empty-string $uuid
+     * @param  non-empty-string  $uuid
      */
     public function __construct(private string $uuid)
     {
@@ -67,14 +67,14 @@ final class LazyUuidFromString implements UuidInterface
 
         return new self(
             substr($base16Uuid, 0, 8)
-            . '-'
-            . substr($base16Uuid, 8, 4)
-            . '-'
-            . substr($base16Uuid, 12, 4)
-            . '-'
-            . substr($base16Uuid, 16, 4)
-            . '-'
-            . substr($base16Uuid, 20, 12)
+            .'-'
+            .substr($base16Uuid, 8, 4)
+            .'-'
+            .substr($base16Uuid, 12, 4)
+            .'-'
+            .substr($base16Uuid, 16, 4)
+            .'-'
+            .substr($base16Uuid, 20, 12)
         );
     }
 
@@ -94,7 +94,7 @@ final class LazyUuidFromString implements UuidInterface
     /**
      * {@inheritDoc}
      *
-     * @param non-empty-string $data
+     * @param  non-empty-string  $data
      */
     public function unserialize(string $data): void
     {
@@ -102,12 +102,12 @@ final class LazyUuidFromString implements UuidInterface
     }
 
     /**
-     * @param array{string?: non-empty-string} $data
+     * @param  array{string?: non-empty-string}  $data
      */
     public function __unserialize(array $data): void
     {
         // @codeCoverageIgnoreStart
-        if (!isset($data['string'])) {
+        if (! isset($data['string'])) {
             throw new ValueError(sprintf('%s(): Argument #1 ($data) is invalid', __METHOD__));
         }
         // @codeCoverageIgnoreEnd
@@ -205,7 +205,7 @@ final class LazyUuidFromString implements UuidInterface
 
     public function equals(?object $other): bool
     {
-        if (!$other instanceof UuidInterface) {
+        if (! $other instanceof UuidInterface) {
             return false;
         }
 
@@ -216,6 +216,7 @@ final class LazyUuidFromString implements UuidInterface
     {
         /**
          * @var non-empty-string
+         *
          * @phpstan-ignore possiblyImpure.functionCall, possiblyImpure.functionCall
          */
         return (string) hex2bin(str_replace('-', '', $this->uuid));

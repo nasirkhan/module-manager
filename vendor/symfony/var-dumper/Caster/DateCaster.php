@@ -34,8 +34,7 @@ class DateCaster
 
         $title = $d->format('l, F j, Y')
             ."\n".self::formatInterval($fromNow).' from now'
-            .($location ? ($d->format('I') ? "\nDST On" : "\nDST Off") : '')
-        ;
+            .($location ? ($d->format('I') ? "\nDST On" : "\nDST Off") : '');
 
         unset(
             $a[Caster::PREFIX_DYNAMIC.'date'],

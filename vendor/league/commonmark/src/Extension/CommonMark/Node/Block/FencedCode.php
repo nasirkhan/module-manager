@@ -36,7 +36,7 @@ final class FencedCode extends AbstractBlock implements StringContainerInterface
         parent::__construct();
 
         $this->length = $length;
-        $this->char   = $char;
+        $this->char = $char;
         $this->offset = $offset;
     }
 

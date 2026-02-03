@@ -4,8 +4,8 @@ namespace Egulias\EmailValidator\Validation;
 
 use Egulias\EmailValidator\EmailLexer;
 use Egulias\EmailValidator\Result\InvalidEmail;
-use Egulias\EmailValidator\Validation\Exception\EmptyValidationList;
 use Egulias\EmailValidator\Result\MultipleErrors;
+use Egulias\EmailValidator\Validation\Exception\EmptyValidationList;
 use Egulias\EmailValidator\Warning\Warning;
 
 class MultipleValidationWithAnd implements EmailValidation
@@ -33,8 +33,8 @@ class MultipleValidationWithAnd implements EmailValidation
     private $error;
 
     /**
-     * @param EmailValidation[] $validations The validations.
-     * @param int               $mode        The validation mode (one of the constants).
+     * @param  EmailValidation[]  $validations  The validations.
+     * @param  int  $mode  The validation mode (one of the constants).
      */
     public function __construct(private readonly array $validations, private readonly int $mode = self::ALLOW_ALL_ERRORS)
     {
@@ -54,7 +54,7 @@ class MultipleValidationWithAnd implements EmailValidation
             $validationResult = $validation->isValid($email, $emailLexer);
             $result = $result && $validationResult;
             $this->warnings = [...$this->warnings, ...$validation->getWarnings()];
-            if (!$validationResult) {
+            if (! $validationResult) {
                 $this->processError($validation);
             }
 
@@ -84,7 +84,7 @@ class MultipleValidationWithAnd implements EmailValidation
 
     private function shouldStop(bool $result): bool
     {
-        return !$result && $this->mode === self::STOP_ON_ERROR;
+        return ! $result && $this->mode === self::STOP_ON_ERROR;
     }
 
     /**

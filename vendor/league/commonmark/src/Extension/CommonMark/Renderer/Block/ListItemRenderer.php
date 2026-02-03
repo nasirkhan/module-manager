@@ -29,7 +29,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class ListItemRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param ListItem $node
+     * @param  ListItem  $node
      *
      * {@inheritDoc}
      *
@@ -44,7 +44,7 @@ final class ListItemRenderer implements NodeRendererInterface, XmlNodeRendererIn
         $inTightList = ($parent = $node->parent()) && $parent instanceof TightBlockInterface && $parent->isTight();
 
         if ($this->needsBlockSeparator($node->firstChild(), $inTightList)) {
-            $contents = "\n" . $contents;
+            $contents = "\n".$contents;
         }
 
         if ($this->needsBlockSeparator($node->lastChild(), $inTightList)) {

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -14,8 +16,8 @@ namespace Monolog\Handler;
 use DateTimeZone;
 use InvalidArgumentException;
 use Monolog\Level;
-use Monolog\Utils;
 use Monolog\LogRecord;
+use Monolog\Utils;
 
 /**
  * Stores logs to files that are rotated every day and a limited number of files are kept.
@@ -34,18 +36,18 @@ class RotatingFileHandler extends StreamHandler
 
     protected string $filename;
     protected int $maxFiles;
-    protected bool|null $mustRotate = null;
+    protected ?bool $mustRotate = null;
     protected \DateTimeImmutable $nextRotation;
     protected string $filenameFormat;
     protected string $dateFormat;
-    protected DateTimeZone|null $timezone = null;
+    protected ?DateTimeZone $timezone = null;
 
     /**
-     * @param int      $maxFiles       The maximal amount of files to keep (0 means unlimited)
-     * @param int|null $filePermission Optional file permissions (default (0644) are only for owner read/write)
-     * @param bool     $useLocking     Try to lock log file before doing any writes
+     * @param  int  $maxFiles  The maximal amount of files to keep (0 means unlimited)
+     * @param  int|null  $filePermission  Optional file permissions (default (0644) are only for owner read/write)
+     * @param  bool  $useLocking  Try to lock log file before doing any writes
      */
-    public function __construct(string $filename, int $maxFiles = 0, int|string|Level $level = Level::Debug, bool $bubble = true, ?int $filePermission = null, bool $useLocking = false, string $dateFormat = self::FILE_PER_DAY, string $filenameFormat  = '{filename}-{date}', DateTimeZone|null $timezone = null)
+    public function __construct(string $filename, int $maxFiles = 0, int|string|Level $level = Level::Debug, bool $bubble = true, ?int $filePermission = null, bool $useLocking = false, string $dateFormat = self::FILE_PER_DAY, string $filenameFormat = '{filename}-{date}', ?DateTimeZone $timezone = null)
     {
         $this->filename = Utils::canonicalizePath($filename);
         $this->maxFiles = $maxFiles;
@@ -101,7 +103,7 @@ class RotatingFileHandler extends StreamHandler
     {
         // on the first record written, if the log is new, we rotate (once per day) after the log has been written so that the new file exists
         if (null === $this->mustRotate) {
-            $this->mustRotate = null === $this->url || !file_exists($this->url);
+            $this->mustRotate = null === $this->url || ! file_exists($this->url);
         }
 
         // if the next rotation is expired, then we rotate immediately
@@ -181,7 +183,7 @@ class RotatingFileHandler extends StreamHandler
         $timedFilename = str_replace(
             ['{filename}', '{date}'],
             [$fileInfo['filename'], (new \DateTimeImmutable(timezone: $this->timezone))->format($this->dateFormat)],
-            ($fileInfo['dirname'] ?? '') . '/' . $this->filenameFormat
+            ($fileInfo['dirname'] ?? '').'/'.$this->filenameFormat
         );
 
         if (isset($fileInfo['extension'])) {
@@ -201,7 +203,7 @@ class RotatingFileHandler extends StreamHandler
                 ['[0-9][0-9][0-9][0-9]', '[0-9][0-9]', '[0-9][0-9]', '[0-9][0-9]'],
                 $this->dateFormat
             )],
-            ($fileInfo['dirname'] ?? '') . '/' . $this->filenameFormat
+            ($fileInfo['dirname'] ?? '').'/'.$this->filenameFormat
         );
         if (isset($fileInfo['extension'])) {
             $glob .= '.'.$fileInfo['extension'];
@@ -225,7 +227,7 @@ class RotatingFileHandler extends StreamHandler
 
     protected function getNextRotation(): \DateTimeImmutable
     {
-        return match (str_replace(['/','_','.'], '-', $this->dateFormat)) {
+        return match (str_replace(['/', '_', '.'], '-', $this->dateFormat)) {
             self::FILE_PER_MONTH => (new \DateTimeImmutable('first day of next month'))->setTime(0, 0, 0),
             self::FILE_PER_YEAR => (new \DateTimeImmutable('first day of January next year'))->setTime(0, 0, 0),
             default => (new \DateTimeImmutable('tomorrow'))->setTime(0, 0, 0),

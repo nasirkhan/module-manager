@@ -19,8 +19,8 @@ use League\Config\ConfigurationInterface;
 
 final class ExternalLinkProcessor
 {
-    public const APPLY_NONE     = '';
-    public const APPLY_ALL      = 'all';
+    public const APPLY_NONE = '';
+    public const APPLY_ALL = 'all';
     public const APPLY_EXTERNAL = 'external';
     public const APPLY_INTERNAL = 'internal';
 
@@ -34,9 +34,9 @@ final class ExternalLinkProcessor
 
     public function __invoke(DocumentParsedEvent $e): void
     {
-        $internalHosts   = $this->config->get('external_link/internal_hosts');
+        $internalHosts = $this->config->get('external_link/internal_hosts');
         $openInNewWindow = $this->config->get('external_link/open_in_new_window');
-        $classes         = $this->config->get('external_link/html_class');
+        $classes = $this->config->get('external_link/html_class');
 
         foreach ($e->getDocument()->iterator() as $link) {
             if (! ($link instanceof Link)) {
@@ -77,8 +77,8 @@ final class ExternalLinkProcessor
     private function applyRelAttribute(Link $link, bool $isExternal): void
     {
         $options = [
-            'nofollow'   => $this->config->get('external_link/nofollow'),
-            'noopener'   => $this->config->get('external_link/noopener'),
+            'nofollow' => $this->config->get('external_link/nofollow'),
+            'noopener' => $this->config->get('external_link/noopener'),
             'noreferrer' => $this->config->get('external_link/noreferrer'),
         ];
 
@@ -100,7 +100,7 @@ final class ExternalLinkProcessor
     /**
      * @internal This method is only public so we can easily test it. DO NOT USE THIS OUTSIDE OF THIS EXTENSION!
      *
-     * @param non-empty-string|list<non-empty-string> $compareTo
+     * @param  non-empty-string|list<non-empty-string>  $compareTo
      */
     public static function hostMatches(string $host, $compareTo): bool
     {

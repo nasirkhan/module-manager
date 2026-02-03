@@ -49,9 +49,9 @@ final class UrlEncoder
         for ($i = 0; $i < $l; $i++) {
             $code = $chars[$i];
             if ($code === '%' && $i + 2 < $l) {
-                if (\preg_match('/^[0-9a-f]{2}$/i', $chars[$i + 1] . $chars[$i + 2]) === 1) {
-                    $result .= '%' . $chars[$i + 1] . $chars[$i + 2];
-                    $i      += 2;
+                if (\preg_match('/^[0-9a-f]{2}$/i', $chars[$i + 1].$chars[$i + 2]) === 1) {
+                    $result .= '%'.$chars[$i + 1].$chars[$i + 2];
+                    $i += 2;
                     continue;
                 }
             }

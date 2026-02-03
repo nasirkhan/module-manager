@@ -8,7 +8,7 @@ use RuntimeException;
 trait Fallback
 {
     /**
-     * Whether to fallback to a custom implementation
+     * Whether to fallback to a custom implementation.
      */
     protected static bool $shouldFallback = false;
 

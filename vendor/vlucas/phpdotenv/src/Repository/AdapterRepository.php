@@ -27,9 +27,8 @@ final class AdapterRepository implements RepositoryInterface
     /**
      * Create a new adapter repository instance.
      *
-     * @param \Dotenv\Repository\Adapter\ReaderInterface $reader
-     * @param \Dotenv\Repository\Adapter\WriterInterface $writer
-     *
+     * @param  \Dotenv\Repository\Adapter\ReaderInterface  $reader
+     * @param  \Dotenv\Repository\Adapter\WriterInterface  $writer
      * @return void
      */
     public function __construct(ReaderInterface $reader, WriterInterface $writer)
@@ -41,8 +40,7 @@ final class AdapterRepository implements RepositoryInterface
     /**
      * Determine if the given environment variable is defined.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return bool
      */
     public function has(string $name)
@@ -53,11 +51,10 @@ final class AdapterRepository implements RepositoryInterface
     /**
      * Get an environment variable.
      *
-     * @param string $name
+     * @param  string  $name
+     * @return string|null
      *
      * @throws \InvalidArgumentException
-     *
-     * @return string|null
      */
     public function get(string $name)
     {
@@ -71,12 +68,11 @@ final class AdapterRepository implements RepositoryInterface
     /**
      * Set an environment variable.
      *
-     * @param string $name
-     * @param string $value
+     * @param  string  $name
+     * @param  string  $value
+     * @return bool
      *
      * @throws \InvalidArgumentException
-     *
-     * @return bool
      */
     public function set(string $name, string $value)
     {
@@ -90,11 +86,10 @@ final class AdapterRepository implements RepositoryInterface
     /**
      * Clear an environment variable.
      *
-     * @param string $name
+     * @param  string  $name
+     * @return bool
      *
      * @throws \InvalidArgumentException
-     *
-     * @return bool
      */
     public function clear(string $name)
     {

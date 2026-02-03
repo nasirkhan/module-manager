@@ -150,7 +150,7 @@ class PdoSessionHandler extends AbstractSessionHandler
      *  * lock_mode: The strategy for locking, see constants [default: LOCK_TRANSACTIONAL]
      *  * ttl: The time to live in seconds.
      *
-     * @param \PDO|string|null $pdoOrDsn A \PDO instance or DSN string or URL string or null
+     * @param  \PDO|string|null  $pdoOrDsn  A \PDO instance or DSN string or URL string or null
      *
      * @throws \InvalidArgumentException When PDO error mode is not PDO::ERRMODE_EXCEPTION
      */
@@ -186,7 +186,7 @@ class PdoSessionHandler extends AbstractSessionHandler
      */
     public function configureSchema(Schema $schema, ?\Closure $isSameDatabase = null): void
     {
-        if ($schema->hasTable($this->table) || ($isSameDatabase && !$isSameDatabase($this->getConnection()->exec(...)))) {
+        if ($schema->hasTable($this->table) || ($isSameDatabase && ! $isSameDatabase($this->getConnection()->exec(...)))) {
             return;
         }
 
@@ -244,7 +244,7 @@ class PdoSessionHandler extends AbstractSessionHandler
      * saved in a BLOB. One could also use a shorter inlined varbinary column
      * if one was sure the data fits into it.
      *
-     * @throws \PDOException    When the table already exists
+     * @throws \PDOException When the table already exists
      * @throws \DomainException When an unsupported PDO driver is used
      */
     public function createTable(): void
@@ -290,7 +290,7 @@ class PdoSessionHandler extends AbstractSessionHandler
     {
         $this->sessionExpired = false;
 
-        if (!isset($this->pdo)) {
+        if (! isset($this->pdo)) {
             $this->connect($this->dsn ?: $savePath);
         }
 
@@ -356,7 +356,7 @@ class PdoSessionHandler extends AbstractSessionHandler
             // We can just catch such an error and re-execute the update. This is similar to a serializable
             // transaction with retry logic on serialization failures but without the overhead and without possible
             // false positives due to longer gap locking.
-            if (!$updateStmt->rowCount()) {
+            if (! $updateStmt->rowCount()) {
                 try {
                     $insertStmt = $this->getInsertStatement($sessionId, $data, $maxlifetime);
                     $insertStmt->execute();
@@ -461,7 +461,7 @@ class PdoSessionHandler extends AbstractSessionHandler
             $this->password = $params['pass'];
         }
 
-        if (!isset($params['scheme'])) {
+        if (! isset($params['scheme'])) {
             throw new \InvalidArgumentException('URLs without scheme are not supported to configure the PdoSessionHandler.');
         }
 
@@ -562,7 +562,7 @@ class PdoSessionHandler extends AbstractSessionHandler
      */
     private function beginTransaction(): void
     {
-        if (!$this->inTransaction) {
+        if (! $this->inTransaction) {
             if ('sqlite' === $this->driver) {
                 $this->pdo->exec('BEGIN IMMEDIATE TRANSACTION');
             } else {
@@ -654,7 +654,7 @@ class PdoSessionHandler extends AbstractSessionHandler
                 throw new \RuntimeException('Failed to read session: INSERT reported a duplicate id but next SELECT did not return any data.');
             }
 
-            if (!filter_var(\ini_get('session.use_strict_mode'), \FILTER_VALIDATE_BOOL) && self::LOCK_TRANSACTIONAL === $this->lockMode && 'sqlite' !== $this->driver) {
+            if (! filter_var(\ini_get('session.use_strict_mode'), \FILTER_VALIDATE_BOOL) && self::LOCK_TRANSACTIONAL === $this->lockMode && 'sqlite' !== $this->driver) {
                 // In strict mode, session fixation is not possible: new sessions always start with a unique
                 // random id, so that concurrency is not possible and this code path can be skipped.
                 // Exclusive-reading of non-existent rows does not block, so we need to do an insert to block
@@ -914,7 +914,7 @@ class PdoSessionHandler extends AbstractSessionHandler
      */
     protected function getConnection(): \PDO
     {
-        if (!isset($this->pdo)) {
+        if (! isset($this->pdo)) {
             $this->connect($this->dsn ?: \ini_get('session.save_path'));
         }
 

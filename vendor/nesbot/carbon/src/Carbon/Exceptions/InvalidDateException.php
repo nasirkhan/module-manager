@@ -35,10 +35,10 @@ class InvalidDateException extends BaseInvalidArgumentException implements Inval
     /**
      * Constructor.
      *
-     * @param string         $field
-     * @param mixed          $value
-     * @param int            $code
-     * @param Throwable|null $previous
+     * @param  string  $field
+     * @param  mixed  $value
+     * @param  int  $code
+     * @param  Throwable|null  $previous
      */
     public function __construct($field, $value, $code = 0, ?Throwable $previous = null)
     {

@@ -38,7 +38,7 @@ final class UriResolver
 
         $newPath = implode('/', $results);
 
-        if ($path[0] === '/' && (!isset($newPath[0]) || $newPath[0] !== '/')) {
+        if ($path[0] === '/' && (! isset($newPath[0]) || $newPath[0] !== '/')) {
             // Re-add the leading slash if necessary for cases like "/.."
             $newPath = '/'.$newPath;
         } elseif ($newPath !== '' && ($segment === '.' || $segment === '..')) {

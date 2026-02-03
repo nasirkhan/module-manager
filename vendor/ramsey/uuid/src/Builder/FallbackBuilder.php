@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,25 +20,24 @@ use Ramsey\Uuid\Exception\UnableToBuildUuidException;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * FallbackBuilder builds a UUID by stepping through a list of UUID builders until a UUID can be constructed without exceptions
+ * FallbackBuilder builds a UUID by stepping through a list of UUID builders until a UUID can be constructed without exceptions.
  *
  * @immutable
  */
 class FallbackBuilder implements UuidBuilderInterface
 {
     /**
-     * @param iterable<UuidBuilderInterface> $builders An array of UUID builders
+     * @param  iterable<UuidBuilderInterface>  $builders  An array of UUID builders
      */
     public function __construct(private iterable $builders)
     {
     }
 
     /**
-     * Builds and returns a UuidInterface instance using the first builder that succeeds
+     * Builds and returns a UuidInterface instance using the first builder that succeeds.
      *
-     * @param CodecInterface $codec The codec to use for building this instance
-     * @param string $bytes The byte string from which to construct a UUID
-     *
+     * @param  CodecInterface  $codec  The codec to use for building this instance
+     * @param  string  $bytes  The byte string from which to construct a UUID
      * @return UuidInterface an instance of a UUID object
      *
      * @pure

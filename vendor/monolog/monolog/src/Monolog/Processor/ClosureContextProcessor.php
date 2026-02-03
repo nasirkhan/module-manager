@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -15,7 +17,7 @@ use Monolog\LogRecord;
 
 /**
  * Generates a context from a Closure if the Closure is the only value
- * in the context
+ * in the context.
  *
  * It helps reduce the performance impact of debug logs if they do
  * need to create lots of context information. If this processor is added
@@ -39,7 +41,7 @@ class ClosureContextProcessor implements ProcessorInterface
                 ];
             }
 
-            if (!\is_array($context)) {
+            if (! \is_array($context)) {
                 $context = [$context];
             }
 

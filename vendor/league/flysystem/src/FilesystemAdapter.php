@@ -25,7 +25,7 @@ interface FilesystemAdapter
     public function write(string $path, string $contents, Config $config): void;
 
     /**
-     * @param resource $contents
+     * @param  resource  $contents
      *
      * @throws UnableToWriteFile
      * @throws FilesystemException

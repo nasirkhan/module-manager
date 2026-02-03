@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Reference;
 
 /**
- * A collection of references
+ * A collection of references.
  *
  * @phpstan-extends \IteratorAggregate<ReferenceInterface>
  */

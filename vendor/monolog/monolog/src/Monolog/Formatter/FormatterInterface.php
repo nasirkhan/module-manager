@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -14,7 +16,7 @@ namespace Monolog\Formatter;
 use Monolog\LogRecord;
 
 /**
- * Interface for formatters
+ * Interface for formatters.
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
@@ -23,16 +25,16 @@ interface FormatterInterface
     /**
      * Formats a log record.
      *
-     * @param  LogRecord $record A record to format
-     * @return mixed     The formatted record
+     * @param  LogRecord  $record  A record to format
+     * @return mixed The formatted record
      */
     public function format(LogRecord $record);
 
     /**
      * Formats a set of log records.
      *
-     * @param  array<LogRecord> $records A set of records to format
-     * @return mixed            The formatted set of records
+     * @param  array<LogRecord>  $records  A set of records to format
+     * @return mixed The formatted set of records
      */
     public function formatBatch(array $records);
 }

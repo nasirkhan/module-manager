@@ -58,7 +58,7 @@ class UploadedFile implements UploadedFileInterface
     private $stream;
 
     /**
-     * @param StreamInterface|string|resource $streamOrFile
+     * @param  StreamInterface|string|resource  $streamOrFile
      */
     public function __construct(
         $streamOrFile,
@@ -78,9 +78,9 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
-     * Depending on the value set file or stream variable
+     * Depending on the value set file or stream variable.
      *
-     * @param StreamInterface|string|resource $streamOrFile
+     * @param  StreamInterface|string|resource  $streamOrFile
      *
      * @throws InvalidArgumentException
      */
@@ -104,7 +104,7 @@ class UploadedFile implements UploadedFileInterface
      */
     private function setError(int $error): void
     {
-        if (!isset(UploadedFile::ERROR_MAP[$error])) {
+        if (! isset(UploadedFile::ERROR_MAP[$error])) {
             throw new InvalidArgumentException(
                 'Invalid error status for UploadedFile'
             );
@@ -119,7 +119,7 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
-     * Return true if there is no upload error
+     * Return true if there is no upload error.
      */
     private function isOk(): bool
     {

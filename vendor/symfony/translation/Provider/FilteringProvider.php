@@ -40,7 +40,7 @@ class FilteringProvider implements ProviderInterface
 
     public function read(array $domains, array $locales): TranslatorBag
     {
-        $domains = !$this->domains ? $domains : array_intersect($this->domains, $domains);
+        $domains = ! $this->domains ? $domains : array_intersect($this->domains, $domains);
         $locales = array_intersect($this->locales, $locales);
 
         return $this->provider->read($domains, $locales);

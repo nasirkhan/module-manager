@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -55,7 +55,7 @@ use Ramsey\Uuid\Validator\ValidatorInterface;
 use const PHP_INT_SIZE;
 
 /**
- * FeatureSet detects and exposes available features in the current environment
+ * FeatureSet detects and exposes available features in the current environment.
  *
  * A feature set is used by UuidFactory to determine the available features and capabilities of the environment.
  */
@@ -76,11 +76,11 @@ class FeatureSet
     private ValidatorInterface $validator;
 
     /**
-     * @param bool $useGuids True build UUIDs using the GuidStringCodec
-     * @param bool $force32Bit True to force the use of 32-bit functionality (primarily for testing purposes)
-     * @param bool $forceNoBigNumber (obsolete)
-     * @param bool $ignoreSystemNode True to disable attempts to check for the system node ID (primarily for testing purposes)
-     * @param bool $enablePecl True to enable the use of the PeclUuidTimeGenerator to generate version 1 UUIDs
+     * @param  bool  $useGuids  True build UUIDs using the GuidStringCodec
+     * @param  bool  $force32Bit  True to force the use of 32-bit functionality (primarily for testing purposes)
+     * @param  bool  $forceNoBigNumber  (obsolete)
+     * @param  bool  $ignoreSystemNode  True to disable attempts to check for the system node ID (primarily for testing purposes)
+     * @param  bool  $enablePecl  True to enable the use of the PeclUuidTimeGenerator to generate version 1 UUIDs
      *
      * @phpstan-ignore constructor.unusedParameter ($forceNoBigNumber is deprecated)
      */
@@ -106,7 +106,7 @@ class FeatureSet
     }
 
     /**
-     * Returns the builder configured for this environment
+     * Returns the builder configured for this environment.
      */
     public function getBuilder(): UuidBuilderInterface
     {
@@ -114,7 +114,7 @@ class FeatureSet
     }
 
     /**
-     * Returns the calculator configured for this environment
+     * Returns the calculator configured for this environment.
      */
     public function getCalculator(): CalculatorInterface
     {
@@ -122,7 +122,7 @@ class FeatureSet
     }
 
     /**
-     * Returns the codec configured for this environment
+     * Returns the codec configured for this environment.
      */
     public function getCodec(): CodecInterface
     {
@@ -130,7 +130,7 @@ class FeatureSet
     }
 
     /**
-     * Returns the DCE Security generator configured for this environment
+     * Returns the DCE Security generator configured for this environment.
      */
     public function getDceSecurityGenerator(): DceSecurityGeneratorInterface
     {
@@ -138,7 +138,7 @@ class FeatureSet
     }
 
     /**
-     * Returns the name generator configured for this environment
+     * Returns the name generator configured for this environment.
      */
     public function getNameGenerator(): NameGeneratorInterface
     {
@@ -146,7 +146,7 @@ class FeatureSet
     }
 
     /**
-     * Returns the node provider configured for this environment
+     * Returns the node provider configured for this environment.
      */
     public function getNodeProvider(): NodeProviderInterface
     {
@@ -154,7 +154,7 @@ class FeatureSet
     }
 
     /**
-     * Returns the number converter configured for this environment
+     * Returns the number converter configured for this environment.
      */
     public function getNumberConverter(): NumberConverterInterface
     {
@@ -162,7 +162,7 @@ class FeatureSet
     }
 
     /**
-     * Returns the random generator configured for this environment
+     * Returns the random generator configured for this environment.
      */
     public function getRandomGenerator(): RandomGeneratorInterface
     {
@@ -170,7 +170,7 @@ class FeatureSet
     }
 
     /**
-     * Returns the time converter configured for this environment
+     * Returns the time converter configured for this environment.
      */
     public function getTimeConverter(): TimeConverterInterface
     {
@@ -178,7 +178,7 @@ class FeatureSet
     }
 
     /**
-     * Returns the time generator configured for this environment
+     * Returns the time generator configured for this environment.
      */
     public function getTimeGenerator(): TimeGeneratorInterface
     {
@@ -186,7 +186,7 @@ class FeatureSet
     }
 
     /**
-     * Returns the Unix Epoch time generator configured for this environment
+     * Returns the Unix Epoch time generator configured for this environment.
      */
     public function getUnixTimeGenerator(): TimeGeneratorInterface
     {
@@ -194,7 +194,7 @@ class FeatureSet
     }
 
     /**
-     * Returns the validator configured for this environment
+     * Returns the validator configured for this environment.
      */
     public function getValidator(): ValidatorInterface
     {
@@ -202,7 +202,7 @@ class FeatureSet
     }
 
     /**
-     * Sets the calculator to use in this environment
+     * Sets the calculator to use in this environment.
      */
     public function setCalculator(CalculatorInterface $calculator): void
     {
@@ -216,7 +216,7 @@ class FeatureSet
     }
 
     /**
-     * Sets the DCE Security provider to use in this environment
+     * Sets the DCE Security provider to use in this environment.
      */
     public function setDceSecurityProvider(DceSecurityProviderInterface $dceSecurityProvider): void
     {
@@ -224,7 +224,7 @@ class FeatureSet
     }
 
     /**
-     * Sets the node provider to use in this environment
+     * Sets the node provider to use in this environment.
      */
     public function setNodeProvider(NodeProviderInterface $nodeProvider): void
     {
@@ -236,7 +236,7 @@ class FeatureSet
     }
 
     /**
-     * Sets the time provider to use in this environment
+     * Sets the time provider to use in this environment.
      */
     public function setTimeProvider(TimeProviderInterface $timeProvider): void
     {
@@ -245,7 +245,7 @@ class FeatureSet
     }
 
     /**
-     * Set the validator to use in this environment
+     * Set the validator to use in this environment.
      */
     public function setValidator(ValidatorInterface $validator): void
     {
@@ -253,9 +253,9 @@ class FeatureSet
     }
 
     /**
-     * Returns a codec configured for this environment
+     * Returns a codec configured for this environment.
      *
-     * @param bool $useGuids Whether to build UUIDs using the GuidStringCodec
+     * @param  bool  $useGuids  Whether to build UUIDs using the GuidStringCodec
      */
     private function buildCodec(bool $useGuids = false): CodecInterface
     {
@@ -267,7 +267,7 @@ class FeatureSet
     }
 
     /**
-     * Returns a DCE Security generator configured for this environment
+     * Returns a DCE Security generator configured for this environment.
      */
     private function buildDceSecurityGenerator(
         DceSecurityProviderInterface $dceSecurityProvider,
@@ -276,7 +276,7 @@ class FeatureSet
     }
 
     /**
-     * Returns a node provider configured for this environment
+     * Returns a node provider configured for this environment.
      */
     private function buildNodeProvider(): NodeProviderInterface
     {
@@ -288,7 +288,7 @@ class FeatureSet
     }
 
     /**
-     * Returns a number converter configured for this environment
+     * Returns a number converter configured for this environment.
      */
     private function buildNumberConverter(CalculatorInterface $calculator): NumberConverterInterface
     {
@@ -296,7 +296,7 @@ class FeatureSet
     }
 
     /**
-     * Returns a random generator configured for this environment
+     * Returns a random generator configured for this environment.
      */
     private function buildRandomGenerator(): RandomGeneratorInterface
     {
@@ -308,10 +308,10 @@ class FeatureSet
     }
 
     /**
-     * Returns a time generator configured for this environment
+     * Returns a time generator configured for this environment.
      *
-     * @param TimeProviderInterface $timeProvider The time provider to use with
-     *     the time generator
+     * @param  TimeProviderInterface  $timeProvider  The time provider to use with
+     *                                               the time generator
      */
     private function buildTimeGenerator(TimeProviderInterface $timeProvider): TimeGeneratorInterface
     {
@@ -323,7 +323,7 @@ class FeatureSet
     }
 
     /**
-     * Returns a Unix Epoch time generator configured for this environment
+     * Returns a Unix Epoch time generator configured for this environment.
      */
     private function buildUnixTimeGenerator(): TimeGeneratorInterface
     {
@@ -331,7 +331,7 @@ class FeatureSet
     }
 
     /**
-     * Returns a name generator configured for this environment
+     * Returns a name generator configured for this environment.
      */
     private function buildNameGenerator(): NameGeneratorInterface
     {
@@ -343,7 +343,7 @@ class FeatureSet
     }
 
     /**
-     * Returns a time converter configured for this environment
+     * Returns a time converter configured for this environment.
      */
     private function buildTimeConverter(CalculatorInterface $calculator): TimeConverterInterface
     {
@@ -357,9 +357,9 @@ class FeatureSet
     }
 
     /**
-     * Returns a UUID builder configured for this environment
+     * Returns a UUID builder configured for this environment.
      *
-     * @param bool $useGuids Whether to build UUIDs using the GuidStringCodec
+     * @param  bool  $useGuids  Whether to build UUIDs using the GuidStringCodec
      */
     private function buildUuidBuilder(bool $useGuids = false): UuidBuilderInterface
     {
@@ -374,10 +374,10 @@ class FeatureSet
     }
 
     /**
-     * Returns true if the PHP build is 64-bit
+     * Returns true if the PHP build is 64-bit.
      */
     private function is64BitSystem(): bool
     {
-        return PHP_INT_SIZE === 8 && !$this->force32Bit;
+        return PHP_INT_SIZE === 8 && ! $this->force32Bit;
     }
 }

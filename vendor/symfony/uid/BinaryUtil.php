@@ -56,7 +56,7 @@ class BinaryUtil
             $quotient = [];
             $remainder = 0;
 
-            for ($i = 0; $i !== $count; ++$i) {
+            for ($i = 0; $i !== $count; $i++) {
                 $carry = $bytes[$i] + ($remainder << (\PHP_INT_SIZE >= 8 ? 16 : 8));
                 $digit = intdiv($carry, $base);
                 $remainder = $carry % $base;
@@ -83,7 +83,7 @@ class BinaryUtil
             $quotient = [];
             $remainder = 0;
 
-            for ($i = 0; $i !== $count; ++$i) {
+            for ($i = 0; $i !== $count; $i++) {
                 $carry = ($bytes ? $digits[$i] : $map[$digits[$i]]) + $remainder * $base;
 
                 if (\PHP_INT_SIZE >= 8) {
@@ -109,7 +109,7 @@ class BinaryUtil
     public static function add(string $a, string $b): string
     {
         $carry = 0;
-        for ($i = 7; 0 <= $i; --$i) {
+        for ($i = 7; 0 <= $i; $i--) {
             $carry += \ord($a[$i]) + \ord($b[$i]);
             $a[$i] = \chr($carry & 0xFF);
             $carry >>= 8;
@@ -119,8 +119,7 @@ class BinaryUtil
     }
 
     /**
-     * @param string $time Count of 100-nanosecond intervals since the UUID epoch 1582-10-15 00:00:00 in hexadecimal
-     *
+     * @param  string  $time  Count of 100-nanosecond intervals since the UUID epoch 1582-10-15 00:00:00 in hexadecimal
      * @return string Count of 100-nanosecond intervals since the UUID epoch 1582-10-15 00:00:00 as a numeric string
      */
     public static function hexToNumericString(string $time): string
@@ -150,7 +149,7 @@ class BinaryUtil
     /**
      * Sub-microseconds are lost since they are not handled by \DateTimeImmutable.
      *
-     * @param string $time Count of 100-nanosecond intervals since the UUID epoch 1582-10-15 00:00:00 in hexadecimal
+     * @param  string  $time  Count of 100-nanosecond intervals since the UUID epoch 1582-10-15 00:00:00 in hexadecimal
      */
     public static function hexToDateTime(string $time): \DateTimeImmutable
     {

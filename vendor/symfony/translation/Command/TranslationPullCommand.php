@@ -105,8 +105,7 @@ final class TranslationPullCommand extends Command
                 Local translations for the specified domains and locale are deleted if they're not present on the provider and overwritten if it's the case.
                 Local translations for others domains and locales are ignored.
                 EOF
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -122,7 +121,7 @@ final class TranslationPullCommand extends Command
         $asTree = (int) $input->getOption('as-tree');
         $xliffVersion = '1.2';
 
-        if ($intlIcu && !$force) {
+        if ($intlIcu && ! $force) {
             $io->note('--intl-icu option only has an effect when used with --force. Here, it will be ignored.');
         }
 
@@ -140,7 +139,7 @@ final class TranslationPullCommand extends Command
             'inline' => $asTree,
         ];
 
-        if (!$domains) {
+        if (! $domains) {
             $domains = $provider->getDomains();
         }
 

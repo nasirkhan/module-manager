@@ -48,7 +48,7 @@ class UnixPipes extends AbstractPipes
 
     public function getDescriptors(): array
     {
-        if (!$this->haveReadSupport) {
+        if (! $this->haveReadSupport) {
             $nullstream = fopen('/dev/null', 'c');
 
             return [
@@ -101,7 +101,7 @@ class UnixPipes extends AbstractPipes
             restore_error_handler();
             // if a system call has been interrupted, forget about it, let's try again
             // otherwise, an error occurred, let's reset pipes
-            if (!$this->hasSystemCallBeenInterrupted()) {
+            if (! $this->hasSystemCallBeenInterrupted()) {
                 $this->pipes = [];
             }
 
@@ -119,7 +119,7 @@ class UnixPipes extends AbstractPipes
                 $read[$type] .= $data;
             } while (isset($data[0]) && ($close || isset($data[self::CHUNK_SIZE - 1])));
 
-            if (!isset($read[$type][0])) {
+            if (! isset($read[$type][0])) {
                 unset($read[$type]);
             }
 

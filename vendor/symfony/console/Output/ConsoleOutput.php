@@ -33,9 +33,9 @@ class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
     private array $consoleSectionOutputs = [];
 
     /**
-     * @param int                           $verbosity The verbosity level (one of the VERBOSITY constants in OutputInterface)
-     * @param bool|null                     $decorated Whether to decorate messages (null for auto-guessing)
-     * @param OutputFormatterInterface|null $formatter Output formatter instance (null to use default OutputFormatter)
+     * @param  int  $verbosity  The verbosity level (one of the VERBOSITY constants in OutputInterface)
+     * @param  bool|null  $decorated  Whether to decorate messages (null for auto-guessing)
+     * @param  OutputFormatterInterface|null  $formatter  Output formatter instance (null to use default OutputFormatter)
      */
     public function __construct(int $verbosity = self::VERBOSITY_NORMAL, ?bool $decorated = null, ?OutputFormatterInterface $formatter = null)
     {
@@ -130,7 +130,7 @@ class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
      */
     private function openOutputStream()
     {
-        if (!$this->hasStdoutSupport()) {
+        if (! $this->hasStdoutSupport()) {
             return fopen('php://output', 'w');
         }
 
@@ -143,7 +143,7 @@ class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
      */
     private function openErrorStream()
     {
-        if (!$this->hasStderrSupport()) {
+        if (! $this->hasStderrSupport()) {
             return fopen('php://output', 'w');
         }
 

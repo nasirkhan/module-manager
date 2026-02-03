@@ -49,19 +49,21 @@ class WindowsPipes extends AbstractPipes
             ];
             $tmpDir = sys_get_temp_dir();
             $lastError = 'unknown reason';
-            set_error_handler(function ($type, $msg) use (&$lastError) { $lastError = $msg; });
-            for ($i = 0;; ++$i) {
+            set_error_handler(function ($type, $msg) use (&$lastError) {
+                $lastError = $msg;
+            });
+            for ($i = 0;; $i++) {
                 foreach ($pipes as $pipe => $name) {
                     $file = \sprintf('%s\\sf_proc_%02X.%s', $tmpDir, $i, $name);
 
-                    if (!$h = fopen($file.'.lock', 'w')) {
+                    if (! $h = fopen($file.'.lock', 'w')) {
                         if (file_exists($file.'.lock')) {
                             continue 2;
                         }
                         restore_error_handler();
                         throw new RuntimeException('A temporary file could not be opened to write the process output: '.$lastError);
                     }
-                    if (!flock($h, \LOCK_EX | \LOCK_NB)) {
+                    if (! flock($h, \LOCK_EX | \LOCK_NB)) {
                         continue 2;
                     }
                     if (isset($this->lockHandles[$pipe])) {
@@ -70,7 +72,7 @@ class WindowsPipes extends AbstractPipes
                     }
                     $this->lockHandles[$pipe] = $h;
 
-                    if (!($h = fopen($file, 'w')) || !fclose($h) || !$h = fopen($file, 'r')) {
+                    if (! ($h = fopen($file, 'w')) || ! fclose($h) || ! $h = fopen($file, 'r')) {
                         flock($this->lockHandles[$pipe], \LOCK_UN);
                         fclose($this->lockHandles[$pipe]);
                         unset($this->lockHandles[$pipe]);
@@ -104,7 +106,7 @@ class WindowsPipes extends AbstractPipes
 
     public function getDescriptors(): array
     {
-        if (!$this->haveReadSupport) {
+        if (! $this->haveReadSupport) {
             $nullstream = fopen('NUL', 'c');
 
             return [

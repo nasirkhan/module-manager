@@ -95,7 +95,7 @@ class UnicodeString extends AbstractUnicodeString
     {
         if ($suffix instanceof AbstractString) {
             $suffix = $suffix->string;
-        } elseif (!\is_string($suffix)) {
+        } elseif (! \is_string($suffix)) {
             return parent::endsWith($suffix);
         }
 
@@ -121,7 +121,7 @@ class UnicodeString extends AbstractUnicodeString
     {
         if ($string instanceof AbstractString) {
             $string = $string->string;
-        } elseif (!\is_string($string)) {
+        } elseif (! \is_string($string)) {
             return parent::equalsTo($string);
         }
 
@@ -139,7 +139,7 @@ class UnicodeString extends AbstractUnicodeString
     {
         if ($needle instanceof AbstractString) {
             $needle = $needle->string;
-        } elseif (!\is_string($needle)) {
+        } elseif (! \is_string($needle)) {
             return parent::indexOf($needle, $offset);
         }
 
@@ -163,7 +163,7 @@ class UnicodeString extends AbstractUnicodeString
     {
         if ($needle instanceof AbstractString) {
             $needle = $needle->string;
-        } elseif (!\is_string($needle)) {
+        } elseif (! \is_string($needle)) {
             return parent::indexOfLast($needle, $offset);
         }
 
@@ -208,9 +208,9 @@ class UnicodeString extends AbstractUnicodeString
 
         if (\in_array($form, [self::NFC, self::NFKC], true)) {
             normalizer_is_normalized($str->string, $form) ?: $str->string = normalizer_normalize($str->string, $form);
-        } elseif (!\in_array($form, [self::NFD, self::NFKD], true)) {
+        } elseif (! \in_array($form, [self::NFD, self::NFKD], true)) {
             throw new InvalidArgumentException('Unsupported normalization form.');
-        } elseif (!normalizer_is_normalized($str->string, $form)) {
+        } elseif (! normalizer_is_normalized($str->string, $form)) {
             $str->string = normalizer_normalize($str->string, $form);
             $str->ignoreCase = null;
         }
@@ -335,7 +335,7 @@ class UnicodeString extends AbstractUnicodeString
             $str->string = grapheme_substr($tail, 0, $i);
             $chunks[] = clone $str;
             $tail = substr($tail, \strlen($str->string) + \strlen($delimiter));
-            --$limit;
+            $limit--;
         }
 
         $str->string = $tail;
@@ -348,7 +348,7 @@ class UnicodeString extends AbstractUnicodeString
     {
         if ($prefix instanceof AbstractString) {
             $prefix = $prefix->string;
-        } elseif (!\is_string($prefix)) {
+        } elseif (! \is_string($prefix)) {
             return parent::startsWith($prefix);
         }
 
@@ -382,7 +382,7 @@ class UnicodeString extends AbstractUnicodeString
             $prefix = (string) $prefix;
         }
 
-        if (!normalizer_is_normalized($prefix, \Normalizer::NFC)) {
+        if (! normalizer_is_normalized($prefix, \Normalizer::NFC)) {
             $prefix = normalizer_normalize($prefix, \Normalizer::NFC);
         }
 
@@ -401,7 +401,7 @@ class UnicodeString extends AbstractUnicodeString
             $suffix = (string) $suffix;
         }
 
-        if (!normalizer_is_normalized($suffix, \Normalizer::NFC)) {
+        if (! normalizer_is_normalized($suffix, \Normalizer::NFC)) {
             $suffix = normalizer_normalize($suffix, \Normalizer::NFC);
         }
 
@@ -437,8 +437,8 @@ class UnicodeString extends AbstractUnicodeString
                 }
             }, $this, static::class)($data);
         } finally {
-            if (!$wakeup) {
-                if (!\is_string($this->string)) {
+            if (! $wakeup) {
+                if (! \is_string($this->string)) {
                     throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
                 }
 
@@ -454,7 +454,7 @@ class UnicodeString extends AbstractUnicodeString
     {
         trigger_deprecation('symfony/string', '7.4', 'Calling "%s::__wakeup()" is deprecated, use "__unserialize()" instead.', get_debug_type($this));
 
-        if (!\is_string($this->string)) {
+        if (! \is_string($this->string)) {
             throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
         }
 

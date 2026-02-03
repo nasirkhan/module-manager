@@ -16,7 +16,7 @@ namespace Dflydev\DotAccessData\Exception;
 use Throwable;
 
 /**
- * Thrown when trying to access a path that does not exist
+ * Thrown when trying to access a path that does not exist.
  */
 class MissingPathException extends DataException
 {

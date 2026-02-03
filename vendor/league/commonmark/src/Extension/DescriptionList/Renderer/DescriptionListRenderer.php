@@ -22,7 +22,7 @@ use League\CommonMark\Util\HtmlElement;
 final class DescriptionListRenderer implements NodeRendererInterface
 {
     /**
-     * @param DescriptionList $node
+     * @param  DescriptionList  $node
      *
      * {@inheritDoc}
      *
@@ -34,6 +34,6 @@ final class DescriptionListRenderer implements NodeRendererInterface
 
         $separator = $childRenderer->getBlockSeparator();
 
-        return new HtmlElement('dl', [], $separator . $childRenderer->renderNodes($node->children()) . $separator);
+        return new HtmlElement('dl', [], $separator.$childRenderer->renderNodes($node->children()).$separator);
     }
 }

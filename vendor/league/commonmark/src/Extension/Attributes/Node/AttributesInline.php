@@ -24,14 +24,14 @@ final class AttributesInline extends AbstractInline
     private bool $block;
 
     /**
-     * @param array<string, mixed> $attributes
+     * @param  array<string, mixed>  $attributes
      */
     public function __construct(array $attributes, bool $block)
     {
         parent::__construct();
 
         $this->attributes = $attributes;
-        $this->block      = $block;
+        $this->block = $block;
     }
 
     /**
@@ -43,7 +43,7 @@ final class AttributesInline extends AbstractInline
     }
 
     /**
-     * @param array<string, mixed> $attributes
+     * @param  array<string, mixed>  $attributes
      */
     public function setAttributes(array $attributes): void
     {

@@ -36,6 +36,7 @@ final class InlineParserContext
 
     /**
      * @var string[]
+     *
      * @psalm-var non-empty-array<string>
      *
      * @psalm-readonly-allow-private-mutation
@@ -44,9 +45,9 @@ final class InlineParserContext
 
     public function __construct(Cursor $contents, AbstractBlock $container, ReferenceMapInterface $referenceMap, int $maxDelimitersPerLine = PHP_INT_MAX)
     {
-        $this->referenceMap   = $referenceMap;
-        $this->container      = $container;
-        $this->cursor         = $contents;
+        $this->referenceMap = $referenceMap;
+        $this->container = $container;
+        $this->cursor = $contents;
         $this->delimiterStack = new DelimiterStack($maxDelimitersPerLine);
     }
 
@@ -105,7 +106,7 @@ final class InlineParserContext
     }
 
     /**
-     * @param string[] $matches
+     * @param  string[]  $matches
      *
      * @psalm-param non-empty-array<string> $matches
      */

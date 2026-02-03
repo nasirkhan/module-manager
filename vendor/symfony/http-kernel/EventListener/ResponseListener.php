@@ -35,7 +35,7 @@ class ResponseListener implements EventSubscriberInterface
      */
     public function onKernelResponse(ResponseEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 
@@ -45,7 +45,7 @@ class ResponseListener implements EventSubscriberInterface
             $response->setCharset($this->charset);
         }
 
-        if ($this->addContentLanguageHeader && !$response->isInformational() && !$response->isEmpty() && !$response->headers->has('Content-Language')) {
+        if ($this->addContentLanguageHeader && ! $response->isInformational() && ! $response->isEmpty() && ! $response->headers->has('Content-Language')) {
             $response->headers->set('Content-Language', $event->getRequest()->getLocale());
         }
 

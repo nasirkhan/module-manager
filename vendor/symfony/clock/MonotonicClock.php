@@ -43,10 +43,10 @@ final class MonotonicClock implements ClockInterface
         [$s, $us] = hrtime();
 
         if (1000000 <= $us = (int) ($us / 1000) + $this->usOffset) {
-            ++$s;
+            $s++;
             $us -= 1000000;
         } elseif (0 > $us) {
-            --$s;
+            $s--;
             $us += 1000000;
         }
 

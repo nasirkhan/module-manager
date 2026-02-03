@@ -20,7 +20,7 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 class EmbedRenderer implements NodeRendererInterface
 {
     /**
-     * @param Embed $node
+     * @param  Embed  $node
      *
      * {@inheritDoc}
      *

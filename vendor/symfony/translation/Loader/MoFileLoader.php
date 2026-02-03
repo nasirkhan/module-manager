@@ -71,7 +71,7 @@ class MoFileLoader extends FileLoader
 
         $messages = [];
 
-        for ($i = 0; $i < $count; ++$i) {
+        for ($i = 0; $i < $count; $i++) {
             $pluralId = null;
             $translated = null;
 
@@ -109,7 +109,7 @@ class MoFileLoader extends FileLoader
             $ids = ['singular' => $singularId, 'plural' => $pluralId];
             $item = compact('ids', 'translated');
 
-            if (!empty($item['ids']['singular'])) {
+            if (! empty($item['ids']['singular'])) {
                 $id = $item['ids']['singular'];
                 if (isset($item['ids']['plural'])) {
                     $id .= '|'.$item['ids']['plural'];
@@ -126,7 +126,7 @@ class MoFileLoader extends FileLoader
     /**
      * Reads an unsigned long from stream respecting endianness.
      *
-     * @param resource $stream
+     * @param  resource  $stream
      */
     private function readLong($stream, bool $isBigEndian): int
     {

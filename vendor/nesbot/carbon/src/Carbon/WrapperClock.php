@@ -84,8 +84,7 @@ final class WrapperClock implements ClockInterface
     /**
      * @template T of CarbonInterface
      *
-     * @param class-string<T> $class
-     *
+     * @param  class-string<T>  $class
      * @return T
      */
     public function nowAs(string $class, DateTimeZone|string|int|null $timezone = null): CarbonInterface
@@ -147,7 +146,7 @@ final class WrapperClock implements ClockInterface
             ? $this->currentClock
             : $this->currentClock->now();
 
-        if (!($now instanceof DateTimeImmutable)) {
+        if (! ($now instanceof DateTimeImmutable)) {
             $now = clone $now;
         }
 
@@ -170,7 +169,7 @@ final class WrapperClock implements ClockInterface
             thousands_separator: '',
         );
 
-        if (!($date instanceof DateTimeImmutable)) {
+        if (! ($date instanceof DateTimeImmutable)) {
             $date = clone $date;
         }
 

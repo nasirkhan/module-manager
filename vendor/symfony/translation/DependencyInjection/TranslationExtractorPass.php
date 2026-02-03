@@ -22,7 +22,7 @@ class TranslationExtractorPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->hasDefinition('translation.extractor')) {
+        if (! $container->hasDefinition('translation.extractor')) {
             return;
         }
 

@@ -34,7 +34,7 @@ final class BacktickParser implements InlineParserInterface
 
     /** @var \WeakReference<Cursor>|null */
     private ?\WeakReference $lastCursor = null;
-    private bool $lastCursorScanned     = false;
+    private bool $lastCursorScanned = false;
 
     /** @var array<int, int> backtick count => position of known ender */
     private array $seenBackticks = [];
@@ -46,12 +46,12 @@ final class BacktickParser implements InlineParserInterface
 
     public function parse(InlineParserContext $inlineContext): bool
     {
-        $ticks  = $inlineContext->getFullMatch();
+        $ticks = $inlineContext->getFullMatch();
         $cursor = $inlineContext->getCursor();
         $cursor->advanceBy($inlineContext->getFullMatchLength());
 
         $currentPosition = $cursor->getPosition();
-        $previousState   = $cursor->saveState();
+        $previousState = $cursor->saveState();
 
         if ($this->findMatchingTicks(\strlen($ticks), $cursor)) {
             $code = $cursor->getSubstring($currentPosition, $cursor->getPosition() - $currentPosition - \strlen($ticks));
@@ -87,17 +87,16 @@ final class BacktickParser implements InlineParserInterface
      *
      * @see https://github.com/commonmark/cmark/commit/8ed5c9d
      *
-     * @param int    $openTickLength Number of backticks in the opening sequence
-     * @param Cursor $cursor         Cursor to scan
-     *
+     * @param  int  $openTickLength  Number of backticks in the opening sequence
+     * @param  Cursor  $cursor  Cursor to scan
      * @return bool True if a matching closer was found, false otherwise
      */
     private function findMatchingTicks(int $openTickLength, Cursor $cursor): bool
     {
         // Reset the seenBackticks cache if this is a new cursor
         if ($this->lastCursor === null || $this->lastCursor->get() !== $cursor) {
-            $this->seenBackticks     = [];
-            $this->lastCursor        = \WeakReference::create($cursor);
+            $this->seenBackticks = [];
+            $this->lastCursor = \WeakReference::create($cursor);
             $this->lastCursorScanned = false;
         }
 
@@ -110,7 +109,7 @@ final class BacktickParser implements InlineParserInterface
             return false;
         }
 
-        while ($ticks = $cursor->match('/`{1,' . self::MAX_BACKTICKS . '}/m')) {
+        while ($ticks = $cursor->match('/`{1,'.self::MAX_BACKTICKS.'}/m')) {
             $numTicks = \strlen($ticks);
 
             // Did we find the closer?

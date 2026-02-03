@@ -15,12 +15,12 @@ namespace League\CommonMark\Normalizer;
 
 interface UniqueSlugNormalizerInterface extends TextNormalizerInterface
 {
-    public const DISABLED        = false;
+    public const DISABLED = false;
     public const PER_ENVIRONMENT = 'environment';
-    public const PER_DOCUMENT    = 'document';
+    public const PER_DOCUMENT = 'document';
 
     /**
-     * Called by the Environment whenever the configured scope changes
+     * Called by the Environment whenever the configured scope changes.
      *
      * Currently, this will only be called PER_DOCUMENT.
      */

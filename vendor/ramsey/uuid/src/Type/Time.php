@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,7 +23,7 @@ use function json_encode;
 use function sprintf;
 
 /**
- * A value object representing a timestamp
+ * A value object representing a timestamp.
  *
  * This class exists for type-safety purposes, to ensure that timestamps used by ramsey/uuid are truly timestamp
  * integers and not some other kind of string or integer.
@@ -36,8 +36,8 @@ final class Time implements TypeInterface
     private IntegerObject $microseconds;
 
     public function __construct(
-        IntegerObject | float | int | string $seconds,
-        IntegerObject | float | int | string $microseconds = 0,
+        IntegerObject|float|int|string $seconds,
+        IntegerObject|float|int|string $microseconds = 0,
     ) {
         $this->seconds = new IntegerObject($seconds);
         $this->microseconds = new IntegerObject($microseconds);
@@ -61,7 +61,7 @@ final class Time implements TypeInterface
 
     public function toString(): string
     {
-        return $this->seconds->toString() . '.' . sprintf('%06s', $this->microseconds->toString());
+        return $this->seconds->toString().'.'.sprintf('%06s', $this->microseconds->toString());
     }
 
     public function __toString(): string
@@ -97,16 +97,16 @@ final class Time implements TypeInterface
     }
 
     /**
-     * Constructs the object from a serialized string representation
+     * Constructs the object from a serialized string representation.
      *
-     * @param string $data The serialized string representation of the object
+     * @param  string  $data  The serialized string representation of the object
      */
     public function unserialize(string $data): void
     {
         /** @var array{seconds?: float | int | string, microseconds?: float | int | string} $time */
         $time = json_decode($data, true);
 
-        if (!isset($time['seconds']) || !isset($time['microseconds'])) {
+        if (! isset($time['seconds']) || ! isset($time['microseconds'])) {
             throw new UnsupportedOperationException('Attempted to unserialize an invalid value');
         }
 
@@ -114,12 +114,12 @@ final class Time implements TypeInterface
     }
 
     /**
-     * @param array{seconds?: string, microseconds?: string} $data
+     * @param  array{seconds?: string, microseconds?: string}  $data
      */
     public function __unserialize(array $data): void
     {
         // @codeCoverageIgnoreStart
-        if (!isset($data['seconds']) || !isset($data['microseconds'])) {
+        if (! isset($data['seconds']) || ! isset($data['microseconds'])) {
             throw new ValueError(sprintf('%s(): Argument #1 ($data) is invalid', __METHOD__));
         }
         // @codeCoverageIgnoreEnd

@@ -27,7 +27,7 @@ class MenuItemsController extends BackendBaseController
         $this->module_icon = 'fa-regular fa-sun';
 
         // module model name, path
-        $this->module_model = "Nasirkhan\\ModuleManager\\Modules\\Menu\\Models\\MenuItem";
+        $this->module_model = 'Nasirkhan\\ModuleManager\\Modules\\Menu\\Models\\MenuItem';
     }
 
     /**

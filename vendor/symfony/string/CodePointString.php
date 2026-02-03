@@ -26,7 +26,7 @@ class CodePointString extends AbstractUnicodeString
 {
     public function __construct(string $string = '')
     {
-        if ('' !== $string && !preg_match('//u', $string)) {
+        if ('' !== $string && ! preg_match('//u', $string)) {
             throw new InvalidArgumentException('Invalid UTF-8 string.');
         }
 
@@ -38,7 +38,7 @@ class CodePointString extends AbstractUnicodeString
         $str = clone $this;
         $str->string .= 1 >= \count($suffix) ? ($suffix[0] ?? '') : implode('', $suffix);
 
-        if (!preg_match('//u', $str->string)) {
+        if (! preg_match('//u', $str->string)) {
             throw new InvalidArgumentException('Invalid UTF-8 string.');
         }
 
@@ -84,11 +84,11 @@ class CodePointString extends AbstractUnicodeString
     {
         if ($suffix instanceof AbstractString) {
             $suffix = $suffix->string;
-        } elseif (!\is_string($suffix)) {
+        } elseif (! \is_string($suffix)) {
             return parent::endsWith($suffix);
         }
 
-        if ('' === $suffix || !preg_match('//u', $suffix)) {
+        if ('' === $suffix || ! preg_match('//u', $suffix)) {
             return false;
         }
 
@@ -103,7 +103,7 @@ class CodePointString extends AbstractUnicodeString
     {
         if ($string instanceof AbstractString) {
             $string = $string->string;
-        } elseif (!\is_string($string)) {
+        } elseif (! \is_string($string)) {
             return parent::equalsTo($string);
         }
 
@@ -118,7 +118,7 @@ class CodePointString extends AbstractUnicodeString
     {
         if ($needle instanceof AbstractString) {
             $needle = $needle->string;
-        } elseif (!\is_string($needle)) {
+        } elseif (! \is_string($needle)) {
             return parent::indexOf($needle, $offset);
         }
 
@@ -135,7 +135,7 @@ class CodePointString extends AbstractUnicodeString
     {
         if ($needle instanceof AbstractString) {
             $needle = $needle->string;
-        } elseif (!\is_string($needle)) {
+        } elseif (! \is_string($needle)) {
             return parent::indexOfLast($needle, $offset);
         }
 
@@ -158,7 +158,7 @@ class CodePointString extends AbstractUnicodeString
         $str = clone $this;
         $str->string = (1 >= \count($prefix) ? ($prefix[0] ?? '') : implode('', $prefix)).$this->string;
 
-        if (!preg_match('//u', $str->string)) {
+        if (! preg_match('//u', $str->string)) {
             throw new InvalidArgumentException('Invalid UTF-8 string.');
         }
 
@@ -169,11 +169,11 @@ class CodePointString extends AbstractUnicodeString
     {
         $str = clone $this;
 
-        if ('' === $from || !preg_match('//u', $from)) {
+        if ('' === $from || ! preg_match('//u', $from)) {
             return $str;
         }
 
-        if ('' !== $to && !preg_match('//u', $to)) {
+        if ('' !== $to && ! preg_match('//u', $to)) {
             throw new InvalidArgumentException('Invalid UTF-8 string.');
         }
 
@@ -196,7 +196,7 @@ class CodePointString extends AbstractUnicodeString
 
     public function splice(string $replacement, int $start = 0, ?int $length = null): static
     {
-        if (!preg_match('//u', $replacement)) {
+        if (! preg_match('//u', $replacement)) {
             throw new InvalidArgumentException('Invalid UTF-8 string.');
         }
 
@@ -222,7 +222,7 @@ class CodePointString extends AbstractUnicodeString
             return parent::split($delimiter.'u', $limit, $flags);
         }
 
-        if (!preg_match('//u', $delimiter)) {
+        if (! preg_match('//u', $delimiter)) {
             throw new InvalidArgumentException('Split delimiter is not a valid UTF-8 string.');
         }
 
@@ -243,11 +243,11 @@ class CodePointString extends AbstractUnicodeString
     {
         if ($prefix instanceof AbstractString) {
             $prefix = $prefix->string;
-        } elseif (!\is_string($prefix)) {
+        } elseif (! \is_string($prefix)) {
             return parent::startsWith($prefix);
         }
 
-        if ('' === $prefix || !preg_match('//u', $prefix)) {
+        if ('' === $prefix || ! preg_match('//u', $prefix)) {
             return false;
         }
 

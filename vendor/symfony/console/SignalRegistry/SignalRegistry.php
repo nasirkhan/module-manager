@@ -39,11 +39,11 @@ final class SignalRegistry
     {
         $previous = pcntl_signal_get_handler($signal);
 
-        if (!isset($this->originalHandlers[$signal])) {
+        if (! isset($this->originalHandlers[$signal])) {
             $this->originalHandlers[$signal] = $previous;
         }
 
-        if (!isset($this->signalHandlers[$signal])) {
+        if (! isset($this->signalHandlers[$signal])) {
             if (\is_callable($previous) && [$this, 'handle'] !== $previous) {
                 $this->signalHandlers[$signal][] = $previous;
             }
@@ -100,7 +100,7 @@ final class SignalRegistry
 
         // Restore OS handler if no more Symfony handlers for this signal
         foreach ($popped as $signal => $handlers) {
-            if (!($this->signalHandlers[$signal] ?? false) && isset($this->originalHandlers[$signal])) {
+            if (! ($this->signalHandlers[$signal] ?? false) && isset($this->originalHandlers[$signal])) {
                 pcntl_signal($signal, $this->originalHandlers[$signal]);
             }
         }

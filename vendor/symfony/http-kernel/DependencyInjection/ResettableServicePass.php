@@ -25,7 +25,7 @@ class ResettableServicePass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->has('services_resetter')) {
+        if (! $container->has('services_resetter')) {
             return;
         }
 
@@ -35,11 +35,11 @@ class ResettableServicePass implements CompilerPassInterface
             $services[$id] = new Reference($id, ContainerInterface::IGNORE_ON_UNINITIALIZED_REFERENCE);
 
             foreach ($tags as $attributes) {
-                if (!isset($attributes['method'])) {
+                if (! isset($attributes['method'])) {
                     throw new RuntimeException(\sprintf('Tag "kernel.reset" requires the "method" attribute to be set on service "%s".', $id));
                 }
 
-                if (!isset($methods[$id])) {
+                if (! isset($methods[$id])) {
                     $methods[$id] = [];
                 }
 
@@ -51,7 +51,7 @@ class ResettableServicePass implements CompilerPassInterface
             }
         }
 
-        if (!$services) {
+        if (! $services) {
             $container->removeAlias('services_resetter');
             $container->removeDefinition('services_resetter');
 

@@ -25,7 +25,7 @@ trait LocalizedRouteTrait
     /**
      * Creates one or many routes.
      *
-     * @param string|array $path the path, or the localized paths of the route
+     * @param  string|array  $path  the path, or the localized paths of the route
      */
     final protected function createLocalizedRoute(RouteCollection $collection, string $name, string|array $path, string $namePrefix = '', ?array $prefixes = null): RouteCollection
     {
@@ -40,7 +40,7 @@ trait LocalizedRouteTrait
                 throw new \LogicException(\sprintf('Route "%s" is missing routes for locale(s) "%s".', $name, implode('", "', array_keys($missing))));
             } else {
                 foreach ($path as $locale => $localePath) {
-                    if (!isset($prefixes[$locale])) {
+                    if (! isset($prefixes[$locale])) {
                         throw new \LogicException(\sprintf('Route "%s" with locale "%s" is missing a corresponding prefix in its parent collection.', $name, $locale));
                     }
 

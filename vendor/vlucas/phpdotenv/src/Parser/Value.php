@@ -25,9 +25,8 @@ final class Value
     /**
      * Internal constructor for a value.
      *
-     * @param string $chars
-     * @param int[]  $vars
-     *
+     * @param  string  $chars
+     * @param  int[]  $vars
      * @return void
      */
     private function __construct(string $chars, array $vars)
@@ -49,9 +48,8 @@ final class Value
     /**
      * Create a new value instance, appending the characters.
      *
-     * @param string $chars
-     * @param bool   $var
-     *
+     * @param  string  $chars
+     * @param  bool  $var
      * @return \Dotenv\Parser\Value
      */
     public function append(string $chars, bool $var)

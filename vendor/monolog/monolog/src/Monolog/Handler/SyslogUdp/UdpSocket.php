@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -28,7 +30,7 @@ class UdpSocket
         $this->port = $port;
     }
 
-    public function write(string $line, string $header = ""): void
+    public function write(string $line, string $header = ''): void
     {
         $this->send($this->assembleMessage($line, $header));
     }
@@ -72,6 +74,6 @@ class UdpSocket
     {
         $chunkSize = static::DATAGRAM_MAX_LENGTH - \strlen($header);
 
-        return $header . Utils::substr($line, 0, $chunkSize);
+        return $header.Utils::substr($line, 0, $chunkSize);
     }
 }

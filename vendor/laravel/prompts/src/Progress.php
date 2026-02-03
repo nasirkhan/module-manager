@@ -23,7 +23,7 @@ class Progress extends Prompt
     public int $total = 0;
 
     /**
-     * The original value of pcntl_async_signals
+     * The original value of pcntl_async_signals.
      */
     protected bool $originalAsync;
 
@@ -108,7 +108,7 @@ class Progress extends Prompt
             pcntl_signal(SIGINT, function () {
                 $this->state = 'cancel';
                 $this->render();
-                exit();
+                exit;
             });
         }
 

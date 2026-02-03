@@ -28,21 +28,20 @@ final class InputBag extends ParameterBag
      *
      * @template TDefault of string|int|float|bool|null
      *
-     * @param TDefault $default The default value if the input key does not exist
-     *
+     * @param  TDefault  $default  The default value if the input key does not exist
      * @return TDefault|TInput
      *
      * @throws BadRequestException if the input contains a non-scalar value
      */
     public function get(string $key, mixed $default = null): string|int|float|bool|null
     {
-        if (null !== $default && !\is_scalar($default) && !$default instanceof \Stringable) {
+        if (null !== $default && ! \is_scalar($default) && ! $default instanceof \Stringable) {
             throw new \InvalidArgumentException(\sprintf('Expected a scalar value as a 2nd argument to "%s()", "%s" given.', __METHOD__, get_debug_type($default)));
         }
 
         $value = parent::get($key, $this);
 
-        if (null !== $value && $this !== $value && !\is_scalar($value) && !$value instanceof \Stringable) {
+        if (null !== $value && $this !== $value && ! \is_scalar($value) && ! $value instanceof \Stringable) {
             throw new BadRequestException(\sprintf('Input value "%s" contains a non-scalar value.', $key));
         }
 
@@ -71,11 +70,11 @@ final class InputBag extends ParameterBag
     /**
      * Sets an input by name.
      *
-     * @param string|int|float|bool|array|null $value
+     * @param  string|int|float|bool|array|null  $value
      */
     public function set(string $key, mixed $value): void
     {
-        if (null !== $value && !\is_scalar($value) && !\is_array($value) && !$value instanceof \Stringable) {
+        if (null !== $value && ! \is_scalar($value) && ! \is_array($value) && ! $value instanceof \Stringable) {
             throw new \InvalidArgumentException(\sprintf('Expected a scalar, or an array as a 2nd argument to "%s()", "%s" given.', __METHOD__, get_debug_type($value)));
         }
 
@@ -87,9 +86,8 @@ final class InputBag extends ParameterBag
      *
      * @template T of \BackedEnum
      *
-     * @param class-string<T> $class
-     * @param ?T              $default
-     *
+     * @param  class-string<T>  $class
+     * @param  ?T  $default
      * @return ?T
      *
      * @psalm-return ($default is null ? T|null : T)
@@ -125,15 +123,15 @@ final class InputBag extends ParameterBag
         $value = $this->has($key) ? $this->all()[$key] : $default;
 
         // Always turn $options into an array - this allows filter_var option shortcuts.
-        if (!\is_array($options) && $options) {
+        if (! \is_array($options) && $options) {
             $options = ['flags' => $options];
         }
 
-        if (\is_array($value) && !(($options['flags'] ?? 0) & (\FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY))) {
+        if (\is_array($value) && ! (($options['flags'] ?? 0) & (\FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY))) {
             throw new BadRequestException(\sprintf('Input value "%s" contains an array, but "FILTER_REQUIRE_ARRAY" or "FILTER_FORCE_ARRAY" flags were not set.', $key));
         }
 
-        if ((\FILTER_CALLBACK & $filter) && !(($options['options'] ?? null) instanceof \Closure)) {
+        if ((\FILTER_CALLBACK & $filter) && ! (($options['options'] ?? null) instanceof \Closure)) {
             throw new \InvalidArgumentException(\sprintf('A Closure must be passed to "%s()" when FILTER_CALLBACK is used, "%s" given.', __METHOD__, get_debug_type($options['options'] ?? null)));
         }
 

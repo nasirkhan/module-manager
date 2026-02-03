@@ -32,8 +32,8 @@ class StreamedResponse extends Response
     private bool $headersSent = false;
 
     /**
-     * @param callable|iterable<string>|null $callbackOrChunks
-     * @param int                            $status           The HTTP status code (200 "OK" by default)
+     * @param  callable|iterable<string>|null  $callbackOrChunks
+     * @param  int  $status  The HTTP status code (200 "OK" by default)
      */
     public function __construct(callable|iterable|null $callbackOrChunks = null, int $status = 200, array $headers = [])
     {
@@ -49,7 +49,7 @@ class StreamedResponse extends Response
     }
 
     /**
-     * @param iterable<string> $chunks
+     * @param  iterable<string>  $chunks
      */
     public function setChunks(iterable $chunks): static
     {
@@ -78,7 +78,7 @@ class StreamedResponse extends Response
 
     public function getCallback(): ?\Closure
     {
-        if (!isset($this->callback)) {
+        if (! isset($this->callback)) {
             return null;
         }
 
@@ -88,8 +88,7 @@ class StreamedResponse extends Response
     /**
      * This method only sends the headers once.
      *
-     * @param positive-int|null $statusCode The status code to use, override the statusCode property if set and not null
-     *
+     * @param  positive-int|null  $statusCode  The status code to use, override the statusCode property if set and not null
      * @return $this
      */
     public function sendHeaders(?int $statusCode = null): static
@@ -118,7 +117,7 @@ class StreamedResponse extends Response
 
         $this->streamed = true;
 
-        if (!isset($this->callback)) {
+        if (! isset($this->callback)) {
             throw new \LogicException('The Response callback must be set.');
         }
 

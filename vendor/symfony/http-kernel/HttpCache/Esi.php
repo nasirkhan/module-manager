@@ -57,12 +57,12 @@ class Esi extends AbstractSurrogate
     public function process(Request $request, Response $response): Response
     {
         $type = $response->headers->get('Content-Type');
-        if (!$type) {
+        if (! $type) {
             $type = 'text/html';
         }
 
         $parts = explode(';', $type);
-        if (!\in_array($parts[0], $this->contentTypes, true)) {
+        if (! \in_array($parts[0], $this->contentTypes, true)) {
             return $response;
         }
 
@@ -82,7 +82,7 @@ class Esi extends AbstractSurrogate
                 $options[$set[1]] = $set[2];
             }
 
-            if (!isset($options['src'])) {
+            if (! isset($options['src'])) {
                 throw new \RuntimeException('Unable to process an ESI tag without a "src" attribute.');
             }
 

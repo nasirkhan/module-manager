@@ -32,7 +32,7 @@ class HttpKernelBrowser extends AbstractBrowser
     private bool $catchExceptions = true;
 
     /**
-     * @param array $server The server parameters (equivalent of $_SERVER)
+     * @param  array  $server  The server parameters (equivalent of $_SERVER)
      */
     public function __construct(
         protected HttpKernelInterface $kernel,
@@ -55,7 +55,7 @@ class HttpKernelBrowser extends AbstractBrowser
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      */
     protected function doRequest(object $request): Response
     {
@@ -69,7 +69,7 @@ class HttpKernelBrowser extends AbstractBrowser
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      */
     protected function getScript(object $request): string
     {
@@ -89,7 +89,7 @@ class HttpKernelBrowser extends AbstractBrowser
             }
         }
 
-        if (!$requires) {
+        if (! $requires) {
             throw new \RuntimeException('Composer autoloader not found.');
         }
 
@@ -123,7 +123,7 @@ class HttpKernelBrowser extends AbstractBrowser
     protected function filterRequest(DomRequest $request): Request
     {
         $httpRequest = Request::create($request->getUri(), $request->getMethod(), $request->getParameters(), $request->getCookies(), $request->getFiles(), $server = $request->getServer(), $request->getContent());
-        if (!isset($server['HTTP_ACCEPT'])) {
+        if (! isset($server['HTTP_ACCEPT'])) {
             $httpRequest->headers->remove('Accept');
         }
 
@@ -176,7 +176,7 @@ class HttpKernelBrowser extends AbstractBrowser
     }
 
     /**
-     * @param Response $response
+     * @param  Response  $response
      */
     protected function filterResponse(object $response): DomResponse
     {
@@ -184,7 +184,7 @@ class HttpKernelBrowser extends AbstractBrowser
         ob_start(static function ($chunk) use (&$content) {
             $content .= $chunk;
 
-             return '';
+            return '';
         });
 
         try {

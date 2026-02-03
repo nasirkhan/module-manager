@@ -37,7 +37,7 @@ final class TranslatorBag implements TranslatorBagInterface
 
     public function getCatalogue(?string $locale = null): MessageCatalogueInterface
     {
-        if (null === $locale || !isset($this->catalogues[$locale])) {
+        if (null === $locale || ! isset($this->catalogues[$locale])) {
             $this->catalogues[$locale] = new MessageCatalogue($locale);
         }
 

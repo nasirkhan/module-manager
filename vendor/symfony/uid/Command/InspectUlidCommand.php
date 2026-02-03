@@ -37,8 +37,7 @@ class InspectUlidCommand extends Command
                     <info>php %command.full_name% 1BVdfLn3ERmbjYBLCdaaLW</info>
                     <info>php %command.full_name% 01771535-b29c-b898-923b-b5a981f5e417</info>
                 EOF
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

@@ -32,7 +32,7 @@ class ConstStub extends Stub
     }
 
     /**
-     * @param array<int, string> $values
+     * @param  array<int, string>  $values
      */
     public static function fromBitfield(int $value, array $values): self
     {
@@ -43,7 +43,7 @@ class ConstStub extends Stub
             }
         }
 
-        if (!$names) {
+        if (! $names) {
             $names[] = $values[0] ?? 0;
         }
 

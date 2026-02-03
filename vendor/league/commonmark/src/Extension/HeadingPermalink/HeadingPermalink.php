@@ -16,7 +16,7 @@ namespace League\CommonMark\Extension\HeadingPermalink;
 use League\CommonMark\Node\Inline\AbstractInline;
 
 /**
- * Represents an anchor link within a heading
+ * Represents an anchor link within a heading.
  */
 final class HeadingPermalink extends AbstractInline
 {

@@ -67,7 +67,7 @@ final class HttpFactory implements RequestFactoryInterface, ResponseFactoryInter
     public function createServerRequest(string $method, $uri, array $serverParams = []): ServerRequestInterface
     {
         if (empty($method)) {
-            if (!empty($serverParams['REQUEST_METHOD'])) {
+            if (! empty($serverParams['REQUEST_METHOD'])) {
                 $method = $serverParams['REQUEST_METHOD'];
             } else {
                 throw new \InvalidArgumentException('Cannot determine HTTP method');

@@ -42,16 +42,15 @@ class CommandTester
      *  * verbosity:                 Sets the output verbosity flag
      *  * capture_stderr_separately: Make output of stdOut and stdErr separately available
      *
-     * @param array $input   An array of command arguments and options
-     * @param array $options An array of execution options
-     *
+     * @param  array  $input  An array of command arguments and options
+     * @param  array  $options  An array of execution options
      * @return int The command exit code
      */
     public function execute(array $input, array $options = []): int
     {
         // set the command name automatically if the application requires
         // this argument and no command name was passed
-        if (!isset($input['command'])
+        if (! isset($input['command'])
             && (null !== $application = $this->command->getApplication())
             && $application->getDefinition()->hasArgument('command')
         ) {
@@ -66,7 +65,7 @@ class CommandTester
             $this->input->setInteractive($options['interactive']);
         }
 
-        if (!isset($options['decorated'])) {
+        if (! isset($options['decorated'])) {
             $options['decorated'] = false;
         }
 

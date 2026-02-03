@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -76,7 +76,7 @@ final class Template implements Stringable
 
         return new self($template, ...array_values(
             array_reduce($founds, function (array $carry, array $found): array {
-                if (!isset($carry[$found['expression']])) {
+                if (! isset($carry[$found['expression']])) {
                     $carry[$found['expression']] = Expression::new($found['expression']);
                 }
 
@@ -90,7 +90,7 @@ final class Template implements Stringable
      */
     public function expand(iterable $variables = []): string
     {
-        if (!$variables instanceof VariableBag) {
+        if (! $variables instanceof VariableBag) {
             $variables = new VariableBag($variables);
         }
 
@@ -102,11 +102,11 @@ final class Template implements Stringable
      */
     public function expandOrFail(iterable $variables = []): string
     {
-        if (!$variables instanceof VariableBag) {
+        if (! $variables instanceof VariableBag) {
             $variables = new VariableBag($variables);
         }
 
-        $missing = array_filter($this->variableNames, fn (string $name): bool => !isset($variables[$name]));
+        $missing = array_filter($this->variableNames, fn (string $name): bool => ! isset($variables[$name]));
         if ([] !== $missing) {
             throw TemplateCanNotBeExpanded::dueToMissingVariables(...$missing);
         }
@@ -133,12 +133,14 @@ final class Template implements Stringable
      *
      * @throws SyntaxError if the template contains invalid expressions
      * @throws SyntaxError if the template contains invalid variable specification
+     *
      * @deprecated Since version 7.0.0
+     *
      * @codeCoverageIgnore
+     *
      * @see Template::new()
      *
      * Create a new instance from a string.
-     *
      */
     #[Deprecated(message:'use League\Uri\UriTemplate\Template::new() instead', since:'league/uri:7.0.0')]
     public static function createFromString(Stringable|string $template): self
