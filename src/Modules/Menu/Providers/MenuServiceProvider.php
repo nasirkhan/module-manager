@@ -139,7 +139,7 @@ class MenuServiceProvider extends ServiceProvider
     protected function registerCommands($namespace = '')
     {
         $finder = new Finder; // from Symfony\Component\Finder;
-        $finder->files()->name('*.php')->in(__DIR__.'/../Console');
+        $finder->files()->name('*.php')->in(__DIR__.'/../Console';
 
         $classes = [];
         foreach ($finder as $file) {
@@ -163,8 +163,8 @@ class MenuServiceProvider extends ServiceProvider
         // Publish Livewire components (both class and view) for full customization
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../Livewire') => app_path('Livewire/Menu'),
-                __DIR__.'/../livewire') => resource_path('views/livewire/menu'),
+                __DIR__.'/../Livewire' => app_path('Livewire/Menu'),
+                __DIR__.'/../Livewire' => resource_path('views/livewire/menu'),
             ], ['menu-livewire-components']);
         }
     }
