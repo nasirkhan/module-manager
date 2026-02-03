@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 *
 * --------------------------------------------------------------------
 */
-Route::group(['namespace' => '\Modules\Post\Http\Controllers\Frontend', 'as' => 'frontend.', 'middleware' => 'web', 'prefix' => ''], function () {
+Route::group(['namespace' => '\Nasirkhan\ModuleManager\Modules\Post\Http\Controllers\Frontend', 'as' => 'frontend.', 'middleware' => 'web', 'prefix' => ''], function () {
     /*
      *
      *  Frontend Posts Routes
@@ -38,7 +38,7 @@ Route::group(['namespace' => '\Modules\Post\Http\Controllers\Frontend', 'as' => 
 *
 * --------------------------------------------------------------------
 */
-Route::group(['namespace' => '\Modules\Post\Http\Controllers\Backend', 'as' => 'backend.', 'middleware' => ['web', 'auth', 'can:view_backend'], 'prefix' => 'admin'], function () {
+Route::group(['namespace' => '\Nasirkhan\ModuleManager\Modules\Post\Http\Controllers\Backend', 'as' => 'backend.', 'middleware' => ['web', 'auth', 'can:view_backend'], 'prefix' => 'admin'], function () {
     /*
     * These routes need view-backend permission
     * (good if you want to allow more than one group in the backend,
