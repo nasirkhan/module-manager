@@ -139,7 +139,7 @@ class MenuServiceProvider extends ServiceProvider
     protected function registerCommands($namespace = '')
     {
         $finder = new Finder; // from Symfony\Component\Finder;
-        $finder->files()->name('*.php')->in(__DIR__.'/../Console';
+        $finder->files()->name('*.php')->in(__DIR__.'/../Console');
 
         $classes = [];
         foreach ($finder as $file) {
