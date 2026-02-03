@@ -23,11 +23,11 @@ abstract class FileLoader extends ArrayLoader
 {
     public function load(mixed $resource, string $locale, string $domain = 'messages'): MessageCatalogue
     {
-        if (!stream_is_local($resource)) {
+        if (! stream_is_local($resource)) {
             throw new InvalidResourceException(\sprintf('This is not a local file "%s".', $resource));
         }
 
-        if (!file_exists($resource)) {
+        if (! file_exists($resource)) {
             throw new NotFoundResourceException(\sprintf('File "%s" not found.', $resource));
         }
 
@@ -37,7 +37,7 @@ abstract class FileLoader extends ArrayLoader
         $messages ??= [];
 
         // not an array
-        if (!\is_array($messages)) {
+        if (! \is_array($messages)) {
             throw new InvalidResourceException(\sprintf('Unable to load file "%s".', $resource));
         }
 

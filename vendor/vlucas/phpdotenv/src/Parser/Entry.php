@@ -25,9 +25,8 @@ final class Entry
     /**
      * Create a new entry instance.
      *
-     * @param string                    $name
-     * @param \Dotenv\Parser\Value|null $value
-     *
+     * @param  string  $name
+     * @param  \Dotenv\Parser\Value|null  $value
      * @return void
      */
     public function __construct(string $name, ?Value $value = null)

@@ -38,7 +38,7 @@ final class CompleteCommand extends Command
     private bool $isDebug = false;
 
     /**
-     * @param array<string, class-string<CompletionOutputInterface>> $completionOutputs A list of additional completion outputs, with shell name as key and FQCN as value
+     * @param  array<string, class-string<CompletionOutputInterface>>  $completionOutputs  A list of additional completion outputs, with shell name as key and FQCN as value
      */
     public function __construct(array $completionOutputs = [])
     {
@@ -59,8 +59,7 @@ final class CompleteCommand extends Command
             ->addOption('input', 'i', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'An array of input tokens (e.g. COMP_WORDS or argv)')
             ->addOption('current', 'c', InputOption::VALUE_REQUIRED, 'The index of the "input" array that the cursor is in (e.g. COMP_CWORD)')
             ->addOption('api-version', 'a', InputOption::VALUE_REQUIRED, 'The API version of the completion script')
-            ->addOption('symfony', 'S', InputOption::VALUE_REQUIRED, 'deprecated')
-        ;
+            ->addOption('symfony', 'S', InputOption::VALUE_REQUIRED, 'deprecated');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
@@ -83,11 +82,11 @@ final class CompleteCommand extends Command
             }
 
             $shell = $input->getOption('shell');
-            if (!$shell) {
+            if (! $shell) {
                 throw new \RuntimeException('The "--shell" option must be set.');
             }
 
-            if (!$completionOutput = $this->completionOutputs[$shell] ?? false) {
+            if (! $completionOutput = $this->completionOutputs[$shell] ?? false) {
                 throw new \RuntimeException(\sprintf('Shell completion is not supported for your shell: "%s" (supported: "%s").', $shell, implode('", "', array_keys($this->completionOutputs))));
             }
 
@@ -112,7 +111,7 @@ final class CompleteCommand extends Command
             } elseif (
                 $completionInput->mustSuggestArgumentValuesFor('command')
                 && $command->getName() !== $completionInput->getCompletionValue()
-                && !\in_array($completionInput->getCompletionValue(), $command->getAliases(), true)
+                && ! \in_array($completionInput->getCompletionValue(), $command->getAliases(), true)
             ) {
                 $this->log('  No command found, completing using the Application class.');
 
@@ -171,7 +170,7 @@ final class CompleteCommand extends Command
     private function createCompletionInput(InputInterface $input): CompletionInput
     {
         $currentIndex = $input->getOption('current');
-        if (!$currentIndex || !ctype_digit($currentIndex)) {
+        if (! $currentIndex || ! ctype_digit($currentIndex)) {
             throw new \RuntimeException('The "--current" option must be set and it must be an integer.');
         }
 
@@ -202,7 +201,7 @@ final class CompleteCommand extends Command
 
     private function log($messages): void
     {
-        if (!$this->isDebug) {
+        if (! $this->isDebug) {
             return;
         }
 

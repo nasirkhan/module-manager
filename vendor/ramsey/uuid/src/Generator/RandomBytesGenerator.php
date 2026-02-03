@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,7 +18,7 @@ use Ramsey\Uuid\Exception\RandomSourceException;
 use Throwable;
 
 /**
- * RandomBytesGenerator generates strings of random binary data using the built-in `random_bytes()` PHP function
+ * RandomBytesGenerator generates strings of random binary data using the built-in `random_bytes()` PHP function.
  *
  * @link http://php.net/random_bytes random_bytes()
  */

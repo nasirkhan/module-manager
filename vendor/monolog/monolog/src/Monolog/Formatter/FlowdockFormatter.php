@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -14,9 +16,10 @@ namespace Monolog\Formatter;
 use Monolog\LogRecord;
 
 /**
- * formats the record to be used in the FlowdockHandler
+ * formats the record to be used in the FlowdockHandler.
  *
  * @author Dominik Liebler <liebler.dominik@gmail.com>
+ *
  * @deprecated Since 2.9.0 and 3.3.0, Flowdock was shutdown we will thus drop this handler in Monolog 4
  */
 class FlowdockFormatter implements FormatterInterface
@@ -40,12 +43,12 @@ class FlowdockFormatter implements FormatterInterface
     {
         $tags = [
             '#logs',
-            '#' . $record->level->toPsrLogLevel(),
-            '#' . $record->channel,
+            '#'.$record->level->toPsrLogLevel(),
+            '#'.$record->channel,
         ];
 
         foreach ($record->extra as $value) {
-            $tags[] = '#' . $value;
+            $tags[] = '#'.$value;
         }
 
         $subject = sprintf(
@@ -93,11 +96,11 @@ class FlowdockFormatter implements FormatterInterface
 
         if ($hasMbString) {
             if (mb_strlen($message, 'UTF-8') > $maxLength) {
-                $message = mb_substr($message, 0, $maxLength - 4, 'UTF-8') . ' ...';
+                $message = mb_substr($message, 0, $maxLength - 4, 'UTF-8').' ...';
             }
         } else {
             if (\strlen($message) > $maxLength) {
-                $message = substr($message, 0, $maxLength - 4) . ' ...';
+                $message = substr($message, 0, $maxLength - 4).' ...';
             }
         }
 

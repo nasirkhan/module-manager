@@ -14,13 +14,13 @@ declare(strict_types=1);
 namespace League\CommonMark\Normalizer;
 
 /**
- * Creates a normalized version of the given input text
+ * Creates a normalized version of the given input text.
  */
 interface TextNormalizerInterface
 {
     /**
-     * @param string               $text    The text to normalize
-     * @param array<string, mixed> $context Additional context about the text being normalized (optional)
+     * @param  string  $text  The text to normalize
+     * @param  array<string, mixed>  $context  Additional context about the text being normalized (optional)
      *
      * $context may include (but is not required to include) the following:
      *   - `prefix` - A string prefix to prepend to each normalized result

@@ -21,7 +21,7 @@ class RawMessage
     private bool $isGeneratorClosed;
 
     /**
-     * @param iterable<string>|string|resource $message
+     * @param  iterable<string>|string|resource  $message
      */
     public function __construct(
         private $message,
@@ -80,7 +80,7 @@ class RawMessage
                 fwrite($message, $chunk);
                 yield $chunk;
             }
-            $this->isGeneratorClosed = !$this->message->valid();
+            $this->isGeneratorClosed = ! $this->message->valid();
             $this->message = $message;
 
             return;

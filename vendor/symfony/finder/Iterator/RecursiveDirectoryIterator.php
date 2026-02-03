@@ -43,7 +43,7 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator
         parent::__construct($path, $flags);
         $this->ignoreUnreadableDirs = $ignoreUnreadableDirs;
         $this->rootPath = $path;
-        if ('/' !== \DIRECTORY_SEPARATOR && !($flags & self::UNIX_PATHS)) {
+        if ('/' !== \DIRECTORY_SEPARATOR && ! ($flags & self::UNIX_PATHS)) {
             $this->directorySeparator = \DIRECTORY_SEPARATOR;
         }
     }
@@ -55,7 +55,7 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator
     {
         // the logic here avoids redoing the same work in all iterations
 
-        if (!isset($this->subPath)) {
+        if (! isset($this->subPath)) {
             $this->subPath = $this->getSubPath();
         }
         $subPathname = $this->subPath;
@@ -65,7 +65,7 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator
         $subPathname .= $this->getFilename();
         $basePath = $this->rootPath;
 
-        if ('/' !== $basePath && !str_ends_with($basePath, $this->directorySeparator) && !str_ends_with($basePath, '/')) {
+        if ('/' !== $basePath && ! str_ends_with($basePath, $this->directorySeparator) && ! str_ends_with($basePath, '/')) {
             $basePath .= $this->directorySeparator;
         }
 
@@ -76,7 +76,7 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator
     {
         $hasChildren = parent::hasChildren($allowLinks);
 
-        if (!$hasChildren || !$this->ignoreUnreadableDirs) {
+        if (! $hasChildren || ! $this->ignoreUnreadableDirs) {
             return $hasChildren;
         }
 

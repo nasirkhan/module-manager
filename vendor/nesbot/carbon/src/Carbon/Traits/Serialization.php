@@ -34,7 +34,7 @@ use Throwable;
  * Depends on the following methods:
  *
  * @method string|static locale(string $locale = null, string ...$fallbackLocales)
- * @method string        toJSON()
+ * @method string toJSON()
  */
 trait Serialization
 {
@@ -81,18 +81,17 @@ trait Serialization
      * $object = Carbon::fromSerialized($value, ['allowed_classes' => [Carbon::class, CarbonImmutable::class]]);
      * ```
      *
-     * @param \Stringable|string $value
-     * @param array              $options example: ['allowed_classes' => [CarbonImmutable::class]]
+     * @param  \Stringable|string  $value
+     * @param  array  $options  example: ['allowed_classes' => [CarbonImmutable::class]]
+     * @return static
      *
      * @throws InvalidFormatException
-     *
-     * @return static
      */
     public static function fromSerialized($value, array $options = []): static
     {
         $instance = @unserialize((string) $value, $options);
 
-        if (!$instance instanceof static) {
+        if (! $instance instanceof static) {
             throw new InvalidFormatException("Invalid serialized value: $value");
         }
 
@@ -102,8 +101,7 @@ trait Serialization
     /**
      * The __set_state handler.
      *
-     * @param string|array $dump
-     *
+     * @param  string|array  $dump
      * @return static
      */
     #[ReturnTypeWillChange]
@@ -171,7 +169,7 @@ trait Serialization
         try {
             $this->__construct($data['date'] ?? null, $data['timezone'] ?? null);
         } catch (Throwable $exception) {
-            if (!isset($data['dumpDateProperties']['date'], $data['dumpDateProperties']['timezone'])) {
+            if (! isset($data['dumpDateProperties']['date'], $data['dumpDateProperties']['timezone'])) {
                 throw $exception;
             }
 
@@ -224,7 +222,7 @@ trait Serialization
      * foreach ($date as $_) {}
      * serializer($date)
      * var_export($date)
-     * get_object_vars($date)
+     * get_object_vars($date).
      */
     public function cleanupDumpProperties(): self
     {

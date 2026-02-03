@@ -35,7 +35,7 @@ final class ImageRenderer implements NodeRendererInterface, XmlNodeRendererInter
     private ConfigurationInterface $config;
 
     /**
-     * @param Image $node
+     * @param  Image  $node
      *
      * {@inheritDoc}
      *
@@ -74,8 +74,7 @@ final class ImageRenderer implements NodeRendererInterface, XmlNodeRendererInter
     }
 
     /**
-     * @param Image $node
-     *
+     * @param  Image  $node
      * @return array<string, scalar>
      *
      * @psalm-suppress MoreSpecificImplementedParamType

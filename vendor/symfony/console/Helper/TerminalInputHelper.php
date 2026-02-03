@@ -44,7 +44,7 @@ final class TerminalInputHelper
     private bool $withStty;
 
     /**
-     * @param resource $inputStream
+     * @param  resource  $inputStream
      *
      * @throws \RuntimeException If unable to read terminal settings
      */
@@ -55,7 +55,7 @@ final class TerminalInputHelper
         $this->withStty = $withStty;
 
         if ($withStty) {
-            if (!\is_string($state = shell_exec('stty -g'))) {
+            if (! \is_string($state = shell_exec('stty -g'))) {
                 throw new \RuntimeException('Unable to read the terminal settings.');
             }
 
@@ -90,7 +90,7 @@ final class TerminalInputHelper
      */
     public function finish(): void
     {
-        if (!$this->withStty) {
+        if (! $this->withStty) {
             return;
         }
 
@@ -108,7 +108,7 @@ final class TerminalInputHelper
 
     private function createSignalHandlers(): void
     {
-        if (!\function_exists('pcntl_async_signals') || !\function_exists('pcntl_signal')) {
+        if (! \function_exists('pcntl_async_signals') || ! \function_exists('pcntl_signal')) {
             return;
         }
 

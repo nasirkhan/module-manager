@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -12,7 +14,7 @@
 namespace Monolog\Test;
 
 /**
- * Lets you easily generate log records and a dummy formatter for testing purposes
+ * Lets you easily generate log records and a dummy formatter for testing purposes.
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  *

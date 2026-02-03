@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,11 +13,11 @@
 
 namespace Monolog\Processor;
 
-use Monolog\Utils;
 use Monolog\LogRecord;
+use Monolog\Utils;
 
 /**
- * Processes a record's message according to PSR-3 rules
+ * Processes a record's message according to PSR-3 rules.
  *
  * It replaces {foo} with the value from $context['foo']
  *
@@ -30,8 +32,8 @@ class PsrLogMessageProcessor implements ProcessorInterface
     private bool $removeUsedContextFields;
 
     /**
-     * @param string|null $dateFormat              The format of the timestamp: one supported by DateTime::format
-     * @param bool        $removeUsedContextFields If set to true the fields interpolated into message gets unset
+     * @param  string|null  $dateFormat  The format of the timestamp: one supported by DateTime::format
+     * @param  bool  $removeUsedContextFields  If set to true the fields interpolated into message gets unset
      */
     public function __construct(?string $dateFormat = null, bool $removeUsedContextFields = false)
     {
@@ -52,12 +54,12 @@ class PsrLogMessageProcessor implements ProcessorInterface
         $context = $record->context;
 
         foreach ($context as $key => $val) {
-            $placeholder = '{' . $key . '}';
+            $placeholder = '{'.$key.'}';
             if (strpos($record->message, $placeholder) === false) {
                 continue;
             }
 
-            if (null === $val || \is_scalar($val) || (\is_object($val) && method_exists($val, "__toString"))) {
+            if (null === $val || \is_scalar($val) || (\is_object($val) && method_exists($val, '__toString'))) {
                 $replacements[$placeholder] = $val;
             } elseif ($val instanceof \DateTimeInterface) {
                 if (null === $this->dateFormat && $val instanceof \Monolog\JsonSerializableDateTimeImmutable) {

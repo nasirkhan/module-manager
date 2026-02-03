@@ -63,7 +63,7 @@ final class CharacterStream
     private int $fixedWidth = 0;
 
     /**
-     * @param resource|string $input
+     * @param  resource|string  $input
      */
     public function __construct($input, ?string $charset = 'utf-8')
     {
@@ -118,7 +118,7 @@ final class CharacterStream
                 $start = $this->map['p'][$this->currentPos - 1];
             }
             $to = $start;
-            for (; $this->currentPos < $end; ++$this->currentPos) {
+            for (; $this->currentPos < $end; $this->currentPos++) {
                 if (isset($this->map['i'][$this->currentPos])) {
                     $ret .= substr($this->data, $start, $to - $start).'?';
                     $start = $this->map['p'][$this->currentPos];
@@ -170,7 +170,7 @@ final class CharacterStream
         $charPos = \count($this->map['p']);
         $foundChars = 0;
         $invalid = false;
-        for ($i = 0; $i < $strlen; ++$i) {
+        for ($i = 0; $i < $strlen; $i++) {
             $char = $string[$i];
             $size = self::UTF8_LENGTH_MAP[$char];
             if (0 == $size) {
@@ -183,14 +183,14 @@ final class CharacterStream
                 /* We mark the chars as invalid and start a new char */
                 $this->map['p'][$charPos + $foundChars] = $startOffset + $i;
                 $this->map['i'][$charPos + $foundChars] = true;
-                ++$foundChars;
+                $foundChars++;
                 $invalid = false;
             }
             if (($i + $size) > $strlen) {
                 $ignoredChars = substr($string, $i);
                 break;
             }
-            for ($j = 1; $j < $size; ++$j) {
+            for ($j = 1; $j < $size; $j++) {
                 $char = $string[$i + $j];
                 if ($char > "\x7F" && $char < "\xC0") {
                     // Valid - continue parsing
@@ -203,7 +203,7 @@ final class CharacterStream
             /* Ok we got a complete char here */
             $this->map['p'][$charPos + $foundChars] = $startOffset + $i + $size;
             $i += $j - 1;
-            ++$foundChars;
+            $foundChars++;
         }
 
         return $foundChars;

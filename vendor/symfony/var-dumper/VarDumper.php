@@ -85,7 +85,7 @@ class VarDumper
                 $dumper = str_contains($accept, 'html') || str_contains($accept, '*/*') ? new HtmlDumper() : new CliDumper();
         }
 
-        if (!$dumper instanceof ServerDumper) {
+        if (! $dumper instanceof ServerDumper) {
             $dumper = new ContextualizedDumper($dumper, [new SourceContextProvider()]);
         }
 
@@ -104,7 +104,7 @@ class VarDumper
     {
         $contextProviders = [];
 
-        if (!\in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true) && class_exists(Request::class)) {
+        if (! \in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true) && class_exists(Request::class)) {
             $requestStack = new RequestStack();
             $requestStack->push(Request::createFromGlobals());
             $contextProviders['request'] = new RequestContextProvider($requestStack);

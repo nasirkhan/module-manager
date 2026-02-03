@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -67,8 +67,8 @@ final class QueryString
      * @see QueryString::buildFromPairs()
      * @see https://datatracker.ietf.org/doc/html/rfc3986#section-2.2
      *
-     * @param iterable<array{0:string, 1:mixed}> $pairs
-     * @param non-empty-string $separator
+     * @param  iterable<array{0:string, 1:mixed}>  $pairs
+     * @param  non-empty-string  $separator
      *
      * @throws SyntaxError If the encoding type is invalid
      * @throws SyntaxError If a pair is invalid
@@ -92,7 +92,7 @@ final class QueryString
      *
      * @see https://datatracker.ietf.org/doc/html/rfc3986#section-2.2
      *
-     * @param iterable<array{0:string, 1:mixed}> $pairs
+     * @param  iterable<array{0:string, 1:mixed}>  $pairs
      *
      * @throws SyntaxError If the encoding type is invalid
      * @throws SyntaxError If a pair is invalid
@@ -101,7 +101,7 @@ final class QueryString
     {
         $keyValuePairs = [];
         foreach ($pairs as $pair) {
-            if (!is_array($pair) || [0, 1] !== array_keys($pair)) {
+            if (! is_array($pair) || [0, 1] !== array_keys($pair)) {
                 throw new SyntaxError('A pair must be a sequential array starting at `0` and containing two elements.');
             }
 
@@ -130,8 +130,8 @@ final class QueryString
      *  - the method preserves value with `null` value (http_build_query) skip the key.
      *  - the method does not handle prefix usage
      *
-     * @param array<array-key, mixed> $data
-     * @param non-empty-string $separator
+     * @param  array<array-key, mixed>  $data
+     * @param  non-empty-string  $separator
      *
      * @throws TypeError if a resource is found it the input array
      * @throws ValueError if a recursion is detected
@@ -156,7 +156,7 @@ final class QueryString
         ?Converter $converter = null,
         QueryComposeMode $composeMode = QueryComposeMode::Native,
     ): ?string {
-        if (QueryComposeMode::EnumLenient === $composeMode && $data instanceof UnitEnum && !$data instanceof BackedEnum) {
+        if (QueryComposeMode::EnumLenient === $composeMode && $data instanceof UnitEnum && ! $data instanceof BackedEnum) {
             return '';
         }
 
@@ -172,14 +172,13 @@ final class QueryString
     }
 
     /**
-     * @param array<array-key, mixed>|object $data
-     * @param SplObjectStorage<object, null> $seenObjects
+     * @param  array<array-key, mixed>|object  $data
+     * @param  SplObjectStorage<object, null>  $seenObjects
+     * @return iterable<array{0: array-key, 1: string|int|float|bool|null}>
      *
      * @throws TypeError if a resource is found it the input array
      * @throws ValueError if a recursion is detected
      * @throws ReflectionException if reflection is not possible on the Enum
-     *
-     * @return iterable<array{0: array-key, 1: string|int|float|bool|null}>
      */
     private static function composeRecursive(
         QueryComposeMode $composeMode,
@@ -188,7 +187,7 @@ final class QueryString
         SplObjectStorage $seenObjects = new SplObjectStorage(),
     ): iterable {
         QueryComposeMode::Safe !== $composeMode || is_array($data) || throw new TypeError('In safe mode only arrays are supported.');
-        in_array($composeMode, [QueryComposeMode::EnumCompatible, QueryComposeMode::EnumLenient], true) || !$data instanceof UnitEnum || throw new TypeError('Argument #1 ($data) must not be an enum, '.((new ReflectionEnum($data::class))->isBacked() ? 'Backed' : 'Pure').' given') ;
+        in_array($composeMode, [QueryComposeMode::EnumCompatible, QueryComposeMode::EnumLenient], true) || ! $data instanceof UnitEnum || throw new TypeError('Argument #1 ($data) must not be an enum, '.((new ReflectionEnum($data::class))->isBacked() ? 'Backed' : 'Pure').' given');
 
         if (is_object($data)) {
             if ($seenObjects->contains($data)) {
@@ -264,6 +263,7 @@ final class QueryString
 
     /**
      * Array recursion detection.
+     *
      * @see https://stackoverflow.com/questions/9042142/detecting-infinite-array-recursion-in-php
      */
     private static function hasCircularReference(array &$arr): bool
@@ -293,7 +293,7 @@ final class QueryString
      *
      * @see QueryString::extractFromValue()
      *
-     * @param non-empty-string $separator
+     * @param  non-empty-string  $separator
      *
      * @throws SyntaxError
      */
@@ -348,11 +348,10 @@ final class QueryString
     /**
      * Parses a query string into a collection of key/value pairs.
      *
-     * @param non-empty-string $separator
+     * @param  non-empty-string  $separator
+     * @return array<int, array{0:string, 1:string|null}>
      *
      * @throws SyntaxError
-     *
-     * @return array<int, array{0:string, 1:string|null}>
      */
     public static function parse(BackedEnum|Stringable|string|bool|null $query, string $separator = '&', int $encType = PHP_QUERY_RFC3986): array
     {
@@ -362,9 +361,9 @@ final class QueryString
     /**
      * Parses a query string into a collection of key/value pairs.
      *
-     * @throws SyntaxError
-     *
      * @return array<int, array{0:string, 1:string|null}>
+     *
+     * @throws SyntaxError
      */
     public static function parseFromValue(BackedEnum|Stringable|string|bool|null $query, ?Converter $converter = null): array
     {
@@ -375,8 +374,7 @@ final class QueryString
     }
 
     /**
-     * @param array<non-empty-list<string|null>> $pairs
-     *
+     * @param  array<non-empty-list<string|null>>  $pairs
      * @return array<int, array{0:string, 1:string|null}>
      */
     private static function decodePairs(array $pairs, int $pairValueState): array
@@ -432,9 +430,9 @@ final class QueryString
      * @see https://github.com/php/php-src/blob/master/ext/standard/tests/strings/parse_str_basic3.phpt
      * @see https://github.com/php/php-src/blob/master/ext/standard/tests/strings/parse_str_basic4.phpt
      *
-     * @param array $data the submitted array
-     * @param array|string $name the pair key
-     * @param string $value the pair value
+     * @param  array  $data  the submitted array
+     * @param  array|string  $name  the pair key
+     * @param  string  $value  the pair value
      */
     private static function extractPhpVariable(
         array $data,
@@ -472,12 +470,12 @@ final class QueryString
             $key = '0';
         }
 
-        if (!array_key_exists($key, $data) || !is_array($data[$key])) {
+        if (! array_key_exists($key, $data) || ! is_array($data[$key])) {
             $data[$key] = [];
         }
 
         $remaining = substr($name, $rightBracketPosition + 1);
-        if (!str_starts_with($remaining, '[') || !str_contains($remaining, ']')) {
+        if (! str_starts_with($remaining, '[') || ! str_contains($remaining, ']')) {
             $remaining = '';
         }
 

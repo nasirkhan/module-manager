@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -35,7 +35,6 @@ final class FeatureDetection
         $isSupported = $isSupported ?? class_exists(finfo::class);
 
         $isSupported || throw new MissingFeature('Support for file type detection requires the `fileinfo` extension.');
-
     }
 
     public static function supportsIdn(): void

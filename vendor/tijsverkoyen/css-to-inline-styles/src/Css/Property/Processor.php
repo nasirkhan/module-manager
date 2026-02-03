@@ -7,10 +7,9 @@ use Symfony\Component\CssSelector\Node\Specificity;
 class Processor
 {
     /**
-     * Split a string into separate properties
+     * Split a string into separate properties.
      *
-     * @param string $propertiesString
-     *
+     * @param  string  $propertiesString
      * @return string[]
      */
     public function splitIntoSeparateProperties($propertiesString)
@@ -18,7 +17,7 @@ class Processor
         $propertiesString = $this->cleanup($propertiesString);
 
         $properties = (array) explode(';', $propertiesString);
-        $keysToRemove = array();
+        $keysToRemove = [];
         $numberOfProperties = count($properties);
 
         for ($i = 0; $i < $numberOfProperties; $i++) {
@@ -26,12 +25,12 @@ class Processor
 
             // if the new property begins with base64 it is part of the current property
             if (isset($properties[$i + 1]) && strpos(trim($properties[$i + 1]), 'base64,') === 0) {
-                $properties[$i] .= ';' . trim($properties[$i + 1]);
+                $properties[$i] .= ';'.trim($properties[$i + 1]);
                 $keysToRemove[] = $i + 1;
             }
         }
 
-        if (!empty($keysToRemove)) {
+        if (! empty($keysToRemove)) {
             foreach ($keysToRemove as $key) {
                 unset($properties[$key]);
             }
@@ -41,14 +40,13 @@ class Processor
     }
 
     /**
-     * @param string $string
-     *
+     * @param  string  $string
      * @return string
      */
     private function cleanup($string)
     {
-        $string = str_replace(array("\r", "\n"), '', $string);
-        $string = str_replace(array("\t"), ' ', $string);
+        $string = str_replace(["\r", "\n"], '', $string);
+        $string = str_replace(["\t"], ' ', $string);
         $string = str_replace('"', '\'', $string);
         $string = preg_replace('|/\*.*?\*/|', '', $string) ?? $string;
         $string = preg_replace('/\s\s+/', ' ', $string) ?? $string;
@@ -60,10 +58,9 @@ class Processor
     }
 
     /**
-     * Converts a property-string into an object
+     * Converts a property-string into an object.
      *
-     * @param string $property
-     *
+     * @param  string  $property
      * @return Property|null
      */
     public function convertToObject($property, ?Specificity $specificity = null)
@@ -72,7 +69,7 @@ class Processor
             return null;
         }
 
-        list($name, $value) = explode(':', $property, 2);
+        [$name, $value] = explode(':', $property, 2);
 
         $name = trim($name);
         $value = trim($value);
@@ -85,15 +82,14 @@ class Processor
     }
 
     /**
-     * Converts an array of property-strings into objects
+     * Converts an array of property-strings into objects.
      *
-     * @param string[] $properties
-     *
+     * @param  string[]  $properties
      * @return Property[]
      */
     public function convertArrayToObjects(array $properties, ?Specificity $specificity = null)
     {
-        $objects = array();
+        $objects = [];
 
         foreach ($properties as $property) {
             $object = $this->convertToObject($property, $specificity);
@@ -108,15 +104,14 @@ class Processor
     }
 
     /**
-     * Build the property-string for multiple properties
+     * Build the property-string for multiple properties.
      *
-     * @param Property[] $properties
-     *
+     * @param  Property[]  $properties
      * @return string
      */
     public function buildPropertiesString(array $properties)
     {
-        $chunks = array();
+        $chunks = [];
 
         foreach ($properties as $property) {
             $chunks[] = $property->toString();

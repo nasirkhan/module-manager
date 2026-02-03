@@ -9,7 +9,7 @@ use Egulias\EmailValidator\Warning\Warning;
 interface CommentStrategy
 {
     /**
-     * Return "true" to continue, "false" to exit
+     * Return "true" to continue, "false" to exit.
      */
     public function exitCondition(EmailLexer $lexer, int $openedParenthesis): bool;
 

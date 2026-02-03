@@ -32,12 +32,12 @@ class ResponseHeaderBag extends HeaderBag
     {
         parent::__construct($headers);
 
-        if (!isset($this->headers['cache-control'])) {
+        if (! isset($this->headers['cache-control'])) {
             $this->set('Cache-Control', '');
         }
 
         /* RFC2616 - 14.18 says all Responses need to have a Date */
-        if (!isset($this->headers['date'])) {
+        if (! isset($this->headers['date'])) {
             $this->initDate();
         }
     }
@@ -71,11 +71,11 @@ class ResponseHeaderBag extends HeaderBag
 
         parent::replace($headers);
 
-        if (!isset($this->headers['cache-control'])) {
+        if (! isset($this->headers['cache-control'])) {
             $this->set('Cache-Control', '');
         }
 
-        if (!isset($this->headers['date'])) {
+        if (! isset($this->headers['date'])) {
             $this->initDate();
         }
     }
@@ -180,7 +180,7 @@ class ResponseHeaderBag extends HeaderBag
             }
         }
 
-        if (!$this->cookies) {
+        if (! $this->cookies) {
             unset($this->headerNames['set-cookie']);
         }
     }
@@ -194,7 +194,7 @@ class ResponseHeaderBag extends HeaderBag
      */
     public function getCookies(string $format = self::COOKIES_FLAT): array
     {
-        if (!\in_array($format, [self::COOKIES_FLAT, self::COOKIES_ARRAY], true)) {
+        if (! \in_array($format, [self::COOKIES_FLAT, self::COOKIES_ARRAY], true)) {
             throw new \InvalidArgumentException(\sprintf('Format "%s" invalid (%s).', $format, implode(', ', [self::COOKIES_FLAT, self::COOKIES_ARRAY])));
         }
 
@@ -217,7 +217,7 @@ class ResponseHeaderBag extends HeaderBag
     /**
      * Clears a cookie in the browser.
      *
-     * @param bool $partitioned
+     * @param  bool  $partitioned
      */
     public function clearCookie(string $name, ?string $path = '/', ?string $domain = null, bool $secure = false, bool $httpOnly = true, ?string $sameSite = null /* , bool $partitioned = false */): void
     {
@@ -242,7 +242,7 @@ class ResponseHeaderBag extends HeaderBag
      */
     protected function computeCacheControlValue(): string
     {
-        if (!$this->cacheControl) {
+        if (! $this->cacheControl) {
             if ($this->has('Last-Modified') || $this->has('Expires')) {
                 return 'private, must-revalidate'; // allows for heuristic expiration (RFC 7234 Section 4.2.2) in the case of "Last-Modified"
             }
@@ -257,7 +257,7 @@ class ResponseHeaderBag extends HeaderBag
         }
 
         // public if s-maxage is defined, private otherwise
-        if (!isset($this->cacheControl['s-maxage'])) {
+        if (! isset($this->cacheControl['s-maxage'])) {
             return $header.', private';
         }
 

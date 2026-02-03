@@ -65,7 +65,7 @@ final class ProgressBar
     private static array $formats;
 
     /**
-     * @param int $max Maximum steps (0 if unknown)
+     * @param  int  $max  Maximum steps (0 if unknown)
      */
     public function __construct(OutputInterface $output, int $max = 0, float $minSecondsBetweenRedraws = 1 / 25)
     {
@@ -82,7 +82,7 @@ final class ProgressBar
             $this->minSecondsBetweenRedraws = $minSecondsBetweenRedraws;
         }
 
-        if (!$this->output->isDecorated()) {
+        if (! $this->output->isDecorated()) {
             // disable overwrite when output does not support ANSI codes.
             $this->overwrite = false;
 
@@ -99,8 +99,8 @@ final class ProgressBar
      *
      * This method also allow you to override an existing placeholder.
      *
-     * @param string                       $name     The placeholder name (including the delimiter char like %)
-     * @param callable(ProgressBar):string $callable A PHP callable
+     * @param  string  $name  The placeholder name (including the delimiter char like %)
+     * @param  callable(ProgressBar):string  $callable  A PHP callable
      */
     public static function setPlaceholderFormatterDefinition(string $name, callable $callable): void
     {
@@ -112,7 +112,7 @@ final class ProgressBar
     /**
      * Gets the placeholder formatter for a given name.
      *
-     * @param string $name The placeholder name (including the delimiter char like %)
+     * @param  string  $name  The placeholder name (including the delimiter char like %)
      */
     public static function getPlaceholderFormatterDefinition(string $name): ?callable
     {
@@ -124,7 +124,7 @@ final class ProgressBar
     /**
      * Sets a placeholder formatter for a given name, for this instance only.
      *
-     * @param callable(ProgressBar):string $callable A PHP callable
+     * @param  callable(ProgressBar):string  $callable  A PHP callable
      */
     public function setPlaceholderFormatter(string $name, callable $callable): void
     {
@@ -134,7 +134,7 @@ final class ProgressBar
     /**
      * Gets the placeholder formatter for a given name.
      *
-     * @param string $name The placeholder name (including the delimiter char like %)
+     * @param  string  $name  The placeholder name (including the delimiter char like %)
      */
     public function getPlaceholderFormatter(string $name): ?callable
     {
@@ -146,8 +146,8 @@ final class ProgressBar
      *
      * This method also allow you to override an existing format.
      *
-     * @param string $name   The format name
-     * @param string $format A format string
+     * @param  string  $name  The format name
+     * @param  string  $format  A format string
      */
     public static function setFormatDefinition(string $name, string $format): void
     {
@@ -159,7 +159,7 @@ final class ProgressBar
     /**
      * Gets the format for a given name.
      *
-     * @param string $name The format name
+     * @param  string  $name  The format name
      */
     public static function getFormatDefinition(string $name): ?string
     {
@@ -175,8 +175,8 @@ final class ProgressBar
      * when the corresponding placeholder is part of the custom format line
      * (by wrapping the name with %).
      *
-     * @param string $message The text to associate with the placeholder
-     * @param string $name    The name of the placeholder
+     * @param  string  $message  The text to associate with the placeholder
+     * @param  string  $name  The name of the placeholder
      */
     public function setMessage(string $message, string $name = 'message'): void
     {
@@ -285,7 +285,7 @@ final class ProgressBar
     /**
      * Sets the redraw frequency.
      *
-     * @param int|null $freq The frequency in steps
+     * @param  int|null  $freq  The frequency in steps
      */
     public function setRedrawFrequency(?int $freq): void
     {
@@ -308,9 +308,8 @@ final class ProgressBar
      * @template TKey
      * @template TValue
      *
-     * @param iterable<TKey, TValue> $iterable
-     * @param int|null               $max      Number of steps to complete the bar (0 if indeterminate), if null it will be inferred from $iterable
-     *
+     * @param  iterable<TKey, TValue>  $iterable
+     * @param  int|null  $max  Number of steps to complete the bar (0 if indeterminate), if null it will be inferred from $iterable
      * @return iterable<TKey, TValue>
      */
     public function iterate(iterable $iterable, ?int $max = null): iterable
@@ -343,8 +342,8 @@ final class ProgressBar
     /**
      * Starts the progress output.
      *
-     * @param int|null $max     Number of steps to complete the bar (0 if indeterminate), null to leave unchanged
-     * @param int      $startAt The starting point of the bar (useful e.g. when resuming a previously started bar)
+     * @param  int|null  $max  Number of steps to complete the bar (0 if indeterminate), null to leave unchanged
+     * @param  int  $startAt  The starting point of the bar (useful e.g. when resuming a previously started bar)
      */
     public function start(?int $max = null, int $startAt = 0): void
     {
@@ -364,7 +363,7 @@ final class ProgressBar
     /**
      * Advances the progress output X steps.
      *
-     * @param int $step Number of steps to advance
+     * @param  int  $step  Number of steps to advance
      */
     public function advance(int $step = 1): void
     {
@@ -441,7 +440,7 @@ final class ProgressBar
             $this->max = $this->step;
         }
 
-        if (($this->step === $this->max || null === $this->max) && !$this->overwrite) {
+        if (($this->step === $this->max || null === $this->max) && ! $this->overwrite) {
             // prevent double 100% output
             return;
         }
@@ -474,7 +473,7 @@ final class ProgressBar
      */
     public function clear(): void
     {
-        if (!$this->overwrite) {
+        if (! $this->overwrite) {
             return;
         }
 
@@ -488,7 +487,7 @@ final class ProgressBar
     private function setRealFormat(string $format): void
     {
         // try to use the _nomax variant if available
-        if (!$this->max && null !== self::getFormatDefinition($format.'_nomax')) {
+        if (! $this->max && null !== self::getFormatDefinition($format.'_nomax')) {
             $this->format = self::getFormatDefinition($format.'_nomax');
         } elseif (null !== self::getFormatDefinition($format)) {
             $this->format = self::getFormatDefinition($format);
@@ -518,7 +517,7 @@ final class ProgressBar
 
                     // When the last previous line is empty (without formatting) it is already cleared by the section output, so we don't need to clear it again
                     if ('' === $lastLineWithoutDecoration) {
-                        --$lineCount;
+                        $lineCount--;
                     }
 
                     foreach ($messageLines as $messageLine) {
@@ -531,7 +530,7 @@ final class ProgressBar
                     $this->output->clear($lineCount);
                 } else {
                     $lineCount = substr_count($this->previousMessage, "\n");
-                    for ($i = 0; $i < $lineCount; ++$i) {
+                    for ($i = 0; $i < $lineCount; $i++) {
                         $this->cursor->moveToColumn(1);
                         $this->cursor->clearLine();
                         $this->cursor->moveUp();
@@ -549,7 +548,7 @@ final class ProgressBar
         $this->lastWriteTime = microtime(true);
 
         $this->output->write($message);
-        ++$this->writeCount;
+        $this->writeCount++;
     }
 
     private function determineBestFormat(): string

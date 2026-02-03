@@ -21,7 +21,7 @@ class Psr6CacheClearer implements CacheClearerInterface
     private array $pools = [];
 
     /**
-     * @param array<string, CacheItemPoolInterface> $pools
+     * @param  array<string, CacheItemPoolInterface>  $pools
      */
     public function __construct(array $pools = [])
     {
@@ -38,7 +38,7 @@ class Psr6CacheClearer implements CacheClearerInterface
      */
     public function getPool(string $name): CacheItemPoolInterface
     {
-        if (!$this->hasPool($name)) {
+        if (! $this->hasPool($name)) {
             throw new \InvalidArgumentException(\sprintf('Cache pool not found: "%s".', $name));
         }
 
@@ -50,7 +50,7 @@ class Psr6CacheClearer implements CacheClearerInterface
      */
     public function clearPool(string $name): bool
     {
-        if (!isset($this->pools[$name])) {
+        if (! isset($this->pools[$name])) {
             throw new \InvalidArgumentException(\sprintf('Cache pool not found: "%s".', $name));
         }
 

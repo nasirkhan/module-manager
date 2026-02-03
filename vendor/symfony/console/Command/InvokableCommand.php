@@ -60,7 +60,7 @@ class InvokableCommand implements SignalableCommandInterface
     {
         $statusCode = $this->invokable->invoke(...$this->getParameters($this->invokable, $input, $output));
 
-        if (!\is_int($statusCode)) {
+        if (! \is_int($statusCode)) {
             if ($this->triggerDeprecations) {
                 trigger_deprecation('symfony/console', '7.3', \sprintf('Returning a non-integer value from the command "%s" is deprecated and will throw an exception in Symfony 8.0.', $this->command->getName()));
 
@@ -116,7 +116,7 @@ class InvokableCommand implements SignalableCommandInterface
 
     private function getClosure(callable $code): \Closure
     {
-        if (!$code instanceof \Closure) {
+        if (! $code instanceof \Closure) {
             return $code(...);
         }
 
@@ -126,7 +126,8 @@ class InvokableCommand implements SignalableCommandInterface
             return $code;
         }
 
-        set_error_handler(static function () {});
+        set_error_handler(static function () {
+        });
         try {
             if ($c = \Closure::bind($code, $this->command)) {
                 $code = $c;
@@ -162,7 +163,7 @@ class InvokableCommand implements SignalableCommandInterface
 
             $type = $parameter->getType();
 
-            if (!$type instanceof \ReflectionNamedType) {
+            if (! $type instanceof \ReflectionNamedType) {
                 if ($this->triggerDeprecations) {
                     trigger_deprecation('symfony/console', '7.3', \sprintf('Omitting the type declaration for the parameter "$%s" is deprecated and will throw an exception in Symfony 8.0.', $parameter->getName()));
 
@@ -234,7 +235,7 @@ class InvokableCommand implements SignalableCommandInterface
             }
         }
 
-        if (!$class = $this->invokable->getClosureCalledClass()) {
+        if (! $class = $this->invokable->getClosureCalledClass()) {
             return;
         }
 

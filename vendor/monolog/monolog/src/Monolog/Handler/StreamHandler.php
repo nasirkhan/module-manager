@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -12,11 +14,11 @@
 namespace Monolog\Handler;
 
 use Monolog\Level;
-use Monolog\Utils;
 use Monolog\LogRecord;
+use Monolog\Utils;
 
 /**
- * Stores to any stream resource
+ * Stores to any stream resource.
  *
  * Can be used to store into php://stderr, remote and local files, etc.
  *
@@ -30,21 +32,21 @@ class StreamHandler extends AbstractProcessingHandler
     protected int $streamChunkSize;
     /** @var resource|null */
     protected $stream;
-    protected string|null $url = null;
-    private string|null $errorMessage = null;
-    protected int|null $filePermission;
+    protected ?string $url = null;
+    private ?string $errorMessage = null;
+    protected ?int $filePermission;
     protected bool $useLocking;
     protected string $fileOpenMode;
     /** @var true|null */
-    private bool|null $dirCreated = null;
+    private ?bool $dirCreated = null;
     private bool $retrying = false;
-    private int|null $inodeUrl = null;
+    private ?int $inodeUrl = null;
 
     /**
-     * @param resource|string $stream         If a missing path can't be created, an UnexpectedValueException will be thrown on first write
-     * @param int|null        $filePermission Optional file permissions (default (0644) are only for owner read/write)
-     * @param bool            $useLocking     Try to lock log file before doing any writes
-     * @param string          $fileOpenMode   The fopen() mode used when opening a file, if $stream is a file path
+     * @param  resource|string  $stream  If a missing path can't be created, an UnexpectedValueException will be thrown on first write
+     * @param  int|null  $filePermission  Optional file permissions (default (0644) are only for owner read/write)
+     * @param  bool  $useLocking  Try to lock log file before doing any writes
+     * @param  string  $fileOpenMode  The fopen() mode used when opening a file, if $stream is a file path
      *
      * @throws \InvalidArgumentException If stream is not a resource or string
      */
@@ -107,7 +109,7 @@ class StreamHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Return the currently active stream if it is open
+     * Return the currently active stream if it is open.
      *
      * @return resource|null
      */
@@ -117,7 +119,7 @@ class StreamHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Return the stream URL if it was configured with a URL and not an active resource
+     * Return the stream URL if it was configured with a URL and not an active resource.
      */
     public function getUrl(): ?string
     {
@@ -141,10 +143,10 @@ class StreamHandler extends AbstractProcessingHandler
             return;
         }
 
-        if (!\is_resource($this->stream)) {
+        if (! \is_resource($this->stream)) {
             $url = $this->url;
             if (null === $url || '' === $url) {
-                throw new \LogicException('Missing stream url, the stream can not be opened. This may be caused by a premature call to close().' . Utils::getRecordMessageForException($record));
+                throw new \LogicException('Missing stream url, the stream can not be opened. This may be caused by a premature call to close().'.Utils::getRecordMessageForException($record));
             }
             $this->createDir($url);
             $this->errorMessage = null;
@@ -158,10 +160,10 @@ class StreamHandler extends AbstractProcessingHandler
             } finally {
                 restore_error_handler();
             }
-            if (!\is_resource($stream)) {
+            if (! \is_resource($stream)) {
                 $this->stream = null;
 
-                throw new \UnexpectedValueException(sprintf('The stream or file "%s" could not be opened in append mode: '.$this->errorMessage, $url) . Utils::getRecordMessageForException($record));
+                throw new \UnexpectedValueException(sprintf('The stream or file "%s" could not be opened in append mode: '.$this->errorMessage, $url).Utils::getRecordMessageForException($record));
             }
             stream_set_chunk_size($stream, $this->streamChunkSize);
             $this->stream = $stream;
@@ -184,7 +186,7 @@ class StreamHandler extends AbstractProcessingHandler
         if ($this->errorMessage !== null) {
             $error = $this->errorMessage;
             // close the resource if possible to reopen it, and retry the failed write
-            if (!$this->retrying && $this->url !== null && $this->url !== 'php://memory') {
+            if (! $this->retrying && $this->url !== null && $this->url !== 'php://memory') {
                 $this->retrying = true;
                 $this->close();
                 $this->write($record);
@@ -192,7 +194,7 @@ class StreamHandler extends AbstractProcessingHandler
                 return;
             }
 
-            throw new \UnexpectedValueException('Writing to the log file failed: '.$error . Utils::getRecordMessageForException($record));
+            throw new \UnexpectedValueException('Writing to the log file failed: '.$error.Utils::getRecordMessageForException($record));
         }
 
         $this->retrying = false;
@@ -202,8 +204,9 @@ class StreamHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Write to stream
-     * @param resource $stream
+     * Write to stream.
+     *
+     * @param  resource  $stream
      */
     protected function streamWrite($stream, LogRecord $record): void
     {
@@ -242,14 +245,14 @@ class StreamHandler extends AbstractProcessingHandler
         }
 
         $dir = $this->getDirFromStream($url);
-        if (null !== $dir && !is_dir($dir)) {
+        if (null !== $dir && ! is_dir($dir)) {
             $this->errorMessage = null;
             set_error_handler(function (...$args) {
                 return $this->customErrorHandler(...$args);
             });
             $status = mkdir($dir, 0777, true);
             restore_error_handler();
-            if (false === $status && !is_dir($dir) && strpos((string) $this->errorMessage, 'File exists') === false) {
+            if (false === $status && ! is_dir($dir) && strpos((string) $this->errorMessage, 'File exists') === false) {
                 throw new \UnexpectedValueException(sprintf('There is no existing directory at "%s" and it could not be created: '.$this->errorMessage, $dir));
             }
         }

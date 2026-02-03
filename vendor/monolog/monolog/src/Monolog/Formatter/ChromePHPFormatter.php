@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -15,7 +17,7 @@ use Monolog\Level;
 use Monolog\LogRecord;
 
 /**
- * Formats a log message according to the ChromePHP array format
+ * Formats a log message according to the ChromePHP array format.
  *
  * @author Christophe Coevoet <stof@notk.org>
  */
@@ -29,13 +31,13 @@ class ChromePHPFormatter implements FormatterInterface
     private function toWildfireLevel(Level $level): string
     {
         return match ($level) {
-            Level::Debug     => 'log',
-            Level::Info      => 'info',
-            Level::Notice    => 'info',
-            Level::Warning   => 'warn',
-            Level::Error     => 'error',
-            Level::Critical  => 'error',
-            Level::Alert     => 'error',
+            Level::Debug => 'log',
+            Level::Info => 'info',
+            Level::Notice => 'info',
+            Level::Warning => 'warn',
+            Level::Error => 'error',
+            Level::Critical => 'error',
+            Level::Alert => 'error',
             Level::Emergency => 'error',
         };
     }

@@ -37,7 +37,7 @@ class NumberHandler implements HandlerInterface
     {
         $match = $reader->findPattern($this->patterns->getNumberPattern());
 
-        if (!$match) {
+        if (! $match) {
             return false;
         }
 

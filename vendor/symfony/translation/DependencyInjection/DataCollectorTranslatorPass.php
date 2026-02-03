@@ -22,13 +22,13 @@ class DataCollectorTranslatorPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->has('translator')) {
+        if (! $container->has('translator')) {
             return;
         }
 
         $translatorClass = $container->getParameterBag()->resolveValue($container->findDefinition('translator')->getClass());
 
-        if (!is_subclass_of($translatorClass, TranslatorBagInterface::class)) {
+        if (! is_subclass_of($translatorClass, TranslatorBagInterface::class)) {
             $container->removeDefinition('translator.data_collector');
             $container->removeDefinition('data_collector.translation');
         }

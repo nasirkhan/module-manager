@@ -22,6 +22,7 @@ final class AndExpr implements ExpressionInterface
 {
     /**
      * @var callable[]
+     *
      * @psalm-var list<callable(Node): bool>
      */
     private array $conditions;
@@ -35,7 +36,7 @@ final class AndExpr implements ExpressionInterface
     }
 
     /**
-     * @param callable(Node): bool $expression
+     * @param  callable(Node): bool  $expression
      */
     public function add(callable $expression): void
     {

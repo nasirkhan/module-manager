@@ -27,8 +27,8 @@ class MethodRequestMatcher implements RequestMatcherInterface
     private array $methods = [];
 
     /**
-     * @param string[]|string $methods An HTTP method or an array of HTTP methods
-     *                                 Strings can contain a comma-delimited list of methods
+     * @param  string[]|string  $methods  An HTTP method or an array of HTTP methods
+     *                                    Strings can contain a comma-delimited list of methods
      */
     public function __construct(array|string $methods)
     {
@@ -37,7 +37,7 @@ class MethodRequestMatcher implements RequestMatcherInterface
 
     public function matches(Request $request): bool
     {
-        if (!$this->methods) {
+        if (! $this->methods) {
             return true;
         }
 

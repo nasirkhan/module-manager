@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -30,7 +30,7 @@ use function trim;
 use const PREG_SPLIT_NO_EMPTY;
 
 /**
- * SystemDceSecurityProvider retrieves the user or group identifiers from the system
+ * SystemDceSecurityProvider retrieves the user or group identifiers from the system.
  */
 class SystemDceSecurityProvider implements DceSecurityProviderInterface
 {
@@ -55,7 +55,7 @@ class SystemDceSecurityProvider implements DceSecurityProviderInterface
         if ($uid === '') {
             throw new DceSecurityException(
                 'Unable to get a user identifier using the system DCE Security provider; please provide a custom '
-                . 'identifier or use a different provider',
+                .'identifier or use a different provider',
             );
         }
 
@@ -85,7 +85,7 @@ class SystemDceSecurityProvider implements DceSecurityProviderInterface
         if ($gid === '') {
             throw new DceSecurityException(
                 'Unable to get a group identifier using the system DCE Security provider; please provide a custom '
-                . 'identifier or use a different provider',
+                .'identifier or use a different provider',
             );
         }
 
@@ -95,11 +95,11 @@ class SystemDceSecurityProvider implements DceSecurityProviderInterface
     }
 
     /**
-     * Returns the UID from the system
+     * Returns the UID from the system.
      */
     private function getSystemUid(): string
     {
-        if (!$this->hasShellExec()) {
+        if (! $this->hasShellExec()) {
             return '';
         }
 
@@ -110,11 +110,11 @@ class SystemDceSecurityProvider implements DceSecurityProviderInterface
     }
 
     /**
-     * Returns the GID from the system
+     * Returns the GID from the system.
      */
     private function getSystemGid(): string
     {
-        if (!$this->hasShellExec()) {
+        if (! $this->hasShellExec()) {
             return '';
         }
 
@@ -125,15 +125,15 @@ class SystemDceSecurityProvider implements DceSecurityProviderInterface
     }
 
     /**
-     * Returns true if shell_exec() is available for use
+     * Returns true if shell_exec() is available for use.
      */
     private function hasShellExec(): bool
     {
-        return !str_contains(strtolower((string) ini_get('disable_functions')), 'shell_exec');
+        return ! str_contains(strtolower((string) ini_get('disable_functions')), 'shell_exec');
     }
 
     /**
-     * Returns the PHP_OS string
+     * Returns the PHP_OS string.
      */
     private function getOs(): string
     {
@@ -144,7 +144,7 @@ class SystemDceSecurityProvider implements DceSecurityProviderInterface
     }
 
     /**
-     * Returns the user identifier for a user on a Windows system
+     * Returns the user identifier for a user on a Windows system.
      *
      * Windows does not have the same concept as an effective POSIX UID for the running script. Instead, each user is
      * uniquely identified by an SID (security identifier). The SID includes three 32-bit unsigned integers that make up
@@ -174,7 +174,7 @@ class SystemDceSecurityProvider implements DceSecurityProviderInterface
     }
 
     /**
-     * Returns a group identifier for a user on a Windows system
+     * Returns a group identifier for a user on a Windows system.
      *
      * Since Windows does not have the same concept as an effective POSIX GID for the running script, we will get the
      * local group memberships for the user running the script. Then, we will get the SID (security identifier) for the
@@ -198,7 +198,7 @@ class SystemDceSecurityProvider implements DceSecurityProviderInterface
             return '';
         }
 
-        $response = shell_exec('wmic group get name,sid | findstr /b /i ' . escapeshellarg($firstGroup));
+        $response = shell_exec('wmic group get name,sid | findstr /b /i '.escapeshellarg($firstGroup));
 
         if ($response === null) {
             return '';

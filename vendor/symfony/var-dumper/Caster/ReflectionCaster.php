@@ -44,7 +44,7 @@ class ReflectionCaster
 
         $a = static::castFunctionAbstract($c, $a, $stub, $isNested, $filter);
 
-        if (!$c->isAnonymous()) {
+        if (! $c->isAnonymous()) {
             $stub->class = isset($a[$prefix.'class']) ? $a[$prefix.'class']->value.'::'.$c->name : $c->name;
             unset($a[$prefix.'class']);
         }
@@ -191,7 +191,7 @@ class ReflectionCaster
 
         self::addAttributes($a, $c, $prefix);
 
-        if (!($filter & Caster::EXCLUDE_VERBOSE) && !$isNested) {
+        if (! ($filter & Caster::EXCLUDE_VERBOSE) && ! $isNested) {
             self::addExtra($a, $c);
         }
 
@@ -212,7 +212,7 @@ class ReflectionCaster
         if (isset($a[$prefix.'returnType'])) {
             $v = $a[$prefix.'returnType'];
             $v = $v instanceof \ReflectionNamedType ? $v->getName() : (string) $v;
-            $a[$prefix.'returnType'] = new ClassStub($a[$prefix.'returnType'] instanceof \ReflectionNamedType && $a[$prefix.'returnType']->allowsNull() && !\in_array($v, ['mixed', 'null'], true) ? '?'.$v : $v, [class_exists($v, false) || interface_exists($v, false) || trait_exists($v, false) ? $v : '', '']);
+            $a[$prefix.'returnType'] = new ClassStub($a[$prefix.'returnType'] instanceof \ReflectionNamedType && $a[$prefix.'returnType']->allowsNull() && ! \in_array($v, ['mixed', 'null'], true) ? '?'.$v : $v, [class_exists($v, false) || interface_exists($v, false) || trait_exists($v, false) ? $v : '', '']);
         }
         if (isset($a[$prefix.'class'])) {
             $a[$prefix.'class'] = new ClassStub($a[$prefix.'class']);
@@ -237,7 +237,7 @@ class ReflectionCaster
 
         self::addAttributes($a, $c, $prefix);
 
-        if (!($filter & Caster::EXCLUDE_VERBOSE) && $v = $c->getStaticVariables()) {
+        if (! ($filter & Caster::EXCLUDE_VERBOSE) && $v = $c->getStaticVariables()) {
             foreach ($v as $k => &$v) {
                 if (\is_object($v)) {
                     $a[$prefix.'use']['$'.$k] = new CutStub($v);
@@ -249,7 +249,7 @@ class ReflectionCaster
             $a[$prefix.'use'] = new EnumStub($a[$prefix.'use']);
         }
 
-        if (!($filter & Caster::EXCLUDE_VERBOSE) && !$isNested) {
+        if (! ($filter & Caster::EXCLUDE_VERBOSE) && ! $isNested) {
             self::addExtra($a, $c);
         }
 
@@ -300,7 +300,7 @@ class ReflectionCaster
         if ($c->isOptional()) {
             try {
                 $a[$prefix.'default'] = $v = $c->getDefaultValue();
-                if ($c->isDefaultValueConstant() && !\is_object($v)) {
+                if ($c->isDefaultValueConstant() && ! \is_object($v)) {
                     $a[$prefix.'default'] = new ConstStub($c->getDefaultValueConstantName(), $v);
                 }
                 if (null === $v) {
@@ -367,10 +367,10 @@ class ReflectionCaster
             foreach ($a[$prefix.'parameters']->value as $k => $param) {
                 $signature .= ', ';
                 if ($type = $param->getType()) {
-                    if (!$type instanceof \ReflectionNamedType) {
+                    if (! $type instanceof \ReflectionNamedType) {
                         $signature .= $type.' ';
                     } else {
-                        if ($param->allowsNull() && !\in_array($type->getName(), ['mixed', 'null'], true)) {
+                        if ($param->allowsNull() && ! \in_array($type->getName(), ['mixed', 'null'], true)) {
                             $signature .= '?';
                         }
                         $signature .= substr(strrchr('\\'.$type->getName(), '\\'), 1).' ';
@@ -378,7 +378,7 @@ class ReflectionCaster
                 }
                 $signature .= $k;
 
-                if (!$param->isDefaultValueAvailable()) {
+                if (! $param->isDefaultValueAvailable()) {
                     continue;
                 }
                 $v = $param->getDefaultValue();
@@ -391,7 +391,7 @@ class ReflectionCaster
                 } elseif (\is_array($v)) {
                     $signature .= $v ? '[…'.\count($v).']' : '[]';
                 } elseif (\is_string($v)) {
-                    $signature .= 10 > \strlen($v) && !str_contains($v, '\\') ? "'{$v}'" : "'…".\strlen($v)."'";
+                    $signature .= 10 > \strlen($v) && ! str_contains($v, '\\') ? "'{$v}'" : "'…".\strlen($v)."'";
                 } elseif (\is_bool($v)) {
                     $signature .= $v ? 'true' : 'false';
                 } elseif (\is_object($v)) {

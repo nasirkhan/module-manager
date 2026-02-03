@@ -75,7 +75,7 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
         try {
             return $response = $this->handleRaw($request, $type);
         } catch (\Throwable $e) {
-            if ($e instanceof \Error && !$this->handleAllThrowables) {
+            if ($e instanceof \Error && ! $this->handleAllThrowables) {
                 throw $e;
             }
 
@@ -122,7 +122,7 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
      */
     public function terminateWithException(\Throwable $exception, ?Request $request = null): void
     {
-        if (!$request ??= $this->requestStack->getMainRequest()) {
+        if (! $request ??= $this->requestStack->getMainRequest()) {
             throw $exception;
         }
 
@@ -149,7 +149,7 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
      *
      * Exceptions are not caught.
      *
-     * @throws \LogicException       If one of the listener does not behave as expected
+     * @throws \LogicException If one of the listener does not behave as expected
      * @throws NotFoundHttpException When controller cannot be found
      */
     private function handleRaw(Request $request, int $type = self::MAIN_REQUEST): Response
@@ -183,7 +183,7 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
         $response = $controller(...$arguments);
 
         // view
-        if (!$response instanceof Response) {
+        if (! $response instanceof Response) {
             $event = new ViewEvent($this, $request, $type, $response, $event);
             $this->dispatcher->dispatch($event, KernelEvents::VIEW);
 
@@ -243,7 +243,7 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
         // a listener might have replaced the exception
         $e = $event->getThrowable();
 
-        if (!$event->hasResponse()) {
+        if (! $event->hasResponse()) {
             $this->finishRequest($request, $type);
 
             throw $e;
@@ -252,7 +252,7 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
         $response = $event->getResponse();
 
         // the developer asked for a specific status code
-        if (!$event->isAllowingCustomResponseCode() && !$response->isClientError() && !$response->isServerError() && !$response->isRedirect()) {
+        if (! $event->isAllowingCustomResponseCode() && ! $response->isClientError() && ! $response->isServerError() && ! $response->isRedirect()) {
             // ensure that we actually have an error response
             if ($e instanceof HttpExceptionInterface) {
                 // keep the HTTP status code and headers
@@ -266,7 +266,7 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
         try {
             return $this->filterResponse($response, $request, $type);
         } catch (\Throwable $e) {
-            if ($e instanceof \Error && !$this->handleAllThrowables) {
+            if ($e instanceof \Error && ! $this->handleAllThrowables) {
                 throw $e;
             }
 

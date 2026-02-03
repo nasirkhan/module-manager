@@ -22,14 +22,13 @@ class CssToInlineStyles
     }
 
     /**
-     * Will inline the $css into the given $html
+     * Will inline the $css into the given $html.
      *
      * Remark: if the html contains <style>-tags those will be used, the rules
      * in $css will be appended.
      *
-     * @param string $html
-     * @param string $css
-     *
+     * @param  string  $html
+     * @param  string  $css
      * @return string
      */
     public function convert($html, $css = null)
@@ -52,11 +51,10 @@ class CssToInlineStyles
     }
 
     /**
-     * Inline the given properties on a given DOMElement
+     * Inline the given properties on a given DOMElement.
      *
-     * @param \DOMElement             $element
-     * @param Property[] $properties
-     *
+     * @param  \DOMElement  $element
+     * @param  Property[]  $properties
      * @return \DOMElement
      */
     public function inlineCssOnElement(\DOMElement $element, array $properties)
@@ -65,20 +63,20 @@ class CssToInlineStyles
             return $element;
         }
 
-        $cssProperties = array();
-        $inlineProperties = array();
+        $cssProperties = [];
+        $inlineProperties = [];
 
         foreach ($this->getInlineStyles($element) as $property) {
             $inlineProperties[$property->getName()] = $property;
         }
 
         foreach ($properties as $property) {
-            if (!isset($inlineProperties[$property->getName()])) {
+            if (! isset($inlineProperties[$property->getName()])) {
                 $cssProperties[$property->getName()] = $property;
             }
         }
 
-        $rules = array();
+        $rules = [];
         foreach (array_merge($cssProperties, $inlineProperties) as $property) {
             $rules[] = $property->toString();
         }
@@ -88,10 +86,9 @@ class CssToInlineStyles
     }
 
     /**
-     * Get the current inline styles for a given DOMElement
+     * Get the current inline styles for a given DOMElement.
      *
-     * @param \DOMElement $element
-     *
+     * @param  \DOMElement  $element
      * @return Property[]
      */
     public function getInlineStyles(\DOMElement $element)
@@ -106,8 +103,7 @@ class CssToInlineStyles
     }
 
     /**
-     * @param string $html
-     *
+     * @param  string  $html
      * @return \DOMDocument
      */
     protected function createDomDocumentFromHtml($html)
@@ -122,8 +118,7 @@ class CssToInlineStyles
     }
 
     /**
-     * @param \DOMDocument $document
-     *
+     * @param  \DOMDocument  $document
      * @return string
      */
     protected function getHtmlFromDocument(\DOMDocument $document)
@@ -161,9 +156,8 @@ class CssToInlineStyles
     }
 
     /**
-     * @param \DOMDocument    $document
-     * @param Css\Rule\Rule[] $rules
-     *
+     * @param  \DOMDocument  $document
+     * @param  Css\Rule\Rule[]  $rules
      * @return \DOMDocument
      */
     protected function inline(\DOMDocument $document, array $rules)
@@ -177,7 +171,7 @@ class CssToInlineStyles
 
         $xPath = new \DOMXPath($document);
 
-        usort($rules, array(RuleProcessor::class, 'sortOnSpecificity'));
+        usort($rules, [RuleProcessor::class, 'sortOnSpecificity']);
 
         foreach ($rules as $rule) {
             try {
@@ -196,7 +190,7 @@ class CssToInlineStyles
                 \assert($element instanceof \DOMElement);
                 $propertyStorage[$element] = $this->calculatePropertiesToBeApplied(
                     $rule->getProperties(),
-                    $propertyStorage->offsetExists($element) ? $propertyStorage[$element] : array()
+                    $propertyStorage->offsetExists($element) ? $propertyStorage[$element] : []
                 );
             }
         }
@@ -211,9 +205,8 @@ class CssToInlineStyles
     /**
      * Merge the CSS rules to determine the applied properties.
      *
-     * @param Property[] $properties
-     * @param array<string, Property> $cssProperties existing applied properties indexed by name
-     *
+     * @param  Property[]  $properties
+     * @param  array<string, Property>  $cssProperties  existing applied properties indexed by name
      * @return array<string, Property> updated properties, indexed by name
      */
     private function calculatePropertiesToBeApplied(array $properties, array $cssProperties): array
@@ -227,13 +220,13 @@ class CssToInlineStyles
                 $existingProperty = $cssProperties[$property->getName()];
 
                 //skip check to overrule if existing property is important and current is not
-                if ($existingProperty->isImportant() && !$property->isImportant()) {
+                if ($existingProperty->isImportant() && ! $property->isImportant()) {
                     continue;
                 }
 
                 //overrule if current property is important and existing is not, else check specificity
-                $overrule = !$existingProperty->isImportant() && $property->isImportant();
-                if (!$overrule) {
+                $overrule = ! $existingProperty->isImportant() && $property->isImportant();
+                if (! $overrule) {
                     \assert($existingProperty->getOriginalSpecificity() !== null, 'Properties created for parsed CSS always have their associated specificity.');
                     \assert($property->getOriginalSpecificity() !== null, 'Properties created for parsed CSS always have their associated specificity.');
                     $overrule = $existingProperty->getOriginalSpecificity()->compareTo($property->getOriginalSpecificity()) <= 0;

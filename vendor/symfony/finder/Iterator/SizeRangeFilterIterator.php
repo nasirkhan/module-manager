@@ -25,8 +25,8 @@ class SizeRangeFilterIterator extends \FilterIterator
     private array $comparators = [];
 
     /**
-     * @param \Iterator<string, \SplFileInfo> $iterator
-     * @param NumberComparator[]              $comparators
+     * @param  \Iterator<string, \SplFileInfo>  $iterator
+     * @param  NumberComparator[]  $comparators
      */
     public function __construct(\Iterator $iterator, array $comparators)
     {
@@ -41,13 +41,13 @@ class SizeRangeFilterIterator extends \FilterIterator
     public function accept(): bool
     {
         $fileinfo = $this->current();
-        if (!$fileinfo->isFile()) {
+        if (! $fileinfo->isFile()) {
             return true;
         }
 
         $filesize = $fileinfo->getSize();
         foreach ($this->comparators as $compare) {
-            if (!$compare->test($filesize)) {
+            if (! $compare->test($filesize)) {
                 return false;
             }
         }

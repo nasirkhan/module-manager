@@ -16,7 +16,7 @@ namespace League\CommonMark\Event;
 use League\CommonMark\Node\Block\Document;
 
 /**
- * Event dispatched just before rendering begins
+ * Event dispatched just before rendering begins.
  */
 final class DocumentPreRenderEvent extends AbstractEvent
 {
@@ -29,7 +29,7 @@ final class DocumentPreRenderEvent extends AbstractEvent
     public function __construct(Document $document, string $format)
     {
         $this->document = $document;
-        $this->format   = $format;
+        $this->format = $format;
     }
 
     public function getDocument(): Document

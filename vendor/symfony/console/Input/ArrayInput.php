@@ -50,7 +50,7 @@ class ArrayInput extends Input
         $values = (array) $values;
 
         foreach ($this->parameters as $k => $v) {
-            if (!\is_int($k)) {
+            if (! \is_int($k)) {
                 $v = $k;
             }
 
@@ -134,7 +134,7 @@ class ArrayInput extends Input
      */
     private function addShortOption(string $shortcut, mixed $value): void
     {
-        if (!$this->definition->hasShortcut($shortcut)) {
+        if (! $this->definition->hasShortcut($shortcut)) {
             throw new InvalidOptionException(\sprintf('The "-%s" option does not exist.', $shortcut));
         }
 
@@ -149,8 +149,8 @@ class ArrayInput extends Input
      */
     private function addLongOption(string $name, mixed $value): void
     {
-        if (!$this->definition->hasOption($name)) {
-            if (!$this->definition->hasNegation($name)) {
+        if (! $this->definition->hasOption($name)) {
+            if (! $this->definition->hasNegation($name)) {
                 throw new InvalidOptionException(\sprintf('The "--%s" option does not exist.', $name));
             }
 
@@ -167,7 +167,7 @@ class ArrayInput extends Input
                 throw new InvalidOptionException(\sprintf('The "--%s" option requires a value.', $name));
             }
 
-            if (!$option->isValueOptional()) {
+            if (! $option->isValueOptional()) {
                 $value = true;
             }
         }
@@ -182,7 +182,7 @@ class ArrayInput extends Input
      */
     private function addArgument(string|int $name, mixed $value): void
     {
-        if (!$this->definition->hasArgument($name)) {
+        if (! $this->definition->hasArgument($name)) {
             throw new InvalidArgumentException(\sprintf('The "%s" argument does not exist.', $name));
         }
 

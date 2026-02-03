@@ -27,7 +27,7 @@ class RequestStack
     private array $requests = [];
 
     /**
-     * @param Request[] $requests
+     * @param  Request[]  $requests
      */
     public function __construct(array $requests = [])
     {
@@ -57,7 +57,7 @@ class RequestStack
      */
     public function pop(): ?Request
     {
-        if (!$this->requests) {
+        if (! $this->requests) {
             return null;
         }
 
@@ -78,7 +78,7 @@ class RequestStack
      */
     public function getMainRequest(): ?Request
     {
-        if (!$this->requests) {
+        if (! $this->requests) {
             return null;
         }
 

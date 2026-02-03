@@ -22,7 +22,7 @@ final class EmailIsQueued extends Constraint
     }
 
     /**
-     * @param MessageEvent $event
+     * @param  MessageEvent  $event
      */
     protected function matches($event): bool
     {
@@ -30,7 +30,7 @@ final class EmailIsQueued extends Constraint
     }
 
     /**
-     * @param MessageEvent $event
+     * @param  MessageEvent  $event
      */
     protected function failureDescription($event): string
     {

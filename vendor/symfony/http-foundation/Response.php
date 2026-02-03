@@ -195,7 +195,7 @@ class Response
     private array $sentHeaders;
 
     /**
-     * @param int $status The HTTP status code (200 "OK" by default)
+     * @param  int  $status  The HTTP status code (200 "OK" by default)
      *
      * @throws \InvalidArgumentException When the HTTP status code is not valid
      */
@@ -253,7 +253,7 @@ class Response
             ini_set('default_mimetype', '');
         } else {
             // Content-type based on the Request
-            if (!$headers->has('Content-Type')) {
+            if (! $headers->has('Content-Type')) {
                 $format = $request->getRequestFormat(null);
                 if (null !== $format && $mimeType = $request->getMimeType($format)) {
                     $headers->set('Content-Type', $mimeType);
@@ -262,7 +262,7 @@ class Response
 
             // Fix Content-Type
             $charset = $this->charset ?: 'utf-8';
-            if (!$headers->has('Content-Type')) {
+            if (! $headers->has('Content-Type')) {
                 $headers->set('Content-Type', 'text/html; charset='.$charset);
             } elseif (0 === stripos($headers->get('Content-Type') ?? '', 'text/') && false === stripos($headers->get('Content-Type') ?? '', 'charset')) {
                 // add the charset
@@ -309,15 +309,14 @@ class Response
     /**
      * Sends HTTP headers.
      *
-     * @param positive-int|null $statusCode The status code to use, override the statusCode property if set and not null
-     *
+     * @param  positive-int|null  $statusCode  The status code to use, override the statusCode property if set and not null
      * @return $this
      */
     public function sendHeaders(?int $statusCode = null): static
     {
         // headers have already been sent by the developer
         if (headers_sent()) {
-            if (!\in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
+            if (! \in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
                 $statusCode ??= $this->statusCode;
                 trigger_deprecation('symfony/http-foundation', '7.4', 'Trying to use "%s::sendHeaders()" after headers have already been sent is deprecated and will throw a PHP warning in 8.0. Use a "StreamedResponse" instead.', static::class);
                 // header(\sprintf('HTTP/%s %s %s', $this->version, $statusCode, $this->statusText), true, $statusCode);
@@ -327,7 +326,7 @@ class Response
         }
 
         $informationalResponse = $statusCode >= 100 && $statusCode < 200;
-        if ($informationalResponse && !\function_exists('headers_send')) {
+        if ($informationalResponse && ! \function_exists('headers_send')) {
             // skip informational responses if not supported by the SAPI
             return $this;
         }
@@ -393,8 +392,7 @@ class Response
     /**
      * Sends HTTP headers and content.
      *
-     * @param bool $flush Whether output buffers should be flushed
-     *
+     * @param  bool  $flush  Whether output buffers should be flushed
      * @return $this
      */
     public function send(bool $flush = true): static
@@ -402,7 +400,7 @@ class Response
         $this->sendHeaders();
         $this->sendContent();
 
-        if (!$flush) {
+        if (! $flush) {
             return $this;
         }
 
@@ -410,7 +408,7 @@ class Response
             fastcgi_finish_request();
         } elseif (\function_exists('litespeed_finish_request')) {
             litespeed_finish_request();
-        } elseif (!\in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
+        } elseif (! \in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
             static::closeOutputBuffers(0, true);
             flush();
         }
@@ -545,7 +543,7 @@ class Response
      */
     public function isCacheable(): bool
     {
-        if (!\in_array($this->statusCode, [200, 203, 300, 301, 302, 404, 410], true)) {
+        if (! \in_array($this->statusCode, [200, 203, 300, 301, 302, 404, 410], true)) {
             return false;
         }
 
@@ -945,9 +943,8 @@ class Response
     /**
      * Sets the ETag value.
      *
-     * @param string|null $etag The ETag unique identifier or null to remove the header
-     * @param bool        $weak Whether you want a weak ETag or not
-     *
+     * @param  string|null  $etag  The ETag unique identifier or null to remove the header
+     * @param  bool  $weak  Whether you want a weak ETag or not
      * @return $this
      *
      * @final
@@ -957,7 +954,7 @@ class Response
         if (null === $etag) {
             $this->headers->remove('Etag');
         } else {
-            if (!str_starts_with($etag, '"')) {
+            if (! str_starts_with($etag, '"')) {
                 $etag = '"'.$etag.'"';
             }
 
@@ -1009,7 +1006,7 @@ class Response
         }
 
         foreach (self::HTTP_RESPONSE_CACHE_CONTROL_DIRECTIVES as $directive => $hasValue) {
-            if (!$hasValue && isset($options[$directive])) {
+            if (! $hasValue && isset($options[$directive])) {
                 if ($options[$directive]) {
                     $this->headers->addCacheControlDirective(str_replace('_', '-', $directive));
                 } else {
@@ -1079,7 +1076,7 @@ class Response
      */
     public function getVary(): array
     {
-        if (!$vary = $this->headers->all('Vary')) {
+        if (! $vary = $this->headers->all('Vary')) {
             return [];
         }
 
@@ -1094,8 +1091,7 @@ class Response
     /**
      * Sets the Vary header.
      *
-     * @param bool $replace Whether to replace the actual value or not (true by default)
-     *
+     * @param  bool  $replace  Whether to replace the actual value or not (true by default)
      * @return $this
      *
      * @final
@@ -1118,7 +1114,7 @@ class Response
      */
     public function isNotModified(Request $request): bool
     {
-        if (!$request->isMethodCacheable()) {
+        if (! $request->isMethodCacheable()) {
             return false;
         }
 
@@ -1280,7 +1276,7 @@ class Response
         $level = \count($status);
         $flags = \PHP_OUTPUT_HANDLER_REMOVABLE | ($flush ? \PHP_OUTPUT_HANDLER_FLUSHABLE : \PHP_OUTPUT_HANDLER_CLEANABLE);
 
-        while ($level-- > $targetLevel && ($s = $status[$level]) && (!isset($s['del']) ? !isset($s['flags']) || ($s['flags'] & $flags) === $flags : $s['del'])) {
+        while ($level-- > $targetLevel && ($s = $status[$level]) && (! isset($s['del']) ? ! isset($s['flags']) || ($s['flags'] & $flags) === $flags : $s['del'])) {
             if ($flush) {
                 ob_end_flush();
             } else {

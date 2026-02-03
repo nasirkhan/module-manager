@@ -30,20 +30,20 @@ class XliffFileLoader implements LoaderInterface
 {
     public function load(mixed $resource, string $locale, string $domain = 'messages'): MessageCatalogue
     {
-        if (!class_exists(XmlUtils::class)) {
+        if (! class_exists(XmlUtils::class)) {
             throw new RuntimeException('Loading translations from the Xliff format requires the Symfony Config component.');
         }
 
-        if (!$this->isXmlString($resource)) {
-            if (!stream_is_local($resource)) {
+        if (! $this->isXmlString($resource)) {
+            if (! stream_is_local($resource)) {
                 throw new InvalidResourceException(\sprintf('This is not a local file "%s".', $resource));
             }
 
-            if (!file_exists($resource)) {
+            if (! file_exists($resource)) {
                 throw new NotFoundResourceException(\sprintf('File "%s" not found.', $resource));
             }
 
-            if (!is_file($resource)) {
+            if (! is_file($resource)) {
                 throw new InvalidResourceException(\sprintf('This is neither a file nor an XLIFF string "%s".', $resource));
             }
         }
@@ -108,7 +108,7 @@ class XliffFileLoader implements LoaderInterface
             foreach ($file->xpath('.//xliff:trans-unit') as $translation) {
                 $attributes = $translation->attributes();
 
-                if (!(isset($attributes['resname']) || isset($translation->source))) {
+                if (! (isset($attributes['resname']) || isset($translation->source))) {
                     continue;
                 }
 

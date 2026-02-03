@@ -47,8 +47,8 @@ class ProgressIndicator
     private static array $formatters;
 
     /**
-     * @param int        $indicatorChangeInterval Change interval in milliseconds
-     * @param array|null $indicatorValues         Animated indicator characters
+     * @param  int  $indicatorChangeInterval  Change interval in milliseconds
+     * @param  array|null  $indicatorValues  Animated indicator characters
      */
     public function __construct(
         private OutputInterface $output,
@@ -106,11 +106,11 @@ class ProgressIndicator
      */
     public function advance(): void
     {
-        if (!$this->started) {
+        if (! $this->started) {
             throw new LogicException('Progress indicator has not yet been started.');
         }
 
-        if (!$this->output->isDecorated()) {
+        if (! $this->output->isDecorated()) {
             return;
         }
 
@@ -121,7 +121,7 @@ class ProgressIndicator
         }
 
         $this->indicatorUpdateTime = $currentTime + $this->indicatorChangeInterval;
-        ++$this->indicatorCurrent;
+        $this->indicatorCurrent++;
 
         $this->display();
     }
@@ -129,16 +129,16 @@ class ProgressIndicator
     /**
      * Finish the indicator with message.
      *
-     * @param ?string $finishedIndicator
+     * @param  ?string  $finishedIndicator
      */
     public function finish(string $message/* , ?string $finishedIndicator = null */): void
     {
         $finishedIndicator = 1 < \func_num_args() ? func_get_arg(1) : null;
-        if (null !== $finishedIndicator && !\is_string($finishedIndicator)) {
+        if (null !== $finishedIndicator && ! \is_string($finishedIndicator)) {
             throw new \TypeError(\sprintf('Argument 2 passed to "%s()" must be of the type string or null, "%s" given.', __METHOD__, get_debug_type($finishedIndicator)));
         }
 
-        if (!$this->started) {
+        if (! $this->started) {
             throw new LogicException('Progress indicator has not yet been started.');
         }
 

@@ -12,7 +12,6 @@
 
 namespace Fruitcake\Cors;
 
-use Fruitcake\Cors\Exceptions\InvalidOptionException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,11 +32,10 @@ use Symfony\Component\HttpFoundation\Response;
  *  'exposed_headers'?: string[]|false,
  *  'max_age'?: int|bool|null
  * }
- *
  */
 class CorsService
 {
-    /** @var string[]  */
+    /** @var string[] */
     private array $allowedOrigins = [];
     /** @var string[] */
     private array $allowedOriginsPatterns = [];
@@ -55,7 +53,7 @@ class CorsService
     private bool $allowAllHeaders = false;
 
     /**
-     * @param CorsInputOptions $options
+     * @param  CorsInputOptions  $options
      */
     public function __construct(array $options = [])
     {
@@ -65,7 +63,7 @@ class CorsService
     }
 
     /**
-     * @param CorsInputOptions $options
+     * @param  CorsInputOptions  $options
      */
     public function setOptions(array $options): void
     {
@@ -83,7 +81,7 @@ class CorsService
         } elseif (array_key_exists('max_age', $options)) {
             $maxAge = $options['max_age'];
         }
-        $this->maxAge = $maxAge === null ? null : (int)$maxAge;
+        $this->maxAge = $maxAge === null ? null : (int) $maxAge;
 
         $exposedHeaders = $options['exposedHeaders'] ?? $options['exposed_headers'] ?? $this->exposedHeaders;
         $this->exposedHeaders = $exposedHeaders === false ? [] : $exposedHeaders;
@@ -103,7 +101,7 @@ class CorsService
         $this->allowAllMethods = in_array('*', $this->allowedMethods);
 
         // Transform wildcard pattern
-        if (!$this->allowAllOrigins) {
+        if (! $this->allowAllOrigins) {
             foreach ($this->allowedOrigins as $origin) {
                 if (strpos($origin, '*') !== false) {
                     $this->allowedOriginsPatterns[] = $this->convertWildcardToPattern($origin);
@@ -113,10 +111,11 @@ class CorsService
     }
 
     /**
-     * Create a pattern for a wildcard, based on Str::is() from Laravel
+     * Create a pattern for a wildcard, based on Str::is() from Laravel.
      *
      * @see https://github.com/laravel/framework/blob/5.5/src/Illuminate/Support/Str.php
-     * @param string $pattern
+     *
+     * @param  string  $pattern
      * @return string
      */
     private function convertWildcardToPattern($pattern)
@@ -128,7 +127,7 @@ class CorsService
         // pattern such as "*.example.com", making any string check convenient.
         $pattern = str_replace('\*', '.*', $pattern);
 
-        return '#^' . $pattern . '\z#u';
+        return '#^'.$pattern.'\z#u';
     }
 
     public function isCorsRequest(Request $request): bool
@@ -203,7 +202,7 @@ class CorsService
 
     private function configureAllowedOrigin(Response $response, Request $request): void
     {
-        if ($this->allowAllOrigins === true && !$this->supportsCredentials) {
+        if ($this->allowAllOrigins === true && ! $this->supportsCredentials) {
             // Safe+cacheable, allow everything
             $response->headers->set('Access-Control-Allow-Origin', '*');
         } elseif ($this->isSingleOriginAllowed()) {
@@ -274,13 +273,13 @@ class CorsService
 
     public function varyHeader(Response $response, string $header): Response
     {
-        if (!$response->headers->has('Vary')) {
+        if (! $response->headers->has('Vary')) {
             $response->headers->set('Vary', $header);
         } else {
             $varyHeaders = $response->getVary();
-            if (!in_array($header, $varyHeaders, true)) {
+            if (! in_array($header, $varyHeaders, true)) {
                 if (count($response->headers->all('Vary')) === 1) {
-                    $response->setVary(((string)$response->headers->get('Vary')) . ', ' . $header);
+                    $response->setVary(((string) $response->headers->get('Vary')).', '.$header);
                 } else {
                     $response->setVary($header, false);
                 }

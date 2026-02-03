@@ -35,16 +35,16 @@ final class Psr4DirectoryLoader extends Loader implements DirectoryAwareLoaderIn
     }
 
     /**
-     * @param array{path: string, namespace: string} $resource
+     * @param  array{path: string, namespace: string}  $resource
      */
     public function load(mixed $resource, ?string $type = null): ?RouteCollection
     {
         $path = $this->locator->locate($resource['path'], $this->currentDirectory);
-        if (!is_dir($path)) {
+        if (! is_dir($path)) {
             return new RouteCollection();
         }
 
-        if (!preg_match('/^(?:[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*+\\\)++$/', trim($resource['namespace'], '\\').'\\')) {
+        if (! preg_match('/^(?:[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*+\\\)++$/', trim($resource['namespace'], '\\').'\\')) {
             throw new InvalidArgumentException(\sprintf('Namespace "%s" is not a valid PSR-4 prefix.', $resource['namespace']));
         }
 
@@ -71,7 +71,7 @@ final class Psr4DirectoryLoader extends Loader implements DirectoryAwareLoaderIn
         $files = iterator_to_array(new \RecursiveIteratorIterator(
             new \RecursiveCallbackFilterIterator(
                 new \RecursiveDirectoryIterator($directory, \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS),
-                fn (\SplFileInfo $current) => !str_starts_with($current->getBasename(), '.')
+                fn (\SplFileInfo $current) => ! str_starts_with($current->getBasename(), '.')
             ),
             \RecursiveIteratorIterator::SELF_FIRST
         ));
@@ -84,7 +84,7 @@ final class Psr4DirectoryLoader extends Loader implements DirectoryAwareLoaderIn
 
                 continue;
             }
-            if ('php' !== $file->getExtension() || !class_exists($className = $psr4Prefix.'\\'.$file->getBasename('.php')) || (new \ReflectionClass($className))->isAbstract()) {
+            if ('php' !== $file->getExtension() || ! class_exists($className = $psr4Prefix.'\\'.$file->getBasename('.php')) || (new \ReflectionClass($className))->isAbstract()) {
                 continue;
             }
 

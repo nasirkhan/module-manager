@@ -116,8 +116,8 @@ final class UriNormalizer
      * treated equivalent which is not necessarily true according to RFC 3986. But that difference
      * is highly uncommon in reality. So this potential normalization is implied in PSR-7 as well.
      *
-     * @param UriInterface $uri   The URI to normalize
-     * @param int          $flags A bitmask of normalizations to apply, see constants
+     * @param  UriInterface  $uri  The URI to normalize
+     * @param  int  $flags  A bitmask of normalizations to apply, see constants
      *
      * @see https://datatracker.ietf.org/doc/html/rfc3986#section-6.2
      */
@@ -145,7 +145,7 @@ final class UriNormalizer
             $uri = $uri->withPort(null);
         }
 
-        if ($flags & self::REMOVE_DOT_SEGMENTS && !Uri::isRelativePathReference($uri)) {
+        if ($flags & self::REMOVE_DOT_SEGMENTS && ! Uri::isRelativePathReference($uri)) {
             $uri = $uri->withPath(UriResolver::removeDotSegments($uri->getPath()));
         }
 
@@ -170,9 +170,9 @@ final class UriNormalizer
      * resolved against the same base URI. If this is not the case, determination of equivalence or difference of
      * relative references does not mean anything.
      *
-     * @param UriInterface $uri1           An URI to compare
-     * @param UriInterface $uri2           An URI to compare
-     * @param int          $normalizations A bitmask of normalizations to apply, see constants
+     * @param  UriInterface  $uri1  An URI to compare
+     * @param  UriInterface  $uri2  An URI to compare
+     * @param  int  $normalizations  A bitmask of normalizations to apply, see constants
      *
      * @see https://datatracker.ietf.org/doc/html/rfc3986#section-6.1
      */

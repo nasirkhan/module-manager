@@ -64,7 +64,7 @@ class SessionHandlerProxy extends AbstractProxy implements \SessionHandlerInterf
 
     public function validateId(#[\SensitiveParameter] string $sessionId): bool
     {
-        return !$this->handler instanceof \SessionUpdateTimestampHandlerInterface || $this->handler->validateId($sessionId);
+        return ! $this->handler instanceof \SessionUpdateTimestampHandlerInterface || $this->handler->validateId($sessionId);
     }
 
     public function updateTimestamp(#[\SensitiveParameter] string $sessionId, string $data): bool

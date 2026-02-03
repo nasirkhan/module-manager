@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -12,13 +14,13 @@
 namespace Monolog\Handler;
 
 use Gelf\PublisherInterface;
-use Monolog\Level;
-use Monolog\Formatter\GelfMessageFormatter;
 use Monolog\Formatter\FormatterInterface;
+use Monolog\Formatter\GelfMessageFormatter;
+use Monolog\Level;
 use Monolog\LogRecord;
 
 /**
- * Handler to send messages to a Graylog2 (http://www.graylog2.org) server
+ * Handler to send messages to a Graylog2 (http://www.graylog2.org) server.
  *
  * @author Matt Lehner <mlehner@gmail.com>
  * @author Benjamin Zikarsky <benjamin@zikarsky.de>
@@ -31,7 +33,7 @@ class GelfHandler extends AbstractProcessingHandler
     protected PublisherInterface $publisher;
 
     /**
-     * @param PublisherInterface $publisher a gelf publisher object
+     * @param  PublisherInterface  $publisher  a gelf publisher object
      */
     public function __construct(PublisherInterface $publisher, int|string|Level $level = Level::Debug, bool $bubble = true)
     {

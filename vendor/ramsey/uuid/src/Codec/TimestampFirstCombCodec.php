@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,7 +23,7 @@ use function substr;
 use function substr_replace;
 
 /**
- * TimestampFirstCombCodec encodes and decodes COMBs, with the timestamp as the first 48 bits
+ * TimestampFirstCombCodec encodes and decodes COMBs, with the timestamp as the first 48 bits.
  *
  * In contrast with the TimestampLastCombCodec, the TimestampFirstCombCodec adds the timestamp to the first 48 bits of
  * the COMB. To generate a timestamp-first COMB, set the TimestampFirstCombCodec as the codec, along with the
@@ -43,7 +43,6 @@ use function substr_replace;
  * ```
  *
  * @deprecated Please migrate to {@link https://uuid.ramsey.dev/en/stable/rfc4122/version7.html Version 7, Unix Epoch Time UUIDs}.
- *
  * @link https://web.archive.org/web/20240118030355/https://www.informit.com/articles/printerfriendly/25862 The Cost of GUIDs as Primary Keys
  *
  * @immutable
@@ -98,7 +97,7 @@ class TimestampFirstCombCodec extends StringCodec
     }
 
     /**
-     * Swaps bytes according to the timestamp-first COMB rules
+     * Swaps bytes according to the timestamp-first COMB rules.
      *
      * @pure
      */

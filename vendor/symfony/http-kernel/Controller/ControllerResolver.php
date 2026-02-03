@@ -34,8 +34,8 @@ class ControllerResolver implements ControllerResolverInterface
     }
 
     /**
-     * @param array<class-string> $types
-     * @param array<class-string> $attributes
+     * @param  array<class-string>  $types
+     * @param  array<class-string>  $attributes
      */
     public function allowControllers(array $types = [], array $attributes = []): void
     {
@@ -53,7 +53,7 @@ class ControllerResolver implements ControllerResolverInterface
      */
     public function getController(Request $request): callable|false
     {
-        if (!$controller = $request->attributes->get('_controller')) {
+        if (! $controller = $request->attributes->get('_controller')) {
             $this->logger?->warning('Unable to look for the controller as the "_controller" parameter is missing.');
 
             return false;
@@ -72,7 +72,7 @@ class ControllerResolver implements ControllerResolverInterface
                 }
             }
 
-            if (!\is_callable($controller)) {
+            if (! \is_callable($controller)) {
                 throw new \InvalidArgumentException(\sprintf('The controller for URI "%s" is not callable: ', $request->getPathInfo()).$this->getControllerError($controller));
             }
 
@@ -80,7 +80,7 @@ class ControllerResolver implements ControllerResolverInterface
         }
 
         if (\is_object($controller)) {
-            if (!\is_callable($controller)) {
+            if (! \is_callable($controller)) {
                 throw new \InvalidArgumentException(\sprintf('The controller for URI "%s" is not callable: ', $request->getPathInfo()).$this->getControllerError($controller));
             }
 
@@ -97,7 +97,7 @@ class ControllerResolver implements ControllerResolverInterface
             throw new \InvalidArgumentException(\sprintf('The controller for URI "%s" is not callable: ', $request->getPathInfo()).$e->getMessage(), 0, $e);
         }
 
-        if (!\is_callable($callable)) {
+        if (! \is_callable($callable)) {
             throw new \InvalidArgumentException(\sprintf('The controller for URI "%s" is not callable: ', $request->getPathInfo()).$this->getControllerError($callable));
         }
 
@@ -111,10 +111,10 @@ class ControllerResolver implements ControllerResolverInterface
      */
     protected function createController(string $controller): callable
     {
-        if (!str_contains($controller, '::')) {
+        if (! str_contains($controller, '::')) {
             $controller = $this->instantiateController($controller);
 
-            if (!\is_callable($controller)) {
+            if (! \is_callable($controller)) {
                 throw new \InvalidArgumentException($this->getControllerError($controller));
             }
 
@@ -137,7 +137,7 @@ class ControllerResolver implements ControllerResolverInterface
             throw $e;
         }
 
-        if (!\is_callable($controller)) {
+        if (! \is_callable($controller)) {
             throw new \InvalidArgumentException($this->getControllerError($controller));
         }
 
@@ -169,17 +169,17 @@ class ControllerResolver implements ControllerResolverInterface
             return \sprintf('Controller class "%s" cannot be called without a method name. You need to implement "__invoke"%s.', get_debug_type($callable), $alternativeMsg);
         }
 
-        if (!\is_array($callable)) {
+        if (! \is_array($callable)) {
             return \sprintf('Invalid type for controller given, expected string, array or object, got "%s".', get_debug_type($callable));
         }
 
-        if (!isset($callable[0]) || !isset($callable[1]) || 2 !== \count($callable)) {
+        if (! isset($callable[0]) || ! isset($callable[1]) || 2 !== \count($callable)) {
             return 'Invalid array callable, expected [controller, method].';
         }
 
         [$controller, $method] = $callable;
 
-        if (\is_string($controller) && !class_exists($controller)) {
+        if (\is_string($controller) && ! class_exists($controller)) {
             return \sprintf('Class "%s" does not exist.', $controller);
         }
 
@@ -223,7 +223,7 @@ class ControllerResolver implements ControllerResolverInterface
 
     private function checkController(Request $request, callable $controller): callable
     {
-        if (!$request->attributes->get('_check_controller_is_allowed', false)) {
+        if (! $request->attributes->get('_check_controller_is_allowed', false)) {
             return $controller;
         }
 
@@ -232,7 +232,7 @@ class ControllerResolver implements ControllerResolverInterface
         if (\is_array($controller)) {
             [$class, $name] = $controller;
             $name = (\is_string($class) ? $class : $class::class).'::'.$name;
-        } elseif (\is_object($controller) && !$controller instanceof \Closure) {
+        } elseif (\is_object($controller) && ! $controller instanceof \Closure) {
             $class = $controller;
             $name = $class::class.'::__invoke';
         } else {

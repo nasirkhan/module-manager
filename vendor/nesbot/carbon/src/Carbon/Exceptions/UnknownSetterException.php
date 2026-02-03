@@ -28,9 +28,9 @@ class UnknownSetterException extends BaseInvalidArgumentException implements Bad
     /**
      * Constructor.
      *
-     * @param string         $setter   setter name
-     * @param int            $code
-     * @param Throwable|null $previous
+     * @param  string  $setter  setter name
+     * @param  int  $code
+     * @param  Throwable|null  $previous
      */
     public function __construct($setter, $code = 0, ?Throwable $previous = null)
     {

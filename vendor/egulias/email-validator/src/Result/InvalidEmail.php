@@ -34,7 +34,7 @@ class InvalidEmail implements Result
 
     public function description(): string
     {
-        return $this->reason->description() . " in char " . $this->token;
+        return $this->reason->description().' in char '.$this->token;
     }
 
     public function code(): int

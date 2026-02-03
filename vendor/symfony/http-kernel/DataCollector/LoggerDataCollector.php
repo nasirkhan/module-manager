@@ -173,7 +173,7 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
 
     private function getContainerDeprecationLogs(): array
     {
-        if (null === $this->containerPathPrefix || !is_file($file = $this->containerPathPrefix.'Deprecations.log')) {
+        if (null === $this->containerPathPrefix || ! is_file($file = $this->containerPathPrefix.'Deprecations.log')) {
             return [];
         }
 
@@ -200,14 +200,14 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
 
     private function getContainerCompilerLogs(?string $compilerLogsFilepath = null): array
     {
-        if (!$compilerLogsFilepath || !is_file($compilerLogsFilepath)) {
+        if (! $compilerLogsFilepath || ! is_file($compilerLogsFilepath)) {
             return [];
         }
 
         $logs = [];
         foreach (file($compilerLogsFilepath, \FILE_IGNORE_NEW_LINES) as $log) {
             $log = explode(': ', $log, 2);
-            if (!isset($log[1]) || !preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*+(?:\\\\[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*+)++$/', $log[0])) {
+            if (! isset($log[1]) || ! preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*+(?:\\\\[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*+)++$/', $log[0])) {
                 $log = ['Unknown Compiler Pass', implode(': ', $log)];
             }
 
@@ -223,7 +223,7 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
         $silencedLogs = [];
 
         foreach ($logs as $log) {
-            if (!$this->isSilencedOrDeprecationErrorLog($log)) {
+            if (! $this->isSilencedOrDeprecationErrorLog($log)) {
                 $sanitizedLogs[] = $log;
 
                 continue;
@@ -238,7 +238,7 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
                 }
                 $silencedLogs[$id] = true;
 
-                if (!isset($sanitizedLogs[$message])) {
+                if (! isset($sanitizedLogs[$message])) {
                     $sanitizedLogs[$message] = $log + [
                         'errorCount' => 0,
                         'scream' => true,
@@ -252,7 +252,7 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
             $errorId = hash('xxh128', "{$exception->getSeverity()}/{$exception->getLine()}/{$exception->getFile()}\0{$message}", true);
 
             if (isset($sanitizedLogs[$errorId])) {
-                ++$sanitizedLogs[$errorId]['errorCount'];
+                $sanitizedLogs[$errorId]['errorCount']++;
             } else {
                 $log += [
                     'errorCount' => 1,
@@ -268,7 +268,7 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
 
     private function isSilencedOrDeprecationErrorLog(array $log): bool
     {
-        if (!isset($log['context']['exception'])) {
+        if (! isset($log['context']['exception'])) {
             return false;
         }
 
@@ -298,7 +298,7 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
 
         foreach ($this->logger->getLogs($this->currentRequest) as $log) {
             if (isset($count['priorities'][$log['priority']])) {
-                ++$count['priorities'][$log['priority']]['count'];
+                $count['priorities'][$log['priority']]['count']++;
             } else {
                 $count['priorities'][$log['priority']] = [
                     'count' => 1,
@@ -306,7 +306,7 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
                 ];
             }
             if ('WARNING' === $log['priorityName']) {
-                ++$count['warning_count'];
+                $count['warning_count']++;
             }
 
             if ($this->isSilencedOrDeprecationErrorLog($log)) {
@@ -318,7 +318,7 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
                     $silencedLogs[$id] = true;
                     $count['scream_count'] += $exception->count;
                 } else {
-                    ++$count['deprecation_count'];
+                    $count['deprecation_count']++;
                 }
             }
         }

@@ -28,7 +28,7 @@ class UnstructuredHeader extends AbstractHeader
     }
 
     /**
-     * @param string $body
+     * @param  string  $body
      */
     public function setBody(mixed $body): void
     {

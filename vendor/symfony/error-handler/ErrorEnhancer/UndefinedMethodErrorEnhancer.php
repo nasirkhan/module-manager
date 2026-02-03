@@ -27,7 +27,7 @@ class UndefinedMethodErrorEnhancer implements ErrorEnhancerInterface
 
         $message = $error->getMessage();
         preg_match('/^Call to undefined method (.*)::(.*)\(\)$/', $message, $matches);
-        if (!$matches) {
+        if (! $matches) {
             return null;
         }
 
@@ -36,7 +36,7 @@ class UndefinedMethodErrorEnhancer implements ErrorEnhancerInterface
 
         $message = \sprintf('Attempted to call an undefined method named "%s" of class "%s".', $methodName, $className);
 
-        if ('' === $methodName || !class_exists($className) || null === $methods = get_class_methods($className)) {
+        if ('' === $methodName || ! class_exists($className) || null === $methods = get_class_methods($className)) {
             // failed to get the class or its methods on which an unknown method was called (for example on an anonymous class)
             return new UndefinedMethodError($message, $error);
         }

@@ -28,7 +28,7 @@ abstract class AbstractSurrogateFragmentRenderer extends RoutableFragmentRendere
      * The "fallback" strategy when surrogate is not available should always be an
      * instance of InlineFragmentRenderer.
      *
-     * @param FragmentRendererInterface $inlineStrategy The inline strategy to use when the surrogate is not supported
+     * @param  FragmentRendererInterface  $inlineStrategy  The inline strategy to use when the surrogate is not supported
      */
     public function __construct(
         private ?SurrogateInterface $surrogate,
@@ -54,7 +54,7 @@ abstract class AbstractSurrogateFragmentRenderer extends RoutableFragmentRendere
      */
     public function render(string|ControllerReference $uri, Request $request, array $options = []): Response
     {
-        if (!$this->surrogate || !$this->surrogate->hasSurrogateCapability($request)) {
+        if (! $this->surrogate || ! $this->surrogate->hasSurrogateCapability($request)) {
             $request->attributes->set('_check_controller_is_allowed', true);
 
             if ($uri instanceof ControllerReference && $this->containsNonScalars($uri->attributes)) {
@@ -92,7 +92,7 @@ abstract class AbstractSurrogateFragmentRenderer extends RoutableFragmentRendere
                 continue;
             }
 
-            if (!\is_array($value) || $this->containsNonScalars($value)) {
+            if (! \is_array($value) || $this->containsNonScalars($value)) {
                 return true;
             }
         }

@@ -34,7 +34,7 @@ class DraftEmail extends Email
     {
         $headers = clone $this->getHeaders();
 
-        if (!$headers->has('MIME-Version')) {
+        if (! $headers->has('MIME-Version')) {
             $headers->addTextHeader('MIME-Version', '1.0');
         }
 

@@ -41,7 +41,7 @@ final class EmailAutolinkParser implements InlineParserInterface
         }
 
         $inlineContext->getCursor()->advanceBy(\strlen($email));
-        $inlineContext->getContainer()->appendChild(new Link('mailto:' . $email, $email));
+        $inlineContext->getContainer()->appendChild(new Link('mailto:'.$email, $email));
 
         return true;
     }

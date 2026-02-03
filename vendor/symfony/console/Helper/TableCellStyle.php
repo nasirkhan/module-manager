@@ -46,7 +46,7 @@ class TableCellStyle
             throw new InvalidArgumentException(\sprintf('The TableCellStyle does not support the following options: \'%s\'.', implode('\', \'', $diff)));
         }
 
-        if (isset($options['align']) && !\array_key_exists($options['align'], self::ALIGN_MAP)) {
+        if (isset($options['align']) && ! \array_key_exists($options['align'], self::ALIGN_MAP)) {
             throw new InvalidArgumentException(\sprintf('Wrong align value. Value must be following: \'%s\'.', implode('\', \'', array_keys(self::ALIGN_MAP))));
         }
 

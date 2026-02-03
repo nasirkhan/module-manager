@@ -22,11 +22,11 @@ use Psr\Log\LogLevel;
 final class WithLogLevel
 {
     /**
-     * @param LogLevel::* $level The level to use to log the exception
+     * @param  LogLevel::*  $level  The level to use to log the exception
      */
     public function __construct(public readonly string $level)
     {
-        if (!\defined('Psr\Log\LogLevel::'.strtoupper($this->level))) {
+        if (! \defined('Psr\Log\LogLevel::'.strtoupper($this->level))) {
             throw new \InvalidArgumentException(\sprintf('Invalid log level "%s".', $this->level));
         }
     }

@@ -58,11 +58,10 @@ final class RepositoryBuilder
     /**
      * Create a new repository builder instance.
      *
-     * @param \Dotenv\Repository\Adapter\ReaderInterface[] $readers
-     * @param \Dotenv\Repository\Adapter\WriterInterface[] $writers
-     * @param bool                                         $immutable
-     * @param string[]|null                                $allowList
-     *
+     * @param  \Dotenv\Repository\Adapter\ReaderInterface[]  $readers
+     * @param  \Dotenv\Repository\Adapter\WriterInterface[]  $writers
+     * @param  bool  $immutable
+     * @param  string[]|null  $allowList
      * @return void
      */
     private function __construct(array $readers = [], array $writers = [], bool $immutable = false, ?array $allowList = null)
@@ -113,13 +112,12 @@ final class RepositoryBuilder
     /**
      * Determine if the given name if of an adapterclass.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return bool
      */
     private static function isAnAdapterClass(string $name)
     {
-        if (!\class_exists($name)) {
+        if (! \class_exists($name)) {
             return false;
         }
 
@@ -132,15 +130,14 @@ final class RepositoryBuilder
      * Accepts either a reader instance, or a class-string for an adapter. If
      * the adapter is not supported, then we silently skip adding it.
      *
-     * @param \Dotenv\Repository\Adapter\ReaderInterface|string $reader
+     * @param  \Dotenv\Repository\Adapter\ReaderInterface|string  $reader
+     * @return \Dotenv\Repository\RepositoryBuilder
      *
      * @throws \InvalidArgumentException
-     *
-     * @return \Dotenv\Repository\RepositoryBuilder
      */
     public function addReader($reader)
     {
-        if (!(\is_string($reader) && self::isAnAdapterClass($reader)) && !($reader instanceof ReaderInterface)) {
+        if (! (\is_string($reader) && self::isAnAdapterClass($reader)) && ! ($reader instanceof ReaderInterface)) {
             throw new InvalidArgumentException(
                 \sprintf(
                     'Expected either an instance of %s or a class-string implementing %s',
@@ -165,15 +162,14 @@ final class RepositoryBuilder
      * Accepts either a writer instance, or a class-string for an adapter. If
      * the adapter is not supported, then we silently skip adding it.
      *
-     * @param \Dotenv\Repository\Adapter\WriterInterface|string $writer
+     * @param  \Dotenv\Repository\Adapter\WriterInterface|string  $writer
+     * @return \Dotenv\Repository\RepositoryBuilder
      *
      * @throws \InvalidArgumentException
-     *
-     * @return \Dotenv\Repository\RepositoryBuilder
      */
     public function addWriter($writer)
     {
-        if (!(\is_string($writer) && self::isAnAdapterClass($writer)) && !($writer instanceof WriterInterface)) {
+        if (! (\is_string($writer) && self::isAnAdapterClass($writer)) && ! ($writer instanceof WriterInterface)) {
             throw new InvalidArgumentException(
                 \sprintf(
                     'Expected either an instance of %s or a class-string implementing %s',
@@ -199,15 +195,14 @@ final class RepositoryBuilder
      * the adapter is not supported, then we silently skip adding it. We will
      * add the adapter as both a reader and a writer.
      *
-     * @param \Dotenv\Repository\Adapter\WriterInterface|string $adapter
+     * @param  \Dotenv\Repository\Adapter\WriterInterface|string  $adapter
+     * @return \Dotenv\Repository\RepositoryBuilder
      *
      * @throws \InvalidArgumentException
-     *
-     * @return \Dotenv\Repository\RepositoryBuilder
      */
     public function addAdapter($adapter)
     {
-        if (!(\is_string($adapter) && self::isAnAdapterClass($adapter)) && !($adapter instanceof AdapterInterface)) {
+        if (! (\is_string($adapter) && self::isAnAdapterClass($adapter)) && ! ($adapter instanceof AdapterInterface)) {
             throw new InvalidArgumentException(
                 \sprintf(
                     'Expected either an instance of %s or a class-string implementing %s',
@@ -240,8 +235,7 @@ final class RepositoryBuilder
     /**
      * Creates a repository builder with the given allow list.
      *
-     * @param string[]|null $allowList
-     *
+     * @param  string[]|null  $allowList
      * @return \Dotenv\Repository\RepositoryBuilder
      */
     public function allowList(?array $allowList = null)

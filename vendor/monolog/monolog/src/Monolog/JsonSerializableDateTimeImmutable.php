@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -14,7 +16,7 @@ namespace Monolog;
 use DateTimeZone;
 
 /**
- * Overrides default json encoding of date time objects
+ * Overrides default json encoding of date time objects.
  *
  * @author Menno Holtkamp
  * @author Jordi Boggiano <j.boggiano@seld.be>

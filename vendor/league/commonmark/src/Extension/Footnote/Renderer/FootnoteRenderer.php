@@ -28,7 +28,7 @@ final class FootnoteRenderer implements NodeRendererInterface, XmlNodeRendererIn
     private ConfigurationInterface $config;
 
     /**
-     * @param Footnote $node
+     * @param  Footnote  $node
      *
      * {@inheritDoc}
      *
@@ -41,7 +41,7 @@ final class FootnoteRenderer implements NodeRendererInterface, XmlNodeRendererIn
         $attrs = $node->data->getData('attributes');
 
         $attrs->append('class', $this->config->get('footnote/footnote_class'));
-        $attrs->set('id', $this->config->get('footnote/footnote_id_prefix') . \mb_strtolower($node->getReference()->getLabel(), 'UTF-8'));
+        $attrs->set('id', $this->config->get('footnote/footnote_id_prefix').\mb_strtolower($node->getReference()->getLabel(), 'UTF-8'));
         $attrs->set('role', 'doc-endnote');
 
         return new HtmlElement(
@@ -63,8 +63,7 @@ final class FootnoteRenderer implements NodeRendererInterface, XmlNodeRendererIn
     }
 
     /**
-     * @param Footnote $node
-     *
+     * @param  Footnote  $node
      * @return array<string, scalar>
      *
      * @psalm-suppress MoreSpecificImplementedParamType

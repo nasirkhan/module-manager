@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -37,7 +37,7 @@ use function unpack;
 use const STR_PAD_LEFT;
 
 /**
- * GUIDs consist of a set of named fields, according to RFC 9562 (formerly RFC 4122)
+ * GUIDs consist of a set of named fields, according to RFC 9562 (formerly RFC 4122).
  *
  * @see Guid
  *
@@ -52,7 +52,7 @@ final class Fields implements FieldsInterface
     use VersionTrait;
 
     /**
-     * @param string $bytes A 16-byte binary string representation of a UUID
+     * @param  string  $bytes  A 16-byte binary string representation of a UUID
      *
      * @throws InvalidArgumentException if the byte string is not exactly 16 bytes
      * @throws InvalidArgumentException if the byte string does not represent a GUID
@@ -62,18 +62,18 @@ final class Fields implements FieldsInterface
     {
         if (strlen($this->bytes) !== 16) {
             throw new InvalidArgumentException(
-                'The byte string must be 16 bytes long; received ' . strlen($this->bytes) . ' bytes',
+                'The byte string must be 16 bytes long; received '.strlen($this->bytes).' bytes',
             );
         }
 
-        if (!$this->isCorrectVariant()) {
+        if (! $this->isCorrectVariant()) {
             throw new InvalidArgumentException(
                 'The byte string received does not conform to the RFC 9562 (formerly RFC 4122) '
-                . 'or Microsoft Corporation variants',
+                .'or Microsoft Corporation variants',
             );
         }
 
-        if (!$this->isCorrectVersion()) {
+        if (! $this->isCorrectVersion()) {
             throw new InvalidArgumentException('The byte string received does not contain a valid version');
         }
     }
@@ -121,7 +121,7 @@ final class Fields implements FieldsInterface
     {
         return new Hexadecimal(sprintf(
             '%03x%04s%08s',
-            hexdec($this->getTimeHiAndVersion()->toString()) & 0x0fff,
+            hexdec($this->getTimeHiAndVersion()->toString()) & 0x0FFF,
             $this->getTimeMid()->toString(),
             $this->getTimeLow()->toString()
         ));
@@ -130,11 +130,11 @@ final class Fields implements FieldsInterface
     public function getClockSeq(): Hexadecimal
     {
         if ($this->isMax()) {
-            $clockSeq = 0xffff;
+            $clockSeq = 0xFFFF;
         } elseif ($this->isNil()) {
             $clockSeq = 0x0000;
         } else {
-            $clockSeq = hexdec(bin2hex(substr($this->bytes, 8, 2))) & 0x3fff;
+            $clockSeq = hexdec(bin2hex(substr($this->bytes, 8, 2))) & 0x3FFF;
         }
 
         return new Hexadecimal(str_pad(dechex($clockSeq), 4, '0', STR_PAD_LEFT));
@@ -164,7 +164,7 @@ final class Fields implements FieldsInterface
         /** @var int[] $parts */
         $parts = unpack('n*', $this->bytes);
 
-        return ($parts[4] >> 4) & 0x00f;
+        return ($parts[4] >> 4) & 0x00F;
     }
 
     private function isCorrectVariant(): bool

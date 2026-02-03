@@ -27,7 +27,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class ParagraphRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param Paragraph $node
+     * @param  Paragraph  $node
      *
      * {@inheritDoc}
      *

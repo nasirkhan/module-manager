@@ -83,14 +83,14 @@ class Command implements SignalableCommandInterface
     }
 
     /**
-     * @param string|null $name The name of the command; passing null means it must be set in configure()
+     * @param  string|null  $name  The name of the command; passing null means it must be set in configure()
      *
      * @throws LogicException When the command name is empty
      */
     public function __construct(?string $name = null, ?callable $code = null)
     {
         if (null !== $code) {
-            if (!\is_object($code) || $code instanceof \Closure) {
+            if (! \is_object($code) || $code instanceof \Closure) {
                 throw new InvalidArgumentException(\sprintf('The command must be an instance of "%s" or an invokable object.', self::class));
             }
             /** @var AsCommand $attribute */
@@ -153,7 +153,7 @@ class Command implements SignalableCommandInterface
             $this->addUsage($usage);
         }
 
-        if (!$code && \is_callable($this) && self::class === (new \ReflectionMethod($this, 'execute'))->getDeclaringClass()->name) {
+        if (! $code && \is_callable($this) && self::class === (new \ReflectionMethod($this, 'execute'))->getDeclaringClass()->name) {
             $this->code = new InvokableCommand($this, $this(...));
         }
 
@@ -294,7 +294,7 @@ class Command implements SignalableCommandInterface
         try {
             $input->bind($this->getDefinition());
         } catch (ExceptionInterface $e) {
-            if (!$this->ignoreValidationErrors) {
+            if (! $this->ignoreValidationErrors) {
                 throw $e;
             }
         }
@@ -303,7 +303,7 @@ class Command implements SignalableCommandInterface
 
         if (null !== $this->processTitle) {
             if (\function_exists('cli_set_process_title')) {
-                if (!@cli_set_process_title($this->processTitle)) {
+                if (! @cli_set_process_title($this->processTitle)) {
                     if ('Darwin' === \PHP_OS) {
                         $output->writeln('<comment>Running "cli_set_process_title" as an unprivileged user is not supported on MacOS.</comment>', OutputInterface::VERBOSITY_VERY_VERBOSE);
                     } else {
@@ -370,8 +370,7 @@ class Command implements SignalableCommandInterface
      * If this method is used, it overrides the code defined
      * in the execute() method.
      *
-     * @param callable $code A callable(InputInterface $input, OutputInterface $output)
-     *
+     * @param  callable  $code  A callable(InputInterface $input, OutputInterface $output)
      * @return $this
      *
      * @throws InvalidArgumentException
@@ -390,7 +389,7 @@ class Command implements SignalableCommandInterface
      *
      * This method is not part of public API and should not be used directly.
      *
-     * @param bool $mergeArgs Whether to merge or not the Application definition arguments to Command definition arguments
+     * @param  bool  $mergeArgs  Whether to merge or not the Application definition arguments to Command definition arguments
      *
      * @internal
      */
@@ -450,7 +449,7 @@ class Command implements SignalableCommandInterface
     {
         $definition = $this->definition ?? throw new LogicException(\sprintf('Command class "%s" is not correctly initialized. You probably forgot to call the parent constructor.', static::class));
 
-        if ($this->code && !$definition->getArguments() && !$definition->getOptions()) {
+        if ($this->code && ! $definition->getArguments() && ! $definition->getOptions()) {
             $this->code->configure($definition);
         }
 
@@ -460,10 +459,9 @@ class Command implements SignalableCommandInterface
     /**
      * Adds an argument.
      *
-     * @param                                                                               $mode            The argument mode: InputArgument::REQUIRED or InputArgument::OPTIONAL
-     * @param                                                                               $default         The default value (for InputArgument::OPTIONAL mode only)
-     * @param array|\Closure(CompletionInput,CompletionSuggestions):list<string|Suggestion> $suggestedValues The values used for input completion
-     *
+     * @param  $mode  The argument mode: InputArgument::REQUIRED or InputArgument::OPTIONAL
+     * @param  $default  The default value (for InputArgument::OPTIONAL mode only)
+     * @param  array|\Closure(CompletionInput,CompletionSuggestions):list<string|Suggestion>  $suggestedValues  The values used for input completion
      * @return $this
      *
      * @throws InvalidArgumentException When argument mode is not valid
@@ -479,11 +477,10 @@ class Command implements SignalableCommandInterface
     /**
      * Adds an option.
      *
-     * @param                                                                               $shortcut        The shortcuts, can be null, a string of shortcuts delimited by | or an array of shortcuts
-     * @param                                                                               $mode            The option mode: One of the InputOption::VALUE_* constants
-     * @param                                                                               $default         The default value (must be null for InputOption::VALUE_NONE)
-     * @param array|\Closure(CompletionInput,CompletionSuggestions):list<string|Suggestion> $suggestedValues The values used for input completion
-     *
+     * @param  $shortcut  The shortcuts, can be null, a string of shortcuts delimited by | or an array of shortcuts
+     * @param  $mode  The option mode: One of the InputOption::VALUE_* constants
+     * @param  $default  The default value (must be null for InputOption::VALUE_NONE)
+     * @param  array|\Closure(CompletionInput,CompletionSuggestions):list<string|Suggestion>  $suggestedValues  The values used for input completion
      * @return $this
      *
      * @throws InvalidArgumentException If option mode is invalid or incompatible
@@ -541,8 +538,7 @@ class Command implements SignalableCommandInterface
     }
 
     /**
-     * @param bool $hidden Whether or not the command should be hidden from the list of commands
-     *
+     * @param  bool  $hidden  Whether or not the command should be hidden from the list of commands
      * @return $this
      */
     public function setHidden(bool $hidden = true): static
@@ -624,8 +620,7 @@ class Command implements SignalableCommandInterface
     /**
      * Sets the aliases for the command.
      *
-     * @param string[] $aliases An array of aliases for the command
-     *
+     * @param  string[]  $aliases  An array of aliases for the command
      * @return $this
      *
      * @throws InvalidArgumentException When an alias is invalid
@@ -655,13 +650,13 @@ class Command implements SignalableCommandInterface
     /**
      * Returns the synopsis for the command.
      *
-     * @param bool $short Whether to show the short version of the synopsis (with options folded) or not
+     * @param  bool  $short  Whether to show the short version of the synopsis (with options folded) or not
      */
     public function getSynopsis(bool $short = false): string
     {
         $key = $short ? 'short' : 'long';
 
-        if (!isset($this->synopsis[$key])) {
+        if (! isset($this->synopsis[$key])) {
             $this->synopsis[$key] = trim(\sprintf('%s %s', $this->name, $this->definition->getSynopsis($short)));
         }
 
@@ -675,7 +670,7 @@ class Command implements SignalableCommandInterface
      */
     public function addUsage(string $usage): static
     {
-        if (!str_starts_with($usage, $this->name)) {
+        if (! str_starts_with($usage, $this->name)) {
             $usage = \sprintf('%s %s', $this->name, $usage);
         }
 
@@ -695,7 +690,7 @@ class Command implements SignalableCommandInterface
     /**
      * Gets a helper instance by name.
      *
-     * @throws LogicException           if no HelperSet is defined
+     * @throws LogicException if no HelperSet is defined
      * @throws InvalidArgumentException if the helper is not defined
      */
     public function getHelper(string $name): HelperInterface
@@ -726,7 +721,7 @@ class Command implements SignalableCommandInterface
      */
     private function validateName(string $name): void
     {
-        if (!preg_match('/^[^\:]++(\:[^\:]++)*$/', $name)) {
+        if (! preg_match('/^[^\:]++(\:[^\:]++)*$/', $name)) {
             throw new InvalidArgumentException(\sprintf('Command name "%s" is invalid.', $name));
         }
     }

@@ -53,7 +53,7 @@ class Spinner extends Prompt
 
         $originalAsync = pcntl_async_signals(true);
 
-        pcntl_signal(SIGINT, fn () => exit());
+        pcntl_signal(SIGINT, fn () => exit);
 
         try {
             $this->hideCursor();

@@ -72,7 +72,7 @@ abstract class AbstractUnicodeString extends AbstractString
      *
      * Install the intl extension for best results.
      *
-     * @param string[]|\Transliterator[]|\Closure[] $rules See "*-Latin" rules from Transliterator::listIDs()
+     * @param  string[]|\Transliterator[]|\Closure[]  $rules  See "*-Latin" rules from Transliterator::listIDs()
      */
     public function ascii(array $rules = []): self
     {
@@ -96,7 +96,7 @@ abstract class AbstractUnicodeString extends AbstractString
                 $s = substr($s, $i);
             }
 
-            if (!$rule = array_shift($rules)) {
+            if (! $rule = array_shift($rules)) {
                 $rules = []; // An empty rule interrupts the next ones
             }
 
@@ -132,7 +132,7 @@ abstract class AbstractUnicodeString extends AbstractString
 
                     $s = $transliterator->transliterate($s);
                 }
-            } elseif (!\function_exists('iconv')) {
+            } elseif (! \function_exists('iconv')) {
                 $s = preg_replace('/[^\x00-\x7F]/u', '?', $s);
             } else {
                 $previousLocale = setlocale(\LC_CTYPE, 0);
@@ -194,7 +194,7 @@ abstract class AbstractUnicodeString extends AbstractString
     {
         $str = clone $this;
 
-        if (!$compat || !\defined('Normalizer::NFKC_CF')) {
+        if (! $compat || ! \defined('Normalizer::NFKC_CF')) {
             $str->string = normalizer_normalize($str->string, $compat ? \Normalizer::NFKC : \Normalizer::NFC);
             $str->string = mb_strtolower(str_replace(self::FOLD_FROM, self::FOLD_TO, $str->string), 'UTF-8');
         } else {
@@ -211,7 +211,7 @@ abstract class AbstractUnicodeString extends AbstractString
         $tail = null !== $lastGlue && 1 < \count($strings) ? $lastGlue.array_pop($strings) : '';
         $str->string = implode($this->string, $strings).$tail;
 
-        if (!preg_match('//u', $str->string)) {
+        if (! preg_match('//u', $str->string)) {
             throw new InvalidArgumentException('Invalid UTF-8 string.');
         }
 
@@ -227,7 +227,7 @@ abstract class AbstractUnicodeString extends AbstractString
     }
 
     /**
-     * @param string $locale In the format language_region (e.g. tr_TR)
+     * @param  string  $locale  In the format language_region (e.g. tr_TR)
      */
     public function localeLower(string $locale): static
     {
@@ -264,7 +264,7 @@ abstract class AbstractUnicodeString extends AbstractString
 
     public function normalize(int $form = self::NFC): static
     {
-        if (!\in_array($form, [self::NFC, self::NFD, self::NFKC, self::NFKD], true)) {
+        if (! \in_array($form, [self::NFC, self::NFD, self::NFKC, self::NFKD], true)) {
             throw new InvalidArgumentException('Unsupported normalization form.');
         }
 
@@ -276,7 +276,7 @@ abstract class AbstractUnicodeString extends AbstractString
 
     public function padBoth(int $length, string $padStr = ' '): static
     {
-        if ('' === $padStr || !preg_match('//u', $padStr)) {
+        if ('' === $padStr || ! preg_match('//u', $padStr)) {
             throw new InvalidArgumentException('Invalid UTF-8 string.');
         }
 
@@ -288,7 +288,7 @@ abstract class AbstractUnicodeString extends AbstractString
 
     public function padEnd(int $length, string $padStr = ' '): static
     {
-        if ('' === $padStr || !preg_match('//u', $padStr)) {
+        if ('' === $padStr || ! preg_match('//u', $padStr)) {
             throw new InvalidArgumentException('Invalid UTF-8 string.');
         }
 
@@ -300,7 +300,7 @@ abstract class AbstractUnicodeString extends AbstractString
 
     public function padStart(int $length, string $padStr = ' '): static
     {
-        if ('' === $padStr || !preg_match('//u', $padStr)) {
+        if ('' === $padStr || ! preg_match('//u', $padStr)) {
             throw new InvalidArgumentException('Invalid UTF-8 string.');
         }
 
@@ -321,13 +321,13 @@ abstract class AbstractUnicodeString extends AbstractString
             $to = static function (array $m) use ($to): string {
                 $to = $to($m);
 
-                if ('' !== $to && (!\is_string($to) || !preg_match('//u', $to))) {
+                if ('' !== $to && (! \is_string($to) || ! preg_match('//u', $to))) {
                     throw new InvalidArgumentException('Replace callback must return a valid UTF-8 string.');
                 }
 
                 return $to;
             };
-        } elseif ('' !== $to && !preg_match('//u', $to)) {
+        } elseif ('' !== $to && ! preg_match('//u', $to)) {
             throw new InvalidArgumentException('Invalid UTF-8 string.');
         } else {
             $replace = 'preg_replace';
@@ -385,7 +385,7 @@ abstract class AbstractUnicodeString extends AbstractString
     }
 
     /**
-     * @param string $locale In the format language_region (e.g. tr_TR)
+     * @param  string  $locale  In the format language_region (e.g. tr_TR)
      */
     public function localeTitle(string $locale): static
     {
@@ -401,7 +401,7 @@ abstract class AbstractUnicodeString extends AbstractString
 
     public function trim(string $chars = " \t\n\r\0\x0B\x0C\u{A0}\u{FEFF}"): static
     {
-        if (" \t\n\r\0\x0B\x0C\u{A0}\u{FEFF}" !== $chars && !preg_match('//u', $chars)) {
+        if (" \t\n\r\0\x0B\x0C\u{A0}\u{FEFF}" !== $chars && ! preg_match('//u', $chars)) {
             throw new InvalidArgumentException('Invalid UTF-8 chars.');
         }
         $chars = preg_quote($chars);
@@ -414,7 +414,7 @@ abstract class AbstractUnicodeString extends AbstractString
 
     public function trimEnd(string $chars = " \t\n\r\0\x0B\x0C\u{A0}\u{FEFF}"): static
     {
-        if (" \t\n\r\0\x0B\x0C\u{A0}\u{FEFF}" !== $chars && !preg_match('//u', $chars)) {
+        if (" \t\n\r\0\x0B\x0C\u{A0}\u{FEFF}" !== $chars && ! preg_match('//u', $chars)) {
             throw new InvalidArgumentException('Invalid UTF-8 chars.');
         }
         $chars = preg_quote($chars);
@@ -427,7 +427,7 @@ abstract class AbstractUnicodeString extends AbstractString
 
     public function trimPrefix($prefix): static
     {
-        if (!$this->ignoreCase) {
+        if (! $this->ignoreCase) {
             return parent::trimPrefix($prefix);
         }
 
@@ -447,7 +447,7 @@ abstract class AbstractUnicodeString extends AbstractString
 
     public function trimStart(string $chars = " \t\n\r\0\x0B\x0C\u{A0}\u{FEFF}"): static
     {
-        if (" \t\n\r\0\x0B\x0C\u{A0}\u{FEFF}" !== $chars && !preg_match('//u', $chars)) {
+        if (" \t\n\r\0\x0B\x0C\u{A0}\u{FEFF}" !== $chars && ! preg_match('//u', $chars)) {
             throw new InvalidArgumentException('Invalid UTF-8 chars.');
         }
         $chars = preg_quote($chars);
@@ -460,7 +460,7 @@ abstract class AbstractUnicodeString extends AbstractString
 
     public function trimSuffix($suffix): static
     {
-        if (!$this->ignoreCase) {
+        if (! $this->ignoreCase) {
             return parent::trimSuffix($suffix);
         }
 
@@ -487,7 +487,7 @@ abstract class AbstractUnicodeString extends AbstractString
     }
 
     /**
-     * @param string $locale In the format language_region (e.g. tr_TR)
+     * @param  string  $locale  In the format language_region (e.g. tr_TR)
      */
     public function localeUpper(string $locale): static
     {
@@ -510,7 +510,7 @@ abstract class AbstractUnicodeString extends AbstractString
             $s = str_replace(["\r\n", "\r"], "\n", $s);
         }
 
-        if (!$ignoreAnsiDecoration) {
+        if (! $ignoreAnsiDecoration) {
             $s = preg_replace('/[\p{Cc}\x7F]++/u', '', $s);
         }
 
@@ -633,7 +633,7 @@ abstract class AbstractUnicodeString extends AbstractString
                 }
             }
 
-            ++$width;
+            $width++;
         }
 
         return $width;

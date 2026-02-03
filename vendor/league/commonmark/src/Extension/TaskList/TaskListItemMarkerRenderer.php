@@ -22,7 +22,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class TaskListItemMarkerRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param TaskListItemMarker $node
+     * @param  TaskListItemMarker  $node
      *
      * {@inheritDoc}
      *
@@ -32,7 +32,7 @@ final class TaskListItemMarkerRenderer implements NodeRendererInterface, XmlNode
     {
         TaskListItemMarker::assertInstanceOf($node);
 
-        $attrs    = $node->data->get('attributes');
+        $attrs = $node->data->get('attributes');
         $checkbox = new HtmlElement('input', $attrs, '', true);
 
         if ($node->isChecked()) {
@@ -51,8 +51,7 @@ final class TaskListItemMarkerRenderer implements NodeRendererInterface, XmlNode
     }
 
     /**
-     * @param TaskListItemMarker $node
-     *
+     * @param  TaskListItemMarker  $node
      * @return array<string, scalar>
      *
      * @psalm-suppress MoreSpecificImplementedParamType

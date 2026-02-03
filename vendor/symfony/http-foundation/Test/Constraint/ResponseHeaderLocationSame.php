@@ -28,7 +28,7 @@ final class ResponseHeaderLocationSame extends Constraint
 
     protected function matches($other): bool
     {
-        if (!$other instanceof Response) {
+        if (! $other instanceof Response) {
             return false;
         }
 

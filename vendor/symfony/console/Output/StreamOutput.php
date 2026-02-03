@@ -33,16 +33,16 @@ class StreamOutput extends Output
     private $stream;
 
     /**
-     * @param resource                      $stream    A stream resource
-     * @param int                           $verbosity The verbosity level (one of the VERBOSITY constants in OutputInterface)
-     * @param bool|null                     $decorated Whether to decorate messages (null for auto-guessing)
-     * @param OutputFormatterInterface|null $formatter Output formatter instance (null to use default OutputFormatter)
+     * @param  resource  $stream  A stream resource
+     * @param  int  $verbosity  The verbosity level (one of the VERBOSITY constants in OutputInterface)
+     * @param  bool|null  $decorated  Whether to decorate messages (null for auto-guessing)
+     * @param  OutputFormatterInterface|null  $formatter  Output formatter instance (null to use default OutputFormatter)
      *
      * @throws InvalidArgumentException When first argument is not a real stream
      */
     public function __construct($stream, int $verbosity = self::VERBOSITY_NORMAL, ?bool $decorated = null, ?OutputFormatterInterface $formatter = null)
     {
-        if (!\is_resource($stream) || 'stream' !== get_resource_type($stream)) {
+        if (! \is_resource($stream) || 'stream' !== get_resource_type($stream)) {
             throw new InvalidArgumentException('The StreamOutput class needs a stream as its first argument.');
         }
 
@@ -101,7 +101,7 @@ class StreamOutput extends Output
 
         // Detect msysgit/mingw and assume this is a tty because detection
         // does not work correctly, see https://github.com/composer/composer/issues/9690
-        if (!@stream_isatty($this->stream) && !\in_array(strtoupper((string) getenv('MSYSTEM')), ['MINGW32', 'MINGW64'], true)) {
+        if (! @stream_isatty($this->stream) && ! \in_array(strtoupper((string) getenv('MSYSTEM')), ['MINGW32', 'MINGW64'], true)) {
             return false;
         }
 

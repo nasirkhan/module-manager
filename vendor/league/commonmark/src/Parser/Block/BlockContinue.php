@@ -32,7 +32,7 @@ final class BlockContinue
     private function __construct(?CursorState $cursorState = null, bool $finalize = false)
     {
         $this->cursorState = $cursorState;
-        $this->finalize    = $finalize;
+        $this->finalize = $finalize;
     }
 
     public function getCursorState(): ?CursorState
@@ -46,7 +46,7 @@ final class BlockContinue
     }
 
     /**
-     * Signal that we cannot continue here
+     * Signal that we cannot continue here.
      *
      * @return null
      */
@@ -56,7 +56,7 @@ final class BlockContinue
     }
 
     /**
-     * Signal that we're continuing at the given position
+     * Signal that we're continuing at the given position.
      */
     public static function at(Cursor $cursor): self
     {
@@ -64,7 +64,7 @@ final class BlockContinue
     }
 
     /**
-     * Signal that we want to finalize and close the block
+     * Signal that we want to finalize and close the block.
      */
     public static function finished(): self
     {

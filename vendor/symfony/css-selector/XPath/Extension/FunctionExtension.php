@@ -76,7 +76,7 @@ class FunctionExtension extends AbstractExtension
 
         if ($last) {
             $expr = 'last() - '.$expr;
-            --$b;
+            $b--;
         }
 
         if (0 !== $b) {
@@ -129,7 +129,7 @@ class FunctionExtension extends AbstractExtension
     {
         $arguments = $function->getArguments();
         foreach ($arguments as $token) {
-            if (!($token->isString() || $token->isIdentifier())) {
+            if (! ($token->isString() || $token->isIdentifier())) {
                 throw new ExpressionErrorException('Expected a single string or identifier for :contains(), got '.implode(', ', $arguments));
             }
         }
@@ -147,7 +147,7 @@ class FunctionExtension extends AbstractExtension
     {
         $arguments = $function->getArguments();
         foreach ($arguments as $token) {
-            if (!($token->isString() || $token->isIdentifier())) {
+            if (! ($token->isString() || $token->isIdentifier())) {
                 throw new ExpressionErrorException('Expected a single string or identifier for :lang(), got '.implode(', ', $arguments));
             }
         }

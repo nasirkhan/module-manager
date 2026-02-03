@@ -64,6 +64,6 @@ final class StrikethroughDelimiterProcessor implements CacheableDelimiterProcess
 
     public function getCacheKey(DelimiterInterface $closer): string
     {
-        return '~' . $closer->getLength();
+        return '~'.$closer->getLength();
     }
 }

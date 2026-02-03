@@ -72,7 +72,7 @@ abstract class AbstractUid implements \JsonSerializable, \Stringable, HashableIn
     }
 
     /**
-     * @param string $uid A valid RFC 9562/4122 uid
+     * @param  string  $uid  A valid RFC 9562/4122 uid
      *
      * @throws InvalidArgumentException When the passed value is not valid
      */
@@ -166,7 +166,7 @@ abstract class AbstractUid implements \JsonSerializable, \Stringable, HashableIn
      */
     public function equals(mixed $other): bool
     {
-        if (!$other instanceof self) {
+        if (! $other instanceof self) {
             return false;
         }
 

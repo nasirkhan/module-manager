@@ -50,7 +50,7 @@ class ArgvInput extends Input
         $argv ??= $_SERVER['argv'] ?? [];
 
         foreach ($argv as $arg) {
-            if (!\is_scalar($arg) && !$arg instanceof \Stringable) {
+            if (! \is_scalar($arg) && ! $arg instanceof \Stringable) {
                 throw new RuntimeException(\sprintf('Argument values expected to be all scalars, got "%s".', get_debug_type($arg)));
             }
         }
@@ -122,8 +122,8 @@ class ArgvInput extends Input
     private function parseShortOptionSet(string $name): void
     {
         $len = \strlen($name);
-        for ($i = 0; $i < $len; ++$i) {
-            if (!$this->definition->hasShortcut($name[$i])) {
+        for ($i = 0; $i < $len; $i++) {
+            if (! $this->definition->hasShortcut($name[$i])) {
                 $encoding = mb_detect_encoding($name, null, true);
                 throw new RuntimeException(\sprintf('The "-%s" option does not exist.', false === $encoding ? $name[$i] : mb_substr($name, $i, 1, $encoding)));
             }
@@ -170,12 +170,12 @@ class ArgvInput extends Input
             $arg = $this->definition->getArgument($c);
             $this->arguments[$arg->getName()] = $arg->isArray() ? [$token] : $token;
 
-        // if last argument isArray(), append token to last argument
+            // if last argument isArray(), append token to last argument
         } elseif ($this->definition->hasArgument($c - 1) && $this->definition->getArgument($c - 1)->isArray()) {
             $arg = $this->definition->getArgument($c - 1);
             $this->arguments[$arg->getName()][] = $token;
 
-        // unexpected argument
+            // unexpected argument
         } else {
             $all = $this->definition->getArguments();
             $symfonyCommandName = null;
@@ -207,7 +207,7 @@ class ArgvInput extends Input
      */
     private function addShortOption(string $shortcut, mixed $value): void
     {
-        if (!$this->definition->hasShortcut($shortcut)) {
+        if (! $this->definition->hasShortcut($shortcut)) {
             throw new RuntimeException(\sprintf('The "-%s" option does not exist.', $shortcut));
         }
 
@@ -221,8 +221,8 @@ class ArgvInput extends Input
      */
     private function addLongOption(string $name, mixed $value): void
     {
-        if (!$this->definition->hasOption($name)) {
-            if (!$this->definition->hasNegation($name)) {
+        if (! $this->definition->hasOption($name)) {
+            if (! $this->definition->hasNegation($name)) {
                 throw new RuntimeException(\sprintf('The "--%s" option does not exist.', $name));
             }
 
@@ -237,7 +237,7 @@ class ArgvInput extends Input
 
         $option = $this->definition->getOption($name);
 
-        if (null !== $value && !$option->acceptValue()) {
+        if (null !== $value && ! $option->acceptValue()) {
             throw new RuntimeException(\sprintf('The "--%s" option does not accept a value.', $name));
         }
 
@@ -257,7 +257,7 @@ class ArgvInput extends Input
                 throw new RuntimeException(\sprintf('The "--%s" option requires a value.', $name));
             }
 
-            if (!$option->isArray() && !$option->isValueOptional()) {
+            if (! $option->isArray() && ! $option->isValueOptional()) {
                 $value = true;
             }
         }
@@ -274,14 +274,14 @@ class ArgvInput extends Input
         $isOption = false;
         foreach ($this->tokens as $i => $token) {
             if ($token && '-' === $token[0]) {
-                if (str_contains($token, '=') || !isset($this->tokens[$i + 1])) {
+                if (str_contains($token, '=') || ! isset($this->tokens[$i + 1])) {
                     continue;
                 }
 
                 // If it's a long option, consider that everything after "--" is the option name.
                 // Otherwise, use the last char (if it's a short option set, only the last one can take a value with space separator)
                 $name = '-' === $token[1] ? substr($token, 2) : substr($token, -1);
-                if (!isset($this->options[$name]) && !$this->definition->hasShortcut($name)) {
+                if (! isset($this->options[$name]) && ! $this->definition->hasShortcut($name)) {
                     // noop
                 } elseif ((isset($this->options[$name]) || isset($this->options[$name = $this->definition->shortcutToName($name)])) && $this->tokens[$i + 1] === $this->options[$name]) {
                     $isOption = true;
@@ -354,20 +354,19 @@ class ArgvInput extends Input
     /**
      * Returns un-parsed and not validated tokens.
      *
-     * @param bool $strip Whether to return the raw parameters (false) or the values after the command name (true)
-     *
+     * @param  bool  $strip  Whether to return the raw parameters (false) or the values after the command name (true)
      * @return list<string>
      */
     public function getRawTokens(bool $strip = false): array
     {
-        if (!$strip) {
+        if (! $strip) {
             return $this->tokens;
         }
 
         $parameters = [];
         $keep = false;
         foreach ($this->tokens as $value) {
-            if (!$keep && $value === $this->getFirstArgument()) {
+            if (! $keep && $value === $this->getFirstArgument()) {
                 $keep = true;
 
                 continue;

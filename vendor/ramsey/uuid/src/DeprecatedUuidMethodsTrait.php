@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -125,9 +125,9 @@ trait DeprecatedUuidMethodsTrait
         try {
             return new DateTimeImmutable(
                 '@'
-                . $time->getSeconds()->toString()
-                . '.'
-                . str_pad($time->getMicroseconds()->toString(), 6, '0', STR_PAD_LEFT)
+                .$time->getSeconds()->toString()
+                .'.'
+                .str_pad($time->getMicroseconds()->toString(), 6, '0', STR_PAD_LEFT)
             );
         } catch (Throwable $e) {
             throw new DateTimeException($e->getMessage(), (int) $e->getCode(), $e);

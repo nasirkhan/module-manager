@@ -39,7 +39,7 @@ class Ulid extends AbstractUid implements TimeBasedUidInterface
 
             if (self::MAX === $this->uid) {
                 $this->uid = self::MAX;
-            } elseif (!self::isValid($ulid)) {
+            } elseif (! self::isValid($ulid)) {
                 throw new InvalidArgumentException('Invalid ULID.');
             }
         }
@@ -180,11 +180,11 @@ class Ulid extends AbstractUid implements TimeBasedUidInterface
 
             goto randomize;
         } else {
-            for ($i = 4; $i > 0 && 0xFFFFF === self::$rand[$i]; --$i) {
+            for ($i = 4; $i > 0 && 0xFFFFF === self::$rand[$i]; $i--) {
                 self::$rand[$i] = 0;
             }
 
-            ++self::$rand[$i];
+            self::$rand[$i]++;
             $time = self::$time;
         }
 

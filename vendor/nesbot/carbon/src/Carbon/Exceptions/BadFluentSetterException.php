@@ -28,9 +28,9 @@ class BadFluentSetterException extends BaseBadMethodCallException implements Bad
     /**
      * Constructor.
      *
-     * @param string         $setter
-     * @param int            $code
-     * @param Throwable|null $previous
+     * @param  string  $setter
+     * @param  int  $code
+     * @param  Throwable|null  $previous
      */
     public function __construct($setter, $code = 0, ?Throwable $previous = null)
     {

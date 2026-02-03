@@ -21,9 +21,9 @@ use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 class MapDateTime extends ValueResolver
 {
     /**
-     * @param string|null                                 $format   The DateTime format to use, @see https://php.net/datetime.format
-     * @param bool                                        $disabled Whether this value resolver is disabled; this allows to enable a value resolver globally while disabling it in specific cases
-     * @param class-string<ValueResolverInterface>|string $resolver The name of the resolver to use
+     * @param  string|null  $format  The DateTime format to use, @see https://php.net/datetime.format
+     * @param  bool  $disabled  Whether this value resolver is disabled; this allows to enable a value resolver globally while disabling it in specific cases
+     * @param  class-string<ValueResolverInterface>|string  $resolver  The name of the resolver to use
      */
     public function __construct(
         public readonly ?string $format = null,

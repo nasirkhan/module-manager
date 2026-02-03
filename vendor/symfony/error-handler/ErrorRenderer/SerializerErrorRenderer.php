@@ -29,9 +29,9 @@ class SerializerErrorRenderer implements ErrorRendererInterface
     private bool|\Closure $debug;
 
     /**
-     * @param string|callable(FlattenException): string $format The format as a string or a callable that should return it
-     *                                                          formats not supported by Request::getMimeTypes() should be given as mime types
-     * @param bool|callable                             $debug  The debugging mode as a boolean or a callable that should return it
+     * @param  string|callable(FlattenException): string  $format  The format as a string or a callable that should return it
+     *                                                             formats not supported by Request::getMimeTypes() should be given as mime types
+     * @param  bool|callable  $debug  The debugging mode as a boolean or a callable that should return it
      */
     public function __construct(
         private SerializerInterface $serializer,
@@ -73,7 +73,7 @@ class SerializerErrorRenderer implements ErrorRendererInterface
     public static function getPreferredFormat(RequestStack $requestStack): \Closure
     {
         return static function () use ($requestStack) {
-            if (!$request = $requestStack->getCurrentRequest()) {
+            if (! $request = $requestStack->getCurrentRequest()) {
                 throw new NotEncodableValueException();
             }
 

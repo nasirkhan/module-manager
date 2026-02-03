@@ -56,7 +56,7 @@ trait StaticOptions
      *
      * Enable the strict mode (or disable with passing false).
      *
-     * @param bool $strictModeEnabled
+     * @param  bool  $strictModeEnabled
      */
     public static function useStrictMode(bool $strictModeEnabled = true): void
     {
@@ -65,7 +65,7 @@ trait StaticOptions
 
     /**
      * Returns true if the strict mode is globally in use, false else.
-     * (It can be overridden in specific instances.)
+     * (It can be overridden in specific instances.).
      *
      * @return bool
      */
@@ -83,8 +83,7 @@ trait StaticOptions
      *
      * Indicates if months should be calculated with overflow.
      *
-     * @param bool $monthsOverflow
-     *
+     * @param  bool  $monthsOverflow
      * @return void
      */
     public static function useMonthsOverflow(bool $monthsOverflow = true): void
@@ -127,8 +126,7 @@ trait StaticOptions
      *
      * Indicates if years should be calculated with overflow.
      *
-     * @param bool $yearsOverflow
-     *
+     * @param  bool  $yearsOverflow
      * @return void
      */
     public static function useYearsOverflow(bool $yearsOverflow = true): void

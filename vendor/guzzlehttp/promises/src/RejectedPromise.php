@@ -17,7 +17,7 @@ class RejectedPromise implements PromiseInterface
     private $reason;
 
     /**
-     * @param mixed $reason
+     * @param  mixed  $reason
      */
     public function __construct($reason)
     {
@@ -35,7 +35,7 @@ class RejectedPromise implements PromiseInterface
         ?callable $onRejected = null
     ): PromiseInterface {
         // If there's no onRejected callback then just return self.
-        if (!$onRejected) {
+        if (! $onRejected) {
             return $this;
         }
 

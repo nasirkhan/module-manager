@@ -19,7 +19,7 @@ use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Node\Query;
 
 /**
- * Identifies any lingering Quote nodes that were missing pairs and converts them into Text nodes
+ * Identifies any lingering Quote nodes that were missing pairs and converts them into Text nodes.
  */
 final class ReplaceUnpairedQuotesListener
 {

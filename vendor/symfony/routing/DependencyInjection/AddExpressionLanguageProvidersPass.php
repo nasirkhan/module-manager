@@ -24,7 +24,7 @@ class AddExpressionLanguageProvidersPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->has('router.default')) {
+        if (! $container->has('router.default')) {
             return;
         }
 

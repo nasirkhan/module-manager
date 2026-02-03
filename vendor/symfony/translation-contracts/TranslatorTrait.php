@@ -47,7 +47,7 @@ trait TranslatorTrait
             }
         }
 
-        if (!isset($parameters['%count%']) || !is_numeric($parameters['%count%'])) {
+        if (! isset($parameters['%count%']) || ! is_numeric($parameters['%count%'])) {
             return strtr($id, $parameters);
         }
 
@@ -110,7 +110,7 @@ EOF;
 
         $position = $this->getPluralizationRule($number, $locale);
 
-        if (!isset($standardRules[$position])) {
+        if (! isset($standardRules[$position])) {
             // when there's exactly one rule given, and that rule is a standard
             // rule, use this rule
             if (1 === \count($parts) && isset($standardRules[0])) {

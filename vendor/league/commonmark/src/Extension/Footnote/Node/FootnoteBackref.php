@@ -15,11 +15,11 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Footnote\Node;
 
 use League\CommonMark\Node\Inline\AbstractInline;
-use League\CommonMark\Reference\ReferenceInterface;
 use League\CommonMark\Reference\ReferenceableInterface;
+use League\CommonMark\Reference\ReferenceInterface;
 
 /**
- * Link from the footnote on the bottom of the document back to the reference
+ * Link from the footnote on the bottom of the document back to the reference.
  */
 final class FootnoteBackref extends AbstractInline implements ReferenceableInterface
 {

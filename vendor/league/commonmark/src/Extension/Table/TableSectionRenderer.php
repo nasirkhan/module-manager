@@ -24,7 +24,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class TableSectionRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param TableSection $node
+     * @param  TableSection  $node
      *
      * {@inheritDoc}
      *
@@ -44,7 +44,7 @@ final class TableSectionRenderer implements NodeRendererInterface, XmlNodeRender
 
         $tag = $node->getType() === TableSection::TYPE_HEAD ? 'thead' : 'tbody';
 
-        return new HtmlElement($tag, $attrs, $separator . $childRenderer->renderNodes($node->children()) . $separator);
+        return new HtmlElement($tag, $attrs, $separator.$childRenderer->renderNodes($node->children()).$separator);
     }
 
     public function getXmlTagName(Node $node): string
@@ -53,8 +53,7 @@ final class TableSectionRenderer implements NodeRendererInterface, XmlNodeRender
     }
 
     /**
-     * @param TableSection $node
-     *
+     * @param  TableSection  $node
      * @return array<string, scalar>
      *
      * @psalm-suppress MoreSpecificImplementedParamType

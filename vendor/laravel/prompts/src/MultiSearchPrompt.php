@@ -127,7 +127,7 @@ class MultiSearchPrompt extends Prompt
     }
 
     /**
-     * The currently visible matches
+     * The currently visible matches.
      *
      * @return array<string>
      */

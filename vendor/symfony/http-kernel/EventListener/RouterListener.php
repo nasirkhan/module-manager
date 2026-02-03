@@ -44,7 +44,7 @@ class RouterListener implements EventSubscriberInterface
     private RequestContext $context;
 
     /**
-     * @param RequestContext|null $context The RequestContext (can be null when $matcher implements RequestContextAwareInterface)
+     * @param  RequestContext|null  $context  The RequestContext (can be null when $matcher implements RequestContextAwareInterface)
      *
      * @throws \InvalidArgumentException
      */
@@ -56,7 +56,7 @@ class RouterListener implements EventSubscriberInterface
         private ?string $projectDir = null,
         private bool $debug = true,
     ) {
-        if (null === $context && !$matcher instanceof RequestContextAwareInterface) {
+        if (null === $context && ! $matcher instanceof RequestContextAwareInterface) {
             throw new \InvalidArgumentException('You must either pass a RequestContext or the matcher must implement RequestContextAwareInterface.');
         }
 
@@ -117,7 +117,7 @@ class RouterListener implements EventSubscriberInterface
                 $attributes = [];
 
                 foreach ($parameters as $parameter => $value) {
-                    if (!isset($mapping[$parameter])) {
+                    if (! isset($mapping[$parameter])) {
                         $attribute = $parameter;
                     } elseif (\is_array($mapping[$parameter])) {
                         [$attribute, $parameter] = $mapping[$parameter];
@@ -126,7 +126,7 @@ class RouterListener implements EventSubscriberInterface
                         $attribute = $mapping[$parameter];
                     }
 
-                    if (!isset($mappedAttributes[$attribute])) {
+                    if (! isset($mappedAttributes[$attribute])) {
                         $attributes[$attribute] = $value;
                         $mappedAttributes[$attribute] = $parameter;
                     } elseif ('' !== $mappedAttributes[$attribute]) {
@@ -163,7 +163,7 @@ class RouterListener implements EventSubscriberInterface
 
     public function onKernelException(ExceptionEvent $event): void
     {
-        if (!$this->debug || !($e = $event->getThrowable()) instanceof NotFoundHttpException) {
+        if (! $this->debug || ! ($e = $event->getThrowable()) instanceof NotFoundHttpException) {
             return;
         }
 

@@ -31,7 +31,7 @@ final class VcsIgnoredFilterIterator extends \FilterIterator
     private array $ignoredPathsCache = [];
 
     /**
-     * @param \Iterator<string, \SplFileInfo> $iterator
+     * @param  \Iterator<string, \SplFileInfo>  $iterator
      */
     public function __construct(\Iterator $iterator, string $baseDir)
     {
@@ -53,12 +53,12 @@ final class VcsIgnoredFilterIterator extends \FilterIterator
 
         $fileRealPath = $this->normalizePath($file->getRealPath());
 
-        return !$this->isIgnored($fileRealPath);
+        return ! $this->isIgnored($fileRealPath);
     }
 
     private function isIgnored(string $fileRealPath): bool
     {
-        if (is_dir($fileRealPath) && !str_ends_with($fileRealPath, '/')) {
+        if (is_dir($fileRealPath) && ! str_ends_with($fileRealPath, '/')) {
             $fileRealPath .= '/';
         }
 
@@ -146,11 +146,11 @@ final class VcsIgnoredFilterIterator extends \FilterIterator
             return $this->gitignoreFilesCache[$path];
         }
 
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             return $this->gitignoreFilesCache[$path] = null;
         }
 
-        if (!is_file($path) || !is_readable($path)) {
+        if (! is_file($path) || ! is_readable($path)) {
             throw new \RuntimeException("The \"ignoreVCSIgnored\" option cannot be used by the Finder as the \"{$path}\" file is not readable.");
         }
 

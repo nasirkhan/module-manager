@@ -31,11 +31,11 @@ final class TransMethodVisitor extends AbstractVisitor implements NodeVisitor
 
     public function leaveNode(Node $node): ?Node
     {
-        if (!$node instanceof Node\Expr\MethodCall && !$node instanceof Node\Expr\FuncCall) {
+        if (! $node instanceof Node\Expr\MethodCall && ! $node instanceof Node\Expr\FuncCall) {
             return null;
         }
 
-        if (!\is_string($node->name) && !$node->name instanceof Node\Identifier && !$node->name instanceof Node\Name) {
+        if (! \is_string($node->name) && ! $node->name instanceof Node\Identifier && ! $node->name instanceof Node\Name) {
             return null;
         }
 
@@ -44,7 +44,7 @@ final class TransMethodVisitor extends AbstractVisitor implements NodeVisitor
         if ('trans' === $name || 't' === $name) {
             $firstNamedArgumentIndex = $this->nodeFirstNamedArgumentIndex($node);
 
-            if (!$messages = $this->getStringArguments($node, 0 < $firstNamedArgumentIndex ? 0 : 'id')) {
+            if (! $messages = $this->getStringArguments($node, 0 < $firstNamedArgumentIndex ? 0 : 'id')) {
                 return null;
             }
 

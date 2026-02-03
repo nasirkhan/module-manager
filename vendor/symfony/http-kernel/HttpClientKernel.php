@@ -35,7 +35,7 @@ final class HttpClientKernel implements HttpKernelInterface
 
     public function __construct(?HttpClientInterface $client = null)
     {
-        if (null === $client && !class_exists(HttpClient::class)) {
+        if (null === $client && ! class_exists(HttpClient::class)) {
             throw new \LogicException(\sprintf('You cannot use "%s" as the HttpClient component is not installed. Try running "composer require symfony/http-client".', __CLASS__));
         }
 
@@ -55,13 +55,14 @@ final class HttpClientKernel implements HttpKernelInterface
             'body' => $body,
         ] + $request->attributes->get('http_client_options', []));
 
-        $response = new Response($response->getContent(!$catch), $response->getStatusCode(), $response->getHeaders(!$catch));
+        $response = new Response($response->getContent(! $catch), $response->getStatusCode(), $response->getHeaders(! $catch));
 
         $response->headers->remove('X-Body-File');
         $response->headers->remove('X-Body-Eval');
         $response->headers->remove('X-Content-Digest');
 
-        $response->headers = new class($response->headers->all()) extends ResponseHeaderBag {
+        $response->headers = new class($response->headers->all()) extends ResponseHeaderBag
+        {
             protected function computeCacheControlValue(): string
             {
                 return $this->getCacheControlHeader(); // preserve the original value
@@ -77,7 +78,7 @@ final class HttpClientKernel implements HttpKernelInterface
             return null;
         }
 
-        if (!class_exists(AbstractPart::class)) {
+        if (! class_exists(AbstractPart::class)) {
             throw new \LogicException('You cannot pass non-empty bodies as the Mime component is not installed. Try running "composer require symfony/mime".');
         }
 

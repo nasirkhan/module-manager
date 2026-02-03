@@ -26,7 +26,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 interface EnvironmentInterface extends ConfigurationProviderInterface, EventDispatcherInterface
 {
     /**
-     * Get all registered extensions
+     * Get all registered extensions.
      *
      * @return ExtensionInterface[]
      */

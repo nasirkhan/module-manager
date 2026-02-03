@@ -28,7 +28,7 @@ final class FootnoteRefRenderer implements NodeRendererInterface, XmlNodeRendere
     private ConfigurationInterface $config;
 
     /**
-     * @param FootnoteRef $node
+     * @param  FootnoteRef  $node
      *
      * {@inheritDoc}
      *
@@ -48,7 +48,7 @@ final class FootnoteRefRenderer implements NodeRendererInterface, XmlNodeRendere
         return new HtmlElement(
             'sup',
             [
-                'id' => $idPrefix . \mb_strtolower($node->getReference()->getLabel(), 'UTF-8'),
+                'id' => $idPrefix.\mb_strtolower($node->getReference()->getLabel(), 'UTF-8'),
             ],
             new HtmlElement(
                 'a',
@@ -70,8 +70,7 @@ final class FootnoteRefRenderer implements NodeRendererInterface, XmlNodeRendere
     }
 
     /**
-     * @param FootnoteRef $node
-     *
+     * @param  FootnoteRef  $node
      * @return array<string, scalar>
      *
      * @psalm-suppress MoreSpecificImplementedParamType

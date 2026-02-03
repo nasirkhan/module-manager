@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,7 +20,7 @@ use function preg_match;
 use function str_replace;
 
 /**
- * GenericValidator validates strings as UUIDs of any variant
+ * GenericValidator validates strings as UUIDs of any variant.
  *
  * @immutable
  */
@@ -45,6 +45,6 @@ final class GenericValidator implements ValidatorInterface
         $uuid = str_replace(['urn:', 'uuid:', 'URN:', 'UUID:', '{', '}'], '', $uuid);
 
         /** @phpstan-ignore possiblyImpure.functionCall */
-        return $uuid === Uuid::NIL || preg_match('/' . self::VALID_PATTERN . '/Dms', $uuid);
+        return $uuid === Uuid::NIL || preg_match('/'.self::VALID_PATTERN.'/Dms', $uuid);
     }
 }

@@ -16,7 +16,7 @@ namespace League\CommonMark\Delimiter\Processor;
 use League\CommonMark\Delimiter\DelimiterInterface;
 
 /**
- * Special marker interface for delimiter processors that return dynamic values from getDelimiterUse()
+ * Special marker interface for delimiter processors that return dynamic values from getDelimiterUse().
  *
  * In order to guarantee linear performance of delimiter processing, the delimiter stack must be able to
  * cache the lower bound when searching for a matching opener. This gets complicated for delimiter processors

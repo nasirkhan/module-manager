@@ -42,8 +42,8 @@ class Option
      *
      * If unset, the `name` value will be inferred from the parameter definition.
      *
-     * @param array|string|null                                                          $shortcut        The shortcuts, can be null, a string of shortcuts delimited by | or an array of shortcuts
-     * @param array<string|Suggestion>|callable(CompletionInput):list<string|Suggestion> $suggestedValues The values used for input completion
+     * @param  array|string|null  $shortcut  The shortcuts, can be null, a string of shortcuts delimited by | or an array of shortcuts
+     * @param  array<string|Suggestion>|callable(CompletionInput):list<string|Suggestion>  $suggestedValues  The values used for input completion
      */
     public function __construct(
         public string $description = '',
@@ -61,7 +61,7 @@ class Option
     {
         $reflection = new ReflectionMember($member);
 
-        if (!$self = $reflection->getAttribute(self::class)) {
+        if (! $self = $reflection->getAttribute(self::class)) {
             return null;
         }
 
@@ -71,11 +71,11 @@ class Option
         $name = $reflection->getName();
         $type = $reflection->getType();
 
-        if (!$reflection->hasDefaultValue()) {
+        if (! $reflection->hasDefaultValue()) {
             throw new LogicException(\sprintf('The option %s "$%s" of "%s" must declare a default value.', $self->memberName, $name, $self->sourceName));
         }
 
-        if (!$self->name) {
+        if (! $self->name) {
             $self->name = (new UnicodeString($name))->kebab();
         }
 
@@ -86,14 +86,14 @@ class Option
             return $self->handleUnion($type);
         }
 
-        if (!$type instanceof \ReflectionNamedType) {
+        if (! $type instanceof \ReflectionNamedType) {
             throw new LogicException(\sprintf('The %s "$%s" of "%s" must have a named type. Untyped or Intersection types are not supported for command options.', $self->memberName, $name, $self->sourceName));
         }
 
         $self->typeName = $type->getName();
         $isBackedEnum = is_subclass_of($self->typeName, \BackedEnum::class);
 
-        if (!\in_array($self->typeName, self::ALLOWED_TYPES, true) && !$isBackedEnum) {
+        if (! \in_array($self->typeName, self::ALLOWED_TYPES, true) && ! $isBackedEnum) {
             throw new LogicException(\sprintf('The type "%s" on %s "$%s" of "%s" is not supported as a command option. Only "%s" types and BackedEnum are allowed.', $self->typeName, $self->memberName, $name, $self->sourceName, implode('", "', self::ALLOWED_TYPES)));
         }
 
@@ -116,11 +116,11 @@ class Option
             $self->mode = InputOption::VALUE_REQUIRED;
         }
 
-        if (\is_array($self->suggestedValues) && !\is_callable($self->suggestedValues) && 2 === \count($self->suggestedValues) && ($instance = $reflection->getSourceThis()) && $instance::class === $self->suggestedValues[0] && \is_callable([$instance, $self->suggestedValues[1]])) {
+        if (\is_array($self->suggestedValues) && ! \is_callable($self->suggestedValues) && 2 === \count($self->suggestedValues) && ($instance = $reflection->getSourceThis()) && $instance::class === $self->suggestedValues[0] && \is_callable([$instance, $self->suggestedValues[1]])) {
             $self->suggestedValues = [$instance, $self->suggestedValues[1]];
         }
 
-        if ($isBackedEnum && !$self->suggestedValues) {
+        if ($isBackedEnum && ! $self->suggestedValues) {
             $self->suggestedValues = array_column($self->typeName::cases(), 'value');
         }
 
@@ -179,7 +179,7 @@ class Option
 
         $this->typeName = implode('|', array_filter($types));
 
-        if (!\in_array($this->typeName, self::ALLOWED_UNION_TYPES, true)) {
+        if (! \in_array($this->typeName, self::ALLOWED_UNION_TYPES, true)) {
             throw new LogicException(\sprintf('The union type for %s "$%s" of "%s" is not supported as a command option. Only "%s" types are allowed.', $this->memberName, $this->name, $this->sourceName, implode('", "', self::ALLOWED_UNION_TYPES)));
         }
 

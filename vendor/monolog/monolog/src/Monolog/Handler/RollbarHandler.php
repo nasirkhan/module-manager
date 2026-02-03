@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -12,12 +14,12 @@
 namespace Monolog\Handler;
 
 use Monolog\Level;
+use Monolog\LogRecord;
 use Rollbar\RollbarLogger;
 use Throwable;
-use Monolog\LogRecord;
 
 /**
- * Sends errors to Rollbar
+ * Sends errors to Rollbar.
  *
  * If the context data contains a `payload` key, that is used as an array
  * of payload options to RollbarLogger's log method.
@@ -37,14 +39,14 @@ class RollbarHandler extends AbstractProcessingHandler
     protected RollbarLogger $rollbarLogger;
 
     /**
-     * Records whether any log records have been added since the last flush of the rollbar notifier
+     * Records whether any log records have been added since the last flush of the rollbar notifier.
      */
     private bool $hasRecords = false;
 
     protected bool $initialized = false;
 
     /**
-     * @param RollbarLogger $rollbarLogger RollbarLogger object constructed with valid token
+     * @param  RollbarLogger  $rollbarLogger  RollbarLogger object constructed with valid token
      */
     public function __construct(RollbarLogger $rollbarLogger, int|string|Level $level = Level::Error, bool $bubble = true)
     {
@@ -61,13 +63,13 @@ class RollbarHandler extends AbstractProcessingHandler
     protected function toRollbarLevel(Level $level): string
     {
         return match ($level) {
-            Level::Debug     => 'debug',
-            Level::Info      => 'info',
-            Level::Notice    => 'info',
-            Level::Warning   => 'warning',
-            Level::Error     => 'error',
-            Level::Critical  => 'critical',
-            Level::Alert     => 'critical',
+            Level::Debug => 'debug',
+            Level::Info => 'info',
+            Level::Notice => 'info',
+            Level::Warning => 'warning',
+            Level::Error => 'error',
+            Level::Critical => 'critical',
+            Level::Alert => 'critical',
             Level::Emergency => 'critical',
         };
     }
@@ -77,7 +79,7 @@ class RollbarHandler extends AbstractProcessingHandler
      */
     protected function write(LogRecord $record): void
     {
-        if (!$this->initialized) {
+        if (! $this->initialized) {
             // __destructor() doesn't get called on Fatal errors
             register_shutdown_function([$this, 'close']);
             $this->initialized = true;

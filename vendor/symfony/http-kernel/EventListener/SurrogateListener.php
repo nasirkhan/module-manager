@@ -36,7 +36,7 @@ class SurrogateListener implements EventSubscriberInterface
      */
     public function onKernelResponse(ResponseEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 

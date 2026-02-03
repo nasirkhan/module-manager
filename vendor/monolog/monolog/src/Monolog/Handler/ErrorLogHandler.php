@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,10 +13,9 @@
 
 namespace Monolog\Handler;
 
-use Monolog\Formatter\LineFormatter;
 use Monolog\Formatter\FormatterInterface;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Level;
-use Monolog\Utils;
 use Monolog\LogRecord;
 
 /**
@@ -32,8 +33,8 @@ class ErrorLogHandler extends AbstractProcessingHandler
     protected bool $expandNewlines;
 
     /**
-     * @param 0|4 $messageType    Says where the error should go.
-     * @param bool $expandNewlines If set to true, newlines in the message will be expanded to be take multiple log entries
+     * @param  0|4  $messageType  Says where the error should go.
+     * @param  bool  $expandNewlines  If set to true, newlines in the message will be expanded to be take multiple log entries
      *
      * @throws \InvalidArgumentException If an unsupported message type is set
      */
@@ -75,7 +76,7 @@ class ErrorLogHandler extends AbstractProcessingHandler
      */
     protected function write(LogRecord $record): void
     {
-        if (!$this->expandNewlines) {
+        if (! $this->expandNewlines) {
             error_log((string) $record->formatted, $this->messageType);
 
             return;
@@ -85,7 +86,7 @@ class ErrorLogHandler extends AbstractProcessingHandler
         if ($lines === false) {
             $pcreErrorCode = preg_last_error();
 
-            throw new \RuntimeException('Failed to preg_split formatted string: ' . $pcreErrorCode . ' / '. preg_last_error_msg());
+            throw new \RuntimeException('Failed to preg_split formatted string: '.$pcreErrorCode.' / '.preg_last_error_msg());
         }
         foreach ($lines as $line) {
             error_log($line, $this->messageType);

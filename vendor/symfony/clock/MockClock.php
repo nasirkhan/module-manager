@@ -40,7 +40,7 @@ final class MockClock implements ClockInterface
 
         if (\is_string($now)) {
             $now = new DatePoint($now, $timezone ?? new \DateTimeZone('UTC'));
-        } elseif (!$now instanceof DatePoint) {
+        } elseif (! $now instanceof DatePoint) {
             $now = DatePoint::createFromInterface($now);
         }
 

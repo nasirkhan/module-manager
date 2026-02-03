@@ -33,18 +33,18 @@ final class DateTimeValueResolver implements ValueResolverInterface
 
     public function resolve(Request $request, ArgumentMetadata $argument): array
     {
-        if (!is_a($argument->getType(), \DateTimeInterface::class, true) || !$request->attributes->has($argument->getName())) {
+        if (! is_a($argument->getType(), \DateTimeInterface::class, true) || ! $request->attributes->has($argument->getName())) {
             return [];
         }
 
         $value = $request->attributes->get($argument->getName());
         $class = \DateTimeInterface::class === $argument->getType() ? \DateTimeImmutable::class : $argument->getType();
 
-        if (!$value) {
+        if (! $value) {
             if ($argument->isNullable()) {
                 return [null];
             }
-            if (!$this->clock) {
+            if (! $this->clock) {
                 return [new $class()];
             }
             $value = $this->clock->now();
@@ -78,7 +78,7 @@ final class DateTimeValueResolver implements ValueResolverInterface
             }
         }
 
-        if (!$date) {
+        if (! $date) {
             throw new NotFoundHttpException(\sprintf('Invalid date given for parameter "%s".', $argument->getName()));
         }
 

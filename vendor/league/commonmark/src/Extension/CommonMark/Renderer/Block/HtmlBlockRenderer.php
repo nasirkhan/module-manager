@@ -31,7 +31,7 @@ final class HtmlBlockRenderer implements NodeRendererInterface, XmlNodeRendererI
     private ConfigurationInterface $config;
 
     /**
-     * @param HtmlBlock $node
+     * @param  HtmlBlock  $node
      *
      * {@inheritDoc}
      *

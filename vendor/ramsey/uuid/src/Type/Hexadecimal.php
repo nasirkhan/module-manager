@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -22,7 +22,7 @@ use function sprintf;
 use function substr;
 
 /**
- * A value object representing a hexadecimal number
+ * A value object representing a hexadecimal number.
  *
  * This class exists for type-safety purposes, to ensure that hexadecimal numbers returned from ramsey/uuid methods as
  * strings are truly hexadecimal and not some other kind of string.
@@ -37,9 +37,9 @@ final class Hexadecimal implements TypeInterface
     private string $value;
 
     /**
-     * @param self | string $value The hexadecimal value to store
+     * @param  self | string  $value  The hexadecimal value to store
      */
-    public function __construct(self | string $value)
+    public function __construct(self|string $value)
     {
         $this->value = $value instanceof self ? (string) $value : $this->prepareValue($value);
     }
@@ -87,9 +87,9 @@ final class Hexadecimal implements TypeInterface
     }
 
     /**
-     * Constructs the object from a serialized string representation
+     * Constructs the object from a serialized string representation.
      *
-     * @param string $data The serialized string representation of the object
+     * @param  string  $data  The serialized string representation of the object
      */
     public function unserialize(string $data): void
     {
@@ -97,12 +97,12 @@ final class Hexadecimal implements TypeInterface
     }
 
     /**
-     * @param array{string?: string} $data
+     * @param  array{string?: string}  $data
      */
     public function __unserialize(array $data): void
     {
         // @codeCoverageIgnoreStart
-        if (!isset($data['string'])) {
+        if (! isset($data['string'])) {
             throw new ValueError(sprintf('%s(): Argument #1 ($data) is invalid', __METHOD__));
         }
         // @codeCoverageIgnoreEnd
@@ -121,7 +121,7 @@ final class Hexadecimal implements TypeInterface
             $value = substr($value, 2);
         }
 
-        if (!preg_match('/^[A-Fa-f0-9]+$/', $value)) {
+        if (! preg_match('/^[A-Fa-f0-9]+$/', $value)) {
             throw new InvalidArgumentException('Value must be a hexadecimal number');
         }
 

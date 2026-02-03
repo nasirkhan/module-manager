@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -14,7 +16,7 @@ namespace Monolog\Processor;
 use Monolog\LogRecord;
 
 /**
- * Injects value of gethostname in all records
+ * Injects value of gethostname in all records.
  */
 class HostnameProcessor implements ProcessorInterface
 {

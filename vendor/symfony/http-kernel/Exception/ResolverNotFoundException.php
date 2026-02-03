@@ -14,7 +14,7 @@ namespace Symfony\Component\HttpKernel\Exception;
 class ResolverNotFoundException extends \RuntimeException
 {
     /**
-     * @param string[] $alternatives
+     * @param  string[]  $alternatives
      */
     public function __construct(string $name, array $alternatives = [])
     {

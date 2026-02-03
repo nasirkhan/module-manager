@@ -40,19 +40,19 @@ class TextPart extends AbstractPart
     private ?bool $seekable = null;
 
     /**
-     * @param resource|string|File $body Use a File instance to defer loading the file until rendering
+     * @param  resource|string|File  $body  Use a File instance to defer loading the file until rendering
      */
     public function __construct($body, ?string $charset = 'utf-8', string $subtype = 'plain', ?string $encoding = null)
     {
         parent::__construct();
 
-        if (!\is_string($body) && !\is_resource($body) && !$body instanceof File) {
+        if (! \is_string($body) && ! \is_resource($body) && ! $body instanceof File) {
             throw new \TypeError(\sprintf('The body of "%s" must be a string, a resource, or an instance of "%s" (got "%s").', self::class, File::class, get_debug_type($body)));
         }
 
         if ($body instanceof File) {
             $path = $body->getPath();
-            if ((is_file($path) && !is_readable($path)) || is_dir($path)) {
+            if ((is_file($path) && ! is_readable($path)) || is_dir($path)) {
                 throw new InvalidArgumentException(\sprintf('Path "%s" is not readable.', $path));
             }
         }
@@ -65,7 +65,7 @@ class TextPart extends AbstractPart
         if (null === $encoding) {
             $this->encoding = $this->chooseEncoding();
         } else {
-            if (!\in_array($encoding, self::DEFAULT_ENCODERS, true) && !\array_key_exists($encoding, self::$encoders)) {
+            if (! \in_array($encoding, self::DEFAULT_ENCODERS, true) && ! \array_key_exists($encoding, self::$encoders)) {
                 throw new InvalidArgumentException(\sprintf('The encoding must be one of "%s" ("%s" given).', implode('", "', array_unique(array_merge(self::DEFAULT_ENCODERS, array_keys(self::$encoders)))), $encoding));
             }
             $this->encoding = $encoding;
@@ -83,8 +83,7 @@ class TextPart extends AbstractPart
     }
 
     /**
-     * @param string $disposition one of attachment, inline, or form-data
-     *
+     * @param  string  $disposition  one of attachment, inline, or form-data
      * @return $this
      */
     public function setDisposition(string $disposition): static
@@ -180,7 +179,7 @@ class TextPart extends AbstractPart
         }
         $headers->setHeaderBody('Text', 'Content-Transfer-Encoding', $this->encoding);
 
-        if (!$headers->has('Content-Disposition') && null !== $this->disposition) {
+        if (! $headers->has('Content-Disposition') && null !== $this->disposition) {
             $headers->setHeaderBody('Parameterized', 'Content-Disposition', $this->disposition);
             if ($this->name) {
                 $headers->setHeaderParameter('Content-Disposition', 'name', $this->name);
@@ -296,7 +295,7 @@ class TextPart extends AbstractPart
 
             if ($wakeup) {
                 $this->__wakeup();
-            } elseif (!\is_string($this->body) && !$this->body instanceof File) {
+            } elseif (! \is_string($this->body) && ! $this->body instanceof File) {
                 throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
             }
 
@@ -314,7 +313,7 @@ class TextPart extends AbstractPart
             if ($wakeup) {
                 $this->_headers = $headers;
                 $this->__wakeup();
-            } elseif (!\is_string($this->body) && !$this->body instanceof File) {
+            } elseif (! \is_string($this->body) && ! $this->body instanceof File) {
                 throw new \BadMethodCallException('Cannot unserialize '.__CLASS__);
             }
 

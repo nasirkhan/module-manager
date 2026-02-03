@@ -59,8 +59,8 @@ class HeadingStartParser implements BlockStartParserInterface
         $cursor->advanceBy(\strlen($match[0]));
 
         $level = \strlen(\trim($match[0]));
-        $str   = $cursor->getRemainder();
-        $str   = \preg_replace('/^[ \t]*#+[ \t]*$/', '', $str);
+        $str = $cursor->getRemainder();
+        $str = \preg_replace('/^[ \t]*#+[ \t]*$/', '', $str);
         \assert(\is_string($str));
         $str = \preg_replace('/[ \t]+#+[ \t]*$/', '', $str);
         \assert(\is_string($str));

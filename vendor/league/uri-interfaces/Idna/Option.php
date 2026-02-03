@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -21,14 +21,14 @@ use ReflectionClassConstant;
  */
 final class Option
 {
-    private const DEFAULT                    = 0;
-    private const ALLOW_UNASSIGNED           = 1;
-    private const USE_STD3_RULES             = 2;
-    private const CHECK_BIDI                 = 4;
-    private const CHECK_CONTEXTJ             = 8;
-    private const NONTRANSITIONAL_TO_ASCII   = 0x10;
+    private const DEFAULT = 0;
+    private const ALLOW_UNASSIGNED = 1;
+    private const USE_STD3_RULES = 2;
+    private const CHECK_BIDI = 4;
+    private const CHECK_CONTEXTJ = 8;
+    private const NONTRANSITIONAL_TO_ASCII = 0x10;
     private const NONTRANSITIONAL_TO_UNICODE = 0x20;
-    private const CHECK_CONTEXTO             = 0x40;
+    private const CHECK_CONTEXTO = 0x40;
 
     private function __construct(private readonly int $value)
     {

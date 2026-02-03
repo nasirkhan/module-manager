@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -33,8 +35,8 @@ class SyslogHandler extends AbstractSyslogHandler
     protected int $logopts;
 
     /**
-     * @param string|int $facility Either one of the names of the keys in $this->facilities, or a LOG_* facility constant
-     * @param int        $logopts  Option flags for the openlog() call, defaults to LOG_PID
+     * @param  string|int  $facility  Either one of the names of the keys in $this->facilities, or a LOG_* facility constant
+     * @param  int  $logopts  Option flags for the openlog() call, defaults to LOG_PID
      */
     public function __construct(string $ident, string|int $facility = LOG_USER, int|string|Level $level = Level::Debug, bool $bubble = true, int $logopts = LOG_PID)
     {

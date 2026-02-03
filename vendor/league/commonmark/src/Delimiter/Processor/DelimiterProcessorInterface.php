@@ -23,7 +23,7 @@ use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Node\Inline\AbstractStringContainer;
 
 /**
- * Interface for a delimiter processor
+ * Interface for a delimiter processor.
  */
 interface DelimiterProcessorInterface
 {
@@ -61,8 +61,8 @@ interface DelimiterProcessorInterface
      * IMPORTANT: Unless this method returns the same hard-coded value in all cases,
      * you MUST implement the CacheableDelimiterProcessorInterface interface instead.
      *
-     * @param DelimiterInterface $opener The opening delimiter run
-     * @param DelimiterInterface $closer The closing delimiter run
+     * @param  DelimiterInterface  $opener  The opening delimiter run
+     * @param  DelimiterInterface  $closer  The closing delimiter run
      */
     public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int;
 
@@ -73,9 +73,9 @@ interface DelimiterProcessorInterface
      * Note that removal of the delimiter from the delimiter nodes and detaching
      * them is done by the caller.
      *
-     * @param AbstractStringContainer $opener       The node that contained the opening delimiter
-     * @param AbstractStringContainer $closer       The node that contained the closing delimiter
-     * @param int                     $delimiterUse The number of delimiters that were used
+     * @param  AbstractStringContainer  $opener  The node that contained the opening delimiter
+     * @param  AbstractStringContainer  $closer  The node that contained the closing delimiter
+     * @param  int  $delimiterUse  The number of delimiters that were used
      */
     public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void;
 }

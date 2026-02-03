@@ -26,8 +26,7 @@ final class Lines
      *
      * This will produce an array of raw entries, one per variable.
      *
-     * @param string[] $lines
-     *
+     * @param  string[]  $lines
      * @return string[]
      */
     public static function process(array $lines)
@@ -39,7 +38,7 @@ final class Lines
         foreach ($lines as $line) {
             [$multiline, $line, $multilineBuffer] = self::multilineProcess($multiline, $line, $multilineBuffer);
 
-            if (!$multiline && !self::isCommentOrWhitespace($line)) {
+            if (! $multiline && ! self::isCommentOrWhitespace($line)) {
                 $output[] = $line;
             }
         }
@@ -50,10 +49,9 @@ final class Lines
     /**
      * Used to make all multiline variable process.
      *
-     * @param bool     $multiline
-     * @param string   $line
-     * @param string[] $buffer
-     *
+     * @param  bool  $multiline
+     * @param  string  $line
+     * @param  string[]  $buffer
      * @return array{bool,string, string[]}
      */
     private static function multilineProcess(bool $multiline, string $line, array $buffer)
@@ -81,8 +79,7 @@ final class Lines
     /**
      * Determine if the given line can be the start of a multiline variable.
      *
-     * @param string $line
-     *
+     * @param  string  $line
      * @return bool
      */
     private static function looksLikeMultilineStart(string $line)
@@ -95,9 +92,8 @@ final class Lines
     /**
      * Determine if the given line can be the start of a multiline variable.
      *
-     * @param string $line
-     * @param bool   $started
-     *
+     * @param  string  $line
+     * @param  bool  $started
      * @return bool
      */
     private static function looksLikeMultilineStop(string $line, bool $started)
@@ -114,8 +110,7 @@ final class Lines
     /**
      * Determine if the line in the file is a comment or whitespace.
      *
-     * @param string $line
-     *
+     * @param  string  $line
      * @return bool
      */
     private static function isCommentOrWhitespace(string $line)

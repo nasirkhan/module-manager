@@ -46,7 +46,7 @@ class Substitutions implements WordInflector
             $toWord = $this->substitutions[$lowerWord]->getTo()->getWord();
 
             if ($firstLetterUppercase) {
-                return strtoupper($toWord[0]) . substr($toWord, 1);
+                return strtoupper($toWord[0]).substr($toWord, 1);
             }
 
             return $toWord;

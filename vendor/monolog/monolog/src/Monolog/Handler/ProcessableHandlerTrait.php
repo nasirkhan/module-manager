@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,12 +13,12 @@
 
 namespace Monolog\Handler;
 
-use Monolog\ResettableInterface;
-use Monolog\Processor\ProcessorInterface;
 use Monolog\LogRecord;
+use Monolog\Processor\ProcessorInterface;
+use Monolog\ResettableInterface;
 
 /**
- * Helper trait for implementing ProcessableInterface
+ * Helper trait for implementing ProcessableInterface.
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
@@ -24,6 +26,7 @@ trait ProcessableHandlerTrait
 {
     /**
      * @var callable[]
+     *
      * @phpstan-var array<(callable(LogRecord): LogRecord)|ProcessorInterface>
      */
     protected array $processors = [];

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -13,8 +15,8 @@ namespace Monolog\Formatter;
 
 use MongoDB\BSON\Type;
 use MongoDB\BSON\UTCDateTime;
-use Monolog\Utils;
 use Monolog\LogRecord;
+use Monolog\Utils;
 
 /**
  * Formats a record for use with the MongoDBHandler.
@@ -27,8 +29,8 @@ class MongoDBFormatter implements FormatterInterface
     private int $maxNestingLevel;
 
     /**
-     * @param int  $maxNestingLevel        0 means infinite nesting, the $record itself is level 1, $record->context is 2
-     * @param bool $exceptionTraceAsString set to false to log exception traces as a sub documents instead of strings
+     * @param  int  $maxNestingLevel  0 means infinite nesting, the $record itself is level 1, $record->context is 2
+     * @param  bool  $exceptionTraceAsString  set to false to log exception traces as a sub documents instead of strings
      */
     public function __construct(int $maxNestingLevel = 3, bool $exceptionTraceAsString = true)
     {
@@ -65,7 +67,7 @@ class MongoDBFormatter implements FormatterInterface
     }
 
     /**
-     * @param  mixed[]        $array
+     * @param  mixed[]  $array
      * @return mixed[]|string Array except when max nesting level is reached then a string "[...]"
      */
     protected function formatArray(array $array, int $nestingLevel = 0)
@@ -81,7 +83,7 @@ class MongoDBFormatter implements FormatterInterface
                 $array[$name] = $this->formatException($value, $nestingLevel + 1);
             } elseif (\is_array($value)) {
                 $array[$name] = $this->formatArray($value, $nestingLevel + 1);
-            } elseif (\is_object($value) && !$value instanceof Type) {
+            } elseif (\is_object($value) && ! $value instanceof Type) {
                 $array[$name] = $this->formatObject($value, $nestingLevel + 1);
             }
         }
@@ -90,7 +92,7 @@ class MongoDBFormatter implements FormatterInterface
     }
 
     /**
-     * @param  mixed          $value
+     * @param  mixed  $value
      * @return mixed[]|string
      */
     protected function formatObject($value, int $nestingLevel)
@@ -110,7 +112,7 @@ class MongoDBFormatter implements FormatterInterface
             'class' => Utils::getClass($exception),
             'message' => $exception->getMessage(),
             'code' => (int) $exception->getCode(),
-            'file' => $exception->getFile() . ':' . $exception->getLine(),
+            'file' => $exception->getFile().':'.$exception->getLine(),
         ];
 
         if ($this->exceptionTraceAsString === true) {

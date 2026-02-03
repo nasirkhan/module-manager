@@ -30,7 +30,7 @@ trait ServiceLocatorTrait
     private array $providedTypes;
 
     /**
-     * @param array<string, callable> $factories
+     * @param  array<string, callable>  $factories
      */
     public function __construct(
         private array $factories,
@@ -44,7 +44,7 @@ trait ServiceLocatorTrait
 
     public function get(string $id): mixed
     {
-        if (!isset($this->factories[$id])) {
+        if (! isset($this->factories[$id])) {
             throw $this->createNotFoundException($id);
         }
 
@@ -66,11 +66,11 @@ trait ServiceLocatorTrait
 
     public function getProvidedServices(): array
     {
-        if (!isset($this->providedTypes)) {
+        if (! isset($this->providedTypes)) {
             $this->providedTypes = [];
 
             foreach ($this->factories as $name => $factory) {
-                if (!\is_callable($factory)) {
+                if (! \is_callable($factory)) {
                     $this->providedTypes[$name] = '?';
                 } else {
                     $type = (new \ReflectionFunction($factory))->getReturnType();
@@ -85,7 +85,7 @@ trait ServiceLocatorTrait
 
     private function createNotFoundException(string $id): NotFoundExceptionInterface
     {
-        if (!$alternatives = array_keys($this->factories)) {
+        if (! $alternatives = array_keys($this->factories)) {
             $message = 'is empty...';
         } else {
             $last = array_pop($alternatives);

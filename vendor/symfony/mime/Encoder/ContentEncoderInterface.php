@@ -19,7 +19,7 @@ interface ContentEncoderInterface extends EncoderInterface
     /**
      * Encodes the stream to a Generator.
      *
-     * @param resource $stream
+     * @param  resource  $stream
      */
     public function encodeByteStream($stream, int $maxLineLength = 0): iterable;
 

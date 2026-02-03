@@ -62,11 +62,11 @@ abstract class Bundle implements BundleInterface
      */
     public function getContainerExtension(): ?ExtensionInterface
     {
-        if (!isset($this->extension)) {
+        if (! isset($this->extension)) {
             $extension = $this->createContainerExtension();
 
             if (null !== $extension) {
-                if (!$extension instanceof ExtensionInterface) {
+                if (! $extension instanceof ExtensionInterface) {
                     throw new \LogicException(\sprintf('Extension "%s" must implement Symfony\Component\DependencyInjection\Extension\ExtensionInterface.', get_debug_type($extension)));
                 }
 
@@ -89,7 +89,7 @@ abstract class Bundle implements BundleInterface
 
     public function getNamespace(): string
     {
-        if (!isset($this->namespace)) {
+        if (! isset($this->namespace)) {
             $this->parseClassName();
         }
 
@@ -98,7 +98,7 @@ abstract class Bundle implements BundleInterface
 
     public function getPath(): string
     {
-        if (!isset($this->path)) {
+        if (! isset($this->path)) {
             $reflected = new \ReflectionObject($this);
             $this->path = \dirname($reflected->getFileName());
         }
@@ -111,7 +111,7 @@ abstract class Bundle implements BundleInterface
      */
     final public function getName(): string
     {
-        if (!isset($this->name)) {
+        if (! isset($this->name)) {
             $this->parseClassName();
         }
 

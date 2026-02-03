@@ -56,8 +56,7 @@ class GenerateUlidCommand extends Command
 
                     <info>php %command.full_name% --format=rfc4122</info>
                 EOF
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -86,7 +85,7 @@ class GenerateUlidCommand extends Command
 
         $count = (int) $input->getOption('count');
         try {
-            for ($i = 0; $i < $count; ++$i) {
+            for ($i = 0; $i < $count; $i++) {
                 $output->writeln($this->factory->create($time)->$format());
             }
         } catch (\Exception $e) {

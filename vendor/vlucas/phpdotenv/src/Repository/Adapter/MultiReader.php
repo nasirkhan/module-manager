@@ -18,8 +18,7 @@ final class MultiReader implements ReaderInterface
     /**
      * Create a new multi-reader instance.
      *
-     * @param \Dotenv\Repository\Adapter\ReaderInterface[] $readers
-     *
+     * @param  \Dotenv\Repository\Adapter\ReaderInterface[]  $readers
      * @return void
      */
     public function __construct(array $readers)
@@ -30,8 +29,7 @@ final class MultiReader implements ReaderInterface
     /**
      * Read an environment variable, if it exists.
      *
-     * @param non-empty-string $name
-     *
+     * @param  non-empty-string  $name
      * @return \PhpOption\Option<string>
      */
     public function read(string $name)

@@ -17,7 +17,7 @@ class FulfilledPromise implements PromiseInterface
     private $value;
 
     /**
-     * @param mixed $value
+     * @param  mixed  $value
      */
     public function __construct($value)
     {
@@ -35,7 +35,7 @@ class FulfilledPromise implements PromiseInterface
         ?callable $onRejected = null
     ): PromiseInterface {
         // Return itself if there is no onFulfilled function.
-        if (!$onFulfilled) {
+        if (! $onFulfilled) {
             return $this;
         }
 

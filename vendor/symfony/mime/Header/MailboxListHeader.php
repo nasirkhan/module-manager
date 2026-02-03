@@ -24,7 +24,7 @@ final class MailboxListHeader extends AbstractHeader
     private array $addresses = [];
 
     /**
-     * @param Address[] $addresses
+     * @param  Address[]  $addresses
      */
     public function __construct(string $name, array $addresses)
     {
@@ -34,7 +34,7 @@ final class MailboxListHeader extends AbstractHeader
     }
 
     /**
-     * @param Address[] $body
+     * @param  Address[]  $body
      *
      * @throws RfcComplianceException
      */
@@ -56,7 +56,7 @@ final class MailboxListHeader extends AbstractHeader
     /**
      * Sets a list of addresses to be shown in this Header.
      *
-     * @param Address[] $addresses
+     * @param  Address[]  $addresses
      *
      * @throws RfcComplianceException
      */
@@ -69,7 +69,7 @@ final class MailboxListHeader extends AbstractHeader
     /**
      * Sets a list of addresses to be shown in this Header.
      *
-     * @param Address[] $addresses
+     * @param  Address[]  $addresses
      *
      * @throws RfcComplianceException
      */
@@ -109,7 +109,7 @@ final class MailboxListHeader extends AbstractHeader
         foreach ($this->addresses as $address) {
             $str = $address->getEncodedAddress();
             if ($name = $address->getName()) {
-                $str = $this->createPhrase($this, $name, $this->getCharset(), !$strings).' <'.$str.'>';
+                $str = $this->createPhrase($this, $name, $this->getCharset(), ! $strings).' <'.$str.'>';
             }
             $strings[] = $str;
         }

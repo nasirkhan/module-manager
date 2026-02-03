@@ -16,11 +16,10 @@ namespace League\CommonMark\Node;
 final class StringContainerHelper
 {
     /**
-     * Extract text literals from all descendant nodes
+     * Extract text literals from all descendant nodes.
      *
-     * @param Node          $node         Parent node
-     * @param array<string> $excludeTypes Optional list of node class types to exclude
-     *
+     * @param  Node  $node  Parent node
+     * @param  array<string>  $excludeTypes  Optional list of node class types to exclude
      * @return string Concatenated literals
      */
     public static function getChildText(Node $node, array $excludeTypes = []): string
@@ -37,7 +36,7 @@ final class StringContainerHelper
     }
 
     /**
-     * @param string[] $classesOrInterfacesToCheck
+     * @param  string[]  $classesOrInterfacesToCheck
      *
      * @psalm-pure
      */

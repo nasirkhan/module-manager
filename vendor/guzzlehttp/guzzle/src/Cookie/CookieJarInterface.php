@@ -25,8 +25,7 @@ interface CookieJarInterface extends \Countable, \IteratorAggregate
      * If no matching cookies are found in the cookie jar, then no Cookie
      * header is added to the request and the same request is returned.
      *
-     * @param RequestInterface $request Request object to modify.
-     *
+     * @param  RequestInterface  $request  Request object to modify.
      * @return RequestInterface returns the modified request.
      */
     public function withCookieHeader(RequestInterface $request): RequestInterface;
@@ -34,16 +33,15 @@ interface CookieJarInterface extends \Countable, \IteratorAggregate
     /**
      * Extract cookies from an HTTP response and store them in the CookieJar.
      *
-     * @param RequestInterface  $request  Request that was sent
-     * @param ResponseInterface $response Response that was received
+     * @param  RequestInterface  $request  Request that was sent
+     * @param  ResponseInterface  $response  Response that was received
      */
     public function extractCookies(RequestInterface $request, ResponseInterface $response): void;
 
     /**
      * Sets a cookie in the cookie jar.
      *
-     * @param SetCookie $cookie Cookie to set.
-     *
+     * @param  SetCookie  $cookie  Cookie to set.
      * @return bool Returns true on success or false on failure
      */
     public function setCookie(SetCookie $cookie): bool;
@@ -58,9 +56,9 @@ interface CookieJarInterface extends \Countable, \IteratorAggregate
      * arguments, then the cookie with the specified name, path and domain is
      * removed.
      *
-     * @param string|null $domain Clears cookies matching a domain
-     * @param string|null $path   Clears cookies matching a domain and path
-     * @param string|null $name   Clears cookies matching a domain, path, and name
+     * @param  string|null  $domain  Clears cookies matching a domain
+     * @param  string|null  $path  Clears cookies matching a domain and path
+     * @param  string|null  $name  Clears cookies matching a domain, path, and name
      */
     public function clear(?string $domain = null, ?string $path = null, ?string $name = null): void;
 

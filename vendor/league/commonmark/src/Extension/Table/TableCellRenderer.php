@@ -25,16 +25,16 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class TableCellRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     private const DEFAULT_ATTRIBUTES = [
-        TableCell::ALIGN_LEFT   => ['align' => 'left'],
+        TableCell::ALIGN_LEFT => ['align' => 'left'],
         TableCell::ALIGN_CENTER => ['align' => 'center'],
-        TableCell::ALIGN_RIGHT  => ['align' => 'right'],
+        TableCell::ALIGN_RIGHT => ['align' => 'right'],
     ];
 
     /** @var array<TableCell::ALIGN_*, array<string, string|string[]|bool>> */
     private array $alignmentAttributes;
 
     /**
-     * @param array<TableCell::ALIGN_*, array<string, string|string[]|bool>> $alignmentAttributes
+     * @param  array<TableCell::ALIGN_*, array<string, string|string[]|bool>>  $alignmentAttributes
      */
     public function __construct(array $alignmentAttributes = self::DEFAULT_ATTRIBUTES)
     {
@@ -42,7 +42,7 @@ final class TableCellRenderer implements NodeRendererInterface, XmlNodeRendererI
     }
 
     /**
-     * @param TableCell $node
+     * @param  TableCell  $node
      *
      * {@inheritDoc}
      *
@@ -68,8 +68,7 @@ final class TableCellRenderer implements NodeRendererInterface, XmlNodeRendererI
     }
 
     /**
-     * @param TableCell $node
-     *
+     * @param  TableCell  $node
      * @return array<string, scalar>
      *
      * @psalm-suppress MoreSpecificImplementedParamType

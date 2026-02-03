@@ -28,7 +28,7 @@ final class Interaction
     }
 
     /**
-     * @param \Closure(\ReflectionFunction $function, InputInterface $input, OutputInterface $output): array $parameterResolver
+     * @param  \Closure(\ReflectionFunction $function, InputInterface $input, OutputInterface $output): array  $parameterResolver
      */
     public function interact(InputInterface $input, OutputInterface $output, \Closure $parameterResolver): void
     {

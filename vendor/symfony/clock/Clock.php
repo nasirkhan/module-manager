@@ -48,7 +48,7 @@ final class Clock implements ClockInterface
     {
         $now = ($this->clock ?? self::get())->now();
 
-        if (!$now instanceof DatePoint) {
+        if (! $now instanceof DatePoint) {
             $now = DatePoint::createFromInterface($now);
         }
 

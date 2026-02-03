@@ -43,7 +43,7 @@ final class ArgumentMetadataFactory implements ArgumentMetadataFactoryInterface
      */
     private function getType(\ReflectionParameter $parameter): ?string
     {
-        if (!$type = $parameter->getType()) {
+        if (! $type = $parameter->getType()) {
             return null;
         }
         $name = $type instanceof \ReflectionNamedType ? $type->getName() : (string) $type;
@@ -63,7 +63,7 @@ final class ArgumentMetadataFactory implements ArgumentMetadataFactoryInterface
             return $r->class.'::'.$name;
         }
 
-        if ($r->isAnonymous() || !$class = $r->getClosureCalledClass()) {
+        if ($r->isAnonymous() || ! $class = $r->getClosureCalledClass()) {
             return $name;
         }
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -405,7 +405,7 @@ final class Encoder
 
         $host = strtolower($host);
 
-        return (!str_contains($host, '%')) ? $host : preg_replace_callback(
+        return (! str_contains($host, '%')) ? $host : preg_replace_callback(
             '/%[a-f0-9]{2}/',
             fn (array $matches) => 1 === preg_match('/%([0-7][0-9a-f])/', $matches[0]) ? rawurldecode($matches[0]) : strtoupper($matches[0]),
             $host
@@ -493,7 +493,9 @@ final class Encoder
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
      * @deprecated Since version 7.6.0
+     *
      * @codeCoverageIgnore
+     *
      * @see Encoder::decodeNecessary()
      *
      * Create a new instance from the environment.

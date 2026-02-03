@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -35,7 +35,7 @@ use const STR_PAD_RIGHT;
 
 /**
  * PhpTimeConverter uses built-in PHP functions and standard math operations available to the PHP programming language
- * to provide facilities for converting parts of time into representations that may be used in UUIDs
+ * to provide facilities for converting parts of time into representations that may be used in UUIDs.
  *
  * @immutable
  */
@@ -44,7 +44,7 @@ class PhpTimeConverter implements TimeConverterInterface
     /**
      * The number of 100-nanosecond intervals from the Gregorian calendar epoch to the Unix epoch.
      */
-    private const GREGORIAN_TO_UNIX_INTERVALS = 0x01b21dd213814000;
+    private const GREGORIAN_TO_UNIX_INTERVALS = 0x01B21DD213814000;
 
     /**
      * The number of 100-nanosecond intervals in one second.
@@ -91,7 +91,7 @@ class PhpTimeConverter implements TimeConverterInterface
         // Check to see whether we've overflowed the max/min integer size.
         // If so, we will default to a different time converter.
         // @phpstan-ignore function.alreadyNarrowedType (the integer value might have overflowed)
-        if (!is_int($uuidTime)) {
+        if (! is_int($uuidTime)) {
             return $this->fallbackConverter->calculateTime(
                 $seconds->toString(),
                 $microseconds->toString(),
@@ -122,13 +122,12 @@ class PhpTimeConverter implements TimeConverterInterface
     }
 
     /**
-     * @param float | int $time The time to split into seconds and microseconds
-     *
+     * @param  float | int  $time  The time to split into seconds and microseconds
      * @return string[]
      *
      * @pure
      */
-    private function splitTime(float | int $time): array
+    private function splitTime(float|int $time): array
     {
         $split = explode('.', (string) $time, 2);
 

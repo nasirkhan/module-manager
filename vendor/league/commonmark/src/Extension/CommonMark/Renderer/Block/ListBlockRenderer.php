@@ -26,7 +26,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class ListBlockRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param ListBlock $node
+     * @param  ListBlock  $node
      *
      * {@inheritDoc}
      *
@@ -48,7 +48,7 @@ final class ListBlockRenderer implements NodeRendererInterface, XmlNodeRendererI
 
         $innerSeparator = $childRenderer->getInnerSeparator();
 
-        return new HtmlElement($tag, $attrs, $innerSeparator . $childRenderer->renderNodes($node->children()) . $innerSeparator);
+        return new HtmlElement($tag, $attrs, $innerSeparator.$childRenderer->renderNodes($node->children()).$innerSeparator);
     }
 
     public function getXmlTagName(Node $node): string
@@ -57,8 +57,7 @@ final class ListBlockRenderer implements NodeRendererInterface, XmlNodeRendererI
     }
 
     /**
-     * @param ListBlock $node
-     *
+     * @param  ListBlock  $node
      * @return array<string, scalar>
      *
      * @psalm-suppress MoreSpecificImplementedParamType

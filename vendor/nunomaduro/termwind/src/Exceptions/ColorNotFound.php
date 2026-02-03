@@ -9,4 +9,6 @@ use InvalidArgumentException;
 /**
  * @internal
  */
-final class ColorNotFound extends InvalidArgumentException {}
+final class ColorNotFound extends InvalidArgumentException
+{
+}

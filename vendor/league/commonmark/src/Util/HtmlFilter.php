@@ -28,11 +28,10 @@ final class HtmlFilter
     public const STRIP = 'strip';
 
     /**
-     * Runs the given HTML through the given filter
+     * Runs the given HTML through the given filter.
      *
-     * @param string $html   HTML input to be filtered
-     * @param string $filter One of the HtmlFilter constants
-     *
+     * @param  string  $html  HTML input to be filtered
+     * @param  string  $filter  One of the HtmlFilter constants
      * @return string Filtered HTML
      *
      * @throws InvalidArgumentException when an invalid $filter is given

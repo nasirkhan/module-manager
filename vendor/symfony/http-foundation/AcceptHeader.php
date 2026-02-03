@@ -32,7 +32,7 @@ class AcceptHeader
     private bool $sorted = true;
 
     /**
-     * @param AcceptHeaderItem[] $items
+     * @param  AcceptHeaderItem[]  $items
      */
     public function __construct(array $items)
     {
@@ -88,7 +88,7 @@ class AcceptHeader
         }
 
         // Collect and filter matching candidates
-        if (!$candidates = array_filter($this->items, fn (AcceptHeaderItem $item) => $this->matches($item, $queryItem))) {
+        if (! $candidates = array_filter($this->items, fn (AcceptHeaderItem $item) => $this->matches($item, $queryItem))) {
             return null;
         }
 
@@ -150,7 +150,7 @@ class AcceptHeader
      */
     private function sort(): void
     {
-        if (!$this->sorted) {
+        if (! $this->sorted) {
             uasort($this->items, static fn ($a, $b) => $b->getQuality() <=> $a->getQuality() ?: $a->getIndex() <=> $b->getIndex());
 
             $this->sorted = true;
@@ -187,8 +187,8 @@ class AcceptHeader
     /**
      * Checks if a given header item (range) matches a queried item (value).
      *
-     * @param AcceptHeaderItem $rangeItem The item from the Accept header (e.g., text/*;format=flowed)
-     * @param AcceptHeaderItem $queryItem The item being queried (e.g., text/plain;format=flowed;charset=utf-8)
+     * @param  AcceptHeaderItem  $rangeItem  The item from the Accept header (e.g., text/*;format=flowed)
+     * @param  AcceptHeaderItem  $queryItem  The item being queried (e.g., text/plain;format=flowed;charset=utf-8)
      */
     private function matches(AcceptHeaderItem $rangeItem, AcceptHeaderItem $queryItem): bool
     {
@@ -214,7 +214,7 @@ class AcceptHeader
         }
 
         // Non-media: exact match only (wildcards handled above)
-        if (!$isQueryMedia) {
+        if (! $isQueryMedia) {
             return $rangeValue === $queryValue && $this->rangeParametersMatch($rangeItem, $queryItem);
         }
 
@@ -245,7 +245,7 @@ class AcceptHeader
         $rangeAttributes = $this->getMediaParams($rangeItem);
 
         foreach ($rangeAttributes as $name => $rangeValue) {
-            if (!\array_key_exists($name, $queryAttributes)) {
+            if (! \array_key_exists($name, $queryAttributes)) {
                 return false; // Missing required param
             }
 
@@ -276,7 +276,7 @@ class AcceptHeader
         $isQueryMedia = str_contains($queryValue, '/');
         $isRangeMedia = str_contains($rangeValue, '/');
 
-        if (!$isQueryMedia && !$isRangeMedia) {
+        if (! $isQueryMedia && ! $isRangeMedia) {
             return ('*' !== $rangeValue ? 2000 : 1000) + $paramCount;
         }
 

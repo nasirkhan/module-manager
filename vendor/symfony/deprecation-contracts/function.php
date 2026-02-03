@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-if (!function_exists('trigger_deprecation')) {
+if (! function_exists('trigger_deprecation')) {
     /**
      * Triggers a silenced deprecation notice.
      *
-     * @param string $package The name of the Composer package that is triggering the deprecation
-     * @param string $version The version of the package that introduced the deprecation
-     * @param string $message The message of the deprecation
-     * @param mixed  ...$args Values to insert in the message using printf() formatting
+     * @param  string  $package  The name of the Composer package that is triggering the deprecation
+     * @param  string  $version  The version of the package that introduced the deprecation
+     * @param  string  $message  The message of the deprecation
+     * @param  mixed  ...$args  Values to insert in the message using printf() formatting
      *
      * @author Nicolas Grekas <p@tchwork.com>
      */

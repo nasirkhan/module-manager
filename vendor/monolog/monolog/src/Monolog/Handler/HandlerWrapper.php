@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,9 +13,9 @@
 
 namespace Monolog\Handler;
 
-use Monolog\ResettableInterface;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\LogRecord;
+use Monolog\ResettableInterface;
 
 /**
  * This simple wrapper class can be used to extend handlers functionality.
@@ -84,7 +86,7 @@ class HandlerWrapper implements HandlerInterface, ProcessableHandlerInterface, F
             return $this;
         }
 
-        throw new \LogicException('The wrapped handler does not implement ' . ProcessableHandlerInterface::class);
+        throw new \LogicException('The wrapped handler does not implement '.ProcessableHandlerInterface::class);
     }
 
     /**
@@ -96,7 +98,7 @@ class HandlerWrapper implements HandlerInterface, ProcessableHandlerInterface, F
             return $this->handler->popProcessor();
         }
 
-        throw new \LogicException('The wrapped handler does not implement ' . ProcessableHandlerInterface::class);
+        throw new \LogicException('The wrapped handler does not implement '.ProcessableHandlerInterface::class);
     }
 
     /**
@@ -110,7 +112,7 @@ class HandlerWrapper implements HandlerInterface, ProcessableHandlerInterface, F
             return $this;
         }
 
-        throw new \LogicException('The wrapped handler does not implement ' . FormattableHandlerInterface::class);
+        throw new \LogicException('The wrapped handler does not implement '.FormattableHandlerInterface::class);
     }
 
     /**
@@ -122,7 +124,7 @@ class HandlerWrapper implements HandlerInterface, ProcessableHandlerInterface, F
             return $this->handler->getFormatter();
         }
 
-        throw new \LogicException('The wrapped handler does not implement ' . FormattableHandlerInterface::class);
+        throw new \LogicException('The wrapped handler does not implement '.FormattableHandlerInterface::class);
     }
 
     public function reset(): void

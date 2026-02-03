@@ -19,7 +19,7 @@ namespace League\CommonMark\Reference;
 use League\CommonMark\Normalizer\TextNormalizer;
 
 /**
- * A collection of references, indexed by label
+ * A collection of references, indexed by label.
  */
 final class ReferenceMap implements ReferenceMapInterface
 {

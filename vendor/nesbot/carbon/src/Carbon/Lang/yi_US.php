@@ -26,7 +26,7 @@ return array_replace_recursive(require __DIR__.'/en.php', [
     'day' => '{1}:count טאג|{0}:count טעג|[-Inf,Inf]:count טעג',
     'a_day' => '{1}א טאג|{0}:count טעג|[-Inf,Inf]:count טעג',
     'd' => ':count טאג',
-    'hour'   => ':count שעה',
+    'hour' => ':count שעה',
     'a_hour' => 'א שעה',
     'h' => ':count שעה',
     'minute' => '{1}:count מינוט|{0}:count מינוט|[-Inf,Inf]:count מינוט',

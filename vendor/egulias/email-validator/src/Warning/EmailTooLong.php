@@ -10,6 +10,6 @@ class EmailTooLong extends Warning
 
     public function __construct()
     {
-        $this->message = 'Email is too long, exceeds ' . EmailParser::EMAIL_MAX_LENGTH;
+        $this->message = 'Email is too long, exceeds '.EmailParser::EMAIL_MAX_LENGTH;
     }
 }

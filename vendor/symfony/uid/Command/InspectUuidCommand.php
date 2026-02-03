@@ -40,8 +40,7 @@ class InspectUuidCommand extends Command
                     <info>php %command.full_name% MfnmaUvvQ1h8B14vTwt6dX</info>
                     <info>php %command.full_name% 57C4Z0MPC627NTGR9BY1DFD7JJ</info>
                 EOF
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

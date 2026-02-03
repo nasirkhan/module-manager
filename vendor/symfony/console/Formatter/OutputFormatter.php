@@ -65,7 +65,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
     /**
      * Initializes console output formatter.
      *
-     * @param OutputFormatterStyleInterface[] $styles Array of "name => FormatterStyle" instances
+     * @param  OutputFormatterStyleInterface[]  $styles  Array of "name => FormatterStyle" instances
      */
     public function __construct(
         private bool $decorated = false,
@@ -105,7 +105,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
 
     public function getStyle(string $name): OutputFormatterStyleInterface
     {
-        if (!$this->hasStyle($name)) {
+        if (! $this->hasStyle($name)) {
             throw new InvalidArgumentException(\sprintf('Undefined style: "%s".', $name));
         }
 
@@ -150,7 +150,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
                 $tag = $matches[3][$i][0] ?? '';
             }
 
-            if (!$open && !$tag) {
+            if (! $open && ! $tag) {
                 // </>
                 $this->styleStack->pop();
             } elseif (null === $style = $this->createStyleFromString($tag)) {
@@ -181,7 +181,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
             return $this->styles[$string];
         }
 
-        if (!preg_match_all('/([^=]+)=([^;]+)(;|$)/', $string, $matches, \PREG_SET_ORDER)) {
+        if (! preg_match_all('/([^=]+)=([^;]+)(;|$)/', $string, $matches, \PREG_SET_ORDER)) {
             return null;
         }
 
@@ -220,11 +220,11 @@ class OutputFormatter implements WrappableOutputFormatterInterface
             return '';
         }
 
-        if (!$width) {
+        if (! $width) {
             return $this->isDecorated() ? $this->styleStack->getCurrent()->apply($text) : $text;
         }
 
-        if (!$currentLineLength && '' !== $current) {
+        if (! $currentLineLength && '' !== $current) {
             $text = ltrim($text);
         }
 
@@ -249,7 +249,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
         $text = $prefix.$this->addLineBreaks($text, $width);
         $text = rtrim($text, "\n").($matches[1] ?? '');
 
-        if (!$currentLineLength && '' !== $current && !str_ends_with($current, "\n")) {
+        if (! $currentLineLength && '' !== $current && ! str_ends_with($current, "\n")) {
             $text = "\n".$text;
         }
 

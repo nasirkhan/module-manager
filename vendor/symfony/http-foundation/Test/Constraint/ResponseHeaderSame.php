@@ -28,7 +28,7 @@ final class ResponseHeaderSame extends Constraint
     }
 
     /**
-     * @param Response $response
+     * @param  Response  $response
      */
     protected function matches($response): bool
     {
@@ -36,7 +36,7 @@ final class ResponseHeaderSame extends Constraint
     }
 
     /**
-     * @param Response $response
+     * @param  Response  $response
      */
     protected function failureDescription($response): string
     {

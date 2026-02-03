@@ -76,20 +76,20 @@ final class ListBlockStartParser implements BlockStartParserInterface, Configura
         $rest = $tmpCursor->getRemainder();
 
         if (\preg_match($this->listMarkerRegex ?? $this->generateListMarkerRegex(), $rest) === 1) {
-            $data               = new ListData();
+            $data = new ListData();
             $data->markerOffset = $indent;
-            $data->type         = ListBlock::TYPE_BULLET;
-            $data->delimiter    = null;
-            $data->bulletChar   = $rest[0];
-            $markerLength       = 1;
+            $data->type = ListBlock::TYPE_BULLET;
+            $data->delimiter = null;
+            $data->bulletChar = $rest[0];
+            $markerLength = 1;
         } elseif (($matches = RegexHelper::matchFirst('/^(\d{1,9})([.)])/', $rest)) && (! $inParagraph || $matches[1] === '1')) {
-            $data               = new ListData();
+            $data = new ListData();
             $data->markerOffset = $indent;
-            $data->type         = ListBlock::TYPE_ORDERED;
-            $data->start        = (int) $matches[1];
-            $data->delimiter    = $matches[2] === '.' ? ListBlock::DELIM_PERIOD : ListBlock::DELIM_PAREN;
-            $data->bulletChar   = null;
-            $markerLength       = \strlen($matches[0]);
+            $data->type = ListBlock::TYPE_ORDERED;
+            $data->start = (int) $matches[1];
+            $data->delimiter = $matches[2] === '.' ? ListBlock::DELIM_PERIOD : ListBlock::DELIM_PAREN;
+            $data->bulletChar = null;
+            $markerLength = \strlen($matches[0]);
         } else {
             return null;
         }
@@ -114,7 +114,7 @@ final class ListBlockStartParser implements BlockStartParserInterface, Configura
 
     private static function calculateListMarkerPadding(Cursor $cursor, int $markerLength): int
     {
-        $start          = $cursor->saveState();
+        $start = $cursor->saveState();
         $spacesStartCol = $cursor->getColumn();
 
         while ($cursor->getColumn() - $spacesStartCol < 5) {
@@ -123,7 +123,7 @@ final class ListBlockStartParser implements BlockStartParserInterface, Configura
             }
         }
 
-        $blankItem         = $cursor->peek() === null;
+        $blankItem = $cursor->peek() === null;
         $spacesAfterMarker = $cursor->getColumn() - $spacesStartCol;
 
         if ($spacesAfterMarker >= 5 || $spacesAfterMarker < 1 || $blankItem) {
@@ -149,6 +149,6 @@ final class ListBlockStartParser implements BlockStartParserInterface, Configura
         $markers = $this->config->get('commonmark/unordered_list_markers');
         \assert(\is_array($markers));
 
-        return $this->listMarkerRegex = '/^[' . \preg_quote(\implode('', $markers), '/') . ']/';
+        return $this->listMarkerRegex = '/^['.\preg_quote(\implode('', $markers), '/').']/';
     }
 }

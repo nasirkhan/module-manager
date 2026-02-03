@@ -5,9 +5,8 @@ namespace GuzzleHttp;
 /**
  * Debug function used to describe the provided value type and class.
  *
- * @param mixed $input Any type of variable to describe the type of. This
- *                     parameter misses a typehint because of that.
- *
+ * @param  mixed  $input  Any type of variable to describe the type of. This
+ *                        parameter misses a typehint because of that.
  * @return string Returns a string containing the type of the variable and
  *                if a class is provided, the class name.
  *
@@ -21,8 +20,8 @@ function describe_type($input): string
 /**
  * Parses an array of header lines into an associative array of headers.
  *
- * @param iterable $lines Header lines array of strings in the following
- *                        format: "Name: Value"
+ * @param  iterable  $lines  Header lines array of strings in the following
+ *                           format: "Name: Value"
  *
  * @deprecated headers_from_lines will be removed in guzzlehttp/guzzle:8.0. Use Utils::headersFromLines instead.
  */
@@ -34,8 +33,7 @@ function headers_from_lines(iterable $lines): array
 /**
  * Returns a debug stream based on the provided variable.
  *
- * @param mixed $value Optional value
- *
+ * @param  mixed  $value  Optional value
  * @return resource
  *
  * @deprecated debug_resource will be removed in guzzlehttp/guzzle:8.0. Use Utils::debugResource instead.
@@ -116,8 +114,8 @@ function normalize_header_keys(array $headers): array
  * 3. The area starts with "." and the area is the last part of the host. e.g.
  *    '.mit.edu' will match any host that ends with '.mit.edu'.
  *
- * @param string   $host         Host to check against the patterns.
- * @param string[] $noProxyArray An array of host patterns.
+ * @param  string  $host  Host to check against the patterns.
+ * @param  string[]  $noProxyArray  An array of host patterns.
  *
  * @throws Exception\InvalidArgumentException
  *
@@ -131,12 +129,11 @@ function is_host_in_noproxy(string $host, array $noProxyArray): bool
 /**
  * Wrapper for json_decode that throws when an error occurs.
  *
- * @param string $json    JSON data to parse
- * @param bool   $assoc   When true, returned objects will be converted
- *                        into associative arrays.
- * @param int    $depth   User specified recursion depth.
- * @param int    $options Bitmask of JSON decode options.
- *
+ * @param  string  $json  JSON data to parse
+ * @param  bool  $assoc  When true, returned objects will be converted
+ *                       into associative arrays.
+ * @param  int  $depth  User specified recursion depth.
+ * @param  int  $options  Bitmask of JSON decode options.
  * @return object|array|string|int|float|bool|null
  *
  * @throws Exception\InvalidArgumentException if the JSON cannot be decoded.
@@ -152,9 +149,9 @@ function json_decode(string $json, bool $assoc = false, int $depth = 512, int $o
 /**
  * Wrapper for JSON encoding that throws when an error occurs.
  *
- * @param mixed $value   The value being encoded
- * @param int   $options JSON encode option bitmask
- * @param int   $depth   Set the maximum depth. Must be greater than zero.
+ * @param  mixed  $value  The value being encoded
+ * @param  int  $options  JSON encode option bitmask
+ * @param  int  $depth  Set the maximum depth. Must be greater than zero.
  *
  * @throws Exception\InvalidArgumentException if the JSON cannot be encoded.
  *

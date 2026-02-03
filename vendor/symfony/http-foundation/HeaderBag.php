@@ -41,7 +41,7 @@ class HeaderBag implements \IteratorAggregate, \Countable, \Stringable
      */
     public function __toString(): string
     {
-        if (!$headers = $this->all()) {
+        if (! $headers = $this->all()) {
             return '';
         }
 
@@ -61,8 +61,7 @@ class HeaderBag implements \IteratorAggregate, \Countable, \Stringable
     /**
      * Returns the headers.
      *
-     * @param string|null $key The name of the headers to return or null to get them all
-     *
+     * @param  string|null  $key  The name of the headers to return or null to get them all
      * @return ($key is null ? array<string, list<string|null>> : list<string|null>)
      */
     public function all(?string $key = null): array
@@ -110,7 +109,7 @@ class HeaderBag implements \IteratorAggregate, \Countable, \Stringable
     {
         $headers = $this->all($key);
 
-        if (!$headers) {
+        if (! $headers) {
             return $default;
         }
 
@@ -124,8 +123,8 @@ class HeaderBag implements \IteratorAggregate, \Countable, \Stringable
     /**
      * Sets a header by name.
      *
-     * @param string|string[]|null $values  The value or an array of values
-     * @param bool                 $replace Whether to replace the actual value or not (true by default)
+     * @param  string|string[]|null  $values  The value or an array of values
+     * @param  bool  $replace  Whether to replace the actual value or not (true by default)
      */
     public function set(string $key, string|array|null $values, bool $replace = true): void
     {
@@ -134,13 +133,13 @@ class HeaderBag implements \IteratorAggregate, \Countable, \Stringable
         if (\is_array($values)) {
             $values = array_values($values);
 
-            if (true === $replace || !isset($this->headers[$key])) {
+            if (true === $replace || ! isset($this->headers[$key])) {
                 $this->headers[$key] = $values;
             } else {
                 $this->headers[$key] = array_merge($this->headers[$key], $values);
             }
         } else {
-            if (true === $replace || !isset($this->headers[$key])) {
+            if (true === $replace || ! isset($this->headers[$key])) {
                 $this->headers[$key] = [$values];
             } else {
                 $this->headers[$key][] = $values;

@@ -33,22 +33,22 @@ class Route
     public array $aliases = [];
 
     /**
-     * @param string|array<string,string>|null                  $path         The route path (i.e. "/user/login")
-     * @param string|null                                       $name         The route name (i.e. "app_user_login")
-     * @param array<string|\Stringable>                         $requirements Requirements for the route attributes, @see https://symfony.com/doc/current/routing.html#parameters-validation
-     * @param array<string, mixed>                              $options      Options for the route (i.e. ['prefix' => '/api'])
-     * @param array<string, mixed>                              $defaults     Default values for the route attributes and query parameters
-     * @param string|null                                       $host         The host for which this route should be active (i.e. "localhost")
-     * @param string|string[]                                   $methods      The list of HTTP methods allowed by this route
-     * @param string|string[]                                   $schemes      The list of schemes allowed by this route (i.e. "https")
-     * @param string|null                                       $condition    An expression that must evaluate to true for the route to be matched, @see https://symfony.com/doc/current/routing.html#matching-expressions
-     * @param int|null                                          $priority     The priority of the route if multiple ones are defined for the same path
-     * @param string|null                                       $locale       The locale accepted by the route
-     * @param string|null                                       $format       The format returned by the route (i.e. "json", "xml")
-     * @param bool|null                                         $utf8         Whether the route accepts UTF-8 in its parameters
-     * @param bool|null                                         $stateless    Whether the route is defined as stateless or stateful, @see https://symfony.com/doc/current/routing.html#stateless-routes
-     * @param string|string[]|null                              $env          The env(s) in which the route is defined (i.e. "dev", "test", "prod", ["dev", "test"])
-     * @param string|DeprecatedAlias|(string|DeprecatedAlias)[] $alias        The list of aliases for this route
+     * @param  string|array<string,string>|null  $path  The route path (i.e. "/user/login")
+     * @param  string|null  $name  The route name (i.e. "app_user_login")
+     * @param  array<string|\Stringable>  $requirements  Requirements for the route attributes, @see https://symfony.com/doc/current/routing.html#parameters-validation
+     * @param  array<string, mixed>  $options  Options for the route (i.e. ['prefix' => '/api'])
+     * @param  array<string, mixed>  $defaults  Default values for the route attributes and query parameters
+     * @param  string|null  $host  The host for which this route should be active (i.e. "localhost")
+     * @param  string|string[]  $methods  The list of HTTP methods allowed by this route
+     * @param  string|string[]  $schemes  The list of schemes allowed by this route (i.e. "https")
+     * @param  string|null  $condition  An expression that must evaluate to true for the route to be matched, @see https://symfony.com/doc/current/routing.html#matching-expressions
+     * @param  int|null  $priority  The priority of the route if multiple ones are defined for the same path
+     * @param  string|null  $locale  The locale accepted by the route
+     * @param  string|null  $format  The format returned by the route (i.e. "json", "xml")
+     * @param  bool|null  $utf8  Whether the route accepts UTF-8 in its parameters
+     * @param  bool|null  $stateless  Whether the route is defined as stateless or stateful, @see https://symfony.com/doc/current/routing.html#stateless-routes
+     * @param  string|string[]|null  $env  The env(s) in which the route is defined (i.e. "dev", "test", "prod", ["dev", "test"])
+     * @param  string|DeprecatedAlias|(string|DeprecatedAlias)[]  $alias  The list of aliases for this route
      */
     public function __construct(
         public string|array|null $path = null,
@@ -232,7 +232,7 @@ class Route
     #[\Deprecated('Use the "envs" property instead', 'symfony/routing:7.4')]
     public function getEnv(): ?string
     {
-        if (!$this->envs) {
+        if (! $this->envs) {
             return null;
         }
         if (\count($this->envs) > 1) {
@@ -252,7 +252,7 @@ class Route
     }
 
     /**
-     * @param string|DeprecatedAlias|(string|DeprecatedAlias)[] $aliases
+     * @param  string|DeprecatedAlias|(string|DeprecatedAlias)[]  $aliases
      */
     #[\Deprecated('Use the "aliases" property instead', 'symfony/routing:7.4')]
     public function setAliases(string|DeprecatedAlias|array $aliases): void
@@ -261,6 +261,6 @@ class Route
     }
 }
 
-if (!class_exists(\Symfony\Component\Routing\Annotation\Route::class, false)) {
+if (! class_exists(\Symfony\Component\Routing\Annotation\Route::class, false)) {
     class_alias(Route::class, \Symfony\Component\Routing\Annotation\Route::class);
 }

@@ -32,7 +32,7 @@ final class IdentificationHeader extends AbstractHeader
     }
 
     /**
-     * @param string|string[] $body a string ID or an array of IDs
+     * @param  string|string[]  $body  a string ID or an array of IDs
      *
      * @throws RfcComplianceException
      */
@@ -49,7 +49,7 @@ final class IdentificationHeader extends AbstractHeader
     /**
      * Set the ID used in the value of this header.
      *
-     * @param string|string[] $id
+     * @param  string|string[]  $id
      *
      * @throws RfcComplianceException
      */
@@ -71,7 +71,7 @@ final class IdentificationHeader extends AbstractHeader
     /**
      * Set a collection of IDs to use in the value of this Header.
      *
-     * @param string[] $ids
+     * @param  string[]  $ids
      *
      * @throws RfcComplianceException
      */

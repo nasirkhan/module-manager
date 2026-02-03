@@ -19,7 +19,7 @@ class PrepareBodyMiddleware
     private $nextHandler;
 
     /**
-     * @param callable(RequestInterface, array): PromiseInterface $nextHandler Next handler to invoke.
+     * @param  callable(RequestInterface, array): PromiseInterface  $nextHandler  Next handler to invoke.
      */
     public function __construct(callable $nextHandler)
     {
@@ -38,7 +38,7 @@ class PrepareBodyMiddleware
         $modify = [];
 
         // Add a default content-type if possible.
-        if (!$request->hasHeader('Content-Type')) {
+        if (! $request->hasHeader('Content-Type')) {
             if ($uri = $request->getBody()->getMetadata('uri')) {
                 if (is_string($uri) && $type = Psr7\MimeType::fromFilename($uri)) {
                     $modify['set_headers']['Content-Type'] = $type;
@@ -47,8 +47,8 @@ class PrepareBodyMiddleware
         }
 
         // Add a default content-length or transfer-encoding header.
-        if (!$request->hasHeader('Content-Length')
-            && !$request->hasHeader('Transfer-Encoding')
+        if (! $request->hasHeader('Content-Length')
+            && ! $request->hasHeader('Transfer-Encoding')
         ) {
             $size = $request->getBody()->getSize();
             if ($size !== null) {
@@ -65,7 +65,7 @@ class PrepareBodyMiddleware
     }
 
     /**
-     * Add expect header
+     * Add expect header.
      */
     private function addExpectHeader(RequestInterface $request, array $options, array &$modify): void
     {
@@ -98,7 +98,7 @@ class PrepareBodyMiddleware
         $body = $request->getBody();
         $size = $body->getSize();
 
-        if ($size === null || $size >= (int) $expect || !$body->isSeekable()) {
+        if ($size === null || $size >= (int) $expect || ! $body->isSeekable()) {
             $modify['set_headers']['Expect'] = '100-Continue';
         }
     }

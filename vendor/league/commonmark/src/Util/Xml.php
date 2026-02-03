@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Util;
 
 /**
- * Utility class for handling/generating XML and HTML
+ * Utility class for handling/generating XML and HTML.
  *
  * @psalm-immutable
  */

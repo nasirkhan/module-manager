@@ -114,7 +114,7 @@ class XliffFileDumper extends FileDumper
 
             if ($this->hasMetadataArrayInfo('notes', $metadata)) {
                 foreach ($metadata['notes'] as $note) {
-                    if (!isset($note['content'])) {
+                    if (! isset($note['content'])) {
                         continue;
                     }
 

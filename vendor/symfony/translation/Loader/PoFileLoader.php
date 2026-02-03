@@ -76,7 +76,7 @@ class PoFileLoader extends FileLoader
 
             if ('' === $line) {
                 // Whitespace indicated current item is done
-                if (!\in_array('fuzzy', $flags, true)) {
+                if (! \in_array('fuzzy', $flags, true)) {
                     $this->addMessage($messages, $item);
                 }
                 $item = $defaults;
@@ -108,7 +108,7 @@ class PoFileLoader extends FileLoader
             }
         }
         // save last item
-        if (!\in_array('fuzzy', $flags, true)) {
+        if (! \in_array('fuzzy', $flags, true)) {
             $this->addMessage($messages, $item);
         }
         fclose($stream);
@@ -124,7 +124,7 @@ class PoFileLoader extends FileLoader
      */
     private function addMessage(array &$messages, array $item): void
     {
-        if (!empty($item['ids']['singular'])) {
+        if (! empty($item['ids']['singular'])) {
             $id = stripcslashes($item['ids']['singular']);
             if (isset($item['ids']['plural'])) {
                 $id .= '|'.stripcslashes($item['ids']['plural']);

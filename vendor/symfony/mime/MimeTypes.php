@@ -116,7 +116,7 @@ final class MimeTypes implements MimeTypesInterface
     public function guessMimeType(string $path): ?string
     {
         foreach ($this->guessers as $guesser) {
-            if (!$guesser->isGuesserSupported()) {
+            if (! $guesser->isGuesserSupported()) {
                 continue;
             }
 
@@ -125,7 +125,7 @@ final class MimeTypes implements MimeTypesInterface
             }
         }
 
-        if (!$this->isGuesserSupported()) {
+        if (! $this->isGuesserSupported()) {
             throw new LogicException('Unable to guess the MIME type as no guessers are available (have you enabled the php_fileinfo extension?).');
         }
 

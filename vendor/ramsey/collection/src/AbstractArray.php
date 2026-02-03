@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/collection library
+ * This file is part of the ramsey/collection library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -24,6 +24,7 @@ use function count;
  * the effort required to implement this interface.
  *
  * @template T
+ *
  * @implements ArrayInterface<T>
  */
 abstract class AbstractArray implements ArrayInterface
@@ -38,7 +39,7 @@ abstract class AbstractArray implements ArrayInterface
     /**
      * Constructs a new array object.
      *
-     * @param array<array-key, T> $data The initial items to add to this array.
+     * @param  array<array-key, T>  $data  The initial items to add to this array.
      */
     public function __construct(array $data = [])
     {
@@ -66,7 +67,7 @@ abstract class AbstractArray implements ArrayInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php ArrayAccess::offsetExists()
      *
-     * @param array-key $offset The offset to check.
+     * @param  array-key  $offset  The offset to check.
      */
     public function offsetExists(mixed $offset): bool
     {
@@ -78,10 +79,9 @@ abstract class AbstractArray implements ArrayInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetget.php ArrayAccess::offsetGet()
      *
-     * @param array-key $offset The offset for which a value should be returned.
-     *
+     * @param  array-key  $offset  The offset for which a value should be returned.
      * @return T the value stored at the offset, or null if the offset
-     *     does not exist.
+     *           does not exist.
      */
     public function offsetGet(mixed $offset): mixed
     {
@@ -93,9 +93,9 @@ abstract class AbstractArray implements ArrayInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetset.php ArrayAccess::offsetSet()
      *
-     * @param array-key | null $offset The offset to set. If `null`, the value
-     *     may be set at a numerically-indexed offset.
-     * @param T $value The value to set at the given offset.
+     * @param  array-key | null  $offset  The offset to set. If `null`, the value
+     *                                    may be set at a numerically-indexed offset.
+     * @param  T  $value  The value to set at the given offset.
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
@@ -111,7 +111,7 @@ abstract class AbstractArray implements ArrayInterface
      *
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php ArrayAccess::offsetUnset()
      *
-     * @param array-key $offset The offset to remove from the array.
+     * @param  array-key  $offset  The offset to remove from the array.
      */
     public function offsetUnset(mixed $offset): void
     {
@@ -134,7 +134,7 @@ abstract class AbstractArray implements ArrayInterface
     /**
      * Adds unserialized data to the object.
      *
-     * @param array<array-key, T> $data
+     * @param  array<array-key, T>  $data
      */
     public function __unserialize(array $data): void
     {

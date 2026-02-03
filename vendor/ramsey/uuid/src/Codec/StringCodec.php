@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -29,16 +29,16 @@ use function strlen;
 use function substr;
 
 /**
- * StringCodec encodes and decodes RFC 9562 (formerly RFC 4122) UUIDs
+ * StringCodec encodes and decodes RFC 9562 (formerly RFC 4122) UUIDs.
  *
  * @immutable
  */
 class StringCodec implements CodecInterface
 {
     /**
-     * Constructs a StringCodec
+     * Constructs a StringCodec.
      *
-     * @param UuidBuilderInterface $builder The builder to use when encoding UUIDs
+     * @param  UuidBuilderInterface  $builder  The builder to use when encoding UUIDs
      */
     public function __construct(private UuidBuilderInterface $builder)
     {
@@ -90,7 +90,7 @@ class StringCodec implements CodecInterface
     }
 
     /**
-     * Returns the UUID builder
+     * Returns the UUID builder.
      */
     protected function getBuilder(): UuidBuilderInterface
     {
@@ -98,7 +98,7 @@ class StringCodec implements CodecInterface
     }
 
     /**
-     * Returns a byte string of the UUID
+     * Returns a byte string of the UUID.
      */
     protected function getBytes(string $encodedUuid): string
     {
@@ -112,8 +112,8 @@ class StringCodec implements CodecInterface
             substr($parsedUuid, 20),
         ];
 
-        if (!Uuid::isValid(implode('-', $components))) {
-            throw new InvalidUuidStringException('Invalid UUID string: ' . $encodedUuid);
+        if (! Uuid::isValid(implode('-', $components))) {
+            throw new InvalidUuidStringException('Invalid UUID string: '.$encodedUuid);
         }
 
         return (string) hex2bin($parsedUuid);

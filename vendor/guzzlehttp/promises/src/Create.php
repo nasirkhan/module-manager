@@ -9,7 +9,7 @@ final class Create
     /**
      * Creates a promise for a value if the value is not a promise.
      *
-     * @param mixed $value Promise or value.
+     * @param  mixed  $value  Promise or value.
      */
     public static function promiseFor($value): PromiseInterface
     {
@@ -34,7 +34,7 @@ final class Create
      * Creates a rejected promise for a reason if the reason is not a promise.
      * If the provided reason is a promise, then it is returned as-is.
      *
-     * @param mixed $reason Promise or reason.
+     * @param  mixed  $reason  Promise or reason.
      */
     public static function rejectionFor($reason): PromiseInterface
     {
@@ -48,7 +48,7 @@ final class Create
     /**
      * Create an exception for a rejected promise value.
      *
-     * @param mixed $reason
+     * @param  mixed  $reason
      */
     public static function exceptionFor($reason): \Throwable
     {
@@ -62,7 +62,7 @@ final class Create
     /**
      * Returns an iterator for the given value.
      *
-     * @param mixed $value
+     * @param  mixed  $value
      */
     public static function iterFor($value): \Iterator
     {

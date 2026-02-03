@@ -3,13 +3,13 @@
 namespace Egulias\EmailValidator\Parser;
 
 use Egulias\EmailValidator\EmailLexer;
-use Egulias\EmailValidator\Result\Result;
-use Egulias\EmailValidator\Warning\QuotedPart;
-use Egulias\EmailValidator\Result\InvalidEmail;
 use Egulias\EmailValidator\Parser\CommentStrategy\CommentStrategy;
+use Egulias\EmailValidator\Result\InvalidEmail;
 use Egulias\EmailValidator\Result\Reason\UnclosedComment;
 use Egulias\EmailValidator\Result\Reason\UnOpenedComment;
+use Egulias\EmailValidator\Result\Result;
 use Egulias\EmailValidator\Warning\Comment as WarningComment;
+use Egulias\EmailValidator\Warning\QuotedPart;
 
 class Comment extends PartParser
 {
@@ -46,7 +46,6 @@ class Comment extends PartParser
 
         $moreTokens = true;
         while ($this->commentStrategy->exitCondition($this->lexer, $this->openedParenthesis) && $moreTokens) {
-
             if ($this->lexer->isNextToken(EmailLexer::S_OPENPARENTHESIS)) {
                 $this->openedParenthesis++;
             }
@@ -71,18 +70,17 @@ class Comment extends PartParser
         return $finalValidations;
     }
 
-
     /**
      * @return void
      */
     private function warnEscaping(): void
     {
         //Backslash found
-        if (!$this->lexer->current->isA(EmailLexer::S_BACKSLASH)) {
+        if (! $this->lexer->current->isA(EmailLexer::S_BACKSLASH)) {
             return;
         }
 
-        if (!$this->lexer->isNextTokenAny(array(EmailLexer::S_SP, EmailLexer::S_HTAB, EmailLexer::C_DEL))) {
+        if (! $this->lexer->isNextTokenAny([EmailLexer::S_SP, EmailLexer::S_HTAB, EmailLexer::C_DEL])) {
             return;
         }
 
@@ -94,6 +92,7 @@ class Comment extends PartParser
     {
         try {
             $this->lexer->find(EmailLexer::S_CLOSEPARENTHESIS);
+
             return false;
         } catch (\RuntimeException $e) {
             return true;

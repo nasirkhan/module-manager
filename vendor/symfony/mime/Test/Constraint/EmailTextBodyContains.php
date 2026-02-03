@@ -28,7 +28,7 @@ final class EmailTextBodyContains extends Constraint
     }
 
     /**
-     * @param RawMessage $message
+     * @param  RawMessage  $message
      */
     protected function matches($message): bool
     {
@@ -40,7 +40,7 @@ final class EmailTextBodyContains extends Constraint
     }
 
     /**
-     * @param RawMessage $message
+     * @param  RawMessage  $message
      */
     protected function failureDescription($message): string
     {

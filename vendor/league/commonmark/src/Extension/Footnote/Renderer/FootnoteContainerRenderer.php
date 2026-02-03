@@ -28,7 +28,7 @@ final class FootnoteContainerRenderer implements NodeRendererInterface, XmlNodeR
     private ConfigurationInterface $config;
 
     /**
-     * @param FootnoteContainer $node
+     * @param  FootnoteContainer  $node
      *
      * {@inheritDoc}
      *

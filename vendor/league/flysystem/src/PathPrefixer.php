@@ -23,7 +23,7 @@ final class PathPrefixer
 
     public function prefixPath(string $path): string
     {
-        return $this->prefix . ltrim($path, '\\/');
+        return $this->prefix.ltrim($path, '\\/');
     }
 
     public function stripPrefix(string $path): string
@@ -45,6 +45,6 @@ final class PathPrefixer
             return $prefixedPath;
         }
 
-        return $prefixedPath . $this->separator;
+        return $prefixedPath.$this->separator;
     }
 }

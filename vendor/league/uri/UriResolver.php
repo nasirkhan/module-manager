@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -19,7 +19,9 @@ use Psr\Http\Message\UriInterface as Psr7UriInterface;
 
 /**
  * @deprecated since version 7.0.0
+ *
  * @codeCoverageIgnore
+ *
  * @see BaseUri
  */
 final class UriResolver

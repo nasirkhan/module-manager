@@ -39,12 +39,12 @@ final class ResponseCookieValueSame extends Constraint
     }
 
     /**
-     * @param Response $response
+     * @param  Response  $response
      */
     protected function matches($response): bool
     {
         $cookie = $this->getCookie($response);
-        if (!$cookie) {
+        if (! $cookie) {
             return false;
         }
 
@@ -52,7 +52,7 @@ final class ResponseCookieValueSame extends Constraint
     }
 
     /**
-     * @param Response $response
+     * @param  Response  $response
      */
     protected function failureDescription($response): string
     {

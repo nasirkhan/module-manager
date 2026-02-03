@@ -66,7 +66,7 @@ class ByteString extends AbstractString
             $data = random_bytes($urandomLength);
             $unpackedData = 0;
             $unpackedBits = 0;
-            for ($i = 0; $i < $urandomLength && $length > 0; ++$i) {
+            for ($i = 0; $i < $urandomLength && $length > 0; $i++) {
                 // Unpack 8 bits
                 $unpackedData = ($unpackedData << 8) | \ord($data[$i]);
                 $unpackedBits += 8;
@@ -81,7 +81,7 @@ class ByteString extends AbstractString
                     // have around a 50% chance of missing as k gets larger
                     if ($index < $alphabetSize) {
                         $ret .= $alphabet[$index];
-                        --$length;
+                        $length--;
                     }
                 }
             }
@@ -141,7 +141,7 @@ class ByteString extends AbstractString
     {
         if ($suffix instanceof AbstractString) {
             $suffix = $suffix->string;
-        } elseif (!\is_string($suffix)) {
+        } elseif (! \is_string($suffix)) {
             return parent::endsWith($suffix);
         }
 
@@ -152,7 +152,7 @@ class ByteString extends AbstractString
     {
         if ($string instanceof AbstractString) {
             $string = $string->string;
-        } elseif (!\is_string($string)) {
+        } elseif (! \is_string($string)) {
             return parent::equalsTo($string);
         }
 
@@ -175,7 +175,7 @@ class ByteString extends AbstractString
     {
         if ($needle instanceof AbstractString) {
             $needle = $needle->string;
-        } elseif (!\is_string($needle)) {
+        } elseif (! \is_string($needle)) {
             return parent::indexOf($needle, $offset);
         }
 
@@ -192,7 +192,7 @@ class ByteString extends AbstractString
     {
         if ($needle instanceof AbstractString) {
             $needle = $needle->string;
-        } elseif (!\is_string($needle)) {
+        } elseif (! \is_string($needle)) {
             return parent::indexOfLast($needle, $offset);
         }
 
@@ -392,7 +392,7 @@ class ByteString extends AbstractString
     {
         if ($prefix instanceof AbstractString) {
             $prefix = $prefix->string;
-        } elseif (!\is_string($prefix)) {
+        } elseif (! \is_string($prefix)) {
             return parent::startsWith($prefix);
         }
 
@@ -428,7 +428,7 @@ class ByteString extends AbstractString
             try {
                 $validEncoding = false !== mb_detect_encoding($this->string, $fromEncoding ?? 'Windows-1252', true);
             } catch (InvalidArgumentException $e) {
-                if (!\function_exists('iconv')) {
+                if (! \function_exists('iconv')) {
                     throw $e;
                 }
 
@@ -440,7 +440,7 @@ class ByteString extends AbstractString
             restore_error_handler();
         }
 
-        if (!$validEncoding) {
+        if (! $validEncoding) {
             throw new InvalidArgumentException(\sprintf('Invalid "%s" string.', $fromEncoding ?? 'Windows-1252'));
         }
 

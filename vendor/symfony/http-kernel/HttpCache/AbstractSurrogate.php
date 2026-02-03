@@ -24,8 +24,8 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 abstract class AbstractSurrogate implements SurrogateInterface
 {
     /**
-     * @param array $contentTypes An array of content-type that should be parsed for Surrogate information
-     *                            (default: text/html, text/xml, application/xhtml+xml, and application/xml)
+     * @param  array  $contentTypes  An array of content-type that should be parsed for Surrogate information
+     *                               (default: text/html, text/xml, application/xhtml+xml, and application/xml)
      */
     public function __construct(
         protected array $contentTypes = ['text/html', 'text/xml', 'application/xhtml+xml', 'application/xml'],
@@ -59,7 +59,7 @@ abstract class AbstractSurrogate implements SurrogateInterface
 
     public function needsParsing(Response $response): bool
     {
-        if (!$control = $response->headers->get('Surrogate-Control')) {
+        if (! $control = $response->headers->get('Surrogate-Control')) {
             return false;
         }
 
@@ -75,7 +75,7 @@ abstract class AbstractSurrogate implements SurrogateInterface
         try {
             $response = $cache->handle($subRequest, HttpKernelInterface::SUB_REQUEST, true);
 
-            if (!$response->isSuccessful() && Response::HTTP_NOT_MODIFIED !== $response->getStatusCode()) {
+            if (! $response->isSuccessful() && Response::HTTP_NOT_MODIFIED !== $response->getStatusCode()) {
                 throw new \RuntimeException(\sprintf('Error when rendering "%s" (Status code is %d).', $subRequest->getUri(), $response->getStatusCode()));
             }
 
@@ -85,7 +85,7 @@ abstract class AbstractSurrogate implements SurrogateInterface
                 return $this->handle($cache, $alt, '', $ignoreErrors);
             }
 
-            if (!$ignoreErrors) {
+            if (! $ignoreErrors) {
                 throw $e;
             }
         }
@@ -98,7 +98,7 @@ abstract class AbstractSurrogate implements SurrogateInterface
      */
     protected function removeFromControl(Response $response): void
     {
-        if (!$response->headers->has('Surrogate-Control')) {
+        if (! $response->headers->has('Surrogate-Control')) {
             return;
         }
 

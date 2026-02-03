@@ -74,7 +74,7 @@ final class UriTemplate
     ];
 
     /**
-     * @param array<string,mixed> $variables Variables to use in the template expansion
+     * @param  array<string,mixed>  $variables  Variables to use in the template expansion
      *
      * @throws \RuntimeException
      */
@@ -99,8 +99,7 @@ final class UriTemplate
     }
 
     /**
-     * @param array<string,mixed> $variables Variables to use in the template expansion
-     *
+     * @param  array<string,mixed>  $variables  Variables to use in the template expansion
      * @return callable(string[]): string
      */
     private static function expandMatchCallback(array $variables): callable
@@ -111,11 +110,10 @@ final class UriTemplate
     }
 
     /**
-     * Process an expansion
+     * Process an expansion.
      *
-     * @param array<string,mixed> $variables Variables to use in the template expansion
-     * @param string[]            $matches   Matches met in the preg_replace_callback
-     *
+     * @param  array<string,mixed>  $variables  Variables to use in the template expansion
+     * @param  string[]  $matches  Matches met in the preg_replace_callback
      * @return string Returns the replacement string
      */
     private static function expandMatch(array $matches, array $variables): string
@@ -128,7 +126,7 @@ final class UriTemplate
         $allUndefined = true;
 
         foreach ($parsed['values'] as $value) {
-            if (!isset($variables[$value['value']])) {
+            if (! isset($variables[$value['value']])) {
                 continue;
             }
 
@@ -148,7 +146,7 @@ final class UriTemplate
                         $isNestedArray = false;
                     }
 
-                    if (!$isNestedArray) {
+                    if (! $isNestedArray) {
                         $var = \rawurlencode((string) $var);
                         if ($parsed['operator'] === '+' || $parsed['operator'] === '#') {
                             $var = self::decodeReserved($var);
@@ -232,10 +230,9 @@ final class UriTemplate
     }
 
     /**
-     * Parse an expression into parts
+     * Parse an expression into parts.
      *
-     * @param string $expression Expression to parse
-     *
+     * @param  string  $expression  Expression to parse
      * @return array{operator:string, values:array<array{value:string, modifier:(''|'*'|':'), position?:int}>}
      */
     private static function parseExpression(string $expression): array

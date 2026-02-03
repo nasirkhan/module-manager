@@ -27,7 +27,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class IndentedCodeRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param IndentedCode $node
+     * @param  IndentedCode  $node
      *
      * {@inheritDoc}
      *

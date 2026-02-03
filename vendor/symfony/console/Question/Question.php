@@ -41,8 +41,8 @@ class Question
     private ?int $timeout = null;
 
     /**
-     * @param string                     $question The question to ask to the user
-     * @param string|bool|int|float|null $default  The default answer to return if the user enters nothing
+     * @param  string  $question  The question to ask to the user
+     * @param  string|bool|int|float|null  $default  The default answer to return if the user enters nothing
      */
     public function __construct(
         private string $question,
@@ -204,8 +204,7 @@ class Question
      *
      * The callback is passed the user input as argument and should return an iterable of corresponding suggestions.
      *
-     * @param (callable(string):string[])|null $callback
-     *
+     * @param  (callable(string):string[])|null  $callback
      * @return $this
      */
     public function setAutocompleterCallback(?callable $callback): static
@@ -222,8 +221,7 @@ class Question
     /**
      * Sets a validator for the question.
      *
-     * @param (callable(mixed):mixed)|null $validator
-     *
+     * @param  (callable(mixed):mixed)|null  $validator
      * @return $this
      */
     public function setValidator(?callable $validator): static
@@ -276,8 +274,7 @@ class Question
     /**
      * Sets a normalizer for the response.
      *
-     * @param callable(mixed):mixed $normalizer
-     *
+     * @param  callable(mixed):mixed  $normalizer
      * @return $this
      */
     public function setNormalizer(callable $normalizer): static

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/collection library
+ * This file is part of the ramsey/collection library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -161,6 +161,7 @@ use RuntimeException;
  * empty.
  *
  * @template T
+ *
  * @extends QueueInterface<T>
  */
 interface DoubleEndedQueueInterface extends QueueInterface
@@ -172,14 +173,13 @@ interface DoubleEndedQueueInterface extends QueueInterface
      * When using a capacity-restricted double-ended queue, it is generally
      * preferable to use the `offerFirst()` method.
      *
-     * @param T $element The element to add to the front of this queue.
-     *
+     * @param  T  $element  The element to add to the front of this queue.
      * @return bool `true` if this queue changed as a result of the call.
      *
      * @throws RuntimeException if a queue refuses to add a particular element
-     *     for any reason other than that it already contains the element.
-     *     Implementations should use a more-specific exception that extends
-     *     `\RuntimeException`.
+     *                          for any reason other than that it already contains the element.
+     *                          Implementations should use a more-specific exception that extends
+     *                          `\RuntimeException`.
      */
     public function addFirst(mixed $element): bool;
 
@@ -192,14 +192,13 @@ interface DoubleEndedQueueInterface extends QueueInterface
      *
      * This method is equivalent to `add()`.
      *
-     * @param T $element The element to add to the end of this queue.
-     *
+     * @param  T  $element  The element to add to the end of this queue.
      * @return bool `true` if this queue changed as a result of the call.
      *
      * @throws RuntimeException if a queue refuses to add a particular element
-     *     for any reason other than that it already contains the element.
-     *     Implementations should use a more-specific exception that extends
-     *     `\RuntimeException`.
+     *                          for any reason other than that it already contains the element.
+     *                          Implementations should use a more-specific exception that extends
+     *                          `\RuntimeException`.
      */
     public function addLast(mixed $element): bool;
 
@@ -211,8 +210,7 @@ interface DoubleEndedQueueInterface extends QueueInterface
      * preferable to `addFirst()`, which can fail to insert an element only by
      * throwing an exception.
      *
-     * @param T $element The element to add to the front of this queue.
-     *
+     * @param  T  $element  The element to add to the front of this queue.
      * @return bool `true` if the element was added to this queue, else `false`.
      */
     public function offerFirst(mixed $element): bool;
@@ -225,8 +223,7 @@ interface DoubleEndedQueueInterface extends QueueInterface
      * preferable to `addLast()` which can fail to insert an element only by
      * throwing an exception.
      *
-     * @param T $element The element to add to the end of this queue.
-     *
+     * @param  T  $element  The element to add to the end of this queue.
      * @return bool `true` if the element was added to this queue, else `false`.
      */
     public function offerLast(mixed $element): bool;

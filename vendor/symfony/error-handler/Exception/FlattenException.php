@@ -91,11 +91,11 @@ class FlattenException
 
         static $defaultCloner;
 
-        if (!$cloner ??= $defaultCloner) {
+        if (! $cloner ??= $defaultCloner) {
             $cloner = $defaultCloner = new VarCloner();
             $cloner->addCasters([
                 \Throwable::class => function (\Throwable $e, array $a, Stub $s, bool $isNested): array {
-                    if (!$isNested) {
+                    if (! $isNested) {
                         unset($a[Caster::PREFIX_PROTECTED.'message']);
                         unset($a[Caster::PREFIX_PROTECTED.'code']);
                         unset($a[Caster::PREFIX_PROTECTED.'file']);

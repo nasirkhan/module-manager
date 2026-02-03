@@ -57,7 +57,7 @@ class XliffLintCommand extends Command
         $this
             ->addArgument('filename', InputArgument::IS_ARRAY, 'A file, a directory or "-" for reading from STDIN')
             ->addOption('format', null, InputOption::VALUE_REQUIRED, \sprintf('The output format ("%s")', implode('", "', $this->getAvailableFormatOptions())))
-            ->setHelp(<<<EOF
+            ->setHelp(<<<'EOF'
                 The <info>%command.name%</info> command lints an XLIFF file and outputs to STDOUT
                 the first encountered syntax error.
 
@@ -78,8 +78,7 @@ class XliffLintCommand extends Command
                   <info>php %command.full_name% dirname --format=json</info>
 
                 EOF
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -93,13 +92,13 @@ class XliffLintCommand extends Command
             return $this->display($io, [$this->validate(file_get_contents('php://stdin'))]);
         }
 
-        if (!$filenames) {
+        if (! $filenames) {
             throw new RuntimeException('Please provide a filename or pipe file content to STDIN.');
         }
 
         $filesInfo = [];
         foreach ($filenames as $filename) {
-            if (!$this->isReadable($filename)) {
+            if (! $this->isReadable($filename)) {
                 throw new RuntimeException(\sprintf('File or directory "%s" is not readable.', $filename));
             }
 
@@ -175,8 +174,8 @@ class XliffLintCommand extends Command
         foreach ($filesInfo as $info) {
             if ($info['valid'] && $this->displayCorrectFiles) {
                 $io->comment('<info>OK</info>'.($info['file'] ? \sprintf(' in %s', $info['file']) : ''));
-            } elseif (!$info['valid']) {
-                ++$erroredFiles;
+            } elseif (! $info['valid']) {
+                $erroredFiles++;
                 $io->text('<error> ERROR </error>'.($info['file'] ? \sprintf(' in %s', $info['file']) : ''));
                 $io->listing(array_map(function ($error) use ($info, $githubReporter) {
                     // general document errors have a '-1' line number
@@ -204,8 +203,8 @@ class XliffLintCommand extends Command
 
         array_walk($filesInfo, function (&$v) use (&$errors) {
             $v['file'] = (string) $v['file'];
-            if (!$v['valid']) {
-                ++$errors;
+            if (! $v['valid']) {
+                $errors++;
             }
         });
 
@@ -226,7 +225,7 @@ class XliffLintCommand extends Command
         }
 
         foreach ($this->getDirectoryIterator($fileOrDirectory) as $file) {
-            if (!\in_array($file->getExtension(), ['xlf', 'xliff'], true)) {
+            if (! \in_array($file->getExtension(), ['xlf', 'xliff'], true)) {
                 continue;
             }
 

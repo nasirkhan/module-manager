@@ -21,7 +21,7 @@ final class Pattern
         if (isset($this->pattern[0]) && $this->pattern[0] === '/') {
             $this->regex = $this->pattern;
         } else {
-            $this->regex = '/' . $this->pattern . '/i';
+            $this->regex = '/'.$this->pattern.'/i';
         }
     }
 

@@ -28,7 +28,7 @@ final class DateHeader extends AbstractHeader
     }
 
     /**
-     * @param \DateTimeInterface $body
+     * @param  \DateTimeInterface  $body
      */
     public function setBody(mixed $body): void
     {

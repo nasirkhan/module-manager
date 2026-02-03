@@ -41,17 +41,17 @@ final class MapInput
     {
         $reflection = new ReflectionMember($member);
 
-        if (!$self = $reflection->getAttribute(self::class)) {
+        if (! $self = $reflection->getAttribute(self::class)) {
             return null;
         }
 
         $type = $reflection->getType();
 
-        if (!$type instanceof \ReflectionNamedType) {
+        if (! $type instanceof \ReflectionNamedType) {
             throw new LogicException(\sprintf('The input %s "%s" must have a named type.', $reflection->getMemberName(), $member->name));
         }
 
-        if (!class_exists($class = $type->getName())) {
+        if (! class_exists($class = $type->getName())) {
             throw new LogicException(\sprintf('The input class "%s" does not exist.', $type->getName()));
         }
 
@@ -66,12 +66,12 @@ final class MapInput
                 $self->definition[$property->name] = $input;
             }
 
-            if (isset($self->definition[$property->name]) && (!$property->isPublic() || $property->isStatic())) {
+            if (isset($self->definition[$property->name]) && (! $property->isPublic() || $property->isStatic())) {
                 throw new LogicException(\sprintf('The input property "%s::$%s" must be public and non-static.', $self->class->name, $property->name));
             }
         }
 
-        if (!$self->definition) {
+        if (! $self->definition) {
             throw new LogicException(\sprintf('The input class "%s" must have at least one argument or option.', $self->class->name));
         }
 
@@ -111,7 +111,7 @@ final class MapInput
         foreach ($this->definition as $name => $spec) {
             $property = $this->class->getProperty($name);
 
-            if (!$property->isInitialized($object) || \in_array($value = $property->getValue($object), [null, []], true)) {
+            if (! $property->isInitialized($object) || \in_array($value = $property->getValue($object), [null, []], true)) {
                 continue;
             }
 

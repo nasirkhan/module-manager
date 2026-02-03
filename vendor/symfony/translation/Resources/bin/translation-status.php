@@ -13,7 +13,7 @@ if ('cli' !== \PHP_SAPI) {
     throw new Exception('This script must be run from the command line.');
 }
 
-$usageInstructions = <<<END
+$usageInstructions = <<<'END'
 
       Usage instructions
       -------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ foreach (array_slice($argv, 1) as $argumentOrOption) {
 }
 
 foreach ($config['original_files'] as $originalFilePath) {
-    if (!file_exists($originalFilePath)) {
+    if (! file_exists($originalFilePath)) {
         echo sprintf('The following file does not exist. Make sure that you execute this command at the root dir of the Symfony code repository.%s  %s', \PHP_EOL, $originalFilePath);
         exit(1);
     }
@@ -182,7 +182,7 @@ function findTransUnitMismatches(array $baseTranslationKeys, array $translatedKe
     $mismatches = [];
 
     foreach ($baseTranslationKeys as $translationId => $translationKey) {
-        if (!isset($translatedKeys[$translationId])) {
+        if (! isset($translatedKeys[$translationId])) {
             continue;
         }
         if ($translatedKeys[$translationId] !== $translationKey) {
@@ -212,7 +212,7 @@ function printTable($translations, $verboseOutput, bool $includeCompletedLanguag
     $longestLocaleNameLength = max(array_map('strlen', array_keys($translations)));
 
     foreach ($translations as $locale => $translation) {
-        if (!$includeCompletedLanguages && $translation['is_completed']) {
+        if (! $includeCompletedLanguages && $translation['is_completed']) {
             continue;
         }
 

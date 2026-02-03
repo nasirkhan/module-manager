@@ -23,7 +23,7 @@ final class SqliteCaster
     public static function castSqlite3Result(\SQLite3Result $result, array $a, Stub $stub, bool $isNested): array
     {
         $numColumns = $result->numColumns();
-        for ($i = 0; $i < $numColumns; ++$i) {
+        for ($i = 0; $i < $numColumns; $i++) {
             $a[Caster::PREFIX_VIRTUAL.'columnNames'][$i] = $result->columnName($i);
         }
 

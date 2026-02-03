@@ -69,7 +69,7 @@ final class FFICaster
     {
         $arguments = [];
 
-        for ($i = 0, $count = $type->getFuncParameterCount(); $i < $count; ++$i) {
+        for ($i = 0, $count = $type->getFuncParameterCount(); $i < $count; $i++) {
             $param = $type->getFuncParameterType($i);
 
             $arguments[] = $param->getName();
@@ -115,7 +115,7 @@ final class FFICaster
     private static function castFFIStringValue(CData $data): string|CutStub
     {
         $result = [];
-        $ffi = \FFI::cdef(<<<C
+        $ffi = \FFI::cdef(<<<'C'
                 size_t zend_get_page_size(void);
             C);
 
@@ -126,7 +126,7 @@ final class FFICaster
         // accessing memory in the same page as $start is safe
         $max = min(self::MAX_STRING_LENGTH, ($start | ($pageSize - 1)) - $start);
 
-        for ($i = 0; $i < $max; ++$i) {
+        for ($i = 0; $i < $max; $i++) {
             $result[$i] = $data[$i];
 
             if ("\0" === $data[$i]) {

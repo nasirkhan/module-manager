@@ -22,7 +22,7 @@ use Symfony\Component\Routing\RouteCollection;
 final class AttributeServicesLoader extends Loader
 {
     /**
-     * @param class-string[] $taggedClasses
+     * @param  class-string[]  $taggedClasses
      */
     public function __construct(
         private array $taggedClasses = [],

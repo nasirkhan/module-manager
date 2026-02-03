@@ -18,7 +18,7 @@ use League\CommonMark\Parser\Block\BlockContinueParserInterface;
 interface MarkdownParserStateInterface
 {
     /**
-     * Returns the deepest open block parser
+     * Returns the deepest open block parser.
      */
     public function getActiveBlockParser(): BlockContinueParserInterface;
 

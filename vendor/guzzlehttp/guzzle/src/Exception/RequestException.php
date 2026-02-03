@@ -9,7 +9,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * HTTP Request exception
+ * HTTP Request exception.
  */
 class RequestException extends TransferException implements RequestExceptionInterface
 {
@@ -44,7 +44,7 @@ class RequestException extends TransferException implements RequestExceptionInte
     }
 
     /**
-     * Wrap non-RequestExceptions with a RequestException
+     * Wrap non-RequestExceptions with a RequestException.
      */
     public static function wrapException(RequestInterface $request, \Throwable $e): RequestException
     {
@@ -52,13 +52,13 @@ class RequestException extends TransferException implements RequestExceptionInte
     }
 
     /**
-     * Factory method to create a new exception with a normalized error message
+     * Factory method to create a new exception with a normalized error message.
      *
-     * @param RequestInterface             $request        Request sent
-     * @param ResponseInterface            $response       Response received
-     * @param \Throwable|null              $previous       Previous exception
-     * @param array                        $handlerContext Optional handler context
-     * @param BodySummarizerInterface|null $bodySummarizer Optional body summarizer
+     * @param  RequestInterface  $request  Request sent
+     * @param  ResponseInterface  $response  Response received
+     * @param  \Throwable|null  $previous  Previous exception
+     * @param  array  $handlerContext  Optional handler context
+     * @param  BodySummarizerInterface|null  $bodySummarizer  Optional body summarizer
      */
     public static function create(
         RequestInterface $request,
@@ -67,7 +67,7 @@ class RequestException extends TransferException implements RequestExceptionInte
         array $handlerContext = [],
         ?BodySummarizerInterface $bodySummarizer = null
     ): self {
-        if (!$response) {
+        if (! $response) {
             return new self(
                 'Error completing request',
                 $request,
@@ -112,7 +112,7 @@ class RequestException extends TransferException implements RequestExceptionInte
     }
 
     /**
-     * Get the request that caused the exception
+     * Get the request that caused the exception.
      */
     public function getRequest(): RequestInterface
     {
@@ -120,7 +120,7 @@ class RequestException extends TransferException implements RequestExceptionInte
     }
 
     /**
-     * Get the associated response
+     * Get the associated response.
      */
     public function getResponse(): ?ResponseInterface
     {
@@ -128,7 +128,7 @@ class RequestException extends TransferException implements RequestExceptionInte
     }
 
     /**
-     * Check if a response was received
+     * Check if a response was received.
      */
     public function hasResponse(): bool
     {

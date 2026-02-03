@@ -69,8 +69,7 @@ class CollectionConfigurator
     /**
      * Sets the prefix to add to the path of all child routes.
      *
-     * @param string|array $prefix the prefix, or the localized prefixes
-     *
+     * @param  string|array  $prefix  the prefix, or the localized prefixes
      * @return $this
      */
     final public function prefix(string|array $prefix): static
@@ -82,7 +81,7 @@ class CollectionConfigurator
                 throw new \LogicException(\sprintf('Collection "%s" is missing prefixes for locale(s) "%s".', $this->name, implode('", "', array_keys($missing))));
             } else {
                 foreach ($prefix as $locale => $localePrefix) {
-                    if (!isset($this->parentPrefixes[$locale])) {
+                    if (! isset($this->parentPrefixes[$locale])) {
                         throw new \LogicException(\sprintf('Collection "%s" with locale "%s" is missing a corresponding prefix in its parent collection.', $this->name, $locale));
                     }
 
@@ -102,8 +101,7 @@ class CollectionConfigurator
     /**
      * Sets the host to use for all child routes.
      *
-     * @param string|array $host the host, or the localized hosts
-     *
+     * @param  string|array  $host  the host, or the localized hosts
      * @return $this
      */
     final public function host(string|array $host): static

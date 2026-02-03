@@ -22,7 +22,7 @@ class PhpBridgeSessionStorage extends NativeSessionStorage
 {
     public function __construct(AbstractProxy|\SessionHandlerInterface|null $handler = null, ?MetadataBag $metaBag = null)
     {
-        if (!\extension_loaded('session')) {
+        if (! \extension_loaded('session')) {
             throw new \LogicException('PHP extension "session" is required.');
         }
 

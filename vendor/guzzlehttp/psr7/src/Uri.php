@@ -264,7 +264,7 @@ class Uri implements UriInterface, \JsonSerializable
     {
         return $uri->getScheme() === ''
             && $uri->getAuthority() === ''
-            && (!isset($uri->getPath()[0]) || $uri->getPath()[0] !== '/');
+            && (! isset($uri->getPath()[0]) || $uri->getPath()[0] !== '/');
     }
 
     /**
@@ -274,8 +274,8 @@ class Uri implements UriInterface, \JsonSerializable
      * component, identical to the base URI. When no base URI is given, only an empty
      * URI reference (apart from its fragment) is considered a same-document reference.
      *
-     * @param UriInterface      $uri  The URI to check
-     * @param UriInterface|null $base An optional base URI to compare against
+     * @param  UriInterface  $uri  The URI to check
+     * @param  UriInterface|null  $base  An optional base URI to compare against
      *
      * @see https://datatracker.ietf.org/doc/html/rfc3986#section-4.4
      */
@@ -299,8 +299,8 @@ class Uri implements UriInterface, \JsonSerializable
      * Any existing query string values that exactly match the provided key are
      * removed.
      *
-     * @param UriInterface $uri URI to use as a base.
-     * @param string       $key Query string key to remove.
+     * @param  UriInterface  $uri  URI to use as a base.
+     * @param  string  $key  Query string key to remove.
      */
     public static function withoutQueryValue(UriInterface $uri, string $key): UriInterface
     {
@@ -318,9 +318,9 @@ class Uri implements UriInterface, \JsonSerializable
      * A value of null will set the query string key without a value, e.g. "key"
      * instead of "key=value".
      *
-     * @param UriInterface $uri   URI to use as a base.
-     * @param string       $key   Key to set.
-     * @param string|null  $value Value to set
+     * @param  UriInterface  $uri  URI to use as a base.
+     * @param  string  $key  Key to set.
+     * @param  string|null  $value  Value to set
      */
     public static function withQueryValue(UriInterface $uri, string $key, ?string $value): UriInterface
     {
@@ -336,8 +336,8 @@ class Uri implements UriInterface, \JsonSerializable
      *
      * It has the same behavior as withQueryValue() but for an associative array of key => value.
      *
-     * @param UriInterface    $uri           URI to use as a base.
-     * @param (string|null)[] $keyValueArray Associative array of key and values
+     * @param  UriInterface  $uri  URI to use as a base.
+     * @param  (string|null)[]  $keyValueArray  Associative array of key and values
      */
     public static function withQueryValues(UriInterface $uri, array $keyValueArray): UriInterface
     {
@@ -538,7 +538,7 @@ class Uri implements UriInterface, \JsonSerializable
     /**
      * Apply parse_url parts to a URI.
      *
-     * @param array $parts Array of parse_url parts to apply.
+     * @param  array  $parts  Array of parse_url parts to apply.
      */
     private function applyParts(array $parts): void
     {
@@ -571,13 +571,13 @@ class Uri implements UriInterface, \JsonSerializable
     }
 
     /**
-     * @param mixed $scheme
+     * @param  mixed  $scheme
      *
      * @throws \InvalidArgumentException If the scheme is invalid.
      */
     private function filterScheme($scheme): string
     {
-        if (!is_string($scheme)) {
+        if (! is_string($scheme)) {
             throw new \InvalidArgumentException('Scheme must be a string');
         }
 
@@ -585,13 +585,13 @@ class Uri implements UriInterface, \JsonSerializable
     }
 
     /**
-     * @param mixed $component
+     * @param  mixed  $component
      *
      * @throws \InvalidArgumentException If the user info is invalid.
      */
     private function filterUserInfoComponent($component): string
     {
-        if (!is_string($component)) {
+        if (! is_string($component)) {
             throw new \InvalidArgumentException('User info must be a string');
         }
 
@@ -603,13 +603,13 @@ class Uri implements UriInterface, \JsonSerializable
     }
 
     /**
-     * @param mixed $host
+     * @param  mixed  $host
      *
      * @throws \InvalidArgumentException If the host is invalid.
      */
     private function filterHost($host): string
     {
-        if (!is_string($host)) {
+        if (! is_string($host)) {
             throw new \InvalidArgumentException('Host must be a string');
         }
 
@@ -617,7 +617,7 @@ class Uri implements UriInterface, \JsonSerializable
     }
 
     /**
-     * @param mixed $port
+     * @param  mixed  $port
      *
      * @throws \InvalidArgumentException If the port is invalid.
      */
@@ -638,8 +638,7 @@ class Uri implements UriInterface, \JsonSerializable
     }
 
     /**
-     * @param (string|int)[] $keys
-     *
+     * @param  (string|int)[]  $keys
      * @return string[]
      */
     private static function getFilteredQueryString(UriInterface $uri, array $keys): array
@@ -655,7 +654,7 @@ class Uri implements UriInterface, \JsonSerializable
         }, $keys);
 
         return array_filter(explode('&', $current), function ($part) use ($decodedKeys) {
-            return !in_array(rawurldecode(explode('=', $part)[0]), $decodedKeys, true);
+            return ! in_array(rawurldecode(explode('=', $part)[0]), $decodedKeys, true);
         });
     }
 
@@ -681,15 +680,15 @@ class Uri implements UriInterface, \JsonSerializable
     }
 
     /**
-     * Filters the path of a URI
+     * Filters the path of a URI.
      *
-     * @param mixed $path
+     * @param  mixed  $path
      *
      * @throws \InvalidArgumentException If the path is invalid.
      */
     private function filterPath($path): string
     {
-        if (!is_string($path)) {
+        if (! is_string($path)) {
             throw new \InvalidArgumentException('Path must be a string');
         }
 
@@ -703,13 +702,13 @@ class Uri implements UriInterface, \JsonSerializable
     /**
      * Filters the query string or fragment of a URI.
      *
-     * @param mixed $str
+     * @param  mixed  $str
      *
      * @throws \InvalidArgumentException If the query or fragment is invalid.
      */
     private function filterQueryAndFragment($str): string
     {
-        if (!is_string($str)) {
+        if (! is_string($str)) {
             throw new \InvalidArgumentException('Query and fragment must be a string');
         }
 

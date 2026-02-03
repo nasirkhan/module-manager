@@ -19,7 +19,7 @@ class Patterns
             return $pattern->getPattern();
         }, $patterns);
 
-        $this->regex = '/^(?:' . implode('|', $patterns) . ')$/i';
+        $this->regex = '/^(?:'.implode('|', $patterns).')$/i';
     }
 
     public function matches(string $word): bool

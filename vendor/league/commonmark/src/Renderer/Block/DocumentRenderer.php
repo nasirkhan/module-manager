@@ -25,7 +25,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class DocumentRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param Document $node
+     * @param  Document  $node
      *
      * {@inheritDoc}
      *
@@ -37,7 +37,7 @@ final class DocumentRenderer implements NodeRendererInterface, XmlNodeRendererIn
 
         $wholeDoc = $childRenderer->renderNodes($node->children());
 
-        return $wholeDoc === '' ? '' : $wholeDoc . "\n";
+        return $wholeDoc === '' ? '' : $wholeDoc."\n";
     }
 
     public function getXmlTagName(Node $node): string

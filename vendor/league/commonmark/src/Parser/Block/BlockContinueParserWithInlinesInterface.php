@@ -18,7 +18,7 @@ use League\CommonMark\Parser\InlineParserEngineInterface;
 interface BlockContinueParserWithInlinesInterface extends BlockContinueParserInterface
 {
     /**
-     * Parse any inlines inside of the current block
+     * Parse any inlines inside of the current block.
      */
     public function parseInlines(InlineParserEngineInterface $inlineParser): void;
 }

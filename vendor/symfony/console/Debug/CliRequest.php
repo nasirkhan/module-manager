@@ -48,7 +48,8 @@ final class CliRequest extends Request
 
     public function getResponse(): Response
     {
-        return new class($this->command->exitCode) extends Response {
+        return new class($this->command->exitCode) extends Response
+        {
             public function __construct(private readonly int $exitCode)
             {
                 parent::__construct();

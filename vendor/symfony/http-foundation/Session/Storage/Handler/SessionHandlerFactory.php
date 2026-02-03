@@ -48,7 +48,7 @@ class SessionHandlerFactory
             case $connection instanceof \PDO:
                 return new PdoSessionHandler($connection);
 
-            case !\is_string($connection):
+            case ! \is_string($connection):
                 throw new \InvalidArgumentException(\sprintf('Unsupported Connection: "%s".', get_debug_type($connection)));
             case str_starts_with($connection, 'file://'):
                 $savePath = substr($connection, 7);
@@ -60,7 +60,7 @@ class SessionHandlerFactory
             case str_starts_with($connection, 'valkey:'):
             case str_starts_with($connection, 'valkeys:'):
             case str_starts_with($connection, 'memcached:'):
-                if (!class_exists(AbstractAdapter::class)) {
+                if (! class_exists(AbstractAdapter::class)) {
                     throw new \InvalidArgumentException('Unsupported Redis or Memcached DSN. Try running "composer require symfony/cache".');
                 }
                 $handlerClass = str_starts_with($connection, 'memcached:') ? MemcachedSessionHandler::class : RedisSessionHandler::class;
@@ -70,7 +70,7 @@ class SessionHandlerFactory
                 return new $handlerClass($connection, array_intersect_key($options, ['prefix' => 1, 'ttl' => 1]));
 
             case str_starts_with($connection, 'pdo_oci://'):
-                if (!class_exists(DriverManager::class)) {
+                if (! class_exists(DriverManager::class)) {
                     throw new \InvalidArgumentException('Unsupported PDO OCI DSN. Try running "composer require doctrine/dbal".');
                 }
                 $connection[3] = '-';

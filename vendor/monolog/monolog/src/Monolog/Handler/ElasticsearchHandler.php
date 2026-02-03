@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,21 +13,21 @@
 
 namespace Monolog\Handler;
 
-use Elastic\Elasticsearch\Response\Elasticsearch;
-use Throwable;
-use RuntimeException;
-use Monolog\Level;
-use Monolog\Formatter\FormatterInterface;
-use Monolog\Formatter\ElasticsearchFormatter;
-use InvalidArgumentException;
-use Elasticsearch\Common\Exceptions\RuntimeException as ElasticsearchRuntimeException;
-use Elasticsearch\Client;
-use Monolog\LogRecord;
-use Elastic\Elasticsearch\Exception\InvalidArgumentException as ElasticInvalidArgumentException;
 use Elastic\Elasticsearch\Client as Client8;
+use Elastic\Elasticsearch\Exception\InvalidArgumentException as ElasticInvalidArgumentException;
+use Elastic\Elasticsearch\Response\Elasticsearch;
+use Elasticsearch\Client;
+use Elasticsearch\Common\Exceptions\RuntimeException as ElasticsearchRuntimeException;
+use InvalidArgumentException;
+use Monolog\Formatter\ElasticsearchFormatter;
+use Monolog\Formatter\FormatterInterface;
+use Monolog\Level;
+use Monolog\LogRecord;
+use RuntimeException;
+use Throwable;
 
 /**
- * Elasticsearch handler
+ * Elasticsearch handler.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/client/php-api/current/index.html
  *
@@ -44,6 +46,7 @@ use Elastic\Elasticsearch\Client as Client8;
  *    $log->pushHandler($handler);
  *
  * @author Avtandil Kikabidze <akalongman@gmail.com>
+ *
  * @phpstan-type Options array{
  *     index: string,
  *     type: string,
@@ -63,6 +66,7 @@ class ElasticsearchHandler extends AbstractProcessingHandler
 
     /**
      * @var mixed[] Handler config options
+     *
      * @phpstan-var Options
      */
     protected array $options;
@@ -73,8 +77,8 @@ class ElasticsearchHandler extends AbstractProcessingHandler
     private $needsType;
 
     /**
-     * @param Client|Client8 $client  Elasticsearch Client object
-     * @param mixed[]        $options Handler configuration
+     * @param  Client|Client8  $client  Elasticsearch Client object
+     * @param  mixed[]  $options  Handler configuration
      *
      * @phpstan-param InputOptions $options
      */
@@ -84,10 +88,10 @@ class ElasticsearchHandler extends AbstractProcessingHandler
         $this->client = $client;
         $this->options = array_merge(
             [
-                'index'        => 'monolog', // Elastic index name
-                'type'         => '_doc',    // Elastic document type
+                'index' => 'monolog', // Elastic index name
+                'type' => '_doc',    // Elastic document type
                 'ignore_error' => false,     // Suppress Elasticsearch exceptions
-                'op_type'      => 'index',   // Elastic op_type (index or create) (https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html#docs-index-api-op_type)
+                'op_type' => 'index',   // Elastic op_type (index or create) (https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html#docs-index-api-op_type)
             ],
             $options
         );
@@ -122,7 +126,7 @@ class ElasticsearchHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Getter options
+     * Getter options.
      *
      * @return mixed[]
      *
@@ -151,9 +155,10 @@ class ElasticsearchHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Use Elasticsearch bulk API to send list of documents
+     * Use Elasticsearch bulk API to send list of documents.
      *
-     * @param  array<array<mixed>> $records Records + _index/_type keys
+     * @param  array<array<mixed>>  $records  Records + _index/_type keys
+     *
      * @throws \RuntimeException
      */
     protected function bulkSend(array $records): void
@@ -167,7 +172,7 @@ class ElasticsearchHandler extends AbstractProcessingHandler
                 $params['body'][] = [
                     $this->options['op_type'] => $this->needsType ? [
                         '_index' => $record['_index'],
-                        '_type'  => $record['_type'],
+                        '_type' => $record['_type'],
                     ] : [
                         '_index' => $record['_index'],
                     ],
@@ -191,11 +196,11 @@ class ElasticsearchHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Creates elasticsearch exception from responses array
+     * Creates elasticsearch exception from responses array.
      *
      * Only the first error is converted into an exception.
      *
-     * @param mixed[]|Elasticsearch $responses returned by $this->client->bulk()
+     * @param  mixed[]|Elasticsearch  $responses  returned by $this->client->bulk()
      */
     protected function createExceptionFromResponses($responses): Throwable
     {
@@ -217,16 +222,16 @@ class ElasticsearchHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Creates elasticsearch exception from error array
+     * Creates elasticsearch exception from error array.
      *
-     * @param mixed[] $error
+     * @param  mixed[]  $error
      */
     protected function createExceptionFromError(array $error): Throwable
     {
         $previous = isset($error['caused_by']) ? $this->createExceptionFromError($error['caused_by']) : null;
 
         if (class_exists(ElasticInvalidArgumentException::class)) {
-            return new ElasticInvalidArgumentException($error['type'] . ': ' . $error['reason'], 0, $previous);
+            return new ElasticInvalidArgumentException($error['type'].': '.$error['reason'], 0, $previous);
         }
 
         if (class_exists(ElasticsearchRuntimeException::class)) {

@@ -116,7 +116,7 @@ trait Mixin
 
                 $result = $closure(...$parameters);
 
-                if (!($result instanceof $className)) {
+                if (! ($result instanceof $className)) {
                     return $result;
                 }
 

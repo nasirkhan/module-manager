@@ -236,7 +236,7 @@ class SplCaster
         $prefix = Caster::PREFIX_VIRTUAL;
         $flags = $c->getFlags();
 
-        if (!($flags & \ArrayObject::STD_PROP_LIST)) {
+        if (! ($flags & \ArrayObject::STD_PROP_LIST)) {
             $c->setFlags(\ArrayObject::STD_PROP_LIST);
             $a = Caster::castObject($c, $c::class, method_exists($c, '__debugInfo'), $stub->class);
             $c->setFlags($flags);

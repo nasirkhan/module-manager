@@ -75,8 +75,7 @@ final class Headers
     }
 
     /**
-     * @param array<Address|string> $addresses
-     *
+     * @param  array<Address|string>  $addresses
      * @return $this
      */
     public function addMailboxListHeader(string $name, array $addresses): static
@@ -147,7 +146,7 @@ final class Headers
             $method = 'addTextHeader';
         } elseif ('addIdentificationHeader' === $method) {
             $method = 'addIdHeader';
-        } elseif ('addMailboxListHeader' === $method && !\is_array($argument)) {
+        } elseif ('addMailboxListHeader' === $method && ! \is_array($argument)) {
             $argument = [$argument];
         }
 
@@ -181,7 +180,7 @@ final class Headers
     public function get(string $name): ?HeaderInterface
     {
         $name = strtolower($name);
-        if (!isset($this->headers[$name])) {
+        if (! isset($this->headers[$name])) {
             return null;
         }
 
@@ -227,11 +226,11 @@ final class Headers
     {
         $name = strtolower($header->getName());
         $headerClasses = self::HEADER_CLASS_MAP[$name] ?? [];
-        if (!\is_array($headerClasses)) {
+        if (! \is_array($headerClasses)) {
             $headerClasses = [$headerClasses];
         }
 
-        if (!$headerClasses) {
+        if (! $headerClasses) {
             return;
         }
 
@@ -285,12 +284,12 @@ final class Headers
 
     public function getHeaderParameter(string $name, string $parameter): ?string
     {
-        if (!$this->has($name)) {
+        if (! $this->has($name)) {
             return null;
         }
 
         $header = $this->get($name);
-        if (!$header instanceof ParameterizedHeader) {
+        if (! $header instanceof ParameterizedHeader) {
             throw new LogicException(\sprintf('Unable to get parameter "%s" on header "%s" as the header is not of class "%s".', $parameter, $name, ParameterizedHeader::class));
         }
 
@@ -302,12 +301,12 @@ final class Headers
      */
     public function setHeaderParameter(string $name, string $parameter, ?string $value): void
     {
-        if (!$this->has($name)) {
+        if (! $this->has($name)) {
             throw new LogicException(\sprintf('Unable to set parameter "%s" on header "%s" as the header is not defined.', $parameter, $name));
         }
 
         $header = $this->get($name);
-        if (!$header instanceof ParameterizedHeader) {
+        if (! $header instanceof ParameterizedHeader) {
             throw new LogicException(\sprintf('Unable to set parameter "%s" on header "%s" as the header is not of class "%s".', $parameter, $name, ParameterizedHeader::class));
         }
 

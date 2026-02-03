@@ -223,7 +223,7 @@ class Inflector
     public function __construct(WordInflector $singularizer, WordInflector $pluralizer)
     {
         $this->singularizer = $singularizer;
-        $this->pluralizer   = $pluralizer;
+        $this->pluralizer = $pluralizer;
     }
 
     /**
@@ -279,9 +279,8 @@ class Inflector
      * ?>
      * </code>
      *
-     * @param string $string     The string to operate on.
-     * @param string $delimiters A list of word separators.
-     *
+     * @param  string  $string  The string to operate on.
+     * @param  string  $delimiters  A list of word separators.
      * @return string The string with all delimiter-separated words capitalized.
      */
     public function capitalize(string $string, string $delimiters = " \n\t\r\0\x0B-"): string
@@ -292,7 +291,7 @@ class Inflector
     /**
      * Checks if the given string seems like it has utf8 characters in it.
      *
-     * @param string $string The string to check for utf8 characters in.
+     * @param  string  $string  The string to check for utf8 characters in.
      */
     public function seemsUtf8(string $string): bool
     {
@@ -328,8 +327,7 @@ class Inflector
     /**
      * Remove any illegal characters, accents, etc.
      *
-     * @param  string $string String to unaccent
-     *
+     * @param  string  $string  String to unaccent
      * @return string Unaccented string
      */
     public function unaccent(string $string): string
@@ -346,70 +344,70 @@ class Inflector
             // Assume ISO-8859-1 if not UTF-8
             $characters['in'] =
                   chr(128)
-                . chr(131)
-                . chr(138)
-                . chr(142)
-                . chr(154)
-                . chr(158)
-                . chr(159)
-                . chr(162)
-                . chr(165)
-                . chr(181)
-                . chr(192)
-                . chr(193)
-                . chr(194)
-                . chr(195)
-                . chr(196)
-                . chr(197)
-                . chr(199)
-                . chr(200)
-                . chr(201)
-                . chr(202)
-                . chr(203)
-                . chr(204)
-                . chr(205)
-                . chr(206)
-                . chr(207)
-                . chr(209)
-                . chr(210)
-                . chr(211)
-                . chr(212)
-                . chr(213)
-                . chr(214)
-                . chr(216)
-                . chr(217)
-                . chr(218)
-                . chr(219)
-                . chr(220)
-                . chr(221)
-                . chr(224)
-                . chr(225)
-                . chr(226)
-                . chr(227)
-                . chr(228)
-                . chr(229)
-                . chr(231)
-                . chr(232)
-                . chr(233)
-                . chr(234)
-                . chr(235)
-                . chr(236)
-                . chr(237)
-                . chr(238)
-                . chr(239)
-                . chr(241)
-                . chr(242)
-                . chr(243)
-                . chr(244)
-                . chr(245)
-                . chr(246)
-                . chr(248)
-                . chr(249)
-                . chr(250)
-                . chr(251)
-                . chr(252)
-                . chr(253)
-                . chr(255);
+                .chr(131)
+                .chr(138)
+                .chr(142)
+                .chr(154)
+                .chr(158)
+                .chr(159)
+                .chr(162)
+                .chr(165)
+                .chr(181)
+                .chr(192)
+                .chr(193)
+                .chr(194)
+                .chr(195)
+                .chr(196)
+                .chr(197)
+                .chr(199)
+                .chr(200)
+                .chr(201)
+                .chr(202)
+                .chr(203)
+                .chr(204)
+                .chr(205)
+                .chr(206)
+                .chr(207)
+                .chr(209)
+                .chr(210)
+                .chr(211)
+                .chr(212)
+                .chr(213)
+                .chr(214)
+                .chr(216)
+                .chr(217)
+                .chr(218)
+                .chr(219)
+                .chr(220)
+                .chr(221)
+                .chr(224)
+                .chr(225)
+                .chr(226)
+                .chr(227)
+                .chr(228)
+                .chr(229)
+                .chr(231)
+                .chr(232)
+                .chr(233)
+                .chr(234)
+                .chr(235)
+                .chr(236)
+                .chr(237)
+                .chr(238)
+                .chr(239)
+                .chr(241)
+                .chr(242)
+                .chr(243)
+                .chr(244)
+                .chr(245)
+                .chr(246)
+                .chr(248)
+                .chr(249)
+                .chr(250)
+                .chr(251)
+                .chr(252)
+                .chr(253)
+                .chr(255);
 
             $characters['out'] = 'EfSZszYcYuAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy';
 
@@ -439,10 +437,9 @@ class Inflector
 
     /**
      * Convert any passed string to a url friendly string.
-     * Converts 'My first blog post' to 'my-first-blog-post'
+     * Converts 'My first blog post' to 'my-first-blog-post'.
      *
-     * @param  string $string String to urlize.
-     *
+     * @param  string  $string  String to urlize.
      * @return string Urlized string.
      */
     public function urlize(string $string): string
@@ -484,8 +481,7 @@ class Inflector
     /**
      * Returns a word in singular form.
      *
-     * @param string $word The word in plural form.
-     *
+     * @param  string  $word  The word in plural form.
      * @return string The word in singular form.
      */
     public function singularize(string $word): string
@@ -496,8 +492,7 @@ class Inflector
     /**
      * Returns a word in plural form.
      *
-     * @param string $word The word in singular form.
-     *
+     * @param  string  $word  The word in singular form.
      * @return string The word in plural form.
      */
     public function pluralize(string $word): string

@@ -24,7 +24,7 @@ namespace Symfony\Component\CssSelector\Node;
 class MatchingNode extends AbstractNode
 {
     /**
-     * @param array<NodeInterface> $arguments
+     * @param  array<NodeInterface>  $arguments
      */
     public function __construct(
         public readonly NodeInterface $selector,

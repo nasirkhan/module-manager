@@ -42,7 +42,7 @@ final class Html5EntityDecoder
     }
 
     /**
-     * @param mixed $number
+     * @param  mixed  $number
      *
      * @psalm-pure
      */
@@ -54,7 +54,7 @@ final class Html5EntityDecoder
             return self::fromHex('fffd');
         }
 
-        $entity = '&#' . $number . ';';
+        $entity = '&#'.$number.';';
 
         $converted = \mb_decode_numericentity($entity, [0x0, 0x2FFFF, 0, 0xFFFF], 'UTF-8');
 

@@ -13,7 +13,7 @@ interface FilesystemWriter
     public function write(string $location, string $contents, array $config = []): void;
 
     /**
-     * @param mixed $contents
+     * @param  mixed  $contents
      *
      * @throws UnableToWriteFile
      * @throws FilesystemException

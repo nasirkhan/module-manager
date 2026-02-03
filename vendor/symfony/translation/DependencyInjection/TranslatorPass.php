@@ -20,7 +20,7 @@ class TranslatorPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->hasDefinition('translator.default')) {
+        if (! $container->hasDefinition('translator.default')) {
             return;
         }
 
@@ -46,15 +46,14 @@ class TranslatorPass implements CompilerPassInterface
         $container
             ->findDefinition('translator.default')
             ->replaceArgument(0, ServiceLocatorTagPass::register($container, $loaderRefs))
-            ->replaceArgument(3, $loaders)
-        ;
+            ->replaceArgument(3, $loaders);
 
         if ($container->hasDefinition('validator') && $container->hasDefinition('translation.extractor.visitor.constraint')) {
             $constraintVisitorDefinition = $container->getDefinition('translation.extractor.visitor.constraint');
             $constraintClassNames = [];
 
             foreach ($container->getDefinitions() as $definition) {
-                if (!$definition->hasTag('validator.constraint_validator')) {
+                if (! $definition->hasTag('validator.constraint_validator')) {
                     continue;
                 }
                 // Resolve constraint validator FQCN even if defined as %foo.validator.class% parameter
@@ -66,7 +65,7 @@ class TranslatorPass implements CompilerPassInterface
             $constraintVisitorDefinition->setArgument(0, $constraintClassNames);
         }
 
-        if (!$container->hasParameter('twig.default_path')) {
+        if (! $container->hasParameter('twig.default_path')) {
             return;
         }
 

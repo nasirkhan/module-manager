@@ -25,7 +25,7 @@ final class MentionExtension implements ConfigurableExtensionInterface
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {
         $isAValidPartialRegex = static function (string $regex): bool {
-            $regex = '/' . $regex . '/i';
+            $regex = '/'.$regex.'/i';
 
             return @\preg_match($regex, '') !== false;
         };

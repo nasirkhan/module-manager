@@ -124,7 +124,7 @@ class Terminal
         }
 
         // skip check if shell_exec function is disabled
-        if (!\function_exists('shell_exec')) {
+        if (! \function_exists('shell_exec')) {
             return false;
         }
 
@@ -140,7 +140,7 @@ class Terminal
                 // or [w, h] from "wxh"
                 self::$width = (int) $matches[1];
                 self::$height = isset($matches[4]) ? (int) $matches[4] : (int) $matches[2];
-            } elseif (!sapi_windows_vt100_support(fopen('php://stdout', 'w')) && self::hasSttyAvailable()) {
+            } elseif (! sapi_windows_vt100_support(fopen('php://stdout', 'w')) && self::hasSttyAvailable()) {
                 // only use stty on Windows if the terminal does not support vt100 (e.g. Windows 7 + git-bash)
                 // testing for stty in a Windows 10 vt100-enabled console will implicitly disable vt100 support on STDOUT
                 self::initDimensionsUsingStty();
@@ -181,7 +181,7 @@ class Terminal
     {
         $info = self::readFromProcess('mode CON');
 
-        if (null === $info || !preg_match('/--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n/', $info, $matches)) {
+        if (null === $info || ! preg_match('/--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n/', $info, $matches)) {
             return null;
         }
 
@@ -198,7 +198,7 @@ class Terminal
 
     private static function readFromProcess(string|array $command): ?string
     {
-        if (!\function_exists('proc_open')) {
+        if (! \function_exists('proc_open')) {
             return null;
         }
 
@@ -209,7 +209,7 @@ class Terminal
 
         $cp = \function_exists('sapi_windows_cp_set') ? sapi_windows_cp_get() : 0;
 
-        if (!$process = @proc_open($command, $descriptorspec, $pipes, null, null, ['suppress_errors' => true])) {
+        if (! $process = @proc_open($command, $descriptorspec, $pipes, null, null, ['suppress_errors' => true])) {
             return null;
         }
 

@@ -38,9 +38,9 @@ final class LazyOption extends Option
 
     /**
      * @template S
-     * @param callable(mixed...):(Option<S>) $callback
-     * @param array<int, mixed>              $arguments
      *
+     * @param  callable(mixed...):(Option<S>)  $callback
+     * @param  array<int, mixed>  $arguments
      * @return LazyOption<S>
      */
     public static function create($callback, array $arguments = []): self
@@ -49,12 +49,12 @@ final class LazyOption extends Option
     }
 
     /**
-     * @param callable(mixed...):(Option<T>) $callback
-     * @param array<int, mixed>              $arguments
+     * @param  callable(mixed...):(Option<T>)  $callback
+     * @param  array<int, mixed>  $arguments
      */
     public function __construct($callback, array $arguments = [])
     {
-        if (!is_callable($callback)) {
+        if (! is_callable($callback)) {
             throw new \InvalidArgumentException('Invalid callback given');
         }
 

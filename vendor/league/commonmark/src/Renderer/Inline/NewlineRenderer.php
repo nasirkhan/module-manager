@@ -35,7 +35,7 @@ final class NewlineRenderer implements NodeRendererInterface, XmlNodeRendererInt
     }
 
     /**
-     * @param Newline $node
+     * @param  Newline  $node
      *
      * {@inheritDoc}
      *
@@ -53,7 +53,7 @@ final class NewlineRenderer implements NodeRendererInterface, XmlNodeRendererInt
     }
 
     /**
-     * @param Newline $node
+     * @param  Newline  $node
      *
      * {@inheritDoc}
      *

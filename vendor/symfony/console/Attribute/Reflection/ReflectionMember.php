@@ -24,8 +24,7 @@ class ReflectionMember
     /**
      * @template T of object
      *
-     * @param class-string<T> $class
-     *
+     * @param  class-string<T>  $class
      * @return T|null
      */
     public function getAttribute(string $class): ?object

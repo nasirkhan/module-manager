@@ -7,14 +7,14 @@ namespace GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 
 /**
- * Stream decorator trait
+ * Stream decorator trait.
  *
  * @property StreamInterface $stream
  */
 trait StreamDecoratorTrait
 {
     /**
-     * @param StreamInterface $stream Stream to decorate
+     * @param  StreamInterface  $stream  Stream to decorate
      */
     public function __construct(StreamInterface $stream)
     {
@@ -62,7 +62,7 @@ trait StreamDecoratorTrait
     }
 
     /**
-     * Allow decorators to implement custom methods
+     * Allow decorators to implement custom methods.
      *
      * @return mixed
      */

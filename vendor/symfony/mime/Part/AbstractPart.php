@@ -65,7 +65,7 @@ abstract class AbstractPart
 
     public function __serialize(): array
     {
-        if (!method_exists($this, '__sleep')) {
+        if (! method_exists($this, '__sleep')) {
             return ['headers' => $this->headers];
         }
 

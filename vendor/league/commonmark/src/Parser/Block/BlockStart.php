@@ -17,7 +17,7 @@ use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Parser\CursorState;
 
 /**
- * Result object for starting parsing of a block; see static methods for constructors
+ * Result object for starting parsing of a block; see static methods for constructors.
  */
 final class BlockStart
 {
@@ -68,7 +68,7 @@ final class BlockStart
     }
 
     /**
-     * Signal that we want to parse at the given cursor position
+     * Signal that we want to parse at the given cursor position.
      *
      * @return $this
      */
@@ -80,7 +80,7 @@ final class BlockStart
     }
 
     /**
-     * Signal that we want to replace the active block parser with this one
+     * Signal that we want to replace the active block parser with this one.
      *
      * @return $this
      */
@@ -92,7 +92,7 @@ final class BlockStart
     }
 
     /**
-     * Signal that we cannot parse whatever is here
+     * Signal that we cannot parse whatever is here.
      *
      * @return null
      */
@@ -102,7 +102,7 @@ final class BlockStart
     }
 
     /**
-     * Signal that we'd like to register the given parser(s) so they can parse the current block
+     * Signal that we'd like to register the given parser(s) so they can parse the current block.
      */
     public static function of(BlockContinueParserInterface ...$blockParsers): self
     {
@@ -110,13 +110,13 @@ final class BlockStart
     }
 
     /**
-     * Signal that the block parsing process should be aborted (no other block starts should be checked)
+     * Signal that the block parsing process should be aborted (no other block starts should be checked).
      *
      * @internal
      */
     public static function abort(): self
     {
-        $ret             = new self();
+        $ret = new self();
         $ret->isAborting = true;
 
         return $ret;

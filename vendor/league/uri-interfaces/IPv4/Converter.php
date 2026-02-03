@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -127,7 +127,7 @@ final class Converter
             return false !== filter_var(substr($ipAddress, 7), FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
         }
 
-        if (!str_starts_with($ipAddress, self::IPV6_6TO4_PREFIX)) {
+        if (! str_starts_with($ipAddress, self::IPV6_6TO4_PREFIX)) {
             return false;
         }
 
@@ -217,7 +217,7 @@ final class Converter
                 return substr($ipAddress, 7);
             }
 
-            if (!str_starts_with($ipAddress, self::IPV6_6TO4_PREFIX)) {
+            if (! str_starts_with($ipAddress, self::IPV6_6TO4_PREFIX)) {
                 return null;
             }
 
@@ -300,7 +300,7 @@ final class Converter
      *
      * @see https://url.spec.whatwg.org/#concept-ipv4-parser
      *
-     * @param mixed $ipAddress the number representation of the IPV4address
+     * @param  mixed  $ipAddress  the number representation of the IPV4address
      */
     private function long2Ip(mixed $ipAddress): string
     {

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -15,13 +17,13 @@ use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\LineFormatter;
 
 /**
- * Helper trait for implementing FormattableInterface
+ * Helper trait for implementing FormattableInterface.
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
 trait FormattableHandlerTrait
 {
-    protected FormatterInterface|null $formatter = null;
+    protected ?FormatterInterface $formatter = null;
 
     /**
      * @inheritDoc

@@ -59,7 +59,7 @@ final class Color
         $this->background = $this->parseColor($background, true);
 
         foreach ($options as $option) {
-            if (!isset(self::AVAILABLE_OPTIONS[$option])) {
+            if (! isset(self::AVAILABLE_OPTIONS[$option])) {
                 throw new InvalidArgumentException(\sprintf('Invalid option specified: "%s". Expected one of (%s).', $option, implode(', ', array_keys(self::AVAILABLE_OPTIONS))));
             }
 

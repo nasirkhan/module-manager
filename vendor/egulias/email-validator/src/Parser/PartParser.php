@@ -41,6 +41,7 @@ abstract class PartParser
         $foldingWS = new FoldingWhiteSpace($this->lexer);
         $resultFWS = $foldingWS->parse();
         $this->warnings = [...$this->warnings, ...$foldingWS->getWarnings()];
+
         return $resultFWS;
     }
 
@@ -58,6 +59,6 @@ abstract class PartParser
         $previous = $this->lexer->getPrevious();
 
         return $previous->isA(EmailLexer::S_BACKSLASH)
-            && !$this->lexer->current->isA(EmailLexer::GENERIC);
+            && ! $this->lexer->current->isA(EmailLexer::GENERIC);
     }
 }

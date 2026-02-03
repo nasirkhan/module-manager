@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,7 +20,7 @@ use Ramsey\Uuid\Type\Time;
 use function gettimeofday;
 
 /**
- * SystemTimeProvider retrieves the current time using built-in PHP functions
+ * SystemTimeProvider retrieves the current time using built-in PHP functions.
  */
 class SystemTimeProvider implements TimeProviderInterface
 {

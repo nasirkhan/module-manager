@@ -27,9 +27,9 @@ class UnitNotConfiguredException extends UnitException
     /**
      * Constructor.
      *
-     * @param string         $unit
-     * @param int            $code
-     * @param Throwable|null $previous
+     * @param  string  $unit
+     * @param  int  $code
+     * @param  Throwable|null  $previous
      */
     public function __construct($unit, $code = 0, ?Throwable $previous = null)
     {

@@ -64,7 +64,7 @@ class PortableVisibilityConverter implements VisibilityConverter
     }
 
     /**
-     * @param array<mixed>  $permissionMap
+     * @param  array<mixed>  $permissionMap
      */
     public static function fromArray(array $permissionMap, string $defaultForDirectories = Visibility::PRIVATE): PortableVisibilityConverter
     {

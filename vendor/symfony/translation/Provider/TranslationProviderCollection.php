@@ -24,7 +24,7 @@ final class TranslationProviderCollection
     private array $providers;
 
     /**
-     * @param array<string, ProviderInterface> $providers
+     * @param  array<string, ProviderInterface>  $providers
      */
     public function __construct(iterable $providers)
     {
@@ -43,7 +43,7 @@ final class TranslationProviderCollection
 
     public function get(string $name): ProviderInterface
     {
-        if (!$this->has($name)) {
+        if (! $this->has($name)) {
             throw new InvalidArgumentException(\sprintf('Provider "%s" not found. Available: "%s".', $name, (string) $this));
         }
 

@@ -37,8 +37,8 @@ class InputStream implements \IteratorAggregate
     /**
      * Appends an input to the write buffer.
      *
-     * @param resource|string|int|float|bool|\Traversable|null $input The input to append as scalar,
-     *                                                                stream resource or \Traversable
+     * @param  resource|string|int|float|bool|\Traversable|null  $input  The input to append as scalar,
+     *                                                                   stream resource or \Traversable
      */
     public function write(mixed $input): void
     {
@@ -64,7 +64,7 @@ class InputStream implements \IteratorAggregate
      */
     public function isClosed(): bool
     {
-        return !$this->open;
+        return ! $this->open;
     }
 
     public function getIterator(): \Traversable
@@ -72,7 +72,7 @@ class InputStream implements \IteratorAggregate
         $this->open = true;
 
         while ($this->open || $this->input) {
-            if (!$this->input) {
+            if (! $this->input) {
                 yield '';
                 continue;
             }
@@ -83,7 +83,7 @@ class InputStream implements \IteratorAggregate
             } else {
                 yield $current;
             }
-            if (!$this->input && $this->open && null !== $onEmpty = $this->onEmpty) {
+            if (! $this->input && $this->open && null !== $onEmpty = $this->onEmpty) {
                 $this->write($onEmpty($this));
             }
         }

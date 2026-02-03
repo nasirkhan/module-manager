@@ -92,7 +92,7 @@ final class TreeNode implements \Countable, \IteratorAggregate
     {
         $count = 0;
         foreach ($this->getChildren() as $child) {
-            ++$count;
+            $count++;
         }
 
         return $count;

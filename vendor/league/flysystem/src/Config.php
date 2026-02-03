@@ -21,8 +21,7 @@ class Config
     }
 
     /**
-     * @param mixed $default
-     *
+     * @param  mixed  $default
      * @return mixed
      */
     public function get(string $property, $default = null)

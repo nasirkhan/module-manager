@@ -25,7 +25,7 @@ final class FnStream implements StreamInterface
     private $methods;
 
     /**
-     * @param array<string, callable> $methods Hash of method name to a callable.
+     * @param  array<string, callable>  $methods  Hash of method name to a callable.
      */
     public function __construct(array $methods)
     {
@@ -72,9 +72,8 @@ final class FnStream implements StreamInterface
      * Adds custom functionality to an underlying stream by intercepting
      * specific method calls.
      *
-     * @param StreamInterface         $stream  Stream to decorate
-     * @param array<string, callable> $methods Hash of method name to a closure
-     *
+     * @param  StreamInterface  $stream  Stream to decorate
+     * @param  array<string, callable>  $methods  Hash of method name to a closure
      * @return FnStream
      */
     public static function decorate(StreamInterface $stream, array $methods)

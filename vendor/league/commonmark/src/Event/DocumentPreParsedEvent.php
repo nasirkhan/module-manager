@@ -17,7 +17,7 @@ use League\CommonMark\Input\MarkdownInputInterface;
 use League\CommonMark\Node\Block\Document;
 
 /**
- * Event dispatched when the document is about to be parsed
+ * Event dispatched when the document is about to be parsed.
  */
 final class DocumentPreParsedEvent extends AbstractEvent
 {

@@ -227,7 +227,7 @@ class ReStructuredTextDescriptor extends Descriptor
         $nonDefaultOptions = [];
         foreach ($definition->getOptions() as $option) {
             // Skip global options.
-            if (!\in_array($option->getName(), $globalOptions, true)) {
+            if (! \in_array($option->getName(), $globalOptions, true)) {
                 $nonDefaultOptions[] = $option;
             }
         }
@@ -242,14 +242,14 @@ class ReStructuredTextDescriptor extends Descriptor
             try {
                 $namespaceCommands = $namespace['commands'];
                 foreach ($namespaceCommands as $key => $commandName) {
-                    if (!\array_key_exists($commandName, $commands)) {
+                    if (! \array_key_exists($commandName, $commands)) {
                         // If the array key does not exist, then this is an alias.
                         unset($namespaceCommands[$key]);
                     } elseif ($commands[$commandName]->isHidden()) {
                         unset($namespaceCommands[$key]);
                     }
                 }
-                if (!$namespaceCommands) {
+                if (! $namespaceCommands) {
                     // If the namespace contained only aliases or hidden commands, skip the namespace.
                     continue;
                 }

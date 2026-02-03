@@ -43,7 +43,7 @@ class DayOfWeekField extends AbstractField
     protected $literals = [1 => 'MON', 2 => 'TUE', 3 => 'WED', 4 => 'THU', 5 => 'FRI', 6 => 'SAT', 7 => 'SUN'];
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -74,14 +74,15 @@ class DayOfWeekField extends AbstractField
 
             $daysInMonth = (int) $date->format('t');
             $remainingDaysInMonth = $daysInMonth - (int) $date->format('d');
-            return (($weekday === (int) $date->format('w')) && ($remainingDaysInMonth < 7));
+
+            return ($weekday === (int) $date->format('w')) && ($remainingDaysInMonth < 7);
         }
 
         // Handle # hash tokens
         if (strpos($value, '#')) {
             [$weekday, $nth] = explode('#', $value);
 
-            if (!is_numeric($nth)) {
+            if (! is_numeric($nth)) {
                 throw new InvalidArgumentException("Hashed weekdays must be numeric, {$nth} given");
             } else {
                 $nth = (int) $nth;
@@ -99,7 +100,7 @@ class DayOfWeekField extends AbstractField
                 throw new InvalidArgumentException("Weekday must be a value between 0 and 7. {$weekday} given");
             }
 
-            if (!\in_array($nth, $this->nthRange, true)) {
+            if (! \in_array($nth, $this->nthRange, true)) {
                 throw new InvalidArgumentException("There are never more than 5 or less than 1 of a given weekday in a month, {$nth} given");
             }
 
@@ -167,7 +168,7 @@ class DayOfWeekField extends AbstractField
     {
         $basicChecks = parent::validate($value);
 
-        if (!$basicChecks) {
+        if (! $basicChecks) {
             if ('?' === $value) {
                 return true;
             }

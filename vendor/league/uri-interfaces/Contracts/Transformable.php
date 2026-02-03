@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -21,7 +21,7 @@ interface Transformable
      * This method MUST retain the state of the current instance, and return
      * a new instance of the same type.
      *
-     * @param callable(static): static $callback
+     * @param  callable(static): static  $callback
      */
     public function transform(callable $callback): static;
 }

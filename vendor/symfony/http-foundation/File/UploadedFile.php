@@ -50,14 +50,14 @@ class UploadedFile extends File
      *
      * Calling any other method on an non-valid instance will cause an unpredictable result.
      *
-     * @param string      $path         The full temporary path to the file
-     * @param string      $originalName The original file name of the uploaded file
-     * @param string|null $mimeType     The type of the file as provided by PHP; null defaults to application/octet-stream
-     * @param int|null    $error        The error constant of the upload (one of PHP's UPLOAD_ERR_XXX constants); null defaults to UPLOAD_ERR_OK
-     * @param bool        $test         Whether the test mode is active
-     *                                  Local files are used in test mode hence the code should not enforce HTTP uploads
+     * @param  string  $path  The full temporary path to the file
+     * @param  string  $originalName  The original file name of the uploaded file
+     * @param  string|null  $mimeType  The type of the file as provided by PHP; null defaults to application/octet-stream
+     * @param  int|null  $error  The error constant of the upload (one of PHP's UPLOAD_ERR_XXX constants); null defaults to UPLOAD_ERR_OK
+     * @param  bool  $test  Whether the test mode is active
+     *                      Local files are used in test mode hence the code should not enforce HTTP uploads
      *
-     * @throws FileException         If file_uploads is disabled
+     * @throws FileException If file_uploads is disabled
      * @throws FileNotFoundException If the file does not exist
      */
     public function __construct(
@@ -145,7 +145,7 @@ class UploadedFile extends File
      */
     public function guessClientExtension(): ?string
     {
-        if (!class_exists(MimeTypes::class)) {
+        if (! class_exists(MimeTypes::class)) {
             throw new \LogicException('You cannot guess the extension as the Mime component is not installed. Try running "composer require symfony/mime".');
         }
 
@@ -187,13 +187,15 @@ class UploadedFile extends File
 
             $target = $this->getTargetFile($directory, $name);
 
-            set_error_handler(function ($type, $msg) use (&$error) { $error = $msg; });
+            set_error_handler(function ($type, $msg) use (&$error) {
+                $error = $msg;
+            });
             try {
                 $moved = move_uploaded_file($this->getPathname(), $target);
             } finally {
                 restore_error_handler();
             }
-            if (!$moved) {
+            if (! $moved) {
                 throw new FileException(\sprintf('Could not move the file "%s" to "%s" (%s).', $this->getPathname(), $target, strip_tags($error)));
             }
 

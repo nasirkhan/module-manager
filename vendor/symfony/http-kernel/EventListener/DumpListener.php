@@ -27,8 +27,8 @@ use Symfony\Component\VarDumper\VarDumper;
 class DumpListener implements EventSubscriberInterface
 {
     /**
-     * @param ?DataDumperInterface $profilerDumper The dumper to use when CLI profiling is enabled.
-     *                                             If null, the default $dumper will be used instead.
+     * @param  ?DataDumperInterface  $profilerDumper  The dumper to use when CLI profiling is enabled.
+     *                                                If null, the default $dumper will be used instead.
      */
     public function __construct(
         private ClonerInterface $cloner,
@@ -39,7 +39,7 @@ class DumpListener implements EventSubscriberInterface
     }
 
     /**
-     * @param ?ConsoleCommandEvent $event
+     * @param  ?ConsoleCommandEvent  $event
      */
     public function configure(/* ?ConsoleCommandEvent $event = null */): void
     {
@@ -47,7 +47,7 @@ class DumpListener implements EventSubscriberInterface
         $input = $event?->getInput();
 
         $cloner = $this->cloner;
-        $dumper = !$this->profilerDumper || !$input?->hasOption('profile') || !$input?->getOption('profile') ? $this->dumper : $this->profilerDumper;
+        $dumper = ! $this->profilerDumper || ! $input?->hasOption('profile') || ! $input?->getOption('profile') ? $this->dumper : $this->profilerDumper;
         $connection = $this->connection;
 
         VarDumper::setHandler(static function ($var, ?string $label = null) use ($cloner, $dumper, $connection) {
@@ -56,7 +56,7 @@ class DumpListener implements EventSubscriberInterface
                 $data = $data->withContext(['label' => $label]);
             }
 
-            if (!$connection || !$connection->write($data)) {
+            if (! $connection || ! $connection->write($data)) {
                 $dumper->dump($data);
             }
         });
@@ -64,7 +64,7 @@ class DumpListener implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        if (!class_exists(ConsoleEvents::class)) {
+        if (! class_exists(ConsoleEvents::class)) {
             return [];
         }
 

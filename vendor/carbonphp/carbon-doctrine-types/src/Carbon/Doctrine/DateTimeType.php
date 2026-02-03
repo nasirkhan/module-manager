@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Carbon\Doctrine;
 
 use Carbon\Carbon;
-use DateTime;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\VarDateTimeType;
 

@@ -32,7 +32,7 @@ final class LinkRenderer implements NodeRendererInterface, XmlNodeRendererInterf
     private ConfigurationInterface $config;
 
     /**
-     * @param Link $node
+     * @param  Link  $node
      *
      * {@inheritDoc}
      *
@@ -71,8 +71,7 @@ final class LinkRenderer implements NodeRendererInterface, XmlNodeRendererInterf
     }
 
     /**
-     * @param Link $node
-     *
+     * @param  Link  $node
      * @return array<string, scalar>
      *
      * @psalm-suppress MoreSpecificImplementedParamType

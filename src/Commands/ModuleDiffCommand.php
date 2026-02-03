@@ -57,16 +57,16 @@ class ModuleDiffCommand extends Command
         // Compare versions
         $this->newLine();
         $this->components->twoColumnDetail("<fg=bright-blue>Comparing Module:</> {$moduleName}", "v{$version}");
-        
-        if (!empty($moduleData['description'])) {
-            $this->components->twoColumnDetail("<fg=gray>Description:</>", $moduleData['description']);
+
+        if (! empty($moduleData['description'])) {
+            $this->components->twoColumnDetail('<fg=gray>Description:</>', $moduleData['description']);
         }
-        
-        if (!empty($moduleData['requires'])) {
+
+        if (! empty($moduleData['requires'])) {
             $deps = implode(', ', $moduleData['requires']);
-            $this->components->twoColumnDetail("<fg=gray>Dependencies:</>", $deps);
+            $this->components->twoColumnDetail('<fg=gray>Dependencies:</>', $deps);
         }
-        
+
         $this->newLine();
 
         // Get file lists
@@ -92,14 +92,14 @@ class ModuleDiffCommand extends Command
         if (! empty($onlyInPackage)) {
             $hasChanges = true;
             $this->components->warn("New files in package [{$stats['new_in_package']}]:");
-            
+
             // Group by directory
             $grouped = $this->groupFilesByDirectory($onlyInPackage);
-            
+
             foreach ($grouped as $dir => $files) {
                 $this->line("  <fg=blue>{$dir}/</>");
                 foreach ($files as $file) {
-                    $this->line("    <fg=green>+</> ".basename($file));
+                    $this->line('    <fg=green>+</> '.basename($file));
                 }
             }
             $this->newLine();
@@ -109,14 +109,14 @@ class ModuleDiffCommand extends Command
         if (! empty($onlyInPublished)) {
             $hasChanges = true;
             $this->components->info("Files only in your version [{$stats['removed_or_custom']}]:");
-            
+
             // Group by directory
             $grouped = $this->groupFilesByDirectory($onlyInPublished);
-            
+
             foreach ($grouped as $dir => $files) {
                 $this->line("  <fg=blue>{$dir}/</>");
                 foreach ($files as $file) {
-                    $this->line("    <fg=red>-</> ".basename($file));
+                    $this->line('    <fg=red>-</> '.basename($file));
                 }
             }
             $this->newLine();
@@ -127,15 +127,15 @@ class ModuleDiffCommand extends Command
 
         if (! empty($modifiedFiles)) {
             $hasChanges = true;
-            $this->components->warn("Modified files [".count($modifiedFiles)."]:");
-            
+            $this->components->warn('Modified files ['.count($modifiedFiles).']:');
+
             // Group by directory
             $grouped = $this->groupFilesByDirectory($modifiedFiles);
-            
+
             foreach ($grouped as $dir => $files) {
                 $this->line("  <fg=blue>{$dir}/</>");
                 foreach ($files as $file) {
-                    $this->line("    <fg=yellow>M</> ".basename($file));
+                    $this->line('    <fg=yellow>M</> '.basename($file));
 
                     if ($this->option('detailed')) {
                         $this->showFileDiff($packagePath.'/'.$file, $publishedPath.'/'.$file);
@@ -221,11 +221,11 @@ class ModuleDiffCommand extends Command
             if ($dir === '.') {
                 $dir = 'root';
             }
-            
-            if (!isset($grouped[$dir])) {
+
+            if (! isset($grouped[$dir])) {
                 $grouped[$dir] = [];
             }
-            
+
             $grouped[$dir][] = $file;
         }
 

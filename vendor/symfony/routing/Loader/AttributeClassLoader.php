@@ -93,7 +93,7 @@ abstract class AttributeClassLoader implements LoaderInterface
      */
     public function load(mixed $class, ?string $type = null): RouteCollection
     {
-        if (!class_exists($class)) {
+        if (! class_exists($class)) {
             throw new \InvalidArgumentException(\sprintf('Class "%s" does not exist.', $class));
         }
 
@@ -105,12 +105,12 @@ abstract class AttributeClassLoader implements LoaderInterface
         $globals = $this->getGlobals($class);
         $collection = new RouteCollection();
         $collection->addResource(new ReflectionClassResource($class));
-        if ($globals['env'] && !\in_array($this->env, $globals['env'], true)) {
+        if ($globals['env'] && ! \in_array($this->env, $globals['env'], true)) {
             return $collection;
         }
         $fqcnAlias = false;
 
-        if (!$class->hasMethod('__invoke')) {
+        if (! $class->hasMethod('__invoke')) {
             foreach ($this->getAttributes($class) as $attr) {
                 if ($attr->aliases) {
                     throw new InvalidArgumentException(\sprintf('Route aliases cannot be used on non-invokable class "%s".', $class->getName()));
@@ -157,11 +157,11 @@ abstract class AttributeClassLoader implements LoaderInterface
     }
 
     /**
-     * @param RouteAttribute $attr or an object that exposes a similar interface
+     * @param  RouteAttribute  $attr  or an object that exposes a similar interface
      */
     protected function addRoute(RouteCollection $collection, object $attr, array $globals, \ReflectionClass $class, \ReflectionMethod $method): void
     {
-        if ($attr->envs && !\in_array($this->env, $attr->envs, true)) {
+        if ($attr->envs && ! \in_array($this->env, $attr->envs, true)) {
             return;
         }
 
@@ -191,7 +191,7 @@ abstract class AttributeClassLoader implements LoaderInterface
         $paths = [];
 
         if (\is_array($path)) {
-            if (!\is_array($prefix)) {
+            if (! \is_array($prefix)) {
                 foreach ($path as $locale => $localePath) {
                     $paths[$locale] = $prefix.$localePath;
                 }
@@ -199,7 +199,7 @@ abstract class AttributeClassLoader implements LoaderInterface
                 throw new \LogicException(\sprintf('Route to "%s" is missing paths for locale(s) "%s".', $class->name.'::'.$method->name, implode('", "', array_keys($missing))));
             } else {
                 foreach ($path as $locale => $localePath) {
-                    if (!isset($prefix[$locale])) {
+                    if (! isset($prefix[$locale])) {
                         throw new \LogicException(\sprintf('Route to "%s" with locale "%s" is missing a corresponding prefix in class "%s".', $method->name, $locale, $class->name));
                     }
 
@@ -215,7 +215,7 @@ abstract class AttributeClassLoader implements LoaderInterface
         }
 
         foreach ($method->getParameters() as $param) {
-            if (isset($defaults[$param->name]) || !$param->isDefaultValueAvailable()) {
+            if (isset($defaults[$param->name]) || ! $param->isDefaultValueAvailable()) {
                 continue;
             }
             foreach ($paths as $locale => $path) {
@@ -259,7 +259,7 @@ abstract class AttributeClassLoader implements LoaderInterface
 
     public function supports(mixed $resource, ?string $type = null): bool
     {
-        return \is_string($resource) && preg_match('/^(?:\\\\?[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)+$/', $resource) && (!$type || 'attribute' === $type);
+        return \is_string($resource) && preg_match('/^(?:\\\\?[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)+$/', $resource) && (! $type || 'attribute' === $type);
     }
 
     public function setResolver(LoaderResolverInterface $resolver): void
@@ -283,7 +283,7 @@ abstract class AttributeClassLoader implements LoaderInterface
         if ($this->defaultRouteIndex > 0) {
             $name .= '_'.$this->defaultRouteIndex;
         }
-        ++$this->defaultRouteIndex;
+        $this->defaultRouteIndex++;
 
         return $name;
     }
@@ -375,8 +375,7 @@ abstract class AttributeClassLoader implements LoaderInterface
     }
 
     /**
-     * @param RouteAttribute $attr or an object that exposes a similar interface
-     *
+     * @param  RouteAttribute  $attr  or an object that exposes a similar interface
      * @return void
      */
     abstract protected function configureRoute(Route $route, \ReflectionClass $class, \ReflectionMethod $method, object $attr);

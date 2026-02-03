@@ -27,7 +27,7 @@ final class EmailHasHeader extends Constraint
     }
 
     /**
-     * @param RawMessage $message
+     * @param  RawMessage  $message
      */
     protected function matches($message): bool
     {
@@ -39,7 +39,7 @@ final class EmailHasHeader extends Constraint
     }
 
     /**
-     * @param RawMessage $message
+     * @param  RawMessage  $message
      */
     protected function failureDescription($message): string
     {

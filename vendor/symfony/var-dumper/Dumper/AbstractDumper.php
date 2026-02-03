@@ -40,9 +40,9 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
     private string $charset = '';
 
     /**
-     * @param callable|resource|string|null $output  A line dumper callable, an opened stream or an output path, defaults to static::$defaultOutput
-     * @param string|null                   $charset The default character encoding to use for non-UTF8 strings
-     * @param int                           $flags   A bit field of static::DUMP_* constants to fine tune dumps representation
+     * @param  callable|resource|string|null  $output  A line dumper callable, an opened stream or an output path, defaults to static::$defaultOutput
+     * @param  string|null  $charset  The default character encoding to use for non-UTF8 strings
+     * @param  int  $flags  A bit field of static::DUMP_* constants to fine tune dumps representation
      */
     public function __construct(
         $output = null,
@@ -51,7 +51,7 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
     ) {
         $this->setCharset($charset ?: \ini_get('php.output_encoding') ?: \ini_get('default_charset') ?: 'UTF-8');
         $this->setOutput($output ?: static::$defaultOutput);
-        if (!$output && \is_string(static::$defaultOutput)) {
+        if (! $output && \is_string(static::$defaultOutput)) {
             static::$defaultOutput = $this->outputStream;
         }
     }
@@ -59,8 +59,7 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
     /**
      * Sets the output destination of the dumps.
      *
-     * @param callable|resource|string|null $output A line dumper callable, an opened stream or an output path
-     *
+     * @param  callable|resource|string|null  $output  A line dumper callable, an opened stream or an output path
      * @return callable|resource|string|null The previous output destination
      */
     public function setOutput($output)
@@ -101,8 +100,7 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
     /**
      * Sets the indentation pad string.
      *
-     * @param string $pad A string that will be prepended to dumped lines, repeated by nesting level
-     *
+     * @param  string  $pad  A string that will be prepended to dumped lines, repeated by nesting level
      * @return string The previous indent pad
      */
     public function setIndentPad(string $pad): string
@@ -116,8 +114,7 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
     /**
      * Dumps a Data object.
      *
-     * @param callable|resource|string|true|null $output A line dumper callable, an opened stream, an output path or true to return the dump
-     *
+     * @param  callable|resource|string|true|null  $output  A line dumper callable, an opened stream, an output path or true to return the dump
      * @return string|null The dump as string when $output is true
      */
     public function dump(Data $data, $output = null): ?string
@@ -157,8 +154,8 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
     /**
      * Dumps the current line.
      *
-     * @param int $depth The recursive depth in the dumped structure for the line being dumped,
-     *                   or -1 to signal the end-of-dump to the line dumper callable
+     * @param  int  $depth  The recursive depth in the dumped structure for the line being dumped,
+     *                      or -1 to signal the end-of-dump to the line dumper callable
      */
     protected function dumpLine(int $depth): void
     {
@@ -215,7 +212,7 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
 
         $s = substr($s, 0, $j);
 
-        if (!$mapCp1252) {
+        if (! $mapCp1252) {
             return $s;
         }
 

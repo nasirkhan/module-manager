@@ -22,9 +22,9 @@ final class NumberFootnotesListener
 {
     public function onDocumentParsed(DocumentParsedEvent $event): void
     {
-        $document     = $event->getDocument();
-        $nextCounter  = 1;
-        $usedLabels   = [];
+        $document = $event->getDocument();
+        $nextCounter = 1;
+        $usedLabels = [];
         $usedCounters = [];
 
         foreach ($document->iterator() as $node) {
@@ -32,9 +32,9 @@ final class NumberFootnotesListener
                 continue;
             }
 
-            $existingReference   = $node->getReference();
-            $label               = $existingReference->getLabel();
-            $counter             = $nextCounter;
+            $existingReference = $node->getReference();
+            $label = $existingReference->getLabel();
+            $counter = $nextCounter;
             $canIncrementCounter = true;
 
             if (\array_key_exists($label, $usedLabels)) {
@@ -42,8 +42,8 @@ final class NumberFootnotesListener
                  * Reference is used again, we need to point
                  * to the same footnote. But with a different ID
                  */
-                $counter             = $usedCounters[$label];
-                $label              .= '__' . ++$usedLabels[$label];
+                $counter = $usedCounters[$label];
+                $label .= '__'.++$usedLabels[$label];
                 $canIncrementCounter = false;
             }
 
@@ -64,7 +64,7 @@ final class NumberFootnotesListener
              */
             $document->data->append($existingReference->getDestination(), $newReference);
 
-            $usedLabels[$label]   = 1;
+            $usedLabels[$label] = 1;
             $usedCounters[$label] = $nextCounter;
 
             if ($canIncrementCounter) {

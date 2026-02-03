@@ -85,7 +85,7 @@ class GithubActionReporter
         // Some values must be encoded.
         $message = strtr($message, self::ESCAPED_DATA);
 
-        if (!$file) {
+        if (! $file) {
             // No file provided, output the message solely:
             $this->output->writeln(\sprintf('::%s::%s', $type, $message));
 

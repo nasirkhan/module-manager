@@ -213,7 +213,7 @@ final class ReferenceParser
             // Destination was at end of line, so this is a valid reference for sure (and maybe a title).
             // If not at end of line, wait for title to be valid first.
             $this->referenceValid = true;
-            $this->paragraph      = '';
+            $this->paragraph = '';
         } elseif ($advanced === 0) {
             // spec: The title must be separated from the link destination by whitespace
             return false;
@@ -315,10 +315,10 @@ final class ReferenceParser
         /** @psalm-suppress PossiblyNullArgument -- these can't possibly be null if we're in this state */
         $this->references[] = new Reference($this->label, $this->destination, $this->title);
 
-        $this->label          = null;
+        $this->label = null;
         $this->referenceValid = false;
-        $this->destination    = null;
-        $this->title          = '';
+        $this->destination = null;
+        $this->title = '';
         $this->titleDelimiter = null;
     }
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -15,7 +17,7 @@ use Monolog\Level;
 use Monolog\LogRecord;
 
 /**
- * Serializes a log message according to RFC 5424
+ * Serializes a log message according to RFC 5424.
  *
  * @author Dalibor Karlović <dalibor.karlovic@sigwin.hr>
  * @author Renat Gabdullin <renatobyj@gmail.com>

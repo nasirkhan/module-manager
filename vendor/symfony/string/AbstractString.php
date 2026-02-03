@@ -84,14 +84,14 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
                 $values[$k] = $v;
             }
 
-            ++$i;
+            $i++;
         }
 
         return null !== $keys ? array_combine($keys, $values) : $values;
     }
 
     /**
-     * @param string|string[] $needle
+     * @param  string|string[]  $needle
      */
     public function after(string|iterable $needle, bool $includeNeedle = false, int $offset = 0): static
     {
@@ -116,7 +116,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
             return $str;
         }
 
-        if (!$includeNeedle) {
+        if (! $includeNeedle) {
             $i += $str->length();
         }
 
@@ -124,7 +124,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
     }
 
     /**
-     * @param string|string[] $needle
+     * @param  string|string[]  $needle
      */
     public function afterLast(string|iterable $needle, bool $includeNeedle = false, int $offset = 0): static
     {
@@ -149,7 +149,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
             return $str;
         }
 
-        if (!$includeNeedle) {
+        if (! $includeNeedle) {
             $i += $str->length();
         }
 
@@ -159,7 +159,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
     abstract public function append(string ...$suffix): static;
 
     /**
-     * @param string|string[] $needle
+     * @param  string|string[]  $needle
      */
     public function before(string|iterable $needle, bool $includeNeedle = false, int $offset = 0): static
     {
@@ -192,7 +192,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
     }
 
     /**
-     * @param string|string[] $needle
+     * @param  string|string[]  $needle
      */
     public function beforeLast(string|iterable $needle, bool $includeNeedle = false, int $offset = 0): static
     {
@@ -250,7 +250,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
     }
 
     /**
-     * @param string|string[] $needle
+     * @param  string|string[]  $needle
      */
     public function containsAny(string|iterable $needle): bool
     {
@@ -258,7 +258,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
     }
 
     /**
-     * @param string|string[] $suffix
+     * @param  string|string[]  $suffix
      */
     public function endsWith(string|iterable $suffix): bool
     {
@@ -277,7 +277,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
 
     public function ensureEnd(string $suffix): static
     {
-        if (!$this->endsWith($suffix)) {
+        if (! $this->endsWith($suffix)) {
             return $this->append($suffix);
         }
 
@@ -291,7 +291,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
     {
         $prefix = new static($prefix);
 
-        if (!$this->startsWith($prefix)) {
+        if (! $this->startsWith($prefix)) {
             return $this->prepend($prefix);
         }
 
@@ -307,7 +307,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
     }
 
     /**
-     * @param string|string[] $string
+     * @param  string|string[]  $string
      */
     public function equalsTo(string|iterable $string): bool
     {
@@ -335,7 +335,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
     }
 
     /**
-     * @param string|string[] $needle
+     * @param  string|string[]  $needle
      */
     public function indexOf(string|iterable $needle, int $offset = 0): ?int
     {
@@ -357,7 +357,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
     }
 
     /**
-     * @param string|string[] $needle
+     * @param  string|string[]  $needle
      */
     public function indexOfLast(string|iterable $needle, int $offset = 0): ?int
     {
@@ -486,7 +486,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
     }
 
     /**
-     * @param string|string[] $prefix
+     * @param  string|string[]  $prefix
      */
     public function startsWith(string|iterable $prefix): bool
     {
@@ -520,7 +520,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
         try {
             $b->string = mb_convert_encoding($this->string, $toEncoding, 'UTF-8');
         } catch (\ValueError $e) {
-            if (!\function_exists('iconv')) {
+            if (! \function_exists('iconv')) {
                 throw new InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
             }
 
@@ -550,7 +550,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
     abstract public function trimEnd(string $chars = " \t\n\r\0\x0B\x0C\u{A0}\u{FEFF}"): static;
 
     /**
-     * @param string|string[] $prefix
+     * @param  string|string[]  $prefix
      */
     public function trimPrefix($prefix): static
     {
@@ -584,7 +584,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
     abstract public function trimStart(string $chars = " \t\n\r\0\x0B\x0C\u{A0}\u{FEFF}"): static;
 
     /**
-     * @param string|string[] $suffix
+     * @param  string|string[]  $suffix
      */
     public function trimSuffix($suffix): static
     {
@@ -630,7 +630,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
         }
 
         $desiredLength = $length;
-        if (TruncateMode::WordAfter === $cut || !$cut) {
+        if (TruncateMode::WordAfter === $cut || ! $cut) {
             if (null === $length = $this->indexOf([' ', "\r", "\n", "\t"], ($length ?: 1) - 1)) {
                 return clone $this;
             }
@@ -688,7 +688,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
         $mask = wordwrap($mask, $width, '#', $cut);
 
         while (false !== $b = strpos($mask, '#', $b + 1)) {
-            for (++$i; $i < $b; ++$i) {
+            for (++$i; $i < $b; $i++) {
                 $string .= $chars[$j];
                 unset($chars[$j++]);
             }

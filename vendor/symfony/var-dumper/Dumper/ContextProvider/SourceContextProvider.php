@@ -42,7 +42,7 @@ final class SourceContextProvider implements ContextProviderInterface
         $name = '-' === $file || 'Standard input code' === $file ? 'Standard input code' : false;
         $fileExcerpt = false;
 
-        for ($i = 2; $i < $this->limit; ++$i) {
+        for ($i = 2; $i < $this->limit; $i++) {
             if (isset($trace[$i]['class'], $trace[$i]['function'])
                 && 'dump' === $trace[$i]['function']
                 && VarDumper::class === $trace[$i]['class']
@@ -51,7 +51,7 @@ final class SourceContextProvider implements ContextProviderInterface
                 $line = $trace[$i]['line'] ?? $line;
 
                 while (++$i < $this->limit) {
-                    if (isset($trace[$i]['function'], $trace[$i]['file']) && empty($trace[$i]['class']) && !str_starts_with($trace[$i]['function'], 'call_user_func')) {
+                    if (isset($trace[$i]['function'], $trace[$i]['file']) && empty($trace[$i]['class']) && ! str_starts_with($trace[$i]['function'], 'call_user_func')) {
                         $file = $trace[$i]['file'];
                         $line = $trace[$i]['line'];
 
@@ -69,7 +69,7 @@ final class SourceContextProvider implements ContextProviderInterface
                                 $src = explode("\n", $src);
                                 $fileExcerpt = [];
 
-                                for ($i = max($line - 3, 1), $max = min($line + 3, \count($src)); $i <= $max; ++$i) {
+                                for ($i = max($line - 3, 1), $max = min($line + 3, \count($src)); $i <= $max; $i++) {
                                     $fileExcerpt[] = '<li'.($i === $line ? ' class="selected"' : '').'><code>'.$this->htmlEncode($src[$i - 1]).'</code></li>';
                                 }
 
@@ -109,7 +109,9 @@ final class SourceContextProvider implements ContextProviderInterface
     {
         $html = '';
 
-        $dumper = new HtmlDumper(function ($line) use (&$html) { $html .= $line; }, $this->charset);
+        $dumper = new HtmlDumper(function ($line) use (&$html) {
+            $html .= $line;
+        }, $this->charset);
         $dumper->setDumpHeader('');
         $dumper->setDumpBoundaries('', '');
 

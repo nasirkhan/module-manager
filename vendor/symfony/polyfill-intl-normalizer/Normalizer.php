@@ -41,13 +41,13 @@ class Normalizer
 
     public static function isNormalized(string $s, int $form = self::FORM_C)
     {
-        if (!\in_array($form, [self::NFD, self::NFKD, self::NFC, self::NFKC])) {
+        if (! \in_array($form, [self::NFD, self::NFKD, self::NFC, self::NFKC])) {
             return false;
         }
-        if (!isset($s[strspn($s, self::$ASCII)])) {
+        if (! isset($s[strspn($s, self::$ASCII)])) {
             return true;
         }
-        if (self::NFC == $form && preg_match('//u', $s) && !preg_match('/[^\x00-\x{2FF}]/u', $s)) {
+        if (self::NFC == $form && preg_match('//u', $s) && ! preg_match('/[^\x00-\x{2FF}]/u', $s)) {
             return true;
         }
 
@@ -56,15 +56,23 @@ class Normalizer
 
     public static function normalize(string $s, int $form = self::FORM_C)
     {
-        if (!preg_match('//u', $s)) {
+        if (! preg_match('//u', $s)) {
             return false;
         }
 
         switch ($form) {
-            case self::NFC: $C = true; $K = false; break;
-            case self::NFD: $C = false; $K = false; break;
-            case self::NFKC: $C = true; $K = true; break;
-            case self::NFKD: $C = false; $K = true; break;
+            case self::NFC: $C = true;
+                $K = false;
+                break;
+            case self::NFD: $C = false;
+                $K = false;
+                break;
+            case self::NFKC: $C = true;
+                $K = true;
+                break;
+            case self::NFKD: $C = false;
+                $K = true;
+                break;
             default:
                 if (\defined('Normalizer::NONE') && \Normalizer::NONE == $form) {
                     return $s;
@@ -142,7 +150,7 @@ class Normalizer
                 $result .= $lastUchr;
                 $lastUchr = $s[$i];
                 $lastUcls = 0;
-                ++$i;
+                $i++;
                 continue;
             }
 
@@ -156,7 +164,7 @@ class Normalizer
 
                 $ucls = $combClass[$uchr] ?? 0;
 
-                if (isset($compMap[$lastUchr.$uchr]) && (!$lastUcls || $lastUcls < $ucls)) {
+                if (isset($compMap[$lastUchr.$uchr]) && (! $lastUcls || $lastUcls < $ucls)) {
                     $lastUchr = $compMap[$lastUchr.$uchr];
                 } elseif ($lastUcls = $ucls) {
                     $tail .= $uchr;
@@ -261,7 +269,7 @@ class Normalizer
                 if (isset($combClass[$uchr])) {
                     // Combining chars, for sorting
 
-                    if (!isset($c[$combClass[$uchr]])) {
+                    if (! isset($c[$combClass[$uchr]])) {
                         $c[$combClass[$uchr]] = '';
                     }
                     $c[$combClass[$uchr]] .= $uchr;

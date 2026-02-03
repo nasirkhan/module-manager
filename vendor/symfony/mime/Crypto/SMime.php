@@ -23,7 +23,7 @@ abstract class SMime
 {
     protected function normalizeFilePath(string $path): string
     {
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             throw new RuntimeException(\sprintf('File does not exist: "%s".', $path));
         }
 
@@ -43,7 +43,7 @@ abstract class SMime
 
         $headers = '';
 
-        while (!feof($stream)) {
+        while (! feof($stream)) {
             $buffer = fread($stream, 78);
             $headers .= $buffer;
 
@@ -64,7 +64,7 @@ abstract class SMime
 
     protected function getStreamIterator($stream): iterable
     {
-        while (!feof($stream)) {
+        while (! feof($stream)) {
             yield str_replace("\n", "\r\n", str_replace("\r\n", "\n", fread($stream, 16372)));
         }
     }
@@ -83,7 +83,7 @@ abstract class SMime
             }
 
             // Handle headers that span multiple lines
-            if (!str_contains($headerLine, ':')) {
+            if (! str_contains($headerLine, ':')) {
                 $headers[$currentHeaderName] .= ' '.trim($headerLine);
                 continue;
             }

@@ -7,7 +7,7 @@ namespace League\MimeTypeDetection;
 interface MimeTypeDetector
 {
     /**
-     * @param string|resource $contents
+     * @param  string|resource  $contents
      */
     public function detectMimeType(string $path, $contents): ?string;
 

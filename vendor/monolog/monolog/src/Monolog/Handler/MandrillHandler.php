@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -16,7 +18,7 @@ use Swift;
 use Swift_Message;
 
 /**
- * MandrillHandler uses cURL to send the emails to the Mandrill API
+ * MandrillHandler uses cURL to send the emails to the Mandrill API.
  *
  * @author Adam Nicholson <adamnicholson10@gmail.com>
  */
@@ -28,8 +30,8 @@ class MandrillHandler extends MailHandler
     /**
      * @phpstan-param (Swift_Message|callable(): Swift_Message) $message
      *
-     * @param string                 $apiKey  A valid Mandrill API key
-     * @param callable|Swift_Message $message An example message for real messages, only the body will be replaced
+     * @param  string  $apiKey  A valid Mandrill API key
+     * @param  callable|Swift_Message  $message  An example message for real messages, only the body will be replaced
      *
      * @throws \InvalidArgumentException if not a Swift Message is set
      */
@@ -37,10 +39,10 @@ class MandrillHandler extends MailHandler
     {
         parent::__construct($level, $bubble);
 
-        if (!$message instanceof Swift_Message) {
+        if (! $message instanceof Swift_Message) {
             $message = $message();
         }
-        if (!$message instanceof Swift_Message) {
+        if (! $message instanceof Swift_Message) {
             throw new \InvalidArgumentException('You must provide either a Swift_Message instance or a callable returning it');
         }
         $this->message = $message;

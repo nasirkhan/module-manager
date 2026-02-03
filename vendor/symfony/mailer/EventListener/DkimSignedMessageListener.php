@@ -31,7 +31,7 @@ class DkimSignedMessageListener implements EventSubscriberInterface
     public function onMessage(MessageEvent $event): void
     {
         $message = $event->getMessage();
-        if (!$message instanceof Message) {
+        if (! $message instanceof Message) {
             return;
         }
         $event->setMessage($this->signer->sign($message));

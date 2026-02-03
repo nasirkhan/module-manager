@@ -13,7 +13,7 @@ final class Message
     /**
      * Returns the string representation of an HTTP message.
      *
-     * @param MessageInterface $message Message to convert to a string.
+     * @param  MessageInterface  $message  Message to convert to a string.
      */
     public static function toString(MessageInterface $message): string
     {
@@ -21,7 +21,7 @@ final class Message
             $msg = trim($message->getMethod().' '
                     .$message->getRequestTarget())
                 .' HTTP/'.$message->getProtocolVersion();
-            if (!$message->hasHeader('host')) {
+            if (! $message->hasHeader('host')) {
                 $msg .= "\r\nHost: ".$message->getUri()->getHost();
             }
         } elseif ($message instanceof ResponseInterface) {
@@ -50,14 +50,14 @@ final class Message
      *
      * Will return `null` if the response is not printable.
      *
-     * @param MessageInterface $message    The message to get the body summary
-     * @param int              $truncateAt The maximum allowed size of the summary
+     * @param  MessageInterface  $message  The message to get the body summary
+     * @param  int  $truncateAt  The maximum allowed size of the summary
      */
     public static function bodySummary(MessageInterface $message, int $truncateAt = 120): ?string
     {
         $body = $message->getBody();
 
-        if (!$body->isSeekable() || !$body->isReadable()) {
+        if (! $body->isSeekable() || ! $body->isReadable()) {
             return null;
         }
 
@@ -90,7 +90,7 @@ final class Message
      * The body of the message will only be rewound if a call to `tell()`
      * returns a value other than `0`.
      *
-     * @param MessageInterface $message Message to rewind
+     * @param  MessageInterface  $message  Message to rewind
      *
      * @throws \RuntimeException
      */
@@ -110,11 +110,11 @@ final class Message
      * the message, "headers" key containing an associative array of header
      * array values, and a "body" key containing the body of the message.
      *
-     * @param string $message HTTP request or response to parse.
+     * @param  string  $message  HTTP request or response to parse.
      */
     public static function parseMessage(string $message): array
     {
-        if (!$message) {
+        if (! $message) {
             throw new \InvalidArgumentException('Invalid message');
         }
 
@@ -170,8 +170,8 @@ final class Message
     /**
      * Constructs a URI for an HTTP request message.
      *
-     * @param string $path    Path from the start-line
-     * @param array  $headers Array of headers (each value an array).
+     * @param  string  $path  Path from the start-line
+     * @param  array  $headers  Array of headers (each value an array).
      */
     public static function parseRequestUri(string $path, array $headers): string
     {
@@ -183,7 +183,7 @@ final class Message
         });
 
         // If no host is found, then a full URI cannot be constructed.
-        if (!$hostKey) {
+        if (! $hostKey) {
             return $path;
         }
 
@@ -196,13 +196,13 @@ final class Message
     /**
      * Parses a request message string into a request object.
      *
-     * @param string $message Request message string.
+     * @param  string  $message  Request message string.
      */
     public static function parseRequest(string $message): RequestInterface
     {
         $data = self::parseMessage($message);
         $matches = [];
-        if (!preg_match('/^[\S]+\s+([a-zA-Z]+:\/\/|\/).*/', $data['start-line'], $matches)) {
+        if (! preg_match('/^[\S]+\s+([a-zA-Z]+:\/\/|\/).*/', $data['start-line'], $matches)) {
             throw new \InvalidArgumentException('Invalid request string');
         }
         $parts = explode(' ', $data['start-line'], 3);
@@ -222,7 +222,7 @@ final class Message
     /**
      * Parses a response message string into a response object.
      *
-     * @param string $message Response message string.
+     * @param  string  $message  Response message string.
      */
     public static function parseResponse(string $message): ResponseInterface
     {
@@ -230,7 +230,7 @@ final class Message
         // According to https://datatracker.ietf.org/doc/html/rfc7230#section-3.1.2
         // the space between status-code and reason-phrase is required. But
         // browsers accept responses without space and reason as well.
-        if (!preg_match('/^HTTP\/.* [0-9]{3}( .*|$)/', $data['start-line'])) {
+        if (! preg_match('/^HTTP\/.* [0-9]{3}( .*|$)/', $data['start-line'])) {
             throw new \InvalidArgumentException('Invalid response string: '.$data['start-line']);
         }
         $parts = explode(' ', $data['start-line'], 3);

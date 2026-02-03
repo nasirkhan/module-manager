@@ -33,7 +33,7 @@ class RemoveEmptyControllerArgumentLocatorsPass implements CompilerPassInterface
                 $argumentLocator = $container->getDefinition($argumentLocator->getFactory()[0]);
             }
 
-            if (!$argumentLocator->getArgument(0)) {
+            if (! $argumentLocator->getArgument(0)) {
                 // remove empty argument locators
                 $reason = \sprintf('Removing service-argument resolver for controller "%s": no corresponding services exist for the referenced types.', $controller);
             } else {
@@ -52,7 +52,7 @@ class RemoveEmptyControllerArgumentLocatorsPass implements CompilerPassInterface
                         break;
                     }
                 }
-                if (!$reason) {
+                if (! $reason) {
                     // see Symfony\Component\HttpKernel\Controller\ContainerControllerResolver
                     $controllers[$id.':'.$action] = $argumentRef;
 

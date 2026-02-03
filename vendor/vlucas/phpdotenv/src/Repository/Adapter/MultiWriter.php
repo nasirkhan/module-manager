@@ -16,8 +16,7 @@ final class MultiWriter implements WriterInterface
     /**
      * Create a new multi-writer instance.
      *
-     * @param \Dotenv\Repository\Adapter\WriterInterface[] $writers
-     *
+     * @param  \Dotenv\Repository\Adapter\WriterInterface[]  $writers
      * @return void
      */
     public function __construct(array $writers)
@@ -28,15 +27,14 @@ final class MultiWriter implements WriterInterface
     /**
      * Write to an environment variable, if possible.
      *
-     * @param non-empty-string $name
-     * @param string           $value
-     *
+     * @param  non-empty-string  $name
+     * @param  string  $value
      * @return bool
      */
     public function write(string $name, string $value)
     {
         foreach ($this->writers as $writers) {
-            if (!$writers->write($name, $value)) {
+            if (! $writers->write($name, $value)) {
                 return false;
             }
         }
@@ -47,14 +45,13 @@ final class MultiWriter implements WriterInterface
     /**
      * Delete an environment variable, if possible.
      *
-     * @param non-empty-string $name
-     *
+     * @param  non-empty-string  $name
      * @return bool
      */
     public function delete(string $name)
     {
         foreach ($this->writers as $writers) {
-            if (!$writers->delete($name)) {
+            if (! $writers->delete($name)) {
                 return false;
             }
         }

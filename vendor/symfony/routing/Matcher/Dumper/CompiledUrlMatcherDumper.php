@@ -177,14 +177,14 @@ class CompiledUrlMatcherDumper extends MatcherDumper
                 $regex = substr_replace($regex, '/?$', $pos - $hasTrailingSlash, 1 + $hasTrailingSlash);
             }
 
-            if (!$compiledRoute->getPathVariables()) {
-                $host = !$compiledRoute->getHostVariables() ? $route->getHost() : '';
+            if (! $compiledRoute->getPathVariables()) {
+                $host = ! $compiledRoute->getHostVariables() ? $route->getHost() : '';
                 $url = $route->getPath();
                 if ($hasTrailingSlash) {
                     $url = substr($url, 0, -1);
                 }
                 foreach ($dynamicRegex as [$hostRx, $rx, $prefix]) {
-                    if (('' === $prefix || str_starts_with($url, $prefix)) && (preg_match($rx, $url) || preg_match($rx, $url.'/')) && (!$host || !$hostRx || preg_match($hostRx, $host))) {
+                    if (('' === $prefix || str_starts_with($url, $prefix)) && (preg_match($rx, $url) || preg_match($rx, $url.'/')) && (! $host || ! $hostRx || preg_match($hostRx, $host))) {
                         $dynamicRegex[] = [$hostRegex, $regex, $staticPrefix];
                         $dynamicRoutes->add($name, $route);
                         continue 2;
@@ -211,7 +211,7 @@ class CompiledUrlMatcherDumper extends MatcherDumper
      */
     private function compileStaticRoutes(array $staticRoutes, array &$conditions): array
     {
-        if (!$staticRoutes) {
+        if (! $staticRoutes) {
             return [];
         }
         $compiledRoutes = [];
@@ -251,7 +251,7 @@ class CompiledUrlMatcherDumper extends MatcherDumper
      */
     private function compileDynamicRoutes(RouteCollection $collection, bool $matchHost, int $chunkLimit, array &$conditions): array
     {
-        if (!$collection->all()) {
+        if (! $collection->all()) {
             return [[], [], ''];
         }
         $regexpList = [];
@@ -370,8 +370,8 @@ class CompiledUrlMatcherDumper extends MatcherDumper
     /**
      * Compiles a regexp tree of subpatterns that matches nested same-prefix routes.
      *
-     * @param \stdClass $state A simple state object that keeps track of the progress of the compilation,
-     *                         and gathers the generated switch's "case" and "default" statements
+     * @param  \stdClass  $state  A simple state object that keeps track of the progress of the compilation,
+     *                            and gathers the generated switch's "case" and "default" statements
      */
     private function compileStaticPrefixCollection(StaticPrefixCollection $tree, \stdClass $state, int $prefixLen, array &$conditions): string
     {
@@ -389,7 +389,7 @@ class CompiledUrlMatcherDumper extends MatcherDumper
                 $code .= $this->indent($this->compileStaticPrefixCollection($route, $state, $prefixLen + \strlen($prefix), $conditions));
                 $code .= "\n            .')'";
                 $state->regex .= ')';
-                ++$state->markTail;
+                $state->markTail++;
                 continue;
             }
 
@@ -447,8 +447,8 @@ class CompiledUrlMatcherDumper extends MatcherDumper
 
     private function getExpressionLanguage(): ExpressionLanguage
     {
-        if (!isset($this->expressionLanguage)) {
-            if (!class_exists(ExpressionLanguage::class)) {
+        if (! isset($this->expressionLanguage)) {
+            if (! class_exists(ExpressionLanguage::class)) {
                 throw new \LogicException('Unable to use expressions as the Symfony ExpressionLanguage component is not installed. Try running "composer require symfony/expression-language".');
             }
             $this->expressionLanguage = new ExpressionLanguage(null, $this->expressionLanguageProviders);
@@ -473,10 +473,10 @@ class CompiledUrlMatcherDumper extends MatcherDumper
         if (\is_object($value)) {
             throw new \InvalidArgumentException(\sprintf('Symfony\Component\Routing\Route cannot contain objects, but "%s" given.', get_debug_type($value)));
         }
-        if (!\is_array($value)) {
+        if (! \is_array($value)) {
             return str_replace("\n", '\'."\n".\'', var_export($value, true));
         }
-        if (!$value) {
+        if (! $value) {
             return '[]';
         }
 
@@ -485,7 +485,7 @@ class CompiledUrlMatcherDumper extends MatcherDumper
 
         foreach ($value as $k => $v) {
             if ($i === $k) {
-                ++$i;
+                $i++;
             } else {
                 $export .= self::export($k).' => ';
 

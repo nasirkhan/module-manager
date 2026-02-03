@@ -27,8 +27,8 @@ class HeaderRequestMatcher implements RequestMatcherInterface
     private array $headers;
 
     /**
-     * @param string[]|string $headers A header or a list of headers
-     *                                 Strings can contain a comma-delimited list of headers
+     * @param  string[]|string  $headers  A header or a list of headers
+     *                                    Strings can contain a comma-delimited list of headers
      */
     public function __construct(array|string $headers)
     {
@@ -37,12 +37,12 @@ class HeaderRequestMatcher implements RequestMatcherInterface
 
     public function matches(Request $request): bool
     {
-        if (!$this->headers) {
+        if (! $this->headers) {
             return true;
         }
 
         foreach ($this->headers as $header) {
-            if (!$request->headers->has($header)) {
+            if (! $request->headers->has($header)) {
                 return false;
             }
         }

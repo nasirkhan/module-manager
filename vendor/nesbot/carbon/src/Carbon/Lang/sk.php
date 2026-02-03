@@ -39,10 +39,10 @@ use Carbon\CarbonInterface;
 
 $fromNow = function ($time) {
     return 'o '.strtr($time, [
-            'hodina' => 'hodinu',
-            'minúta' => 'minútu',
-            'sekunda' => 'sekundu',
-        ]);
+        'hodina' => 'hodinu',
+        'minúta' => 'minútu',
+        'sekunda' => 'sekundu',
+    ]);
 };
 
 $ago = function ($time) {

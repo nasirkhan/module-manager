@@ -21,14 +21,14 @@ final class MultipartStream implements StreamInterface
     private $stream;
 
     /**
-     * @param array  $elements Array of associative arrays, each containing a
-     *                         required "name" key mapping to the form field,
-     *                         name, a required "contents" key mapping to a
-     *                         StreamInterface/resource/string, an optional
-     *                         "headers" associative array of custom headers,
-     *                         and an optional "filename" key mapping to a
-     *                         string to send as the filename in the part.
-     * @param string $boundary You can optionally provide a specific boundary
+     * @param  array  $elements  Array of associative arrays, each containing a
+     *                           required "name" key mapping to the form field,
+     *                           name, a required "contents" key mapping to a
+     *                           StreamInterface/resource/string, an optional
+     *                           "headers" associative array of custom headers,
+     *                           and an optional "filename" key mapping to a
+     *                           string to send as the filename in the part.
+     * @param  string  $boundary  You can optionally provide a specific boundary
      *
      * @throws \InvalidArgumentException
      */
@@ -49,9 +49,9 @@ final class MultipartStream implements StreamInterface
     }
 
     /**
-     * Get the headers needed before transferring the content of a POST file
+     * Get the headers needed before transferring the content of a POST file.
      *
-     * @param string[] $headers
+     * @param  string[]  $headers
      */
     private function getHeaders(array $headers): string
     {
@@ -64,14 +64,14 @@ final class MultipartStream implements StreamInterface
     }
 
     /**
-     * Create the aggregate stream that will be used to upload the POST data
+     * Create the aggregate stream that will be used to upload the POST data.
      */
     protected function createStream(array $elements = []): StreamInterface
     {
         $stream = new AppendStream();
 
         foreach ($elements as $element) {
-            if (!is_array($element)) {
+            if (! is_array($element)) {
                 throw new \UnexpectedValueException('An array is expected');
             }
             $this->addElement($stream, $element);
@@ -86,7 +86,7 @@ final class MultipartStream implements StreamInterface
     private function addElement(AppendStream $stream, array $element): void
     {
         foreach (['contents', 'name'] as $key) {
-            if (!array_key_exists($key, $element)) {
+            if (! array_key_exists($key, $element)) {
                 throw new \InvalidArgumentException("A '{$key}' key is required");
             }
         }
@@ -113,15 +113,14 @@ final class MultipartStream implements StreamInterface
     }
 
     /**
-     * @param string[] $headers
-     *
+     * @param  string[]  $headers
      * @return array{0: StreamInterface, 1: string[]}
      */
     private function createElement(string $name, StreamInterface $stream, ?string $filename, array $headers): array
     {
         // Set a default content-disposition header if one was no provided
         $disposition = self::getHeader($headers, 'content-disposition');
-        if (!$disposition) {
+        if (! $disposition) {
             $headers['Content-Disposition'] = ($filename === '0' || $filename)
                 ? sprintf(
                     'form-data; name="%s"; filename="%s"',
@@ -133,7 +132,7 @@ final class MultipartStream implements StreamInterface
 
         // Set a default content-length header if one was no provided
         $length = self::getHeader($headers, 'content-length');
-        if (!$length) {
+        if (! $length) {
             if ($length = $stream->getSize()) {
                 $headers['Content-Length'] = (string) $length;
             }
@@ -141,7 +140,7 @@ final class MultipartStream implements StreamInterface
 
         // Set a default Content-Type if one was not supplied
         $type = self::getHeader($headers, 'content-type');
-        if (!$type && ($filename === '0' || $filename)) {
+        if (! $type && ($filename === '0' || $filename)) {
             $headers['Content-Type'] = MimeType::fromFilename($filename) ?? 'application/octet-stream';
         }
 
@@ -149,7 +148,7 @@ final class MultipartStream implements StreamInterface
     }
 
     /**
-     * @param string[] $headers
+     * @param  string[]  $headers
      */
     private static function getHeader(array $headers, string $key): ?string
     {

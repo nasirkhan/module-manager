@@ -10,7 +10,7 @@ namespace GuzzleHttp\Psr7;
 final class Rfc7230
 {
     /**
-     * Header related regular expressions (based on amphp/http package)
+     * Header related regular expressions (based on amphp/http package).
      *
      * Note: header delimiter (\r\n) is modified to \r?\n to accept line feed only delimiters for BC reasons.
      *

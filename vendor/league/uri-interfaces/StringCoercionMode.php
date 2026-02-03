@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -76,14 +76,14 @@ enum StringCoercionMode
     public function isCoercible(mixed $value): bool
     {
         return self::Ecmascript === $this
-            ? !is_resource($value)
+            ? ! is_resource($value)
             : match (true) {
                 $value instanceof Rfc3986Uri,
-                    $value instanceof WhatWgUrl,
-                    $value instanceof BackedEnum,
-                    $value instanceof Stringable,
+                $value instanceof WhatWgUrl,
+                $value instanceof BackedEnum,
+                $value instanceof Stringable,
                 is_scalar($value),
-                    null === $value => true,
+                null === $value => true,
                 default => false,
             };
     }
@@ -134,6 +134,7 @@ enum StringCoercionMode
 
     /**
      * Array recursion detection.
+     *
      * @see https://stackoverflow.com/questions/9042142/detecting-infinite-array-recursion-in-php
      */
     private static function hasCircularReference(array &$arr): bool

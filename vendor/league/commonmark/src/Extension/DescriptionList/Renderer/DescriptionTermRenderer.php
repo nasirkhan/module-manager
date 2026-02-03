@@ -22,7 +22,7 @@ use League\CommonMark\Util\HtmlElement;
 final class DescriptionTermRenderer implements NodeRendererInterface
 {
     /**
-     * @param DescriptionTerm $node
+     * @param  DescriptionTerm  $node
      *
      * {@inheritDoc}
      *

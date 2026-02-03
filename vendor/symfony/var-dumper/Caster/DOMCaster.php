@@ -102,7 +102,7 @@ class DOMCaster
 
     public static function castDocument(\DOMDocument $dom, array $a, Stub $stub, bool $isNested, int $filter = 0): array
     {
-        if (!($filter & Caster::EXCLUDE_VERBOSE)) {
+        if (! ($filter & Caster::EXCLUDE_VERBOSE)) {
             $formatOutput = $dom->formatOutput;
             $dom->formatOutput = true;
             $a += [Caster::PREFIX_VIRTUAL.'xml' => $dom->saveXML()];
@@ -114,7 +114,7 @@ class DOMCaster
 
     public static function castXMLDocument(\Dom\XMLDocument $dom, array $a, Stub $stub, bool $isNested, int $filter = 0): array
     {
-        if (!($filter & Caster::EXCLUDE_VERBOSE)) {
+        if (! ($filter & Caster::EXCLUDE_VERBOSE)) {
             $formatOutput = $dom->formatOutput;
             $dom->formatOutput = true;
             $a += [Caster::PREFIX_VIRTUAL.'xml' => $dom->saveXML()];
@@ -126,7 +126,7 @@ class DOMCaster
 
     public static function castHTMLDocument(\Dom\HTMLDocument $dom, array $a, Stub $stub, bool $isNested, int $filter = 0): array
     {
-        if (!($filter & Caster::EXCLUDE_VERBOSE)) {
+        if (! ($filter & Caster::EXCLUDE_VERBOSE)) {
             $a += [Caster::PREFIX_VIRTUAL.'html' => $dom->saveHTML()];
         }
 

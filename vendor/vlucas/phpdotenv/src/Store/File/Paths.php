@@ -24,9 +24,8 @@ final class Paths
     /**
      * Returns the full paths to the files.
      *
-     * @param string[] $paths
-     * @param string[] $names
-     *
+     * @param  string[]  $paths
+     * @param  string[]  $names
      * @return string[]
      */
     public static function filePaths(array $paths, array $names)

@@ -32,7 +32,7 @@ class ControllerArgumentValueResolverPass implements CompilerPassInterface
 
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->hasDefinition('argument_resolver')) {
+        if (! $container->hasDefinition('argument_resolver')) {
             return;
         }
 
@@ -64,7 +64,6 @@ class ControllerArgumentValueResolverPass implements CompilerPassInterface
         $container
             ->getDefinition('argument_resolver')
             ->replaceArgument(1, new IteratorArgument(array_values($resolvers)))
-            ->setArgument(2, new ServiceLocatorArgument($namedResolvers))
-        ;
+            ->setArgument(2, new ServiceLocatorArgument($namedResolvers));
     }
 }

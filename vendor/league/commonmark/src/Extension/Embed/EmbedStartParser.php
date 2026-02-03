@@ -23,7 +23,7 @@ class EmbedStartParser implements BlockStartParserInterface
 {
     public function tryStart(Cursor $cursor, MarkdownParserStateInterface $parserState): ?BlockStart
     {
-        if ($cursor->isIndented() || $parserState->getParagraphContent() !== null || ! ($parserState->getActiveBlockParser()->isContainer())) {
+        if ($cursor->isIndented() || $parserState->getParagraphContent() !== null || ! $parserState->getActiveBlockParser()->isContainer()) {
             return BlockStart::none();
         }
 

@@ -31,19 +31,19 @@ final class NodeWalker
 
     public function __construct(Node $root)
     {
-        $this->root     = $root;
-        $this->current  = $this->root;
+        $this->root = $root;
+        $this->current = $this->root;
         $this->entering = true;
     }
 
     /**
      * Returns an event which contains node and entering flag
      * (entering is true when we enter a Node from a parent or sibling,
-     * and false when we reenter it from child)
+     * and false when we reenter it from child).
      */
     public function next(): ?NodeWalkerEvent
     {
-        $current  = $this->current;
+        $current = $this->current;
         $entering = $this->entering;
         if ($current === null) {
             return null;
@@ -51,7 +51,7 @@ final class NodeWalker
 
         if ($entering && ($current instanceof AbstractBlock || $current->hasChildren())) {
             if ($current->firstChild()) {
-                $this->current  = $current->firstChild();
+                $this->current = $current->firstChild();
                 $this->entering = true;
             } else {
                 $this->entering = false;
@@ -59,10 +59,10 @@ final class NodeWalker
         } elseif ($current === $this->root) {
             $this->current = null;
         } elseif ($current->next() === null) {
-            $this->current  = $current->parent();
+            $this->current = $current->parent();
             $this->entering = false;
         } else {
-            $this->current  = $current->next();
+            $this->current = $current->next();
             $this->entering = true;
         }
 
@@ -70,11 +70,11 @@ final class NodeWalker
     }
 
     /**
-     * Resets the iterator to resume at the specified node
+     * Resets the iterator to resume at the specified node.
      */
     public function resumeAt(Node $node, bool $entering = true): void
     {
-        $this->current  = $node;
+        $this->current = $node;
         $this->entering = $entering;
     }
 }

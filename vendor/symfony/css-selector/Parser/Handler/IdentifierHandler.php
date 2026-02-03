@@ -39,7 +39,7 @@ class IdentifierHandler implements HandlerInterface
     {
         $match = $reader->findPattern($this->patterns->getIdentifierPattern());
 
-        if (!$match) {
+        if (! $match) {
             return false;
         }
 

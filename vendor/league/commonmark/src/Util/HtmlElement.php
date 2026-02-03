@@ -31,14 +31,14 @@ final class HtmlElement implements \Stringable
     private bool $selfClosing;
 
     /**
-     * @param string                                $tagName     Name of the HTML tag
-     * @param array<string, string|string[]|bool>   $attributes  Array of attributes (values should be unescaped)
-     * @param \Stringable|\Stringable[]|string|null $contents    Inner contents, pre-escaped if needed
-     * @param bool                                  $selfClosing Whether the tag is self-closing
+     * @param  string  $tagName  Name of the HTML tag
+     * @param  array<string, string|string[]|bool>  $attributes  Array of attributes (values should be unescaped)
+     * @param  \Stringable|\Stringable[]|string|null  $contents  Inner contents, pre-escaped if needed
+     * @param  bool  $selfClosing  Whether the tag is self-closing
      */
     public function __construct(string $tagName, array $attributes = [], $contents = '', bool $selfClosing = false)
     {
-        $this->tagName     = $tagName;
+        $this->tagName = $tagName;
         $this->selfClosing = $selfClosing;
 
         foreach ($attributes as $name => $value) {
@@ -75,7 +75,7 @@ final class HtmlElement implements \Stringable
     }
 
     /**
-     * @param string|string[]|bool $value
+     * @param  string|string[]|bool  $value
      */
     public function setAttribute(string $key, $value = true): self
     {
@@ -103,10 +103,9 @@ final class HtmlElement implements \Stringable
     }
 
     /**
-     * Sets the inner contents of the tag (must be pre-escaped if needed)
+     * Sets the inner contents of the tag (must be pre-escaped if needed).
      *
-     * @param \Stringable|\Stringable[]|string $contents
-     *
+     * @param  \Stringable|\Stringable[]|string  $contents
      * @return $this
      */
     public function setContents($contents): self
@@ -119,26 +118,26 @@ final class HtmlElement implements \Stringable
     /** @psalm-immutable */
     public function __toString(): string
     {
-        $result = '<' . $this->tagName;
+        $result = '<'.$this->tagName;
 
         foreach ($this->attributes as $key => $value) {
             if ($value === true) {
-                $result .= ' ' . $key;
+                $result .= ' '.$key;
             } elseif ($value === false) {
                 continue;
             } else {
-                $result .= ' ' . $key . '="' . Xml::escape($value) . '"';
+                $result .= ' '.$key.'="'.Xml::escape($value).'"';
             }
         }
 
         if ($this->contents !== '') {
-            $result .= '>' . $this->getContentsAsString() . '</' . $this->tagName . '>';
+            $result .= '>'.$this->getContentsAsString().'</'.$this->tagName.'>';
         } elseif ($this->selfClosing && $this->tagName === 'input') {
             $result .= '>';
         } elseif ($this->selfClosing) {
             $result .= ' />';
         } else {
-            $result .= '></' . $this->tagName . '>';
+            $result .= '></'.$this->tagName.'>';
         }
 
         return $result;

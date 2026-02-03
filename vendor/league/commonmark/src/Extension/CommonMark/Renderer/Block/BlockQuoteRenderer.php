@@ -26,7 +26,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class BlockQuoteRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param BlockQuote $node
+     * @param  BlockQuote  $node
      *
      * {@inheritDoc}
      *
@@ -38,7 +38,7 @@ final class BlockQuoteRenderer implements NodeRendererInterface, XmlNodeRenderer
 
         $attrs = $node->data->get('attributes');
 
-        $filling        = $childRenderer->renderNodes($node->children());
+        $filling = $childRenderer->renderNodes($node->children());
         $innerSeparator = $childRenderer->getInnerSeparator();
         if ($filling === '') {
             return new HtmlElement('blockquote', $attrs, $innerSeparator);
@@ -47,7 +47,7 @@ final class BlockQuoteRenderer implements NodeRendererInterface, XmlNodeRenderer
         return new HtmlElement(
             'blockquote',
             $attrs,
-            $innerSeparator . $filling . $innerSeparator
+            $innerSeparator.$filling.$innerSeparator
         );
     }
 
@@ -57,8 +57,7 @@ final class BlockQuoteRenderer implements NodeRendererInterface, XmlNodeRenderer
     }
 
     /**
-     * @param BlockQuote $node
-     *
+     * @param  BlockQuote  $node
      * @return array<string, scalar>
      *
      * @psalm-suppress MoreSpecificImplementedParamType

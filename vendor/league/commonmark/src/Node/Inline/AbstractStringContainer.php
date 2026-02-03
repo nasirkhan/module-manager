@@ -23,7 +23,7 @@ abstract class AbstractStringContainer extends AbstractInline implements StringC
     protected string $literal = '';
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public function __construct(string $contents = '', array $data = [])
     {

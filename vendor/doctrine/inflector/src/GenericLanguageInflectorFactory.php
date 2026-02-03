@@ -19,7 +19,7 @@ abstract class GenericLanguageInflectorFactory implements LanguageInflectorFacto
     final public function __construct()
     {
         $this->singularRulesets[] = $this->getSingularRuleset();
-        $this->pluralRulesets[]   = $this->getPluralRuleset();
+        $this->pluralRulesets[] = $this->getPluralRuleset();
     }
 
     final public function build(): Inflector

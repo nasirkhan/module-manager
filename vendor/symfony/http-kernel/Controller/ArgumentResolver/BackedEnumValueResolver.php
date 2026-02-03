@@ -26,7 +26,7 @@ final class BackedEnumValueResolver implements ValueResolverInterface
 {
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if (!is_subclass_of($argument->getType(), \BackedEnum::class)) {
+        if (! is_subclass_of($argument->getType(), \BackedEnum::class)) {
             return [];
         }
 
@@ -38,7 +38,7 @@ final class BackedEnumValueResolver implements ValueResolverInterface
         // do not support if no value can be resolved at all
         // letting the \Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver be used
         // or \Symfony\Component\HttpKernel\Controller\ArgumentResolver fail with a meaningful error.
-        if (!$request->attributes->has($argument->getName())) {
+        if (! $request->attributes->has($argument->getName())) {
             return [];
         }
 
@@ -52,7 +52,7 @@ final class BackedEnumValueResolver implements ValueResolverInterface
             return [$value];
         }
 
-        if (!\is_int($value) && !\is_string($value)) {
+        if (! \is_int($value) && ! \is_string($value)) {
             throw new \LogicException(\sprintf('Could not resolve the "%s $%s" controller argument: expecting an int or string, got "%s".', $argument->getType(), $argument->getName(), get_debug_type($value)));
         }
 

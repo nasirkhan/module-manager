@@ -41,10 +41,10 @@ trait CompiledUrlMatcherTrait
         if ($allow) {
             throw new MethodNotAllowedException(array_keys($allow));
         }
-        if (!$this instanceof RedirectableUrlMatcherInterface) {
+        if (! $this instanceof RedirectableUrlMatcherInterface) {
             throw new ResourceNotFoundException(\sprintf('No routes found for "%s".', $pathinfo));
         }
-        if (!\in_array($this->context->getMethod(), ['HEAD', 'GET'], true)) {
+        if (! \in_array($this->context->getMethod(), ['HEAD', 'GET'], true)) {
             // no-op
         } elseif ($allowSchemes) {
             redirect_scheme:
@@ -89,7 +89,7 @@ trait CompiledUrlMatcherTrait
 
         foreach ($this->staticRoutes[$trimmedPathinfo] ?? [] as [$ret, $requiredHost, $requiredMethods, $requiredSchemes, $hasTrailingSlash, , $condition]) {
             if ($requiredHost) {
-                if ('{' !== $requiredHost[0] ? $requiredHost !== $host : !preg_match($requiredHost, $host, $hostMatches)) {
+                if ('{' !== $requiredHost[0] ? $requiredHost !== $host : ! preg_match($requiredHost, $host, $hostMatches)) {
                     continue;
                 }
                 if ('{' === $requiredHost[0] && $hostMatches) {
@@ -98,24 +98,24 @@ trait CompiledUrlMatcherTrait
                 }
             }
 
-            if ($condition && !($this->checkCondition)($condition, $context, 0 < $condition ? $request ??= $this->request ?: $this->createRequest($pathinfo) : null, $ret)) {
+            if ($condition && ! ($this->checkCondition)($condition, $context, 0 < $condition ? $request ??= $this->request ?: $this->createRequest($pathinfo) : null, $ret)) {
                 continue;
             }
 
             if ('/' !== $pathinfo && $hasTrailingSlash === ($trimmedPathinfo === $pathinfo)) {
-                if ($supportsRedirections && (!$requiredMethods || isset($requiredMethods['GET']))) {
+                if ($supportsRedirections && (! $requiredMethods || isset($requiredMethods['GET']))) {
                     return $allow = $allowSchemes = [];
                 }
                 continue;
             }
 
-            $hasRequiredScheme = !$requiredSchemes || isset($requiredSchemes[$context->getScheme()]);
-            if ($hasRequiredScheme && $requiredMethods && !isset($requiredMethods[$canonicalMethod]) && !isset($requiredMethods[$requestMethod])) {
+            $hasRequiredScheme = ! $requiredSchemes || isset($requiredSchemes[$context->getScheme()]);
+            if ($hasRequiredScheme && $requiredMethods && ! isset($requiredMethods[$canonicalMethod]) && ! isset($requiredMethods[$requestMethod])) {
                 $allow += $requiredMethods;
                 continue;
             }
 
-            if (!$hasRequiredScheme) {
+            if (! $hasRequiredScheme) {
                 $allowSchemes += $requiredSchemes;
                 continue;
             }
@@ -148,23 +148,23 @@ trait CompiledUrlMatcherTrait
                         }
                     }
 
-                    if ($condition && !($this->checkCondition)($condition, $context, 0 < $condition ? $request ??= $this->request ?: $this->createRequest($pathinfo) : null, $ret)) {
+                    if ($condition && ! ($this->checkCondition)($condition, $context, 0 < $condition ? $request ??= $this->request ?: $this->createRequest($pathinfo) : null, $ret)) {
                         continue;
                     }
 
-                    if ('/' !== $pathinfo && !$hasTrailingVar && $hasTrailingSlash === ($trimmedPathinfo === $pathinfo)) {
-                        if ($supportsRedirections && (!$requiredMethods || isset($requiredMethods['GET']))) {
+                    if ('/' !== $pathinfo && ! $hasTrailingVar && $hasTrailingSlash === ($trimmedPathinfo === $pathinfo)) {
+                        if ($supportsRedirections && (! $requiredMethods || isset($requiredMethods['GET']))) {
                             return $allow = $allowSchemes = [];
                         }
                         continue;
                     }
 
-                    if ($requiredSchemes && !isset($requiredSchemes[$context->getScheme()])) {
+                    if ($requiredSchemes && ! isset($requiredSchemes[$context->getScheme()])) {
                         $allowSchemes += $requiredSchemes;
                         continue;
                     }
 
-                    if ($requiredMethods && !isset($requiredMethods[$canonicalMethod]) && !isset($requiredMethods[$requestMethod])) {
+                    if ($requiredMethods && ! isset($requiredMethods[$canonicalMethod]) && ! isset($requiredMethods[$requestMethod])) {
                         $allow += $requiredMethods;
                         continue;
                     }
@@ -177,7 +177,7 @@ trait CompiledUrlMatcherTrait
             }
         }
 
-        if ('/' === $pathinfo && !$allow && !$allowSchemes) {
+        if ('/' === $pathinfo && ! $allow && ! $allowSchemes) {
             throw new NoConfigurationException();
         }
 

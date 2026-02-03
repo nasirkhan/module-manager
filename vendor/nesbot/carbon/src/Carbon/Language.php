@@ -42,7 +42,7 @@ class Language implements JsonSerializable
         $this->code = $parts[0];
 
         if (isset($parts[1])) {
-            if (!preg_match('/^[A-Z]+$/', $parts[1])) {
+            if (! preg_match('/^[A-Z]+$/', $parts[1])) {
                 $this->variant = $parts[1];
                 $parts[1] = $parts[2] ?? null;
             }

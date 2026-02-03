@@ -277,7 +277,7 @@ final readonly class NativeCalculator extends Calculator
 
         $decreased = false;
 
-        for (; ;) {
+        for (;;) {
             $nx = $this->divQ($this->add($x, $this->divQ($n, $x)), '2');
 
             if ($x === $nx || $this->cmp($nx, $x) > 0 && $decreased) {
@@ -303,7 +303,7 @@ final readonly class NativeCalculator extends Calculator
         $carry = 0;
         $result = '';
 
-        for ($i = $length - $this->maxDigits; ; $i -= $this->maxDigits) {
+        for ($i = $length - $this->maxDigits;; $i -= $this->maxDigits) {
             $blockLength = $this->maxDigits;
 
             if ($i < 0) {
@@ -325,12 +325,12 @@ final readonly class NativeCalculator extends Calculator
                 $carry = 1;
             } else {
                 if ($sumLength < $blockLength) {
-                    $sum = str_repeat('0', $blockLength - $sumLength) . $sum;
+                    $sum = str_repeat('0', $blockLength - $sumLength).$sum;
                 }
                 $carry = 0;
             }
 
-            $result = $sum . $result;
+            $result = $sum.$result;
 
             if ($i === 0) {
                 break;
@@ -338,7 +338,7 @@ final readonly class NativeCalculator extends Calculator
         }
 
         if ($carry === 1) {
-            $result = '1' . $result;
+            $result = '1'.$result;
         }
 
         return $result;
@@ -373,7 +373,7 @@ final readonly class NativeCalculator extends Calculator
 
         $complement = 10 ** $this->maxDigits;
 
-        for ($i = $length - $this->maxDigits; ; $i -= $this->maxDigits) {
+        for ($i = $length - $this->maxDigits;; $i -= $this->maxDigits) {
             $blockLength = $this->maxDigits;
 
             if ($i < 0) {
@@ -400,10 +400,10 @@ final readonly class NativeCalculator extends Calculator
             $sumLength = strlen($sum);
 
             if ($sumLength < $blockLength) {
-                $sum = str_repeat('0', $blockLength - $sumLength) . $sum;
+                $sum = str_repeat('0', $blockLength - $sumLength).$sum;
             }
 
-            $result = $sum . $result;
+            $result = $sum.$result;
 
             if ($i === 0) {
                 break;
@@ -437,7 +437,7 @@ final readonly class NativeCalculator extends Calculator
 
         $result = '0';
 
-        for ($i = $x - $maxDigits; ; $i -= $maxDigits) {
+        for ($i = $x - $maxDigits;; $i -= $maxDigits) {
             $blockALength = $maxDigits;
 
             if ($i < 0) {
@@ -450,7 +450,7 @@ final readonly class NativeCalculator extends Calculator
             $line = '';
             $carry = 0;
 
-            for ($j = $y - $maxDigits; ; $j -= $maxDigits) {
+            for ($j = $y - $maxDigits;; $j -= $maxDigits) {
                 $blockBLength = $maxDigits;
 
                 if ($j < 0) {
@@ -467,7 +467,7 @@ final readonly class NativeCalculator extends Calculator
                 $value = (string) $value;
                 $value = str_pad($value, $maxDigits, '0', STR_PAD_LEFT);
 
-                $line = $value . $line;
+                $line = $value.$line;
 
                 if ($j === 0) {
                     break;
@@ -475,7 +475,7 @@ final readonly class NativeCalculator extends Calculator
             }
 
             if ($carry !== 0) {
-                $line = $carry . $line;
+                $line = $carry.$line;
             }
 
             $line = ltrim($line, '0');
@@ -533,7 +533,7 @@ final readonly class NativeCalculator extends Calculator
             return [ltrim($q, '0') ?: '0', (string) $r];
         }
 
-        for (; ;) {
+        for (;;) {
             $focus = substr($a, 0, $z);
 
             $cmp = $this->doCmp($focus, $b);
@@ -548,8 +548,8 @@ final readonly class NativeCalculator extends Calculator
 
             $zeros = str_repeat('0', $x - $z);
 
-            $q = $this->add($q, '1' . $zeros);
-            $a = $this->sub($a, $b . $zeros);
+            $q = $this->add($q, '1'.$zeros);
+            $a = $this->sub($a, $b.$zeros);
 
             $r = $a;
 
@@ -605,13 +605,13 @@ final readonly class NativeCalculator extends Calculator
         $y = strlen($b);
 
         if ($x > $y) {
-            $b = str_repeat('0', $x - $y) . $b;
+            $b = str_repeat('0', $x - $y).$b;
 
             return [$a, $b, $x];
         }
 
         if ($x < $y) {
-            $a = str_repeat('0', $y - $x) . $a;
+            $a = str_repeat('0', $y - $x).$a;
 
             return [$a, $b, $y];
         }

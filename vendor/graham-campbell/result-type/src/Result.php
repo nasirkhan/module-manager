@@ -31,8 +31,7 @@ abstract class Result
      *
      * @template S
      *
-     * @param callable(T):S $f
-     *
+     * @param  callable(T):S  $f
      * @return \GrahamCampbell\ResultType\Result<S,E>
      */
     abstract public function map(callable $f);
@@ -43,8 +42,7 @@ abstract class Result
      * @template S
      * @template F
      *
-     * @param callable(T):\GrahamCampbell\ResultType\Result<S,F> $f
-     *
+     * @param  callable(T):\GrahamCampbell\ResultType\Result<S,F>  $f
      * @return \GrahamCampbell\ResultType\Result<S,F>
      */
     abstract public function flatMap(callable $f);
@@ -61,8 +59,7 @@ abstract class Result
      *
      * @template F
      *
-     * @param callable(E):F $f
-     *
+     * @param  callable(E):F  $f
      * @return \GrahamCampbell\ResultType\Result<T,F>
      */
     abstract public function mapError(callable $f);

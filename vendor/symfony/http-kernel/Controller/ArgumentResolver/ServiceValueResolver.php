@@ -36,7 +36,7 @@ final class ServiceValueResolver implements ValueResolverInterface
 
         if (\is_array($controller) && \is_callable($controller, true) && \is_string($controller[0])) {
             $controller = $controller[0].'::'.$controller[1];
-        } elseif (!\is_string($controller) || '' === $controller) {
+        } elseif (! \is_string($controller) || '' === $controller) {
             return [];
         }
 
@@ -44,11 +44,11 @@ final class ServiceValueResolver implements ValueResolverInterface
             $controller = ltrim($controller, '\\');
         }
 
-        if (!$this->container->has($controller) && false !== $i = strrpos($controller, ':')) {
+        if (! $this->container->has($controller) && false !== $i = strrpos($controller, ':')) {
             $controller = substr($controller, 0, $i).strtolower(substr($controller, $i));
         }
 
-        if (!$this->container->has($controller) || !$this->container->get($controller)->has($argument->getName())) {
+        if (! $this->container->has($controller) || ! $this->container->get($controller)->has($argument->getName())) {
             return [];
         }
 

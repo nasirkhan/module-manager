@@ -27,7 +27,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class FencedCodeRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param FencedCode $node
+     * @param  FencedCode  $node
      *
      * {@inheritDoc}
      *
@@ -43,7 +43,7 @@ final class FencedCodeRenderer implements NodeRendererInterface, XmlNodeRenderer
         if (\count($infoWords) !== 0 && $infoWords[0] !== '') {
             $class = $infoWords[0];
             if (! \str_starts_with($class, 'language-')) {
-                $class = 'language-' . $class;
+                $class = 'language-'.$class;
             }
 
             $attrs->append('class', $class);
@@ -62,8 +62,7 @@ final class FencedCodeRenderer implements NodeRendererInterface, XmlNodeRenderer
     }
 
     /**
-     * @param FencedCode $node
-     *
+     * @param  FencedCode  $node
      * @return array<string, scalar>
      *
      * @psalm-suppress MoreSpecificImplementedParamType

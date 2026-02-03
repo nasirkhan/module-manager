@@ -74,17 +74,17 @@ class RequestPayloadValueResolver implements ValueResolverInterface, EventSubscr
             ?? $argument->getAttributesOfType(MapUploadedFile::class, ArgumentMetadata::IS_INSTANCEOF)[0]
             ?? null;
 
-        if (!$attribute) {
+        if (! $attribute) {
             return [];
         }
 
-        if (!$attribute instanceof MapUploadedFile && $argument->isVariadic()) {
+        if (! $attribute instanceof MapUploadedFile && $argument->isVariadic()) {
             throw new \LogicException(\sprintf('Mapping variadic argument "$%s" is not supported.', $argument->getName()));
         }
 
         if ($attribute instanceof MapRequestPayload) {
             if ('array' === $argument->getType()) {
-                if (!$attribute->type) {
+                if (! $attribute->type) {
                     throw new NearMissValueResolverException(\sprintf('Please set the $type argument of the #[%s] attribute to the type of the objects in the expected array.', MapRequestPayload::class));
                 }
             } elseif ($attribute->type) {
@@ -116,7 +116,7 @@ class RequestPayloadValueResolver implements ValueResolverInterface, EventSubscr
             }
             $request = $event->getRequest();
 
-            if (!$argument->metadata->getType()) {
+            if (! $argument->metadata->getType()) {
                 throw new \LogicException(\sprintf('Could not resolve the "$%s" controller argument: argument should be typed.', $argument->metadata->getName()));
             }
 
@@ -142,9 +142,9 @@ class RequestPayloadValueResolver implements ValueResolverInterface, EventSubscr
                     $payload = $e->getData();
                 }
 
-                if (null !== $payload && !\count($violations)) {
+                if (null !== $payload && ! \count($violations)) {
                     $constraints = $argument->constraints ?? null;
-                    if (\is_array($payload) && !empty($constraints) && !$constraints instanceof Assert\All) {
+                    if (\is_array($payload) && ! empty($constraints) && ! $constraints instanceof Assert\All) {
                         $constraints = new Assert\All($constraints);
                     }
                     $violations->addAll($this->validator->validate($payload, $constraints, $argument->validationGroups ?? null));
@@ -184,7 +184,7 @@ class RequestPayloadValueResolver implements ValueResolverInterface, EventSubscr
 
     private function mapQueryString(Request $request, ArgumentMetadata $argument, MapQueryString $attribute): ?object
     {
-        if (!($data = $request->query->all($attribute->key)) && ($argument->isNullable() || $argument->hasDefaultValue())) {
+        if (! ($data = $request->query->all($attribute->key)) && ($argument->isNullable() || $argument->hasDefaultValue())) {
             return null;
         }
 
@@ -201,7 +201,7 @@ class RequestPayloadValueResolver implements ValueResolverInterface, EventSubscr
             throw new UnsupportedMediaTypeHttpException('Unsupported format.');
         }
 
-        if ($attribute->acceptFormat && !\in_array($format, (array) $attribute->acceptFormat, true)) {
+        if ($attribute->acceptFormat && ! \in_array($format, (array) $attribute->acceptFormat, true)) {
             throw new UnsupportedMediaTypeHttpException(\sprintf('Unsupported format, expects "%s", but "%s" given.', implode('", "', (array) $attribute->acceptFormat), $format));
         }
 
@@ -232,7 +232,7 @@ class RequestPayloadValueResolver implements ValueResolverInterface, EventSubscr
 
     private function mapUploadedFile(Request $request, ArgumentMetadata $argument, MapUploadedFile $attribute): UploadedFile|array|null
     {
-        if (!($files = $request->files->get($attribute->name ?? $argument->getName())) && ($argument->isNullable() || $argument->hasDefaultValue())) {
+        if (! ($files = $request->files->get($attribute->name ?? $argument->getName())) && ($argument->isNullable() || $argument->hasDefaultValue())) {
             return null;
         }
 

@@ -24,12 +24,14 @@ class ListData
 
     /**
      * @psalm-var ListBlock::TYPE_*
+     *
      * @phpstan-var ListBlock::TYPE_*
      */
     public string $type;
 
     /**
      * @psalm-var ListBlock::DELIM_*|null
+     *
      * @phpstan-var ListBlock::DELIM_*|null
      */
     public ?string $delimiter = null;

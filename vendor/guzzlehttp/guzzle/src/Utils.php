@@ -14,8 +14,7 @@ final class Utils
     /**
      * Debug function used to describe the provided value type and class.
      *
-     * @param mixed $input
-     *
+     * @param  mixed  $input
      * @return string Returns a string containing the type of the variable and
      *                if a class is provided, the class name.
      */
@@ -40,8 +39,8 @@ final class Utils
     /**
      * Parses an array of header lines into an associative array of headers.
      *
-     * @param iterable $lines Header lines array of strings in the following
-     *                        format: "Name: Value"
+     * @param  iterable  $lines  Header lines array of strings in the following
+     *                           format: "Name: Value"
      */
     public static function headersFromLines(iterable $lines): array
     {
@@ -58,8 +57,7 @@ final class Utils
     /**
      * Returns a debug stream based on the provided variable.
      *
-     * @param mixed $value Optional value
-     *
+     * @param  mixed  $value  Optional value
      * @return resource
      */
     public static function debugResource($value = null)
@@ -101,7 +99,7 @@ final class Utils
             $handler = $handler
                 ? Proxy::wrapStreaming($handler, new StreamHandler())
                 : new StreamHandler();
-        } elseif (!$handler) {
+        } elseif (! $handler) {
             throw new \RuntimeException('GuzzleHttp requires cURL, the allow_url_fopen ini setting, or a custom HTTP handler.');
         }
 
@@ -171,7 +169,7 @@ final class Utils
         }
 
         throw new \RuntimeException(
-            <<< EOT
+            <<< 'EOT'
 No system CA bundle could be found in any of the the common system locations.
 PHP versions earlier than 5.6 are not properly configured to use the system's
 CA bundle by default. In order to verify peer certificates, you will need to
@@ -215,8 +213,8 @@ EOT
      * 3. The area starts with "." and the area is the last part of the host. e.g.
      *    '.mit.edu' will match any host that ends with '.mit.edu'.
      *
-     * @param string   $host         Host to check against the patterns.
-     * @param string[] $noProxyArray An array of host patterns.
+     * @param  string  $host  Host to check against the patterns.
+     * @param  string[]  $noProxyArray  An array of host patterns.
      *
      * @throws InvalidArgumentException
      */
@@ -258,12 +256,11 @@ EOT
     /**
      * Wrapper for json_decode that throws when an error occurs.
      *
-     * @param string $json    JSON data to parse
-     * @param bool   $assoc   When true, returned objects will be converted
-     *                        into associative arrays.
-     * @param int    $depth   User specified recursion depth.
-     * @param int    $options Bitmask of JSON decode options.
-     *
+     * @param  string  $json  JSON data to parse
+     * @param  bool  $assoc  When true, returned objects will be converted
+     *                       into associative arrays.
+     * @param  int  $depth  User specified recursion depth.
+     * @param  int  $options  Bitmask of JSON decode options.
      * @return object|array|string|int|float|bool|null
      *
      * @throws InvalidArgumentException if the JSON cannot be decoded.
@@ -283,9 +280,9 @@ EOT
     /**
      * Wrapper for JSON encoding that throws when an error occurs.
      *
-     * @param mixed $value   The value being encoded
-     * @param int   $options JSON encode option bitmask
-     * @param int   $depth   Set the maximum depth. Must be greater than zero.
+     * @param  mixed  $value  The value being encoded
+     * @param  int  $options  JSON encode option bitmask
+     * @param  int  $depth  Set the maximum depth. Must be greater than zero.
      *
      * @throws InvalidArgumentException if the JSON cannot be encoded.
      *
@@ -304,7 +301,7 @@ EOT
 
     /**
      * Wrapper for the hrtime() or microtime() functions
-     * (depending on the PHP version, one of the two is used)
+     * (depending on the PHP version, one of the two is used).
      *
      * @return float UNIX timestamp
      *
