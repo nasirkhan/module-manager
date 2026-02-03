@@ -32,7 +32,7 @@ class PostsController extends BackendBaseController
         $this->module_icon = 'fa-regular fa-file-lines';
 
         // module model name, path
-        $this->module_model = "Modules\Post\Models\Post";
+        $this->module_model = "Nasirkhan\\ModuleManager\\Modules\\Post\\Models\\Post";
     }
 
     /**

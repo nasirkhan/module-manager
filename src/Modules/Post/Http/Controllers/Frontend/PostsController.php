@@ -33,7 +33,7 @@ class PostsController extends Controller
         $this->module_icon = 'fa-regular fa-sun';
 
         // module model name, path
-        $this->module_model = "Modules\Post\Models\Post";
+        $this->module_model = "Nasirkhan\\ModuleManager\\Modules\\Post\\Models\\Post";
     }
 
     /**
