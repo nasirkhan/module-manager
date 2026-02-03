@@ -78,7 +78,7 @@ class MenuServiceProvider extends ServiceProvider
      */
     protected function registerConfig()
     {
-        $configPath = __DIR__.'/../config.php');
+        $configPath = __DIR__.'/../Config/config.php';
 
         // Merge config from module (package defaults)
         $this->mergeConfigFrom($configPath, $this->moduleNameLower);
@@ -98,7 +98,7 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $sourcePath = __DIR__.'/../views');
+        $sourcePath = __DIR__.'/../Resources/views';
 
         // Load views from module with 'menu' namespace
         $this->loadViewsFrom($sourcePath, $this->moduleNameLower);
