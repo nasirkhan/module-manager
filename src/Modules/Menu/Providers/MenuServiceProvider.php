@@ -47,7 +47,7 @@ class MenuServiceProvider extends ServiceProvider
         }
 
         // register commands
-        $this->registerCommands('\Nasirkhan\ModuleManager\Modules\Menu\Console\Commands');
+        $this->registerCommands('Nasirkhan\ModuleManager\Modules\Menu\Console\Commands');
 
         $this->registerLivewireComponents();
 
