@@ -43,7 +43,8 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Nasirkhan\\ModuleManager\\ModuleManagerServiceProvider"
+        "Nasirkhan\\ModuleManager\\ModuleManagerServiceProvider",
+        "Nasirkhan\\ModuleManager\\Modules\\Post\\Providers\\PostServiceProvider"
       ],
       "aliases": {
         "ModuleManager": "Nasirkhan\\ModuleManager\\ModuleManagerFacade"
