@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Nasirkhan\ModuleManager\Commands\AuthPermissionsCommand;
 use Nasirkhan\ModuleManager\Commands\InsertDemoDataCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleBuildCommand;
+use Nasirkhan\ModuleManager\Commands\ModuleCheckMigrationsCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleDiffCommand;
 use Nasirkhan\ModuleManager\Commands\ModulePublishCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleStatusCommand;
@@ -81,6 +82,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
                     ModulePublishCommand::class,
                     ModuleStatusCommand::class,
                     ModuleDiffCommand::class,
+                    ModuleCheckMigrationsCommand::class,
 
                 ]);
             }
