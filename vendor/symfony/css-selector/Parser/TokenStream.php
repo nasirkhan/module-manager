@@ -76,7 +76,7 @@ class TokenStream
             return $this->peeked;
         }
 
-        if (!isset($this->tokens[$this->cursor])) {
+        if (! isset($this->tokens[$this->cursor])) {
             throw new InternalErrorException('Unexpected token stream end.');
         }
 
@@ -88,7 +88,7 @@ class TokenStream
      */
     public function getPeek(): Token
     {
-        if (!$this->peeking) {
+        if (! $this->peeking) {
             $this->peeked = $this->getNext();
             $this->peeking = true;
         }
@@ -115,7 +115,7 @@ class TokenStream
     {
         $next = $this->getNext();
 
-        if (!$next->isIdentifier()) {
+        if (! $next->isIdentifier()) {
             throw SyntaxErrorException::unexpectedToken('identifier', $next);
         }
 

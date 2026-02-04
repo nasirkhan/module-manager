@@ -284,7 +284,7 @@ class ConfigDataCollector extends DataCollector implements LateDataCollectorInte
     {
         $stack = debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
         for ($frame = end($stack); $frame; $frame = prev($stack)) {
-            if (!$class = $frame['class'] ?? null) {
+            if (! $class = $frame['class'] ?? null) {
                 continue;
             }
             if (is_a($class, RunnerInterface::class, true)) {

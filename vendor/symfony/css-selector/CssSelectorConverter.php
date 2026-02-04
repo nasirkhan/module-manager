@@ -33,7 +33,7 @@ class CssSelectorConverter
     private static array $htmlCache = [];
 
     /**
-     * @param bool $html Whether HTML support should be enabled. Disable it for XML documents
+     * @param  bool  $html  Whether HTML support should be enabled. Disable it for XML documents
      */
     public function __construct(bool $html = true)
     {
@@ -50,8 +50,7 @@ class CssSelectorConverter
             ->registerParserShortcut(new EmptyStringParser())
             ->registerParserShortcut(new ElementParser())
             ->registerParserShortcut(new ClassParser())
-            ->registerParserShortcut(new HashParser())
-        ;
+            ->registerParserShortcut(new HashParser());
     }
 
     /**

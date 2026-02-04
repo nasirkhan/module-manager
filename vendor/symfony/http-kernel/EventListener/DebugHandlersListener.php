@@ -37,7 +37,7 @@ class DebugHandlersListener implements EventSubscriberInterface
     private bool $hasTerminatedWithException = false;
 
     /**
-     * @param callable|null $exceptionHandler A handler that must support \Throwable instances that will be called on Exception
+     * @param  callable|null  $exceptionHandler  A handler that must support \Throwable instances that will be called on Exception
      */
     public function __construct(?callable $exceptionHandler = null, ?bool $webMode = null)
     {
@@ -46,7 +46,7 @@ class DebugHandlersListener implements EventSubscriberInterface
         restore_exception_handler();
 
         $this->exceptionHandler = null === $exceptionHandler ? null : $exceptionHandler(...);
-        $this->webMode = $webMode ?? !\in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true);
+        $this->webMode = $webMode ?? ! \in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true);
     }
 
     /**
@@ -57,13 +57,13 @@ class DebugHandlersListener implements EventSubscriberInterface
         if ($event instanceof ConsoleEvent && $this->webMode) {
             return;
         }
-        if (!$event instanceof KernelEvent ? !$this->firstCall : !$event->isMainRequest()) {
+        if (! $event instanceof KernelEvent ? ! $this->firstCall : ! $event->isMainRequest()) {
             return;
         }
         $this->firstCall = $this->hasTerminatedWithException = false;
         $hasRun = null;
 
-        if (!$this->exceptionHandler) {
+        if (! $this->exceptionHandler) {
             if ($event instanceof KernelEvent) {
                 if (method_exists($kernel = $event->getKernel(), 'terminateWithException')) {
                     $request = $event->getRequest();
@@ -92,7 +92,7 @@ class DebugHandlersListener implements EventSubscriberInterface
             $handler = \is_array($handler) ? $handler[0] : null;
             restore_exception_handler();
 
-            if (!$handler instanceof ErrorHandler) {
+            if (! $handler instanceof ErrorHandler) {
                 $handler = $this->earlyHandler;
             }
 

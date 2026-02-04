@@ -27,10 +27,10 @@ class MigratingSessionHandler implements \SessionHandlerInterface, \SessionUpdat
 
     public function __construct(\SessionHandlerInterface $currentHandler, \SessionHandlerInterface $writeOnlyHandler)
     {
-        if (!$currentHandler instanceof \SessionUpdateTimestampHandlerInterface) {
+        if (! $currentHandler instanceof \SessionUpdateTimestampHandlerInterface) {
             $currentHandler = new StrictSessionHandler($currentHandler);
         }
-        if (!$writeOnlyHandler instanceof \SessionUpdateTimestampHandlerInterface) {
+        if (! $writeOnlyHandler instanceof \SessionUpdateTimestampHandlerInterface) {
             $writeOnlyHandler = new StrictSessionHandler($writeOnlyHandler);
         }
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,7 +17,7 @@ namespace Ramsey\Uuid\Exception;
 use RuntimeException as PhpRuntimeException;
 
 /**
- * Thrown to indicate that the source of time encountered an error
+ * Thrown to indicate that the source of time encountered an error.
  */
 class TimeSourceException extends PhpRuntimeException implements UuidExceptionInterface
 {

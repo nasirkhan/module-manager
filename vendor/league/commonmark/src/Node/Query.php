@@ -18,7 +18,7 @@ use League\CommonMark\Node\Query\OrExpr;
 
 final class Query
 {
-    /** @var callable(Node): bool $condition */
+    /** @var callable(Node): bool */
     private $condition;
 
     public function __construct()
@@ -84,7 +84,7 @@ final class Query
                 continue;
             }
 
-            ++$resultCount;
+            $resultCount++;
 
             yield $n;
         }

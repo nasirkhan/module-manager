@@ -50,10 +50,10 @@ final class FragmentUriGenerator implements FragmentUriGeneratorInterface
         // This makes things inconsistent if you switch from rendering a controller
         // to rendering a route if the route pattern does not contain the special
         // _format and _locale placeholders.
-        if (!isset($controller->attributes['_format'])) {
+        if (! isset($controller->attributes['_format'])) {
             $controller->attributes['_format'] = $request->getRequestFormat();
         }
-        if (!isset($controller->attributes['_locale'])) {
+        if (! isset($controller->attributes['_locale'])) {
             $controller->attributes['_locale'] = $request->getLocale();
         }
 
@@ -64,7 +64,7 @@ final class FragmentUriGenerator implements FragmentUriGeneratorInterface
         // we need to sign the absolute URI, but want to return the path only.
         $fragmentUri = $sign || $absolute ? $request->getUriForPath($path) : $request->getBaseUrl().$path;
 
-        if (!$sign) {
+        if (! $sign) {
             return $fragmentUri;
         }
 
@@ -78,7 +78,7 @@ final class FragmentUriGenerator implements FragmentUriGeneratorInterface
         foreach ($values as $key => $value) {
             if (\is_array($value)) {
                 $this->checkNonScalar($value);
-            } elseif (!\is_scalar($value) && null !== $value) {
+            } elseif (! \is_scalar($value) && null !== $value) {
                 throw new \LogicException(\sprintf('Controller attributes cannot contain non-scalar/non-null values (value for key "%s" is not a scalar or null).', $key));
             }
         }

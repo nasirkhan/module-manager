@@ -44,11 +44,10 @@ final class StoreBuilder
     /**
      * Create a new store builder instance.
      *
-     * @param string[]    $paths
-     * @param string[]    $names
-     * @param bool        $shortCircuit
-     * @param string|null $fileEncoding
-     *
+     * @param  string[]  $paths
+     * @param  string[]  $names
+     * @param  bool  $shortCircuit
+     * @param  string|null  $fileEncoding
      * @return void
      */
     private function __construct(array $paths = [], array $names = [], bool $shortCircuit = false, ?string $fileEncoding = null)
@@ -82,8 +81,7 @@ final class StoreBuilder
     /**
      * Creates a store builder with the given path added.
      *
-     * @param string $path
-     *
+     * @param  string  $path
      * @return \Dotenv\Store\StoreBuilder
      */
     public function addPath(string $path)
@@ -94,8 +92,7 @@ final class StoreBuilder
     /**
      * Creates a store builder with the given name added.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return \Dotenv\Store\StoreBuilder
      */
     public function addName(string $name)
@@ -116,8 +113,7 @@ final class StoreBuilder
     /**
      * Creates a store builder with the specified file encoding.
      *
-     * @param string|null $fileEncoding
-     *
+     * @param  string|null  $fileEncoding
      * @return \Dotenv\Store\StoreBuilder
      */
     public function fileEncoding(?string $fileEncoding = null)

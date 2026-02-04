@@ -27,7 +27,7 @@ class TaskQueue implements TaskQueueInterface
                 if ($this->enableShutdown) {
                     // Only run the tasks if an E_ERROR didn't occur.
                     $err = error_get_last();
-                    if (!$err || ($err['type'] ^ E_ERROR)) {
+                    if (! $err || ($err['type'] ^ E_ERROR)) {
                         $this->run();
                     }
                 }
@@ -37,7 +37,7 @@ class TaskQueue implements TaskQueueInterface
 
     public function isEmpty(): bool
     {
-        return !$this->queue;
+        return ! $this->queue;
     }
 
     public function add(callable $task): void

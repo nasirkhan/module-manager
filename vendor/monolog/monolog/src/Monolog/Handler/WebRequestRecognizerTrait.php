@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -14,7 +16,7 @@ namespace Monolog\Handler;
 trait WebRequestRecognizerTrait
 {
     /**
-     * Checks if PHP's serving a web request
+     * Checks if PHP's serving a web request.
      */
     protected function isWebRequest(): bool
     {

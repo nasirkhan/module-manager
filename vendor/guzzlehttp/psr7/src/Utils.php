@@ -14,7 +14,7 @@ final class Utils
     /**
      * Remove the items given by the keys, case insensitively from the data.
      *
-     * @param (string|int)[] $keys
+     * @param  (string|int)[]  $keys
      */
     public static function caselessRemove(array $keys, array $data): array
     {
@@ -25,7 +25,7 @@ final class Utils
         }
 
         foreach ($data as $k => $v) {
-            if (!in_array(strtolower((string) $k), $keys)) {
+            if (! in_array(strtolower((string) $k), $keys)) {
                 $result[$k] = $v;
             }
         }
@@ -37,10 +37,10 @@ final class Utils
      * Copy the contents of a stream into another stream until the given number
      * of bytes have been read.
      *
-     * @param StreamInterface $source Stream to read from
-     * @param StreamInterface $dest   Stream to write to
-     * @param int             $maxLen Maximum number of bytes to read. Pass -1
-     *                                to read the entire stream.
+     * @param  StreamInterface  $source  Stream to read from
+     * @param  StreamInterface  $dest  Stream to write to
+     * @param  int  $maxLen  Maximum number of bytes to read. Pass -1
+     *                       to read the entire stream.
      *
      * @throws \RuntimeException on error.
      */
@@ -49,17 +49,17 @@ final class Utils
         $bufferSize = 8192;
 
         if ($maxLen === -1) {
-            while (!$source->eof()) {
-                if (!$dest->write($source->read($bufferSize))) {
+            while (! $source->eof()) {
+                if (! $dest->write($source->read($bufferSize))) {
                     break;
                 }
             }
         } else {
             $remaining = $maxLen;
-            while ($remaining > 0 && !$source->eof()) {
+            while ($remaining > 0 && ! $source->eof()) {
                 $buf = $source->read(min($bufferSize, $remaining));
                 $len = strlen($buf);
-                if (!$len) {
+                if (! $len) {
                     break;
                 }
                 $remaining -= $len;
@@ -72,9 +72,9 @@ final class Utils
      * Copy the contents of a stream into a string until the given number of
      * bytes have been read.
      *
-     * @param StreamInterface $stream Stream to read
-     * @param int             $maxLen Maximum number of bytes to read. Pass -1
-     *                                to read the entire stream.
+     * @param  StreamInterface  $stream  Stream to read
+     * @param  int  $maxLen  Maximum number of bytes to read. Pass -1
+     *                       to read the entire stream.
      *
      * @throws \RuntimeException on error.
      */
@@ -83,7 +83,7 @@ final class Utils
         $buffer = '';
 
         if ($maxLen === -1) {
-            while (!$stream->eof()) {
+            while (! $stream->eof()) {
                 $buf = $stream->read(1048576);
                 if ($buf === '') {
                     break;
@@ -95,7 +95,7 @@ final class Utils
         }
 
         $len = 0;
-        while (!$stream->eof() && $len < $maxLen) {
+        while (! $stream->eof() && $len < $maxLen) {
             $buf = $stream->read($maxLen - $len);
             if ($buf === '') {
                 break;
@@ -113,9 +113,9 @@ final class Utils
      * This method reads the entire stream to calculate a rolling hash, based
      * on PHP's `hash_init` functions.
      *
-     * @param StreamInterface $stream    Stream to calculate the hash for
-     * @param string          $algo      Hash algorithm (e.g. md5, crc32, etc)
-     * @param bool            $rawOutput Whether or not to use raw output
+     * @param  StreamInterface  $stream  Stream to calculate the hash for
+     * @param  string  $algo  Hash algorithm (e.g. md5, crc32, etc)
+     * @param  bool  $rawOutput  Whether or not to use raw output
      *
      * @throws \RuntimeException on error.
      */
@@ -128,7 +128,7 @@ final class Utils
         }
 
         $ctx = hash_init($algo);
-        while (!$stream->eof()) {
+        while (! $stream->eof()) {
             hash_update($ctx, $stream->read(1048576));
         }
 
@@ -153,18 +153,18 @@ final class Utils
      * - query: (string) Set the query string value of the URI.
      * - version: (string) Set the protocol version.
      *
-     * @param RequestInterface $request Request to clone and modify.
-     * @param array            $changes Changes to apply.
+     * @param  RequestInterface  $request  Request to clone and modify.
+     * @param  array  $changes  Changes to apply.
      */
     public static function modifyRequest(RequestInterface $request, array $changes): RequestInterface
     {
-        if (!$changes) {
+        if (! $changes) {
             return $request;
         }
 
         $headers = $request->getHeaders();
 
-        if (!isset($changes['uri'])) {
+        if (! isset($changes['uri'])) {
             $uri = $request->getUri();
         } else {
             // Remove the host header if one is on the URI
@@ -182,11 +182,11 @@ final class Utils
             $uri = $changes['uri'];
         }
 
-        if (!empty($changes['remove_headers'])) {
+        if (! empty($changes['remove_headers'])) {
             $headers = self::caselessRemove($changes['remove_headers'], $headers);
         }
 
-        if (!empty($changes['set_headers'])) {
+        if (! empty($changes['set_headers'])) {
             $headers = self::caselessRemove(array_keys($changes['set_headers']), $headers);
             $headers = $changes['set_headers'] + $headers;
         }
@@ -228,15 +228,15 @@ final class Utils
     /**
      * Read a line from the stream up to the maximum allowed buffer length.
      *
-     * @param StreamInterface $stream    Stream to read from
-     * @param int|null        $maxLength Maximum buffer length
+     * @param  StreamInterface  $stream  Stream to read from
+     * @param  int|null  $maxLength  Maximum buffer length
      */
     public static function readLine(StreamInterface $stream, ?int $maxLength = null): string
     {
         $buffer = '';
         $size = 0;
 
-        while (!$stream->eof()) {
+        while (! $stream->eof()) {
             if ('' === ($byte = $stream->read(1))) {
                 return $buffer;
             }
@@ -293,8 +293,8 @@ final class Utils
      *   number of requested bytes are available. Any additional bytes will be
      *   buffered and used in subsequent reads.
      *
-     * @param resource|string|int|float|bool|StreamInterface|callable|\Iterator|null $resource Entity body data
-     * @param array{size?: int, metadata?: array}                                    $options  Additional options
+     * @param  resource|string|int|float|bool|StreamInterface|callable|\Iterator|null  $resource  Entity body data
+     * @param  array{size?: int, metadata?: array}  $options  Additional options
      *
      * @throws \InvalidArgumentException if the $resource arg is not valid.
      */
@@ -332,7 +332,7 @@ final class Utils
                     return $resource;
                 } elseif ($resource instanceof \Iterator) {
                     return new PumpStream(function () use ($resource) {
-                        if (!$resource->valid()) {
+                        if (! $resource->valid()) {
                             return false;
                         }
                         $result = $resource->current();
@@ -361,9 +361,8 @@ final class Utils
      * When fopen fails, PHP normally raises a warning. This function adds an
      * error handler that checks for errors and throws an exception instead.
      *
-     * @param string $filename File to open
-     * @param string $mode     Mode used to open the file
-     *
+     * @param  string  $filename  File to open
+     * @param  string  $mode  Mode used to open the file
      * @return resource
      *
      * @throws \RuntimeException if the file cannot be opened
@@ -411,7 +410,7 @@ final class Utils
      * function adds an error handler that checks for errors and throws an
      * exception instead.
      *
-     * @param resource $stream
+     * @param  resource  $stream
      *
      * @throws \RuntimeException if the stream cannot be read
      */
@@ -458,7 +457,7 @@ final class Utils
      * UriInterface for the given value. If the value is already a
      * UriInterface, it is returned as-is.
      *
-     * @param string|UriInterface $uri
+     * @param  string|UriInterface  $uri
      *
      * @throws \InvalidArgumentException
      */

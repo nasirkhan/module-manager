@@ -54,7 +54,7 @@ class SendmailTransport extends AbstractTransport
         parent::__construct($dispatcher, $logger);
 
         if (null !== $command) {
-            if (!str_contains($command, ' -bs') && !str_contains($command, ' -t')) {
+            if (! str_contains($command, ' -bs') && ! str_contains($command, ' -t')) {
                 throw new \InvalidArgumentException(\sprintf('Unsupported sendmail command flags "%s"; must be one of "-bs" or "-t" but can include additional flags.', $command));
             }
 
@@ -97,13 +97,13 @@ class SendmailTransport extends AbstractTransport
             $command = str_replace(' -t', '', $command);
         }
 
-        if (!str_contains($command, ' -f')) {
+        if (! str_contains($command, ' -f')) {
             $command .= ' -f'.escapeshellarg($message->getEnvelope()->getSender()->getEncodedAddress());
         }
 
         $chunks = AbstractStream::replace("\r\n", "\n", $message->toIterable());
 
-        if (!str_contains($command, ' -i') && !str_contains($command, ' -oi')) {
+        if (! str_contains($command, ' -i') && ! str_contains($command, ' -oi')) {
             $chunks = AbstractStream::replace("\n.", "\n..", $chunks);
         }
 

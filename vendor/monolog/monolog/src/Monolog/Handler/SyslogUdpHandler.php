@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -15,7 +17,6 @@ use DateTimeInterface;
 use Monolog\Handler\SyslogUdp\UdpSocket;
 use Monolog\Level;
 use Monolog\LogRecord;
-use Monolog\Utils;
 
 /**
  * A Handler for logging to a remote syslogd server.
@@ -42,19 +43,20 @@ class SyslogUdpHandler extends AbstractSyslogHandler
     protected int $rfc;
 
     /**
-     * @param  string                    $host     Either IP/hostname or a path to a unix socket (port must be 0 then)
-     * @param  int                       $port     Port number, or 0 if $host is a unix socket
-     * @param  string|int                $facility Either one of the names of the keys in $this->facilities, or a LOG_* facility constant
-     * @param  bool                      $bubble   Whether the messages that are handled can bubble up the stack or not
-     * @param  string                    $ident    Program name or tag for each log message.
-     * @param  int                       $rfc      RFC to format the message for.
+     * @param  string  $host  Either IP/hostname or a path to a unix socket (port must be 0 then)
+     * @param  int  $port  Port number, or 0 if $host is a unix socket
+     * @param  string|int  $facility  Either one of the names of the keys in $this->facilities, or a LOG_* facility constant
+     * @param  bool  $bubble  Whether the messages that are handled can bubble up the stack or not
+     * @param  string  $ident  Program name or tag for each log message.
+     * @param  int  $rfc  RFC to format the message for.
+     *
      * @throws MissingExtensionException when there is no socket extension
      *
      * @phpstan-param self::RFC* $rfc
      */
     public function __construct(string $host, int $port = 514, string|int $facility = LOG_USER, int|string|Level $level = Level::Debug, bool $bubble = true, string $ident = 'php', int $rfc = self::RFC5424)
     {
-        if (!\extension_loaded('sockets')) {
+        if (! \extension_loaded('sockets')) {
             throw new MissingExtensionException('The sockets extension is required to use the SyslogUdpHandler');
         }
 
@@ -83,7 +85,7 @@ class SyslogUdpHandler extends AbstractSyslogHandler
     }
 
     /**
-     * @param  string|string[] $message
+     * @param  string|string[]  $message
      * @return string[]
      */
     private function splitMessageIntoLines($message): array
@@ -96,14 +98,14 @@ class SyslogUdpHandler extends AbstractSyslogHandler
         if (false === $lines) {
             $pcreErrorCode = preg_last_error();
 
-            throw new \RuntimeException('Could not preg_split: ' . $pcreErrorCode . ' / ' . preg_last_error_msg());
+            throw new \RuntimeException('Could not preg_split: '.$pcreErrorCode.' / '.preg_last_error_msg());
         }
 
         return $lines;
     }
 
     /**
-     * Make common syslog header (see rfc5424 or rfc3164)
+     * Make common syslog header (see rfc5424 or rfc3164).
      */
     protected function makeCommonSyslogHeader(int $severity, DateTimeInterface $datetime): string
     {
@@ -125,23 +127,23 @@ class SyslogUdpHandler extends AbstractSyslogHandler
             $dateNew = $datetime->setTimezone(new \DateTimeZone('UTC'));
             $date = $dateNew->format($this->dateFormats[$this->rfc]);
 
-            return "<$priority>" .
-                $date . " " .
-                $hostname . " " .
-                $this->ident . "[" . $pid . "]: ";
+            return "<$priority>".
+                $date.' '.
+                $hostname.' '.
+                $this->ident.'['.$pid.']: ';
         }
 
         $date = $datetime->format($this->dateFormats[$this->rfc]);
 
-        return "<$priority>1 " .
-            $date . " " .
-            $hostname . " " .
-            $this->ident . " " .
-            $pid . " - - ";
+        return "<$priority>1 ".
+            $date.' '.
+            $hostname.' '.
+            $this->ident.' '.
+            $pid.' - - ';
     }
 
     /**
-     * Inject your own socket, mainly used for testing
+     * Inject your own socket, mainly used for testing.
      *
      * @return $this
      */

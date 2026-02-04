@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -14,7 +16,7 @@ namespace Monolog;
 use Psr\Log\LogLevel;
 
 /**
- * Represents the log levels
+ * Represents the log levels.
  *
  * Monolog supports the logging levels described by RFC 5424 {@see https://datatracker.ietf.org/doc/html/rfc5424}
  * but due to BC the severity values used internally are not 0-7.
@@ -32,24 +34,24 @@ use Psr\Log\LogLevel;
 enum Level: int
 {
     /**
-     * Detailed debug information
+     * Detailed debug information.
      */
     case Debug = 100;
 
     /**
-     * Interesting events
+     * Interesting events.
      *
      * Examples: User logs in, SQL logs.
      */
     case Info = 200;
 
     /**
-     * Uncommon events
+     * Uncommon events.
      */
     case Notice = 250;
 
     /**
-     * Exceptional occurrences that are not errors
+     * Exceptional occurrences that are not errors.
      *
      * Examples: Use of deprecated APIs, poor use of an API,
      * undesirable things that are not necessarily wrong.
@@ -57,19 +59,19 @@ enum Level: int
     case Warning = 300;
 
     /**
-     * Runtime errors
+     * Runtime errors.
      */
     case Error = 400;
 
     /**
-     * Critical conditions
+     * Critical conditions.
      *
      * Example: Application component unavailable, unexpected exception.
      */
     case Critical = 500;
 
     /**
-     * Action must be taken immediately
+     * Action must be taken immediately.
      *
      * Example: Entire website down, database unavailable, etc.
      * This should trigger the SMS alerts and wake you up.
@@ -82,7 +84,7 @@ enum Level: int
     case Emergency = 600;
 
     /**
-     * @param  value-of<self::NAMES>|LogLevel::*|'Debug'|'Info'|'Notice'|'Warning'|'Error'|'Critical'|'Alert'|'Emergency' $name
+     * @param  value-of<self::NAMES>|LogLevel::*|'Debug'|'Info'|'Notice'|'Warning'|'Error'|'Critical'|'Alert'|'Emergency'  $name
      * @return static
      */
     public static function fromName(string $name): self
@@ -100,7 +102,7 @@ enum Level: int
     }
 
     /**
-     * @param  value-of<self::VALUES> $value
+     * @param  value-of<self::VALUES>  $value
      * @return static
      */
     public static function fromValue(int $value): self
@@ -109,7 +111,7 @@ enum Level: int
     }
 
     /**
-     * Returns true if the passed $level is higher or equal to $this
+     * Returns true if the passed $level is higher or equal to $this.
      */
     public function includes(Level $level): bool
     {
@@ -127,7 +129,7 @@ enum Level: int
     }
 
     /**
-     * Returns the monolog standardized all-capitals name of the level
+     * Returns the monolog standardized all-capitals name of the level.
      *
      * Use this instead of $level->name which returns the enum case name (e.g. Debug vs DEBUG if you use getName())
      *
@@ -148,7 +150,7 @@ enum Level: int
     }
 
     /**
-     * Returns the PSR-3 level matching this instance
+     * Returns the PSR-3 level matching this instance.
      *
      * @phpstan-return \Psr\Log\LogLevel::*
      */
@@ -167,7 +169,7 @@ enum Level: int
     }
 
     /**
-     * Returns the RFC 5424 level matching this instance
+     * Returns the RFC 5424 level matching this instance.
      *
      * @phpstan-return int<0, 7>
      */

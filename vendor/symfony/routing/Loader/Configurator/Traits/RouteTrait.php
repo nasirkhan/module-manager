@@ -94,8 +94,7 @@ trait RouteTrait
      * Sets the schemes (e.g. 'https') this route is restricted to.
      * So an empty array means that any scheme is allowed.
      *
-     * @param string[] $schemes
-     *
+     * @param  string[]  $schemes
      * @return $this
      */
     final public function schemes(array $schemes): static
@@ -109,8 +108,7 @@ trait RouteTrait
      * Sets the HTTP methods (e.g. 'POST') this route is restricted to.
      * So an empty array means that any method is allowed.
      *
-     * @param string[] $methods
-     *
+     * @param  string[]  $methods
      * @return $this
      */
     final public function methods(array $methods): static
@@ -123,8 +121,7 @@ trait RouteTrait
     /**
      * Adds the "_controller" entry to defaults.
      *
-     * @param callable|string|array $controller a callable or parseable pseudo-callable
-     *
+     * @param  callable|string|array  $controller  a callable or parseable pseudo-callable
      * @return $this
      */
     final public function controller(callable|string|array $controller): static

@@ -23,9 +23,8 @@ final class GuardedWriter implements WriterInterface
     /**
      * Create a new guarded writer instance.
      *
-     * @param \Dotenv\Repository\Adapter\WriterInterface $writer
-     * @param string[]                                   $allowList
-     *
+     * @param  \Dotenv\Repository\Adapter\WriterInterface  $writer
+     * @param  string[]  $allowList
      * @return void
      */
     public function __construct(WriterInterface $writer, array $allowList)
@@ -37,15 +36,14 @@ final class GuardedWriter implements WriterInterface
     /**
      * Write to an environment variable, if possible.
      *
-     * @param non-empty-string $name
-     * @param string           $value
-     *
+     * @param  non-empty-string  $name
+     * @param  string  $value
      * @return bool
      */
     public function write(string $name, string $value)
     {
         // Don't set non-allowed variables
-        if (!$this->isAllowed($name)) {
+        if (! $this->isAllowed($name)) {
             return false;
         }
 
@@ -56,14 +54,13 @@ final class GuardedWriter implements WriterInterface
     /**
      * Delete an environment variable, if possible.
      *
-     * @param non-empty-string $name
-     *
+     * @param  non-empty-string  $name
      * @return bool
      */
     public function delete(string $name)
     {
         // Don't clear non-allowed variables
-        if (!$this->isAllowed($name)) {
+        if (! $this->isAllowed($name)) {
             return false;
         }
 
@@ -74,8 +71,7 @@ final class GuardedWriter implements WriterInterface
     /**
      * Determine if the given variable is allowed.
      *
-     * @param non-empty-string $name
-     *
+     * @param  non-empty-string  $name
      * @return bool
      */
     private function isAllowed(string $name)

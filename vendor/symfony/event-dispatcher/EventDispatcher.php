@@ -66,7 +66,7 @@ class EventDispatcher implements EventDispatcherInterface
                 return [];
             }
 
-            if (!isset($this->sorted[$eventName])) {
+            if (! isset($this->sorted[$eventName])) {
                 $this->sortListeners($eventName);
             }
 
@@ -74,7 +74,7 @@ class EventDispatcher implements EventDispatcherInterface
         }
 
         foreach ($this->listeners as $eventName => $eventListeners) {
-            if (!isset($this->sorted[$eventName])) {
+            if (! isset($this->sorted[$eventName])) {
                 $this->sortListeners($eventName);
             }
         }
@@ -111,7 +111,7 @@ class EventDispatcher implements EventDispatcherInterface
     public function hasListeners(?string $eventName = null): bool
     {
         if (null !== $eventName) {
-            return !empty($this->listeners[$eventName]);
+            return ! empty($this->listeners[$eventName]);
         }
 
         foreach ($this->listeners as $eventListeners) {
@@ -151,7 +151,7 @@ class EventDispatcher implements EventDispatcherInterface
                 }
             }
 
-            if (!$listeners) {
+            if (! $listeners) {
                 unset($this->listeners[$eventName][$priority]);
             }
         }
@@ -191,9 +191,9 @@ class EventDispatcher implements EventDispatcherInterface
      * This method can be overridden to add functionality that is executed
      * for each listener.
      *
-     * @param callable[] $listeners The event listeners
-     * @param string     $eventName The name of the event to dispatch
-     * @param object     $event     The event object to pass to the event handlers/listeners
+     * @param  callable[]  $listeners  The event listeners
+     * @param  string  $eventName  The name of the event to dispatch
+     * @param  object  $event  The event object to pass to the event handlers/listeners
      */
     protected function callListeners(iterable $listeners, string $eventName, object $event): void
     {

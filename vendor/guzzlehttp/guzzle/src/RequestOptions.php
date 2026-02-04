@@ -207,7 +207,7 @@ final class RequestOptions
      * query: (array|string) Associative array of query string values to add
      * to the request. This option uses PHP's http_build_query() to create
      * the string representation. Pass a string value if you need more
-     * control than what this method provides
+     * control than what this method provides.
      */
     public const QUERY = 'query';
 
@@ -268,7 +268,7 @@ final class RequestOptions
     public const VERSION = 'version';
 
     /**
-     * force_ip_resolve: (bool) Force client to use only ipv4 or ipv6 protocol
+     * force_ip_resolve: (bool) Force client to use only ipv4 or ipv6 protocol.
      */
     public const FORCE_IP_RESOLVE = 'force_ip_resolve';
 }

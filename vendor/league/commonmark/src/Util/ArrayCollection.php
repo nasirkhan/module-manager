@@ -14,13 +14,14 @@ declare(strict_types=1);
 namespace League\CommonMark\Util;
 
 /**
- * Array collection
+ * Array collection.
  *
  * Provides a wrapper around a standard PHP array.
  *
  * @internal
  *
  * @phpstan-template T
+ *
  * @phpstan-implements \IteratorAggregate<int, T>
  * @phpstan-implements \ArrayAccess<int, T>
  */
@@ -28,14 +29,15 @@ final class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAcc
 {
     /**
      * @var array<int, mixed>
+     *
      * @phpstan-var array<int, T>
      */
     private array $elements;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param array<int|string, mixed> $elements
+     * @param  array<int|string, mixed>  $elements
      *
      * @phpstan-param array<int, T> $elements
      */
@@ -65,7 +67,7 @@ final class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAcc
     }
 
     /**
-     * Retrieve an external iterator
+     * Retrieve an external iterator.
      *
      * @return \ArrayIterator<int, mixed>
      *
@@ -78,7 +80,7 @@ final class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAcc
     }
 
     /**
-     * Count elements of an object
+     * Count elements of an object.
      *
      * @return int The count as an integer.
      */
@@ -88,7 +90,7 @@ final class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAcc
     }
 
     /**
-     * Whether an offset exists
+     * Whether an offset exists.
      *
      * {@inheritDoc}
      *
@@ -100,7 +102,7 @@ final class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAcc
     }
 
     /**
-     * Offset to retrieve
+     * Offset to retrieve.
      *
      * {@inheritDoc}
      *
@@ -115,7 +117,7 @@ final class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAcc
     }
 
     /**
-     * Offset to set
+     * Offset to set.
      *
      * {@inheritDoc}
      *
@@ -133,7 +135,7 @@ final class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAcc
     }
 
     /**
-     * Offset to unset
+     * Offset to unset.
      *
      * {@inheritDoc}
      *
@@ -150,7 +152,7 @@ final class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAcc
     }
 
     /**
-     * Returns a subset of the array
+     * Returns a subset of the array.
      *
      * @return array<int, mixed>
      *

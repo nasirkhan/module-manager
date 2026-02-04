@@ -16,7 +16,7 @@ use Symfony\Component\Uid\UuidV4;
 class RandomBasedUuidFactory
 {
     /**
-     * @param class-string $class
+     * @param  class-string  $class
      */
     public function __construct(
         private string $class,

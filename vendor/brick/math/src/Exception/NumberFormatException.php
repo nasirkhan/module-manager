@@ -26,7 +26,7 @@ final class NumberFormatException extends MathException
     }
 
     /**
-     * @param string $char The failing character.
+     * @param  string  $char  The failing character.
      *
      * @pure
      */
@@ -38,10 +38,10 @@ final class NumberFormatException extends MathException
             $char = strtoupper(dechex($ord));
 
             if ($ord < 10) {
-                $char = '0' . $char;
+                $char = '0'.$char;
             }
         } else {
-            $char = '"' . $char . '"';
+            $char = '"'.$char.'"';
         }
 
         return new self(sprintf('Char %s is not a valid character in the given alphabet.', $char));

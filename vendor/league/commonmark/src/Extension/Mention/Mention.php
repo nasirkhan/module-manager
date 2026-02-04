@@ -29,8 +29,8 @@ class Mention extends Link
 
     public function __construct(string $name, string $prefix, string $identifier, ?string $label = null)
     {
-        $this->name       = $name;
-        $this->prefix     = $prefix;
+        $this->name = $name;
+        $this->prefix = $prefix;
         $this->identifier = $identifier;
 
         parent::__construct('', $label ?? \sprintf('%s%s', $prefix, $identifier));

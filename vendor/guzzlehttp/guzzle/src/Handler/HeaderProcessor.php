@@ -12,8 +12,7 @@ final class HeaderProcessor
     /**
      * Returns the HTTP version, status code, reason phrase, and headers.
      *
-     * @param string[] $headers
-     *
+     * @param  string[]  $headers
      * @return array{0:string, 1:int, 2:?string, 3:array}
      *
      * @throws \RuntimeException

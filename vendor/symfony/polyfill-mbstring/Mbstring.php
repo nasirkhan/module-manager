@@ -154,17 +154,17 @@ final class Mbstring
 
     public static function mb_decode_numericentity($s, $convmap, $encoding = null)
     {
-        if (null !== $s && !\is_scalar($s) && !(\is_object($s) && method_exists($s, '__toString'))) {
+        if (null !== $s && ! \is_scalar($s) && ! (\is_object($s) && method_exists($s, '__toString'))) {
             trigger_error('mb_decode_numericentity() expects parameter 1 to be string, '.\gettype($s).' given', \E_USER_WARNING);
 
             return null;
         }
 
-        if (!\is_array($convmap) || (80000 > \PHP_VERSION_ID && !$convmap)) {
+        if (! \is_array($convmap) || (80000 > \PHP_VERSION_ID && ! $convmap)) {
             return false;
         }
 
-        if (null !== $encoding && !\is_scalar($encoding)) {
+        if (null !== $encoding && ! \is_scalar($encoding)) {
             trigger_error('mb_decode_numericentity() expects parameter 3 to be string, '.\gettype($s).' given', \E_USER_WARNING);
 
             return '';  // Instead of null (cf. mb_encode_numericentity).
@@ -179,7 +179,7 @@ final class Mbstring
 
         if ('UTF-8' === $encoding) {
             $encoding = null;
-            if (!preg_match('//u', $s)) {
+            if (! preg_match('//u', $s)) {
                 $s = @iconv('UTF-8', 'UTF-8//IGNORE', $s);
             }
         } else {
@@ -214,23 +214,23 @@ final class Mbstring
 
     public static function mb_encode_numericentity($s, $convmap, $encoding = null, $is_hex = false)
     {
-        if (null !== $s && !\is_scalar($s) && !(\is_object($s) && method_exists($s, '__toString'))) {
+        if (null !== $s && ! \is_scalar($s) && ! (\is_object($s) && method_exists($s, '__toString'))) {
             trigger_error('mb_encode_numericentity() expects parameter 1 to be string, '.\gettype($s).' given', \E_USER_WARNING);
 
             return null;
         }
 
-        if (!\is_array($convmap) || (80000 > \PHP_VERSION_ID && !$convmap)) {
+        if (! \is_array($convmap) || (80000 > \PHP_VERSION_ID && ! $convmap)) {
             return false;
         }
 
-        if (null !== $encoding && !\is_scalar($encoding)) {
+        if (null !== $encoding && ! \is_scalar($encoding)) {
             trigger_error('mb_encode_numericentity() expects parameter 3 to be string, '.\gettype($s).' given', \E_USER_WARNING);
 
             return null;  // Instead of '' (cf. mb_decode_numericentity).
         }
 
-        if (null !== $is_hex && !\is_scalar($is_hex)) {
+        if (null !== $is_hex && ! \is_scalar($is_hex)) {
             trigger_error('mb_encode_numericentity() expects parameter 4 to be boolean, '.\gettype($s).' given', \E_USER_WARNING);
 
             return null;
@@ -245,7 +245,7 @@ final class Mbstring
 
         if ('UTF-8' === $encoding) {
             $encoding = null;
-            if (!preg_match('//u', $s)) {
+            if (! preg_match('//u', $s)) {
                 $s = @iconv('UTF-8', 'UTF-8//IGNORE', $s);
             }
         } else {
@@ -293,7 +293,7 @@ final class Mbstring
 
         if ('UTF-8' === $encoding) {
             $encoding = null;
-            if (!preg_match('//u', $s)) {
+            if (! preg_match('//u', $s)) {
                 $s = @iconv('UTF-8', 'UTF-8//IGNORE', $s);
             }
         } else {
@@ -431,15 +431,15 @@ final class Mbstring
             $encoding = self::$internalEncoding;
         }
 
-        if (!\is_array($var)) {
+        if (! \is_array($var)) {
             return self::mb_detect_encoding($var, [$encoding]) || false !== @iconv($encoding, $encoding, $var);
         }
 
         foreach ($var as $key => $value) {
-            if (!self::mb_check_encoding($key, $encoding)) {
+            if (! self::mb_check_encoding($key, $encoding)) {
                 return false;
             }
-            if (!self::mb_check_encoding($value, $encoding)) {
+            if (! self::mb_check_encoding($value, $encoding)) {
                 return false;
             }
         }
@@ -452,7 +452,7 @@ final class Mbstring
         if (null === $encodingList) {
             $encodingList = self::$encodingList;
         } else {
-            if (!\is_array($encodingList)) {
+            if (! \is_array($encodingList)) {
                 $encodingList = array_map('trim', explode(',', $encodingList));
             }
             $encodingList = array_map('strtoupper', $encodingList);
@@ -461,7 +461,7 @@ final class Mbstring
         foreach ($encodingList as $enc) {
             switch ($enc) {
                 case 'ASCII':
-                    if (!preg_match('/[\x80-\xFF]/', $str)) {
+                    if (! preg_match('/[\x80-\xFF]/', $str)) {
                         return $enc;
                     }
                     break;
@@ -489,7 +489,7 @@ final class Mbstring
             return self::$encodingList;
         }
 
-        if (!\is_array($encodingList)) {
+        if (! \is_array($encodingList)) {
             $encodingList = array_map('trim', explode(',', $encodingList));
         }
         $encodingList = array_map('strtoupper', $encodingList);
@@ -572,7 +572,7 @@ final class Mbstring
 
     public static function mb_str_split($string, $split_length = 1, $encoding = null)
     {
-        if (null !== $string && !\is_scalar($string) && !(\is_object($string) && method_exists($string, '__toString'))) {
+        if (null !== $string && ! \is_scalar($string) && ! (\is_object($string) && method_exists($string, '__toString'))) {
             trigger_error('mb_str_split() expects parameter 1 to be string, '.\gettype($string).' given', \E_USER_WARNING);
 
             return null;
@@ -836,7 +836,7 @@ final class Mbstring
 
     public static function mb_str_pad(string $string, int $length, string $pad_string = ' ', int $pad_type = \STR_PAD_RIGHT, ?string $encoding = null): string
     {
-        if (!\in_array($pad_type, [\STR_PAD_RIGHT, \STR_PAD_LEFT, \STR_PAD_BOTH], true)) {
+        if (! \in_array($pad_type, [\STR_PAD_RIGHT, \STR_PAD_LEFT, \STR_PAD_BOTH], true)) {
             throw new \ValueError('mb_str_pad(): Argument #4 ($pad_type) must be STR_PAD_LEFT, STR_PAD_RIGHT, or STR_PAD_BOTH');
         }
 
@@ -1000,10 +1000,10 @@ final class Mbstring
 
         if ('UTF-8' === $encoding) {
             $encoding = null;
-            if (!preg_match('//u', $string)) {
+            if (! preg_match('//u', $string)) {
                 $string = @iconv('UTF-8', 'UTF-8//IGNORE', $string);
             }
-            if (null !== $characters && !preg_match('//u', $characters)) {
+            if (null !== $characters && ! preg_match('//u', $characters)) {
                 $characters = @iconv('UTF-8', 'UTF-8//IGNORE', $characters);
             }
         } else {
@@ -1038,7 +1038,7 @@ final class Mbstring
         }
 
         // BC for PHP 7.3 and lower
-        if (!$validEncoding) {
+        if (! $validEncoding) {
             throw new \ValueError(sprintf($errorFormat, $encoding));
         }
     }

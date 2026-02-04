@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -19,6 +19,7 @@ use function preg_match;
 
 /**
  * @internal The class exposes the internal representation of a Var Specifier
+ *
  * @link https://www.rfc-editor.org/rfc/rfc6570#section-2.3
  */
 final class VarSpecifier

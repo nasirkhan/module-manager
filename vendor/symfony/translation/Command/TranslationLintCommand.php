@@ -88,7 +88,7 @@ class TranslationLintCommand extends Command
             }
         }
 
-        if (!$domainsByLocales) {
+        if (! $domainsByLocales) {
             $this->io->error('No translation files were found.');
 
             return Command::SUCCESS;
@@ -100,7 +100,7 @@ class TranslationLintCommand extends Command
                 static fn (string $locale, array $domains) => [
                     $locale,
                     implode(', ', $domains),
-                    !\array_key_exists($locale, $errors) ? '<info>Yes</>' : '<error>No</>',
+                    ! \array_key_exists($locale, $errors) ? '<info>Yes</>' : '<error>No</>',
                 ],
                 array_keys($domainsByLocales),
                 $domainsByLocales

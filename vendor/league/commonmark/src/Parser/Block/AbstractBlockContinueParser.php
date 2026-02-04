@@ -16,7 +16,7 @@ namespace League\CommonMark\Parser\Block;
 use League\CommonMark\Node\Block\AbstractBlock;
 
 /**
- * Base class for a block parser
+ * Base class for a block parser.
  *
  * Slightly more convenient to extend from vs. implementing the interface
  */

@@ -19,6 +19,6 @@ class InvalidFrontMatterException extends \RuntimeException implements CommonMar
 {
     public static function wrap(\Throwable $t): self
     {
-        return new InvalidFrontMatterException('Failed to parse front matter: ' . $t->getMessage(), 0, $t);
+        return new InvalidFrontMatterException('Failed to parse front matter: '.$t->getMessage(), 0, $t);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,7 +17,7 @@ namespace Ramsey\Uuid\Exception;
 use RuntimeException as PhpRuntimeException;
 
 /**
- * Thrown to indicate that an error occurred while attempting to hash a namespace and name
+ * Thrown to indicate that an error occurred while attempting to hash a namespace and name.
  */
 class NameException extends PhpRuntimeException implements UuidExceptionInterface
 {

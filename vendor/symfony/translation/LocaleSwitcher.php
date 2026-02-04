@@ -22,7 +22,7 @@ class LocaleSwitcher implements LocaleAwareInterface
     private string $defaultLocale;
 
     /**
-     * @param LocaleAwareInterface[] $localeAwareServices
+     * @param  LocaleAwareInterface[]  $localeAwareServices
      */
     public function __construct(
         private string $locale,
@@ -60,8 +60,7 @@ class LocaleSwitcher implements LocaleAwareInterface
      *
      * @template T
      *
-     * @param callable(string $locale):T $callback
-     *
+     * @param  callable(string $locale):T  $callback
      * @return T
      */
     public function runWithLocale(string $locale, callable $callback): mixed

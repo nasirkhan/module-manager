@@ -20,7 +20,7 @@ trait HostTrait
 {
     final protected function addHost(RouteCollection $routes, string|array $hosts): void
     {
-        if (!$hosts || !\is_array($hosts)) {
+        if (! $hosts || ! \is_array($hosts)) {
             $routes->setHost($hosts ?: '');
 
             return;
@@ -38,7 +38,7 @@ trait HostTrait
                     $localizedRoute->setHost($host);
                     $routes->add($name.'.'.$locale, $localizedRoute, $priority);
                 }
-            } elseif (!isset($hosts[$locale])) {
+            } elseif (! isset($hosts[$locale])) {
                 throw new \InvalidArgumentException(\sprintf('Route "%s" with locale "%s" is missing a corresponding host in its parent collection.', $name, $locale));
             } else {
                 $route->setHost($hosts[$locale]);

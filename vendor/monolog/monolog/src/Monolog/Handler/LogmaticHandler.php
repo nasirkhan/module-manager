@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,9 +13,9 @@
 
 namespace Monolog\Handler;
 
-use Monolog\Level;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\LogmaticFormatter;
+use Monolog\Level;
 use Monolog\LogRecord;
 
 /**
@@ -28,10 +30,10 @@ class LogmaticHandler extends SocketHandler
     private string $appName;
 
     /**
-     * @param string $token    Log token supplied by Logmatic.
-     * @param string $hostname Host name supplied by Logmatic.
-     * @param string $appName  Application name supplied by Logmatic.
-     * @param bool   $useSSL   Whether or not SSL encryption should be used.
+     * @param  string  $token  Log token supplied by Logmatic.
+     * @param  string  $hostname  Host name supplied by Logmatic.
+     * @param  string  $appName  Application name supplied by Logmatic.
+     * @param  bool  $useSSL  Whether or not SSL encryption should be used.
      *
      * @throws MissingExtensionException If SSL encryption is set to true and OpenSSL is missing
      */
@@ -48,7 +50,7 @@ class LogmaticHandler extends SocketHandler
         ?float $connectionTimeout = null,
         ?int $chunkSize = null
     ) {
-        if ($useSSL && !\extension_loaded('openssl')) {
+        if ($useSSL && ! \extension_loaded('openssl')) {
             throw new MissingExtensionException('The OpenSSL PHP extension is required to use SSL encrypted connection for LogmaticHandler');
         }
 
@@ -68,7 +70,7 @@ class LogmaticHandler extends SocketHandler
 
         $this->logToken = $token;
         $this->hostname = $hostname;
-        $this->appName  = $appName;
+        $this->appName = $appName;
     }
 
     /**
@@ -76,7 +78,7 @@ class LogmaticHandler extends SocketHandler
      */
     protected function generateDataStream(LogRecord $record): string
     {
-        return $this->logToken . ' ' . $record->formatted;
+        return $this->logToken.' '.$record->formatted;
     }
 
     /**

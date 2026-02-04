@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -14,7 +16,7 @@ namespace Monolog\Processor;
 use Monolog\LogRecord;
 
 /**
- * Adds value of getmypid into records
+ * Adds value of getmypid into records.
  *
  * @author Andreas Hörnicke
  */

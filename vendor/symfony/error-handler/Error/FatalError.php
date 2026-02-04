@@ -14,7 +14,7 @@ namespace Symfony\Component\ErrorHandler\Error;
 class FatalError extends \Error
 {
     /**
-     * @param array $error An array as returned by error_get_last()
+     * @param  array  $error  An array as returned by error_get_last()
      */
     public function __construct(
         string $message,
@@ -27,7 +27,7 @@ class FatalError extends \Error
         parent::__construct($message, $code);
 
         if (null !== $trace) {
-            if (!$traceArgs) {
+            if (! $traceArgs) {
                 foreach ($trace as &$frame) {
                     unset($frame['args'], $frame['this'], $frame);
                 }
@@ -39,7 +39,7 @@ class FatalError extends \Error
                 }
 
                 foreach ($trace as &$frame) {
-                    if (!isset($frame['type'])) {
+                    if (! isset($frame['type'])) {
                         // XDebug pre 2.1.1 doesn't currently set the call type key http://bugs.xdebug.org/view.php?id=695
                         if (isset($frame['class'])) {
                             $frame['type'] = '::';
@@ -51,9 +51,9 @@ class FatalError extends \Error
                     }
 
                     // XDebug also has a different name for the parameters array
-                    if (!$traceArgs) {
+                    if (! $traceArgs) {
                         unset($frame['params'], $frame['args']);
-                    } elseif (isset($frame['params']) && !isset($frame['args'])) {
+                    } elseif (isset($frame['params']) && ! isset($frame['args'])) {
                         $frame['args'] = $frame['params'];
                         unset($frame['params']);
                     }

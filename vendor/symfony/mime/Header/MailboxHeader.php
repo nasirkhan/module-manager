@@ -31,7 +31,7 @@ final class MailboxHeader extends AbstractHeader
     }
 
     /**
-     * @param Address $body
+     * @param  Address  $body
      *
      * @throws RfcComplianceException
      */

@@ -483,7 +483,7 @@ final class EnglishInflector implements InflectorInterface
             // given plural one by one
             while ($suffix[$j] === $lowerPluralRev[$j]) {
                 // Let $j point to the next character
-                ++$j;
+                $j++;
 
                 // Successfully compared the last character
                 // Add an entry with the singular suffix to the singular array
@@ -492,12 +492,12 @@ final class EnglishInflector implements InflectorInterface
                     if ($j < $pluralLength) {
                         $nextIsVowel = str_contains('aeiou', $lowerPluralRev[$j]);
 
-                        if (!$map[2] && $nextIsVowel) {
+                        if (! $map[2] && $nextIsVowel) {
                             // suffix may not succeed a vowel but next char is one
                             break;
                         }
 
-                        if (!$map[3] && !$nextIsVowel) {
+                        if (! $map[3] && ! $nextIsVowel) {
                             // suffix may not succeed a consonant but next char is one
                             break;
                         }
@@ -560,7 +560,7 @@ final class EnglishInflector implements InflectorInterface
 
             while ($suffix[$j] === $lowerSingularRev[$j]) {
                 // Let $j point to the next character
-                ++$j;
+                $j++;
 
                 // Successfully compared the last character
                 // Add an entry with the plural suffix to the plural array
@@ -569,12 +569,12 @@ final class EnglishInflector implements InflectorInterface
                     if ($j < $singularLength) {
                         $nextIsVowel = str_contains('aeiou', $lowerSingularRev[$j]);
 
-                        if (!$map[2] && $nextIsVowel) {
+                        if (! $map[2] && $nextIsVowel) {
                             // suffix may not succeed a vowel but next char is one
                             break;
                         }
 
-                        if (!$map[3] && !$nextIsVowel) {
+                        if (! $map[3] && ! $nextIsVowel) {
                             // suffix may not succeed a consonant but next char is one
                             break;
                         }

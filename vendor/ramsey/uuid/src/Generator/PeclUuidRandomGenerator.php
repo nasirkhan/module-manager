@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,7 +20,7 @@ use function uuid_parse;
 use const UUID_TYPE_RANDOM;
 
 /**
- * PeclUuidRandomGenerator generates strings of random binary data using ext-uuid
+ * PeclUuidRandomGenerator generates strings of random binary data using ext-uuid.
  *
  * @link https://pecl.php.net/package/uuid ext-uuid
  */

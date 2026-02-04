@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -31,7 +31,7 @@ use function substr;
 use const STR_PAD_LEFT;
 
 /**
- * Nonstandard UUID fields do not conform to the RFC 9562 (formerly RFC 4122) standard
+ * Nonstandard UUID fields do not conform to the RFC 9562 (formerly RFC 4122) standard.
  *
  * Since some systems may create nonstandard UUIDs, this implements the {@see FieldsInterface}, so that functionality of
  * a nonstandard UUID is not degraded, in the event these UUIDs are expected to contain RFC 9562 (formerly RFC 4122) fields.
@@ -46,7 +46,7 @@ final class Fields implements FieldsInterface
     use VariantTrait;
 
     /**
-     * @param string $bytes A 16-byte binary string representation of a UUID
+     * @param  string  $bytes  A 16-byte binary string representation of a UUID
      *
      * @throws InvalidArgumentException if the byte string is not exactly 16 bytes
      */
@@ -54,7 +54,7 @@ final class Fields implements FieldsInterface
     {
         if (strlen($this->bytes) !== 16) {
             throw new InvalidArgumentException(
-                'The byte string must be 16 bytes long; received ' . strlen($this->bytes) . ' bytes',
+                'The byte string must be 16 bytes long; received '.strlen($this->bytes).' bytes',
             );
         }
     }
@@ -66,7 +66,7 @@ final class Fields implements FieldsInterface
 
     public function getClockSeq(): Hexadecimal
     {
-        $clockSeq = hexdec(bin2hex(substr($this->bytes, 8, 2))) & 0x3fff;
+        $clockSeq = hexdec(bin2hex(substr($this->bytes, 8, 2))) & 0x3FFF;
 
         return new Hexadecimal(str_pad(dechex($clockSeq), 4, '0', STR_PAD_LEFT));
     }
@@ -105,7 +105,7 @@ final class Fields implements FieldsInterface
     {
         return new Hexadecimal(sprintf(
             '%03x%04s%08s',
-            hexdec($this->getTimeHiAndVersion()->toString()) & 0x0fff,
+            hexdec($this->getTimeHiAndVersion()->toString()) & 0x0FFF,
             $this->getTimeMid()->toString(),
             $this->getTimeLow()->toString()
         ));

@@ -45,7 +45,7 @@ class Caster
     /**
      * Casts objects to arrays and adds the dynamic property prefix.
      *
-     * @param bool $hasDebugInfo Whether the __debugInfo method exists on $obj or not
+     * @param  bool  $hasDebugInfo  Whether the __debugInfo method exists on $obj or not
      *
      * @internal since Symfony 7.3
      */
@@ -76,13 +76,13 @@ class Caster
             $prefixedKeys = [];
             foreach ($a as $k => $v) {
                 if ("\0" !== ($k[0] ?? '')) {
-                    if (!isset($classProperties[$k])) {
+                    if (! isset($classProperties[$k])) {
                         $prefixedKeys[$i] = self::PREFIX_DYNAMIC.$k;
                     }
                 } elseif ($debugClass !== $class && 1 === strpos($k, $class)) {
                     $prefixedKeys[$i] = "\0".$debugClass.strrchr($k, "\0");
                 }
-                ++$i;
+                $i++;
             }
             if ($prefixedKeys) {
                 $keys = array_keys($a);
@@ -95,7 +95,7 @@ class Caster
 
         if ($hasDebugInfo && \is_array($debugInfo)) {
             foreach ($debugInfo as $k => $v) {
-                if (!isset($k[0]) || "\0" !== $k[0]) {
+                if (! isset($k[0]) || "\0" !== $k[0]) {
                     if (\array_key_exists(self::PREFIX_DYNAMIC.$k, $a)) {
                         continue;
                     }
@@ -116,10 +116,10 @@ class Caster
      * By default, a single match in the $filter bit field filters properties out, following an "or" logic.
      * When EXCLUDE_STRICT is set, an "and" logic is applied: all bits must match for a property to be removed.
      *
-     * @param array    $a                The array containing the properties to filter
-     * @param int      $filter           A bit field of Caster::EXCLUDE_* constants specifying which properties to filter out
-     * @param string[] $listedProperties List of properties to exclude when Caster::EXCLUDE_VERBOSE is set, and to preserve when Caster::EXCLUDE_NOT_IMPORTANT is set
-     * @param int|null &$count           Set to the number of removed properties
+     * @param  array  $a  The array containing the properties to filter
+     * @param  int  $filter  A bit field of Caster::EXCLUDE_* constants specifying which properties to filter out
+     * @param  string[]  $listedProperties  List of properties to exclude when Caster::EXCLUDE_VERBOSE is set, and to preserve when Caster::EXCLUDE_NOT_IMPORTANT is set
+     * @param  int|null  &$count  Set to the number of removed properties
      */
     public static function filter(array $a, int $filter, array $listedProperties = [], ?int &$count = 0): array
     {
@@ -136,14 +136,14 @@ class Caster
             } elseif ($v instanceof UninitializedStub) {
                 $type |= self::EXCLUDE_UNINITIALIZED & $filter;
             }
-            if ((self::EXCLUDE_NOT_IMPORTANT & $filter) && !\in_array($k, $listedProperties, true)) {
+            if ((self::EXCLUDE_NOT_IMPORTANT & $filter) && ! \in_array($k, $listedProperties, true)) {
                 $type |= self::EXCLUDE_NOT_IMPORTANT;
             }
             if ((self::EXCLUDE_VERBOSE & $filter) && \in_array($k, $listedProperties, true)) {
                 $type |= self::EXCLUDE_VERBOSE;
             }
 
-            if (!isset($k[1]) || "\0" !== $k[0]) {
+            if (! isset($k[1]) || "\0" !== $k[0]) {
                 $type |= self::EXCLUDE_PUBLIC & $filter;
             } elseif ('~' === $k[1]) {
                 $type |= self::EXCLUDE_VIRTUAL & $filter;
@@ -157,7 +157,7 @@ class Caster
 
             if ((self::EXCLUDE_STRICT & $filter) ? $type === $filter : $type) {
                 unset($a[$k]);
-                ++$count;
+                $count++;
             }
         }
 

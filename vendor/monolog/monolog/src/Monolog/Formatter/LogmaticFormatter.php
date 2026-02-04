@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -20,7 +22,7 @@ use Monolog\LogRecord;
  */
 class LogmaticFormatter extends JsonFormatter
 {
-    protected const MARKERS = ["sourcecode", "php"];
+    protected const MARKERS = ['sourcecode', 'php'];
 
     protected string $hostname = '';
 
@@ -57,13 +59,13 @@ class LogmaticFormatter extends JsonFormatter
         $record = parent::normalizeRecord($record);
 
         if ($this->hostname !== '') {
-            $record["hostname"] = $this->hostname;
+            $record['hostname'] = $this->hostname;
         }
         if ($this->appName !== '') {
-            $record["appname"] = $this->appName;
+            $record['appname'] = $this->appName;
         }
 
-        $record["@marker"] = static::MARKERS;
+        $record['@marker'] = static::MARKERS;
 
         return $record;
     }

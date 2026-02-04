@@ -22,9 +22,9 @@ final class UidValueResolver implements ValueResolverInterface
     public function resolve(Request $request, ArgumentMetadata $argument): array
     {
         if ($argument->isVariadic()
-            || !\is_string($value = $request->attributes->get($argument->getName()))
+            || ! \is_string($value = $request->attributes->get($argument->getName()))
             || null === ($uidClass = $argument->getType())
-            || !is_subclass_of($uidClass, AbstractUid::class, true)
+            || ! is_subclass_of($uidClass, AbstractUid::class, true)
         ) {
             return [];
         }

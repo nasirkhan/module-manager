@@ -24,12 +24,12 @@ use League\CommonMark\Util\UrlEncoder;
 
 final class AutolinkParser implements InlineParserInterface
 {
-    private const EMAIL_REGEX      = '<([a-zA-Z0-9.!#$%&\'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)>';
+    private const EMAIL_REGEX = '<([a-zA-Z0-9.!#$%&\'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)>';
     private const OTHER_LINK_REGEX = '<([A-Za-z][A-Za-z0-9.+-]{1,31}:[^<>\x00-\x20]*)>';
 
     public function getMatchDefinition(): InlineParserMatch
     {
-        return InlineParserMatch::regex(self::EMAIL_REGEX . '|' . self::OTHER_LINK_REGEX);
+        return InlineParserMatch::regex(self::EMAIL_REGEX.'|'.self::OTHER_LINK_REGEX);
     }
 
     public function parse(InlineParserContext $inlineContext): bool
@@ -38,7 +38,7 @@ final class AutolinkParser implements InlineParserInterface
         $matches = $inlineContext->getMatches();
 
         if ($matches[1] !== '') {
-            $inlineContext->getContainer()->appendChild(new Link('mailto:' . UrlEncoder::unescapeAndEncode($matches[1]), $matches[1]));
+            $inlineContext->getContainer()->appendChild(new Link('mailto:'.UrlEncoder::unescapeAndEncode($matches[1]), $matches[1]));
 
             return true;
         }

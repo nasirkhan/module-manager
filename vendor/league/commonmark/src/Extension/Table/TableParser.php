@@ -42,7 +42,9 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
 
     /**
      * @var array<int, string|null>
+     *
      * @psalm-var array<int, TableCell::ALIGN_*|null>
+     *
      * @phpstan-var array<int, TableCell::ALIGN_*|null>
      *
      * @psalm-readonly
@@ -62,8 +64,8 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
     private int $remainingAutocompletedCells;
 
     /**
-     * @param array<int, string|null> $columns
-     * @param array<int, string>      $headerCells
+     * @param  array<int, string|null>  $columns
+     * @param  array<int, string>  $headerCells
      *
      * @psalm-param array<int, TableCell::ALIGN_*|null> $columns
      *
@@ -71,10 +73,10 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
      */
     public function __construct(array $columns, array $headerCells, int $remainingAutocompletedCells = self::DEFAULT_MAX_AUTOCOMPLETED_CELLS)
     {
-        $this->block                       = new Table();
-        $this->bodyLines                   = new ArrayCollection();
-        $this->columns                     = $columns;
-        $this->headerCells                 = $headerCells;
+        $this->block = new Table();
+        $this->bodyLines = new ArrayCollection();
+        $this->columns = $columns;
+        $this->headerCells = $headerCells;
         $this->remainingAutocompletedCells = $remainingAutocompletedCells;
     }
 
@@ -116,7 +118,7 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
         $headerRow = new TableRow();
         $head->appendChild($headerRow);
         for ($i = 0; $i < $headerColumns; $i++) {
-            $cell      = $this->headerCells[$i];
+            $cell = $this->headerCells[$i];
             $tableCell = $this->parseCell($cell, $i, $inlineParser);
             $tableCell->setType(TableCell::TYPE_HEADER);
             $headerRow->appendChild($tableCell);
@@ -125,7 +127,7 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
         $body = null;
         foreach ($this->bodyLines as $rowLine) {
             $cells = self::split($rowLine);
-            $row   = new TableRow();
+            $row = new TableRow();
 
             // Body can not have more columns than head
             for ($i = 0; $i < $headerColumns; $i++) {
@@ -135,7 +137,7 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
                     return;
                 }
 
-                $cell      = $cells[$i] ?? '';
+                $cell = $cells[$i] ?? '';
                 $tableCell = $this->parseCell($cell, $i, $inlineParser);
                 $row->appendChild($tableCell);
             }
@@ -175,7 +177,7 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
         }
 
         $cells = [];
-        $sb    = '';
+        $sb = '';
 
         while (! $cursor->isAtEnd()) {
             switch ($c = $cursor->getCurrentCharacter()) {
@@ -194,7 +196,7 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
                     break;
                 case '|':
                     $cells[] = $sb;
-                    $sb      = '';
+                    $sb = '';
                     break;
                 default:
                     $sb .= $c;

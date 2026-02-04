@@ -157,8 +157,7 @@ class SymfonyStyle extends OutputStyle
         $this->createTable()
             ->setHeaders($headers)
             ->setRows($rows)
-            ->render()
-        ;
+            ->render();
 
         $this->newLine();
     }
@@ -172,8 +171,7 @@ class SymfonyStyle extends OutputStyle
             ->setHorizontal(true)
             ->setHeaders($headers)
             ->setRows($rows)
-            ->render()
-        ;
+            ->render();
 
         $this->newLine();
     }
@@ -201,7 +199,7 @@ class SymfonyStyle extends OutputStyle
                 $row[] = null;
                 continue;
             }
-            if (!\is_array($value)) {
+            if (! \is_array($value)) {
                 throw new InvalidArgumentException('Value should be an array, string, or an instance of TableSeparator.');
             }
             $headers[] = key($value);
@@ -284,9 +282,8 @@ class SymfonyStyle extends OutputStyle
      * @template TKey
      * @template TValue
      *
-     * @param iterable<TKey, TValue> $iterable
-     * @param int|null               $max      Number of steps to complete the bar (0 if indeterminate), if null it will be inferred from $iterable
-     *
+     * @param  iterable<TKey, TValue>  $iterable
+     * @param  int|null  $max  Number of steps to complete the bar (0 if indeterminate), if null it will be inferred from $iterable
      * @return iterable<TKey, TValue>
      */
     public function progressIterate(iterable $iterable, ?int $max = null): iterable
@@ -321,7 +318,7 @@ class SymfonyStyle extends OutputStyle
 
     public function writeln(string|iterable $messages, int $type = self::OUTPUT_NORMAL): void
     {
-        if (!is_iterable($messages)) {
+        if (! is_iterable($messages)) {
             $messages = [$messages];
         }
 
@@ -333,7 +330,7 @@ class SymfonyStyle extends OutputStyle
 
     public function write(string|iterable $messages, bool $newline = false, int $type = self::OUTPUT_NORMAL): void
     {
-        if (!is_iterable($messages)) {
+        if (! is_iterable($messages)) {
             $messages = [$messages];
         }
 
@@ -373,7 +370,7 @@ class SymfonyStyle extends OutputStyle
     }
 
     /**
-     * @param iterable<string, iterable|string|TreeNode> $nodes
+     * @param  iterable<string, iterable|string|TreeNode>  $nodes
      */
     public function tree(iterable $nodes, string $root = ''): void
     {
@@ -381,7 +378,7 @@ class SymfonyStyle extends OutputStyle
     }
 
     /**
-     * @param iterable<string, iterable|string|TreeNode> $nodes
+     * @param  iterable<string, iterable|string|TreeNode>  $nodes
      */
     public function createTree(iterable $nodes, string $root = ''): TreeHelper
     {
@@ -394,7 +391,7 @@ class SymfonyStyle extends OutputStyle
     {
         $chars = substr(str_replace(\PHP_EOL, "\n", $this->bufferedOutput->fetch()), -2);
 
-        if (!isset($chars[0])) {
+        if (! isset($chars[0])) {
             $this->newLine(); // empty history, so we should start with a new line.
 
             return;
@@ -407,7 +404,7 @@ class SymfonyStyle extends OutputStyle
     {
         $fetched = $this->bufferedOutput->fetch();
         // Prepend new line if last char isn't EOL:
-        if ($fetched && !str_ends_with($fetched, "\n")) {
+        if ($fetched && ! str_ends_with($fetched, "\n")) {
             $this->newLine();
         }
     }

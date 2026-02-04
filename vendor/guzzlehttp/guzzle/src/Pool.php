@@ -29,18 +29,18 @@ class Pool implements PromisorInterface
     private $each;
 
     /**
-     * @param ClientInterface $client   Client used to send the requests.
-     * @param array|\Iterator $requests Requests or functions that return
-     *                                  requests to send concurrently.
-     * @param array           $config   Associative array of options
-     *                                  - concurrency: (int) Maximum number of requests to send concurrently
-     *                                  - options: Array of request options to apply to each request.
-     *                                  - fulfilled: (callable) Function to invoke when a request completes.
-     *                                  - rejected: (callable) Function to invoke when a request is rejected.
+     * @param  ClientInterface  $client  Client used to send the requests.
+     * @param  array|\Iterator  $requests  Requests or functions that return
+     *                                     requests to send concurrently.
+     * @param  array  $config  Associative array of options
+     *                         - concurrency: (int) Maximum number of requests to send concurrently
+     *                         - options: Array of request options to apply to each request.
+     *                         - fulfilled: (callable) Function to invoke when a request completes.
+     *                         - rejected: (callable) Function to invoke when a request is rejected.
      */
     public function __construct(ClientInterface $client, $requests, array $config = [])
     {
-        if (!isset($config['concurrency'])) {
+        if (! isset($config['concurrency'])) {
             $config['concurrency'] = 25;
         }
 
@@ -68,7 +68,7 @@ class Pool implements PromisorInterface
     }
 
     /**
-     * Get promise
+     * Get promise.
      */
     public function promise(): PromiseInterface
     {
@@ -83,11 +83,10 @@ class Pool implements PromisorInterface
      * as such, is NOT recommended when sending a large number or an
      * indeterminate number of requests concurrently.
      *
-     * @param ClientInterface $client   Client used to send the requests
-     * @param array|\Iterator $requests Requests to send concurrently.
-     * @param array           $options  Passes through the options available in
-     *                                  {@see Pool::__construct}
-     *
+     * @param  ClientInterface  $client  Client used to send the requests
+     * @param  array|\Iterator  $requests  Requests to send concurrently.
+     * @param  array  $options  Passes through the options available in
+     *                          {@see Pool::__construct}
      * @return array Returns an array containing the response or an exception
      *               in the same order that the requests were sent.
      *
@@ -106,11 +105,11 @@ class Pool implements PromisorInterface
     }
 
     /**
-     * Execute callback(s)
+     * Execute callback(s).
      */
     private static function cmpCallback(array &$options, string $name, array &$results): void
     {
-        if (!isset($options[$name])) {
+        if (! isset($options[$name])) {
             $options[$name] = static function ($v, $k) use (&$results) {
                 $results[$k] = $v;
             };

@@ -25,12 +25,12 @@ final class MessengerTransportListener implements EventSubscriberInterface
 {
     public function onMessage(MessageEvent $event): void
     {
-        if (!$event->isQueued()) {
+        if (! $event->isQueued()) {
             return;
         }
 
         $message = $event->getMessage();
-        if (!$message instanceof Message || !$message->getHeaders()->has('X-Bus-Transport')) {
+        if (! $message instanceof Message || ! $message->getHeaders()->has('X-Bus-Transport')) {
             return;
         }
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -27,19 +27,19 @@ use function unpack;
 use const STR_PAD_LEFT;
 
 /**
- * Provides common functionality for handling the variant, as defined by RFC 9562 (formerly RFC 4122)
+ * Provides common functionality for handling the variant, as defined by RFC 9562 (formerly RFC 4122).
  *
  * @immutable
  */
 trait VariantTrait
 {
     /**
-     * Returns the bytes that comprise the fields
+     * Returns the bytes that comprise the fields.
      */
     abstract public function getBytes(): string;
 
     /**
-     * Returns the variant
+     * Returns the variant.
      *
      * The variant number describes the layout of the UUID. The variant number has the following meaning:
      *

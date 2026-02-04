@@ -90,7 +90,7 @@ class ExceptionCaster
     {
         $sPrefix = "\0".SilencedErrorContext::class."\0";
 
-        if (!isset($a[$s = $sPrefix.'severity'])) {
+        if (! isset($a[$s = $sPrefix.'severity'])) {
             return $a;
         }
 
@@ -115,7 +115,7 @@ class ExceptionCaster
 
     public static function castTraceStub(TraceStub $trace, array $a, Stub $stub, bool $isNested): array
     {
-        if (!$isNested) {
+        if (! $isNested) {
             return $a;
         }
         $stub->class = '';
@@ -128,7 +128,7 @@ class ExceptionCaster
         if (0 > $i = $trace->sliceOffset) {
             $i = max(0, $j + $i);
         }
-        if (!isset($trace->value[$i])) {
+        if (! isset($trace->value[$i])) {
             return [];
         }
         $lastCall = isset($frames[$i]['function']) ? (isset($frames[$i]['class']) ? $frames[0]['class'].$frames[$i]['type'] : '').$frames[$i]['function'].'()' : '';
@@ -162,7 +162,7 @@ class ExceptionCaster
                     $label = substr_replace($label, "title=Stack level $j.&", 2, 0);
                 }
                 $f = $frames[$i - 1];
-                if ($trace->keepArgs && !empty($f['args']) && $frame instanceof EnumStub) {
+                if ($trace->keepArgs && ! empty($f['args']) && $frame instanceof EnumStub) {
                     $frame->value['arguments'] = new ArgsStub($f['args'], $f['function'] ?? null, $f['class'] ?? null);
                 }
             } elseif ('???' !== $lastCall) {
@@ -189,7 +189,7 @@ class ExceptionCaster
 
     public static function castFrameStub(FrameStub $frame, array $a, Stub $stub, bool $isNested): array
     {
-        if (!$isNested) {
+        if (! $isNested) {
             return $a;
         }
         $f = $frame->value;
@@ -216,7 +216,7 @@ class ExceptionCaster
                 $ellipsis = $ellipsis->attr['ellipsis'] ?? 0;
 
                 if (is_file($f['file']) && 0 <= self::$srcContext) {
-                    if (!empty($f['class']) && is_subclass_of($f['class'], 'Twig\Template')) {
+                    if (! empty($f['class']) && is_subclass_of($f['class'], 'Twig\Template')) {
                         $template = null;
                         if (isset($f['object'])) {
                             $template = $f['object'];
@@ -228,7 +228,7 @@ class ExceptionCaster
                             $templateSrc = method_exists($template, 'getSourceContext') ? $template->getSourceContext()->getCode() : (method_exists($template, 'getSource') ? $template->getSource() : '');
                             $templateInfo = $template->getDebugInfo();
                             if (isset($templateInfo[$f['line']])) {
-                                if (!method_exists($template, 'getSourceContext') || !is_file($templatePath = $template->getSourceContext()->getPath())) {
+                                if (! method_exists($template, 'getSourceContext') || ! is_file($templatePath = $template->getSourceContext()->getPath())) {
                                     $templatePath = null;
                                 }
                                 if ($templateSrc) {
@@ -259,11 +259,11 @@ class ExceptionCaster
             unset($a[$prefix.'class'], $a[$prefix.'type'], $a[$prefix.'function']);
         }
         foreach ($a as $k => $v) {
-            if (!$v) {
+            if (! $v) {
                 unset($a[$k]);
             }
         }
-        if ($frame->keepArgs && !empty($f['args'])) {
+        if ($frame->keepArgs && ! empty($f['args'])) {
             $a[$prefix.'arguments'] = new ArgsStub($f['args'], $f['function'], $f['class']);
         }
 
@@ -289,7 +289,7 @@ class ExceptionCaster
             $trace = [];
         }
 
-        if (!($filter & Caster::EXCLUDE_VERBOSE) && $trace) {
+        if (! ($filter & Caster::EXCLUDE_VERBOSE) && $trace) {
             if (isset($a[Caster::PREFIX_PROTECTED.'file'], $a[Caster::PREFIX_PROTECTED.'line'])) {
                 self::traceUnshift($trace, $xClass, $a[Caster::PREFIX_PROTECTED.'file'], $a[Caster::PREFIX_PROTECTED.'line']);
             }
@@ -328,7 +328,7 @@ class ExceptionCaster
         $srcLines = explode("\n", $srcLines);
         $src = [];
 
-        for ($i = $line - 1 - $srcContext; $i <= $line - 1 + $srcContext; ++$i) {
+        for ($i = $line - 1 - $srcContext; $i <= $line - 1 + $srcContext; $i++) {
             $src[] = ($srcLines[$i] ?? '')."\n";
         }
 
@@ -361,7 +361,7 @@ class ExceptionCaster
         $ltrim = 0;
         do {
             $pad = null;
-            for ($i = $srcContext << 1; $i >= 0; --$i) {
+            for ($i = $srcContext << 1; $i >= 0; $i--) {
                 if (isset($src[$i][$ltrim]) && "\r" !== ($c = $src[$i][$ltrim]) && "\n" !== $c) {
                     $pad ??= $c;
                     if ((' ' !== $c && "\t" !== $c) || $pad !== $c) {
@@ -369,10 +369,10 @@ class ExceptionCaster
                     }
                 }
             }
-            ++$ltrim;
+            $ltrim++;
         } while (0 > $i && null !== $pad);
 
-        --$ltrim;
+        $ltrim--;
 
         foreach ($src as $i => $c) {
             if ($ltrim) {

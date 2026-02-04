@@ -90,7 +90,7 @@ trait LoggerTrait
     /**
      * Logs with an arbitrary level.
      *
-     * @param mixed $level
+     * @param  mixed  $level
      *
      * @throws \Psr\Log\InvalidArgumentException
      */

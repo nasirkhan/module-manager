@@ -43,7 +43,7 @@ class Store implements StoreInterface
         protected string $root,
         private array $options = [],
     ) {
-        if (!is_dir($this->root) && !@mkdir($this->root, 0o777, true) && !is_dir($this->root)) {
+        if (! is_dir($this->root) && ! @mkdir($this->root, 0o777, true) && ! is_dir($this->root)) {
             throw new \RuntimeException(\sprintf('Unable to create the store directory (%s).', $this->root));
         }
         $this->keyCache = new \SplObjectStorage();
@@ -73,13 +73,13 @@ class Store implements StoreInterface
     {
         $key = $this->getCacheKey($request);
 
-        if (!isset($this->locks[$key])) {
+        if (! isset($this->locks[$key])) {
             $path = $this->getPath($key);
-            if (!is_dir(\dirname($path)) && false === @mkdir(\dirname($path), 0o777, true) && !is_dir(\dirname($path))) {
+            if (! is_dir(\dirname($path)) && false === @mkdir(\dirname($path), 0o777, true) && ! is_dir(\dirname($path))) {
                 return $path;
             }
             $h = fopen($path, 'c');
-            if (!flock($h, \LOCK_EX | \LOCK_NB)) {
+            if (! flock($h, \LOCK_EX | \LOCK_NB)) {
                 fclose($h);
 
                 return $path;
@@ -119,7 +119,7 @@ class Store implements StoreInterface
             return true; // shortcut if lock held by this process
         }
 
-        if (!is_file($path = $this->getPath($key))) {
+        if (! is_file($path = $this->getPath($key))) {
             return false;
         }
 
@@ -138,7 +138,7 @@ class Store implements StoreInterface
     {
         $key = $this->getCacheKey($request);
 
-        if (!$entries = $this->getMetadata($key)) {
+        if (! $entries = $this->getMetadata($key)) {
             return null;
         }
 
@@ -182,7 +182,7 @@ class Store implements StoreInterface
 
         if ($response->headers->has('X-Body-File')) {
             // Assume the response came from disk, but at least perform some safeguard checks
-            if (!$response->headers->has('X-Content-Digest')) {
+            if (! $response->headers->has('X-Content-Digest')) {
                 throw new \RuntimeException('A restored response must have the X-Content-Digest header.');
             }
 
@@ -190,16 +190,16 @@ class Store implements StoreInterface
             if ($this->getPath($digest) !== $response->headers->get('X-Body-File')) {
                 throw new \RuntimeException('X-Body-File and X-Content-Digest do not match.');
             }
-        // Everything seems ok, omit writing content to disk
+            // Everything seems ok, omit writing content to disk
         } else {
             $digest = $this->generateContentDigest($response);
             $response->headers->set('X-Content-Digest', $digest);
 
-            if (!$this->save($digest, $response->getContent(), false)) {
+            if (! $this->save($digest, $response->getContent(), false)) {
                 throw new \RuntimeException('Unable to store the entity.');
             }
 
-            if (!$response->headers->has('Transfer-Encoding')) {
+            if (! $response->headers->has('Transfer-Encoding')) {
                 $response->headers->set('Content-Length', \strlen($response->getContent()));
             }
         }
@@ -208,7 +208,7 @@ class Store implements StoreInterface
         $entries = [];
         $vary = implode(', ', $response->headers->all('vary'));
         foreach ($this->getMetadata($key) as $entry) {
-            if (!$this->requestsMatch($vary ?? '', $entry[0], $storedEnv)) {
+            if (! $this->requestsMatch($vary ?? '', $entry[0], $storedEnv)) {
                 $entries[] = $entry;
             }
         }
@@ -222,7 +222,7 @@ class Store implements StoreInterface
 
         array_unshift($entries, [$storedEnv, $headers]);
 
-        if (!$this->save($key, serialize($entries))) {
+        if (! $this->save($key, serialize($entries))) {
             throw new \RuntimeException('Unable to store the metadata.');
         }
 
@@ -259,7 +259,7 @@ class Store implements StoreInterface
             }
         }
 
-        if ($modified && !$this->save($key, serialize($entries))) {
+        if ($modified && ! $this->save($key, serialize($entries))) {
             throw new \RuntimeException('Unable to store the metadata.');
         }
     }
@@ -268,9 +268,9 @@ class Store implements StoreInterface
      * Determines whether two Request HTTP header sets are non-varying based on
      * the vary response header value provided.
      *
-     * @param string|null $vary A Response vary header
-     * @param array       $env1 A Request HTTP header array
-     * @param array       $env2 A Request HTTP header array
+     * @param  string|null  $vary  A Response vary header
+     * @param  array  $env1  A Request HTTP header array
+     * @param  array  $env2  A Request HTTP header array
      */
     private function requestsMatch(?string $vary, array $env1, array $env2): bool
     {
@@ -297,7 +297,7 @@ class Store implements StoreInterface
      */
     private function getMetadata(string $key): array
     {
-        if (!$entries = $this->load($key)) {
+        if (! $entries = $this->load($key)) {
             return [];
         }
 
@@ -360,7 +360,7 @@ class Store implements StoreInterface
     {
         $path = $this->getPath($key);
 
-        if (!$overwrite && file_exists($path)) {
+        if (! $overwrite && file_exists($path)) {
             return true;
         }
 
@@ -375,7 +375,7 @@ class Store implements StoreInterface
                 return false;
             }
         } else {
-            if (!is_dir(\dirname($path)) && false === @mkdir(\dirname($path), 0o777, true) && !is_dir(\dirname($path))) {
+            if (! is_dir(\dirname($path)) && false === @mkdir(\dirname($path), 0o777, true) && ! is_dir(\dirname($path))) {
                 return false;
             }
 

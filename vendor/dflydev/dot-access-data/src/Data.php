@@ -26,16 +26,16 @@ class Data implements DataInterface, ArrayAccess
     private const DELIMITERS = ['.', '/'];
 
     /**
-     * Internal representation of data data
+     * Internal representation of data data.
      *
      * @var array<string, mixed>
      */
     protected $data;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public function __construct(array $data = [])
     {
@@ -47,7 +47,7 @@ class Data implements DataInterface, ArrayAccess
      */
     public function append(string $key, $value = null): void
     {
-        $currentValue =& $this->data;
+        $currentValue = &$this->data;
         $keyPath = self::keyToPathArray($key);
 
         $endKey = array_pop($keyPath);
@@ -55,14 +55,14 @@ class Data implements DataInterface, ArrayAccess
             if (! isset($currentValue[$currentKey])) {
                 $currentValue[$currentKey] = [];
             }
-            $currentValue =& $currentValue[$currentKey];
+            $currentValue = &$currentValue[$currentKey];
         }
 
-        if (!isset($currentValue[$endKey])) {
+        if (! isset($currentValue[$endKey])) {
             $currentValue[$endKey] = [];
         }
 
-        if (!is_array($currentValue[$endKey])) {
+        if (! is_array($currentValue[$endKey])) {
             // Promote this key to an array.
             // TODO: Is this really what we want to do?
             $currentValue[$endKey] = [$currentValue[$endKey]];
@@ -76,18 +76,18 @@ class Data implements DataInterface, ArrayAccess
      */
     public function set(string $key, $value = null): void
     {
-        $currentValue =& $this->data;
+        $currentValue = &$this->data;
         $keyPath = self::keyToPathArray($key);
 
         $endKey = array_pop($keyPath);
         foreach ($keyPath as $currentKey) {
-            if (!isset($currentValue[$currentKey])) {
+            if (! isset($currentValue[$currentKey])) {
                 $currentValue[$currentKey] = [];
             }
-            if (!is_array($currentValue[$currentKey])) {
+            if (! is_array($currentValue[$currentKey])) {
                 throw new DataException(sprintf('Key path "%s" within "%s" cannot be indexed into (is not an array)', $currentKey, self::formatPath($key)));
             }
-            $currentValue =& $currentValue[$currentKey];
+            $currentValue = &$currentValue[$currentKey];
         }
         $currentValue[$endKey] = $value;
     }
@@ -97,15 +97,15 @@ class Data implements DataInterface, ArrayAccess
      */
     public function remove(string $key): void
     {
-        $currentValue =& $this->data;
+        $currentValue = &$this->data;
         $keyPath = self::keyToPathArray($key);
 
         $endKey = array_pop($keyPath);
         foreach ($keyPath as $currentKey) {
-            if (!isset($currentValue[$currentKey])) {
+            if (! isset($currentValue[$currentKey])) {
                 return;
             }
-            $currentValue =& $currentValue[$currentKey];
+            $currentValue = &$currentValue[$currentKey];
         }
         unset($currentValue[$endKey]);
     }
@@ -124,7 +124,7 @@ class Data implements DataInterface, ArrayAccess
         $keyPath = self::keyToPathArray($key);
 
         foreach ($keyPath as $currentKey) {
-            if (!is_array($currentValue) || !array_key_exists($currentKey, $currentValue)) {
+            if (! is_array($currentValue) || ! array_key_exists($currentKey, $currentValue)) {
                 if ($hasDefault) {
                     return $default;
                 }
@@ -149,8 +149,8 @@ class Data implements DataInterface, ArrayAccess
 
         foreach (self::keyToPathArray($key) as $currentKey) {
             if (
-                !is_array($currentValue) ||
-                !array_key_exists($currentKey, $currentValue)
+                ! is_array($currentValue) ||
+                ! array_key_exists($currentKey, $currentValue)
             ) {
                 return false;
             }
@@ -226,9 +226,8 @@ class Data implements DataInterface, ArrayAccess
     /**
      * {@inheritdoc}
      *
-     * @param string $key
-     * @param mixed $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return void
      */
     #[\ReturnTypeWillChange]
@@ -249,8 +248,7 @@ class Data implements DataInterface, ArrayAccess
     }
 
     /**
-     * @param string $path
-     *
+     * @param  string  $path
      * @return string[]
      *
      * @psalm-return non-empty-list<string>
@@ -269,8 +267,7 @@ class Data implements DataInterface, ArrayAccess
     }
 
     /**
-     * @param string|string[] $path
-     *
+     * @param  string|string[]  $path
      * @return string
      *
      * @psalm-pure

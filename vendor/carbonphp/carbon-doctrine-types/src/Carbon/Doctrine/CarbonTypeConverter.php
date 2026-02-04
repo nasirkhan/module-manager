@@ -46,7 +46,7 @@ trait CarbonTypeConverter
 
         $type = parent::getSQLDeclaration($fieldDeclaration, $platform);
 
-        if (!$precision) {
+        if (! $precision) {
             return $type;
         }
 
@@ -100,7 +100,7 @@ trait CarbonTypeConverter
             $error = $exception;
         }
 
-        if (!$date) {
+        if (! $date) {
             throw ValueNotConvertible::new(
                 $value,
                 static::class,

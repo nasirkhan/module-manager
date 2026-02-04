@@ -67,7 +67,7 @@ class Profiler implements ResetInterface
      */
     public function loadProfileFromResponse(Response $response): ?Profile
     {
-        if (!$token = $response->headers->get('X-Debug-Token')) {
+        if (! $token = $response->headers->get('X-Debug-Token')) {
             return null;
         }
 
@@ -94,7 +94,7 @@ class Profiler implements ResetInterface
             }
         }
 
-        if (!($ret = $this->storage->write($profile)) && null !== $this->logger) {
+        if (! ($ret = $this->storage->write($profile)) && null !== $this->logger) {
             $this->logger->warning('Unable to store the profiler information.', ['configured_storage' => $this->storage::class]);
         }
 
@@ -112,10 +112,10 @@ class Profiler implements ResetInterface
     /**
      * Finds profiler tokens for the given criteria.
      *
-     * @param int|null      $limit  The maximum number of tokens to return
-     * @param string|null   $start  The start date to search from
-     * @param string|null   $end    The end date to search to
-     * @param \Closure|null $filter A filter to apply on the list of tokens
+     * @param  int|null  $limit  The maximum number of tokens to return
+     * @param  string|null  $start  The start date to search from
+     * @param  string|null  $end  The end date to search to
+     * @param  \Closure|null  $filter  A filter to apply on the list of tokens
      *
      * @see https://php.net/datetime.formats for the supported date/time formats
      */
@@ -183,7 +183,7 @@ class Profiler implements ResetInterface
     /**
      * Sets the Collectors associated with this profiler.
      *
-     * @param DataCollectorInterface[] $collectors An array of collectors
+     * @param  DataCollectorInterface[]  $collectors  An array of collectors
      */
     public function set(array $collectors = []): void
     {
@@ -204,7 +204,7 @@ class Profiler implements ResetInterface
     /**
      * Returns true if a Collector for the given name exists.
      *
-     * @param string $name A collector name
+     * @param  string  $name  A collector name
      */
     public function has(string $name): bool
     {
@@ -214,13 +214,13 @@ class Profiler implements ResetInterface
     /**
      * Gets a Collector by name.
      *
-     * @param string $name A collector name
+     * @param  string  $name  A collector name
      *
      * @throws \InvalidArgumentException if the collector does not exist
      */
     public function get(string $name): DataCollectorInterface
     {
-        if (!isset($this->collectors[$name])) {
+        if (! isset($this->collectors[$name])) {
             throw new \InvalidArgumentException(\sprintf('Collector "%s" does not exist.', $name));
         }
 

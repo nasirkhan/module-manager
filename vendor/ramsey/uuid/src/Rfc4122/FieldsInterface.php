@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,7 +18,7 @@ use Ramsey\Uuid\Fields\FieldsInterface as BaseFieldsInterface;
 use Ramsey\Uuid\Type\Hexadecimal;
 
 /**
- * UUID fields, as defined by RFC 4122
+ * UUID fields, as defined by RFC 4122.
  *
  * This interface defines the fields of an RFC 4122 variant UUID. Since RFC 9562 removed the concept of fields and
  * instead defined layouts that are specific to a given version, this interface is a legacy artifact of the earlier, and
@@ -41,47 +41,47 @@ use Ramsey\Uuid\Type\Hexadecimal;
 interface FieldsInterface extends BaseFieldsInterface
 {
     /**
-     * Returns the full 16-bit clock sequence, with the variant bits (two most significant bits) masked out
+     * Returns the full 16-bit clock sequence, with the variant bits (two most significant bits) masked out.
      */
     public function getClockSeq(): Hexadecimal;
 
     /**
-     * Returns the high field of the clock sequence multiplexed with the variant
+     * Returns the high field of the clock sequence multiplexed with the variant.
      */
     public function getClockSeqHiAndReserved(): Hexadecimal;
 
     /**
-     * Returns the low field of the clock sequence
+     * Returns the low field of the clock sequence.
      */
     public function getClockSeqLow(): Hexadecimal;
 
     /**
-     * Returns the node field
+     * Returns the node field.
      */
     public function getNode(): Hexadecimal;
 
     /**
-     * Returns the high field of the timestamp multiplexed with the version
+     * Returns the high field of the timestamp multiplexed with the version.
      */
     public function getTimeHiAndVersion(): Hexadecimal;
 
     /**
-     * Returns the low field of the timestamp
+     * Returns the low field of the timestamp.
      */
     public function getTimeLow(): Hexadecimal;
 
     /**
-     * Returns the middle field of the timestamp
+     * Returns the middle field of the timestamp.
      */
     public function getTimeMid(): Hexadecimal;
 
     /**
-     * Returns the full 60-bit timestamp, without the version
+     * Returns the full 60-bit timestamp, without the version.
      */
     public function getTimestamp(): Hexadecimal;
 
     /**
-     * Returns the variant
+     * Returns the variant.
      *
      * The variant number describes the layout of the UUID. The variant number has the following meaning:
      *
@@ -97,7 +97,7 @@ interface FieldsInterface extends BaseFieldsInterface
     public function getVariant(): int;
 
     /**
-     * Returns the UUID version
+     * Returns the UUID version.
      *
      * The version number describes how the UUID was generated and has the following meaning:
      *
@@ -120,7 +120,7 @@ interface FieldsInterface extends BaseFieldsInterface
     public function getVersion(): ?int;
 
     /**
-     * Returns true if these fields represent a nil UUID
+     * Returns true if these fields represent a nil UUID.
      *
      * The nil UUID is a special form of UUID that is specified to have all 128 bits set to zero.
      *

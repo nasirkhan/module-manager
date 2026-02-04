@@ -26,7 +26,7 @@ final class DatePoint extends \DateTimeImmutable
         $now = $reference ?? Clock::get()->now();
 
         if ('now' !== $datetime) {
-            if (!$now instanceof static) {
+            if (! $now instanceof static) {
                 $now = static::createFromInterface($now);
             }
 
@@ -78,11 +78,11 @@ final class DatePoint extends \DateTimeImmutable
             return parent::createFromTimestamp($timestamp);
         }
 
-        if (\is_int($timestamp) || !$ms = (int) $timestamp - $timestamp) {
+        if (\is_int($timestamp) || ! $ms = (int) $timestamp - $timestamp) {
             return static::createFromFormat('U', (string) $timestamp);
         }
 
-        if (!is_finite($timestamp) || \PHP_INT_MAX + 1.0 <= $timestamp || \PHP_INT_MIN > $timestamp) {
+        if (! is_finite($timestamp) || \PHP_INT_MAX + 1.0 <= $timestamp || \PHP_INT_MIN > $timestamp) {
             throw new \DateRangeError(\sprintf('DateTimeImmutable::createFromTimestamp(): Argument #1 ($timestamp) must be a finite number between %s and %s.999999, %s given', \PHP_INT_MIN, \PHP_INT_MAX, $timestamp));
         }
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/collection library
+ * This file is part of the ramsey/collection library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -24,7 +24,7 @@ use function is_int;
 
 /**
  * `NamedParameterMap` represents a mapping of values to a set of named keys
- * that may optionally be typed
+ * that may optionally be typed.
  *
  * @extends AbstractMap<string, mixed>
  */
@@ -43,8 +43,8 @@ class NamedParameterMap extends AbstractMap
     /**
      * Constructs a new `NamedParameterMap`.
      *
-     * @param array<array-key, string> $namedParameters The named parameters defined for this map.
-     * @param array<string, mixed> $data An initial set of data to set on this map.
+     * @param  array<array-key, string>  $namedParameters  The named parameters defined for this map.
+     * @param  array<string, mixed>  $data  An initial set of data to set on this map.
      */
     public function __construct(array $namedParameters, array $data = [])
     {
@@ -64,18 +64,18 @@ class NamedParameterMap extends AbstractMap
 
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        if (!array_key_exists($offset, $this->namedParameters)) {
+        if (! array_key_exists($offset, $this->namedParameters)) {
             throw new InvalidArgumentException(
                 'Attempting to set value for unconfigured parameter \''
-                . $this->toolValueToString($offset) . '\'',
+                .$this->toolValueToString($offset).'\'',
             );
         }
 
         if ($this->checkType($this->namedParameters[$offset], $value) === false) {
             throw new InvalidArgumentException(
-                'Value for \'' . $offset . '\' must be of type '
-                . $this->namedParameters[$offset] . '; value is '
-                . $this->toolValueToString($value),
+                'Value for \''.$offset.'\' must be of type '
+                .$this->namedParameters[$offset].'; value is '
+                .$this->toolValueToString($value),
             );
         }
 
@@ -86,8 +86,7 @@ class NamedParameterMap extends AbstractMap
      * Given an array of named parameters, constructs a proper mapping of
      * named parameters to types.
      *
-     * @param array<array-key, string> $namedParameters The named parameters to filter.
-     *
+     * @param  array<array-key, string>  $namedParameters  The named parameters to filter.
      * @return array<string, string>
      */
     protected function filterNamedParameters(array $namedParameters): array

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -24,7 +24,7 @@ use function sprintf;
 use function substr;
 
 /**
- * A value object representing an integer
+ * A value object representing an integer.
  *
  * This class exists for type-safety purposes, to ensure that integers returned from ramsey/uuid methods as strings are
  * truly integers and not some other kind of string.
@@ -46,7 +46,7 @@ final class Integer implements NumberInterface
      */
     private bool $isNegative = false;
 
-    public function __construct(self | float | int | string $value)
+    public function __construct(self|float|int|string $value)
     {
         $this->value = $value instanceof self ? (string) $value : $this->prepareValue($value);
     }
@@ -93,9 +93,9 @@ final class Integer implements NumberInterface
     }
 
     /**
-     * Constructs the object from a serialized string representation
+     * Constructs the object from a serialized string representation.
      *
-     * @param string $data The serialized string representation of the object
+     * @param  string  $data  The serialized string representation of the object
      */
     public function unserialize(string $data): void
     {
@@ -103,12 +103,12 @@ final class Integer implements NumberInterface
     }
 
     /**
-     * @param array{string?: string} $data
+     * @param  array{string?: string}  $data
      */
     public function __unserialize(array $data): void
     {
         // @codeCoverageIgnoreStart
-        if (!isset($data['string'])) {
+        if (! isset($data['string'])) {
             throw new ValueError(sprintf('%s(): Argument #1 ($data) is invalid', __METHOD__));
         }
         // @codeCoverageIgnoreEnd
@@ -119,7 +119,7 @@ final class Integer implements NumberInterface
     /**
      * @return numeric-string
      */
-    private function prepareValue(float | int | string $value): string
+    private function prepareValue(float|int|string $value): string
     {
         $value = (string) $value;
         $sign = '+';
@@ -130,10 +130,10 @@ final class Integer implements NumberInterface
             $value = substr($value, 1);
         }
 
-        if (!preg_match('/^\d+$/', $value)) {
+        if (! preg_match('/^\d+$/', $value)) {
             throw new InvalidArgumentException(
                 'Value must be a signed integer or a string containing only '
-                . 'digits 0-9 and, optionally, a sign (+ or -)'
+                .'digits 0-9 and, optionally, a sign (+ or -)'
             );
         }
 
@@ -147,7 +147,7 @@ final class Integer implements NumberInterface
 
         // Add the negative sign back to the value.
         if ($sign === '-' && $value !== '0') {
-            $value = $sign . $value;
+            $value = $sign.$value;
 
             /** @phpstan-ignore property.readOnlyByPhpDocAssignNotInConstructor */
             $this->isNegative = true;

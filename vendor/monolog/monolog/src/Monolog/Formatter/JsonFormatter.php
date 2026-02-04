@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,12 +13,12 @@
 
 namespace Monolog\Formatter;
 
+use Monolog\LogRecord;
 use Stringable;
 use Throwable;
-use Monolog\LogRecord;
 
 /**
- * Encodes whatever record data is passed to it as json
+ * Encodes whatever record data is passed to it as json.
  *
  * This can be useful to log to databases or remote APIs
  *
@@ -37,7 +39,7 @@ class JsonFormatter extends NormalizerFormatter
     protected bool $includeStacktraces = false;
 
     /**
-     * @param self::BATCH_MODE_* $batchMode
+     * @param  self::BATCH_MODE_*  $batchMode
      */
     public function __construct(int $batchMode = self::BATCH_MODE_JSON, bool $appendNewline = true, bool $ignoreEmptyContextAndExtra = false, bool $includeStacktraces = false)
     {
@@ -62,7 +64,7 @@ class JsonFormatter extends NormalizerFormatter
     }
 
     /**
-     * True if newlines are appended to every formatted record
+     * True if newlines are appended to every formatted record.
      */
     public function isAppendingNewlines(): bool
     {
@@ -76,7 +78,7 @@ class JsonFormatter extends NormalizerFormatter
     {
         $normalized = $this->normalizeRecord($record);
 
-        return $this->toJson($normalized, true) . ($this->appendNewline ? "\n" : '');
+        return $this->toJson($normalized, true).($this->appendNewline ? "\n" : '');
     }
 
     /**
@@ -225,7 +227,7 @@ class JsonFormatter extends NormalizerFormatter
     protected function normalizeException(Throwable $e, int $depth = 0): array
     {
         $data = parent::normalizeException($e, $depth);
-        if (!$this->includeStacktraces) {
+        if (! $this->includeStacktraces) {
             unset($data['trace']);
         }
 

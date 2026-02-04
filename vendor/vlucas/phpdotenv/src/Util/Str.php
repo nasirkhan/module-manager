@@ -28,14 +28,13 @@ final class Str
     /**
      * Convert a string to UTF-8 from the given encoding.
      *
-     * @param string      $input
-     * @param string|null $encoding
-     *
+     * @param  string  $input
+     * @param  string|null  $encoding
      * @return \GrahamCampbell\ResultType\Result<string, string>
      */
     public static function utf8(string $input, ?string $encoding = null)
     {
-        if ($encoding !== null && !\in_array($encoding, \mb_list_encodings(), true)) {
+        if ($encoding !== null && ! \in_array($encoding, \mb_list_encodings(), true)) {
             /** @var \GrahamCampbell\ResultType\Result<string, string> */
             return Error::create(
                 \sprintf('Illegal character encoding [%s] specified.', $encoding)
@@ -46,7 +45,7 @@ final class Str
             @\mb_convert_encoding($input, 'UTF-8') :
             @\mb_convert_encoding($input, 'UTF-8', $encoding);
 
-        if (!is_string($converted)) {
+        if (! is_string($converted)) {
             /** @var \GrahamCampbell\ResultType\Result<string, string> */
             return Error::create(
                 \sprintf('Conversion from encoding [%s] failed.', $encoding ?? 'NULL')
@@ -54,7 +53,8 @@ final class Str
         }
 
         /**
-         * this is for support UTF-8 with BOM encoding
+         * this is for support UTF-8 with BOM encoding.
+         *
          * @see https://en.wikipedia.org/wiki/Byte_order_mark
          * @see https://github.com/vlucas/phpdotenv/issues/500
          */
@@ -69,9 +69,8 @@ final class Str
     /**
      * Search for a given substring of the input.
      *
-     * @param string $haystack
-     * @param string $needle
-     *
+     * @param  string  $haystack
+     * @param  string  $needle
      * @return \PhpOption\Option<int>
      */
     public static function pos(string $haystack, string $needle)
@@ -83,10 +82,9 @@ final class Str
     /**
      * Grab the specified substring of the input.
      *
-     * @param string   $input
-     * @param int      $start
-     * @param int|null $length
-     *
+     * @param  string  $input
+     * @param  int  $start
+     * @param  int|null  $length
      * @return string
      */
     public static function substr(string $input, int $start, ?int $length = null)
@@ -97,8 +95,7 @@ final class Str
     /**
      * Compute the length of the given string.
      *
-     * @param string $input
-     *
+     * @param  string  $input
      * @return int
      */
     public static function len(string $input)

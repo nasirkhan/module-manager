@@ -35,7 +35,7 @@ final class NotTaggedControllerValueResolver implements ValueResolverInterface
 
         if (\is_array($controller) && \is_callable($controller, true) && \is_string($controller[0])) {
             $controller = $controller[0].'::'.$controller[1];
-        } elseif (!\is_string($controller) || '' === $controller) {
+        } elseif (! \is_string($controller) || '' === $controller) {
             return [];
         }
 
@@ -43,7 +43,7 @@ final class NotTaggedControllerValueResolver implements ValueResolverInterface
             $controller = ltrim($controller, '\\');
         }
 
-        if (!$this->container->has($controller)) {
+        if (! $this->container->has($controller)) {
             $controller = (false !== $i = strrpos($controller, ':'))
                 ? substr($controller, 0, $i).strtolower(substr($controller, $i))
                 : $controller.'::__invoke';

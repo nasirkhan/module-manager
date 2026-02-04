@@ -30,7 +30,7 @@ final class Transports implements TransportInterface
     private TransportInterface $default;
 
     /**
-     * @param iterable<string, TransportInterface> $transports
+     * @param  iterable<string, TransportInterface>  $transports
      */
     public function __construct(iterable $transports)
     {
@@ -39,7 +39,7 @@ final class Transports implements TransportInterface
             $this->transports[$name] = $transport;
         }
 
-        if (!$this->transports) {
+        if (! $this->transports) {
             throw new LogicException(\sprintf('"%s" must have at least one transport configured.', __CLASS__));
         }
     }
@@ -47,7 +47,7 @@ final class Transports implements TransportInterface
     public function send(RawMessage $message, ?Envelope $envelope = null): ?SentMessage
     {
         /** @var Message $message */
-        if (RawMessage::class === $message::class || !$message->getHeaders()->has('X-Transport')) {
+        if (RawMessage::class === $message::class || ! $message->getHeaders()->has('X-Transport')) {
             return $this->default->send($message, $envelope);
         }
 
@@ -55,7 +55,7 @@ final class Transports implements TransportInterface
         $transport = $headers->get('X-Transport')->getBody();
         $headers->remove('X-Transport');
 
-        if (!isset($this->transports[$transport])) {
+        if (! isset($this->transports[$transport])) {
             throw new InvalidArgumentException(\sprintf('The "%s" transport does not exist (available transports: "%s").', $transport, implode('", "', array_keys($this->transports))));
         }
 

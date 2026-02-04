@@ -28,9 +28,9 @@ class UnknownMethodException extends BaseBadMethodCallException implements BadMe
     /**
      * Constructor.
      *
-     * @param string         $method
-     * @param int            $code
-     * @param Throwable|null $previous
+     * @param  string  $method
+     * @param  int  $code
+     * @param  Throwable|null  $previous
      */
     public function __construct($method, $code = 0, ?Throwable $previous = null)
     {

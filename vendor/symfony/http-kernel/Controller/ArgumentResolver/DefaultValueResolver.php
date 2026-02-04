@@ -28,7 +28,7 @@ final class DefaultValueResolver implements ValueResolverInterface
             return [$argument->getDefaultValue()];
         }
 
-        if (null !== $argument->getType() && $argument->isNullable() && !$argument->isVariadic()) {
+        if (null !== $argument->getType() && $argument->isNullable() && ! $argument->isVariadic()) {
             return [null];
         }
 

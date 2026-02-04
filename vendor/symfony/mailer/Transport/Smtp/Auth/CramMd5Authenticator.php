@@ -42,7 +42,7 @@ class CramMd5Authenticator implements AuthenticatorInterface
      */
     private function getResponse(#[\SensitiveParameter] string $secret, string $challenge): string
     {
-        if (!$secret) {
+        if (! $secret) {
             throw new InvalidArgumentException('A non-empty secret is required.');
         }
 

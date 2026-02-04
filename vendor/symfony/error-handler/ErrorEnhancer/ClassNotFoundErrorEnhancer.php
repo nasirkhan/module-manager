@@ -24,8 +24,8 @@ class ClassNotFoundErrorEnhancer implements ErrorEnhancerInterface
     public function enhance(\Throwable $error): ?\Throwable
     {
         // Some specific versions of PHP produce a fatal error when extending a not found class.
-        $message = !$error instanceof FatalError ? $error->getMessage() : $error->getError()['message'];
-        if (!preg_match('/^(Class|Interface|Trait) [\'"]([^\'"]+)[\'"] not found$/', $message, $matches)) {
+        $message = ! $error instanceof FatalError ? $error->getMessage() : $error->getError()['message'];
+        if (! preg_match('/^(Class|Interface|Trait) [\'"]([^\'"]+)[\'"] not found$/', $message, $matches)) {
             return null;
         }
         $typeName = strtolower($matches[1]);
@@ -61,13 +61,13 @@ class ClassNotFoundErrorEnhancer implements ErrorEnhancerInterface
      * By default, it looks for PSR-0 and PSR-4 classes registered via a Symfony or a Composer
      * autoloader (that should cover all common cases).
      *
-     * @param string $class A class name (without its namespace)
+     * @param  string  $class  A class name (without its namespace)
      *
      * Returns an array of possible fully qualified class names
      */
     private function getClassCandidates(string $class): array
     {
-        if (!\is_array($functions = spl_autoload_functions())) {
+        if (! \is_array($functions = spl_autoload_functions())) {
             return [];
         }
 
@@ -75,14 +75,14 @@ class ClassNotFoundErrorEnhancer implements ErrorEnhancerInterface
         $classes = [];
 
         foreach ($functions as $function) {
-            if (!\is_array($function)) {
+            if (! \is_array($function)) {
                 continue;
             }
             // get class loaders wrapped by DebugClassLoader
             if ($function[0] instanceof DebugClassLoader) {
                 $function = $function[0]->getClassLoader();
 
-                if (!\is_array($function)) {
+                if (! \is_array($function)) {
                     continue;
                 }
             }
@@ -108,7 +108,7 @@ class ClassNotFoundErrorEnhancer implements ErrorEnhancerInterface
     private function findClassInPath(string $path, string $class, string $prefix): array
     {
         $path = realpath($path.'/'.strtr($prefix, '\\_', '//')) ?: realpath($path.'/'.\dirname(strtr($prefix, '\\_', '//'))) ?: realpath($path);
-        if (!$path || !is_dir($path)) {
+        if (! $path || ! is_dir($path)) {
             return [];
         }
 

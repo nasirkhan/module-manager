@@ -75,7 +75,7 @@ namespace Symfony\Component\Routing\Loader\Configurator;
 class RoutesReference
 {
     /**
-     * @param RoutesConfig $config
+     * @param  RoutesConfig  $config
      *
      * @psalm-return RoutesConfig
      */

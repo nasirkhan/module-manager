@@ -21,6 +21,6 @@ final class UnableToGeneratePublicUrl extends RuntimeException implements Filesy
 
     public static function noGeneratorConfigured(string $path, string $extraReason = ''): static
     {
-        return new static('No generator was configured ' . $extraReason, $path);
+        return new static('No generator was configured '.$extraReason, $path);
     }
 }

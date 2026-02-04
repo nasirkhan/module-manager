@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,16 +23,16 @@ use Ramsey\Uuid\UuidInterface;
 use Throwable;
 
 /**
- * Nonstandard\UuidBuilder builds instances of Nonstandard\Uuid
+ * Nonstandard\UuidBuilder builds instances of Nonstandard\Uuid.
  *
  * @immutable
  */
 class UuidBuilder implements UuidBuilderInterface
 {
     /**
-     * @param NumberConverterInterface $numberConverter The number converter to use when constructing the Nonstandard\Uuid
-     * @param TimeConverterInterface $timeConverter The time converter to use for converting timestamps extracted from a
-     *     UUID to Unix timestamps
+     * @param  NumberConverterInterface  $numberConverter  The number converter to use when constructing the Nonstandard\Uuid
+     * @param  TimeConverterInterface  $timeConverter  The time converter to use for converting timestamps extracted from a
+     *                                                 UUID to Unix timestamps
      */
     public function __construct(
         private NumberConverterInterface $numberConverter,
@@ -41,11 +41,10 @@ class UuidBuilder implements UuidBuilderInterface
     }
 
     /**
-     * Builds and returns a Nonstandard\Uuid
+     * Builds and returns a Nonstandard\Uuid.
      *
-     * @param CodecInterface $codec The codec to use for building this instance
-     * @param string $bytes The byte string from which to construct a UUID
-     *
+     * @param  CodecInterface  $codec  The codec to use for building this instance
+     * @param  string  $bytes  The byte string from which to construct a UUID
      * @return Uuid The Nonstandard\UuidBuilder returns an instance of Nonstandard\Uuid
      *
      * @pure
@@ -62,7 +61,7 @@ class UuidBuilder implements UuidBuilderInterface
     }
 
     /**
-     * Proxy method to allow injecting a mock for testing
+     * Proxy method to allow injecting a mock for testing.
      *
      * @pure
      */

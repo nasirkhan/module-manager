@@ -34,7 +34,7 @@ class ConnectException extends TransferException implements NetworkExceptionInte
     }
 
     /**
-     * Get the request that caused the exception
+     * Get the request that caused the exception.
      */
     public function getRequest(): RequestInterface
     {

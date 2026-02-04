@@ -34,11 +34,11 @@ final class Dsn
             throw new InvalidArgumentException('The mailer DSN is invalid.');
         }
 
-        if (!isset($params['scheme'])) {
+        if (! isset($params['scheme'])) {
             throw new InvalidArgumentException('The mailer DSN must contain a scheme.');
         }
 
-        if (!isset($params['host'])) {
+        if (! isset($params['host'])) {
             throw new InvalidArgumentException('The mailer DSN must contain a host (use "default" by default).');
         }
 

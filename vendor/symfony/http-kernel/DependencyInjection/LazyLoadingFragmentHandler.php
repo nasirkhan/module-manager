@@ -38,7 +38,7 @@ class LazyLoadingFragmentHandler extends FragmentHandler
 
     public function render(string|ControllerReference $uri, string $renderer = 'inline', array $options = []): ?string
     {
-        if (!isset($this->initialized[$renderer]) && $this->container->has($renderer)) {
+        if (! isset($this->initialized[$renderer]) && $this->container->has($renderer)) {
             $this->addRenderer($this->container->get($renderer));
             $this->initialized[$renderer] = true;
         }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -12,8 +14,8 @@
 namespace Monolog\Handler\FingersCrossed;
 
 use Monolog\Level;
-use Monolog\LogRecord;
 use Monolog\Logger;
+use Monolog\LogRecord;
 use Psr\Log\LogLevel;
 
 /**
@@ -26,7 +28,7 @@ class ErrorLevelActivationStrategy implements ActivationStrategyInterface
     private Level $actionLevel;
 
     /**
-     * @param int|string|Level $actionLevel Level or name or value
+     * @param  int|string|Level  $actionLevel  Level or name or value
      *
      * @phpstan-param value-of<Level::VALUES>|value-of<Level::NAMES>|Level|LogLevel::* $actionLevel
      */

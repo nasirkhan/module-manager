@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -43,7 +43,7 @@ final class VariableBag implements ArrayAccess, Countable, IteratorAggregate
     private array $variables = [];
 
     /**
-     * @param iterable<array-key, InputValue> $variables
+     * @param  iterable<array-key, InputValue>  $variables
      */
     public function __construct(iterable $variables = [])
     {
@@ -115,7 +115,7 @@ final class VariableBag implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
-     * @param Stringable|InputValue $value
+     * @param  Stringable|InputValue  $value
      */
     public function assign(string $name, BackedEnum|Stringable|string|bool|int|float|array|null $value): void
     {
@@ -123,7 +123,7 @@ final class VariableBag implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
-     * @param Stringable|InputValue $value
+     * @param  Stringable|InputValue  $value
      *
      * @throws TemplateCanNotBeExpanded if the value contains nested list
      */
@@ -139,7 +139,7 @@ final class VariableBag implements ArrayAccess, Countable, IteratorAggregate
         return match (true) {
             is_bool($value) => true === $value ? '1' : '0',
             (null === $value || is_scalar($value) || $value instanceof Stringable) => (string) $value,
-            !$isNestedListAllowed => throw TemplateCanNotBeExpanded::dueToNestedListOfValue($name),
+            ! $isNestedListAllowed => throw TemplateCanNotBeExpanded::dueToNestedListOfValue($name),
             default => array_map(fn ($var): array|string => self::normalizeValue($var, $name, false), $value),
         };
     }

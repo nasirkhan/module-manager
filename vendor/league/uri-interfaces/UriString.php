@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -43,8 +43,9 @@ use const FILTER_VALIDATE_IP;
  * A class to parse a URI string according to RFC3986.
  *
  * @link    https://tools.ietf.org/html/rfc3986
- * @package League\Uri
+ *
  * @author  Ignace Nyamagana Butera <nyamsprod@gmail.com>
+ *
  * @since   6.0.0
  *
  * @phpstan-type AuthorityMap array{user: ?string, pass: ?string, host: ?string, port: ?int}
@@ -96,6 +97,7 @@ final class UriString
      * RFC3986 regular expression URI splitter.
      *
      * @link https://tools.ietf.org/html/rfc3986#appendix-B
+     *
      * @var string
      */
     private const REGEXP_URI_PARTS = ',^
@@ -110,6 +112,7 @@ final class UriString
      * URI scheme regular expression.
      *
      * @link https://tools.ietf.org/html/rfc3986#section-3.1
+     *
      * @var string
      */
     private const REGEXP_URI_SCHEME = '/^([a-z][a-z\d+.-]*)?$/i';
@@ -118,6 +121,7 @@ final class UriString
      * Invalid path for URI without scheme and authority regular expression.
      *
      * @link https://tools.ietf.org/html/rfc3986#section-3.3
+     *
      * @var string
      */
     private const REGEXP_INVALID_PATH = ',^(([^/]*):)(.*)?/,';
@@ -164,7 +168,7 @@ final class UriString
         return self::build([
             ...array_map(fn (?string $value) => match (true) {
                 null === $value,
-                !str_contains($value, '%20') => $value,
+                ! str_contains($value, '%20') => $value,
                 default => str_replace('%20', ' ', $value),
             }, $components),
             ...['port' => $port],
@@ -181,7 +185,7 @@ final class UriString
      * @link https://tools.ietf.org/html/rfc3986#section-5.3
      * @link https://tools.ietf.org/html/rfc3986#section-7.5
      *
-     * @param InputComponentMap $components
+     * @param  InputComponentMap  $components
      */
     public static function build(array $components): string
     {
@@ -235,13 +239,13 @@ final class UriString
     /**
      * Generate a URI authority representation from its parsed representation.
      *
-     * @param InputComponentMap $components
+     * @param  InputComponentMap  $components
      */
     public static function buildAuthority(array $components): ?string
     {
-        if (!isset($components['host'])) {
-            (!isset($components['user']) && !isset($components['pass'])) || throw new SyntaxError('The user info component must not be set if the host is not defined.');
-            !isset($components['port']) || throw new SyntaxError('The port component must not be set if the host is not defined.');
+        if (! isset($components['host'])) {
+            (! isset($components['user']) && ! isset($components['pass'])) || throw new SyntaxError('The user info component must not be set if the host is not defined.');
+            ! isset($components['port']) || throw new SyntaxError('The port component must not be set if the host is not defined.');
 
             return null;
         }
@@ -267,9 +271,9 @@ final class UriString
     /**
      * Parses and normalizes the URI following RFC3986 destructive and non-destructive constraints.
      *
-     * @throws SyntaxError if the URI is not parsable
-     *
      * @return ComponentMap
+     *
+     * @throws SyntaxError if the URI is not parsable
      */
     public static function parseNormalized(Stringable|string $uri): array
     {
@@ -412,7 +416,7 @@ final class UriString
     public static function removeDotSegments(Stringable|string $path): string
     {
         $path = (string) $path;
-        if (!str_contains($path, '.')) {
+        if (! str_contains($path, '.')) {
             return $path;
         }
 
@@ -423,7 +427,7 @@ final class UriString
                 return $carry;
             }
 
-            if (!isset(self::DOT_SEGMENTS[$segment])) {
+            if (! isset(self::DOT_SEGMENTS[$segment])) {
                 $carry[] = $segment;
             }
 
@@ -442,9 +446,8 @@ final class UriString
     /**
      * Resolves an URI path and query component.
      *
-     * @param ComponentMap $uri
-     * @param ComponentMap $baseUri
-     *
+     * @param  ComponentMap  $uri
+     * @param  ComponentMap  $baseUri
      * @return array{0:string, 1:string|null}
      */
     private static function resolvePathAndQuery(array $uri, array $baseUri): array
@@ -519,11 +522,11 @@ final class UriString
      *
      * @link https://tools.ietf.org/html/rfc3986
      *
+     * @return ComponentMap
+     *
      * @throws SyntaxError if the URI contains invalid characters
      * @throws SyntaxError if the URI contains an invalid scheme
      * @throws SyntaxError if the URI contains an invalid path
-     *
-     * @return ComponentMap
      */
     public static function parse(BackedEnum|Stringable|string|int $uri): array
     {
@@ -568,7 +571,7 @@ final class UriString
         preg_match(self::REGEXP_URI_PARTS, $uri, $parts);
         $parts += ['query' => '', 'fragment' => ''];
 
-        if (':' === ($parts['scheme']  ?? null) || 1 !== preg_match(self::REGEXP_URI_SCHEME, $parts['scontent'] ?? '')) {
+        if (':' === ($parts['scheme'] ?? null) || 1 !== preg_match(self::REGEXP_URI_SCHEME, $parts['scontent'] ?? '')) {
             throw new SyntaxError(sprintf('The uri `%s` contains an invalid scheme', $uri));
         }
 
@@ -621,7 +624,7 @@ final class UriString
             return;
         }
 
-        if (!str_contains(substr($path, 0, $pos), '/')) {
+        if (! str_contains(substr($path, 0, $pos), '/')) {
             throw new SyntaxError('In absence of a scheme and an authority the first path segment cannot contain a colon (":") character.');
         }
     }
@@ -631,9 +634,9 @@ final class UriString
      *
      * @link https://tools.ietf.org/html/rfc3986#section-3.2
      *
-     * @throws SyntaxError If the port component is invalid
-     *
      * @return AuthorityMap
+     *
+     * @throws SyntaxError If the port component is invalid
      */
     public static function parseAuthority(BackedEnum|Stringable|string|null $authority): array
     {
@@ -731,7 +734,7 @@ final class UriString
         }
 
         $idnaHost = IdnaConverter::toAscii($host);
-        if (!$idnaHost->hasErrors()) {
+        if (! $idnaHost->hasErrors()) {
             return $idnaHost->domain();
         }
 
@@ -742,7 +745,9 @@ final class UriString
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
      * @deprecated Since version 7.6.0
+     *
      * @codeCoverageIgnore
+     *
      * @see HostRecoord::validate()
      *
      * Create a new instance from the environment.

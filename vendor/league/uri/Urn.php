@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -33,7 +33,9 @@ use function strtolower;
 
 /**
  * @phpstan-type UrnSerialize array{0: array{urn: non-empty-string}, 1: array{}}
+ *
  * @phpstan-import-type InputComponentMap from UriString
+ *
  * @phpstan-type UrnMap array{
  *      scheme: 'urn',
  *      nid: string,
@@ -89,7 +91,7 @@ final class Urn implements Conditionable, Stringable, JsonSerializable, Transfor
     private readonly ?string $fComponent;
 
     /**
-     * @param Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string $urn the percent-encoded URN
+     * @param  Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string  $urn  the percent-encoded URN
      */
     public static function parse(Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string $urn): ?Urn
     {
@@ -101,7 +103,8 @@ final class Urn implements Conditionable, Stringable, JsonSerializable, Transfor
     }
 
     /**
-     * @param Rfc3986Uri|WhatWgUrl|Stringable|string $urn the percent-encoded URN
+     * @param  Rfc3986Uri|WhatWgUrl|Stringable|string  $urn  the percent-encoded URN
+     *
      * @see self::fromString()
      *
      * @throws SyntaxError if the URN is invalid
@@ -112,7 +115,7 @@ final class Urn implements Conditionable, Stringable, JsonSerializable, Transfor
     }
 
     /**
-     * @param Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string $urn the percent-encoded URN
+     * @param  Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string  $urn  the percent-encoded URN
      *
      * @throws SyntaxError if the URN is invalid
      */
@@ -141,7 +144,7 @@ final class Urn implements Conditionable, Stringable, JsonSerializable, Transfor
      * Create a new instance from a hash representation of the URI similar
      * to PHP parse_url function result.
      *
-     * @param InputComponentMap $components a hash representation of the URI similar to PHP parse_url function result
+     * @param  InputComponentMap  $components  a hash representation of the URI similar to PHP parse_url function result
      */
     public static function fromComponents(array $components = []): self
     {
@@ -154,7 +157,7 @@ final class Urn implements Conditionable, Stringable, JsonSerializable, Transfor
     }
 
     /**
-     * @param Stringable|string $nss the percent-encoded NSS
+     * @param  Stringable|string  $nss  the percent-encoded NSS
      *
      * @throws SyntaxError if the URN is invalid
      */
@@ -172,10 +175,10 @@ final class Urn implements Conditionable, Stringable, JsonSerializable, Transfor
     }
 
     /**
-     * @param string $nss the percent-encoded NSS
-     * @param ?string $rComponent the percent-encoded r-component
-     * @param ?string $qComponent the percent-encoded q-component
-     * @param ?string $fComponent the percent-encoded f-component
+     * @param  string  $nss  the percent-encoded NSS
+     * @param  ?string  $rComponent  the percent-encoded r-component
+     * @param  ?string  $qComponent  the percent-encoded q-component
+     * @param  ?string  $fComponent  the percent-encoded f-component
      *
      * @throws SyntaxError if one of the URN part is invalid
      */
@@ -319,6 +322,7 @@ final class Urn implements Conditionable, Stringable, JsonSerializable, Transfor
 
     /**
      * Returns the RFC8141 URN string representation.
+     *
      * @see self::toString()
      *
      * @return non-empty-string
@@ -523,7 +527,7 @@ final class Urn implements Conditionable, Stringable, JsonSerializable, Transfor
 
     public function equals(Urn|Rfc3986Uri|WhatWgUrl|BackedEnum|Stringable|string $other, UrnComparisonMode $urnComparisonMode = UrnComparisonMode::ExcludeComponents): bool
     {
-        if (!$other instanceof Urn) {
+        if (! $other instanceof Urn) {
             $other = self::parse($other);
         }
 
@@ -535,7 +539,7 @@ final class Urn implements Conditionable, Stringable, JsonSerializable, Transfor
 
     public function when(callable|bool $condition, callable $onSuccess, ?callable $onFail = null): static
     {
-        if (!is_bool($condition)) {
+        if (! is_bool($condition)) {
             $condition = $condition($this);
         }
 
@@ -560,7 +564,7 @@ final class Urn implements Conditionable, Stringable, JsonSerializable, Transfor
     }
 
     /**
-     * @param UrnSerialize $data
+     * @param  UrnSerialize  $data
      *
      * @throws SyntaxError
      */

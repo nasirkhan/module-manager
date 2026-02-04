@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,7 +19,7 @@ use Ramsey\Uuid\Provider\NodeProviderInterface;
 use Ramsey\Uuid\Type\Hexadecimal;
 
 /**
- * A collection of NodeProviderInterface objects
+ * A collection of NodeProviderInterface objects.
  *
  * @deprecated this class has been deprecated and will be removed in 5.0.0. The use-case for this class comes from a
  *     pre-`phpstan/phpstan` and pre-`vimeo/psalm` ecosystem, in which type safety had to be mostly enforced at runtime:
@@ -36,9 +36,9 @@ class NodeProviderCollection extends AbstractCollection
     }
 
     /**
-     * Re-constructs the object from its serialized form
+     * Re-constructs the object from its serialized form.
      *
-     * @param string $serialized The serialized PHP string to unserialize into a UuidInterface instance
+     * @param  string  $serialized  The serialized PHP string to unserialize into a UuidInterface instance
      */
     public function unserialize($serialized): void
     {

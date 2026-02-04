@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -12,12 +14,12 @@
 namespace Monolog\Formatter;
 
 use Monolog\JsonSerializableDateTimeImmutable;
+use Monolog\LogRecord;
 use Monolog\Utils;
 use Throwable;
-use Monolog\LogRecord;
 
 /**
- * Normalizes incoming records to remove objects/resources so it's easier to dump to various targets
+ * Normalizes incoming records to remove objects/resources so it's easier to dump to various targets.
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
  */
@@ -34,7 +36,7 @@ class NormalizerFormatter implements FormatterInterface
     protected string $basePath = '';
 
     /**
-     * @param string|null $dateFormat The format of the timestamp: one supported by DateTime::format
+     * @param  string|null  $dateFormat  The format of the timestamp: one supported by DateTime::format
      */
     public function __construct(?string $dateFormat = null)
     {
@@ -50,7 +52,7 @@ class NormalizerFormatter implements FormatterInterface
     }
 
     /**
-     * Normalize an arbitrary value to a scalar|array|null
+     * Normalize an arbitrary value to a scalar|array|null.
      *
      * @return null|scalar|array<mixed[]|scalar|null>
      */
@@ -87,7 +89,7 @@ class NormalizerFormatter implements FormatterInterface
     }
 
     /**
-     * The maximum number of normalization levels to go through
+     * The maximum number of normalization levels to go through.
      */
     public function getMaxNormalizeDepth(): int
     {
@@ -105,7 +107,7 @@ class NormalizerFormatter implements FormatterInterface
     }
 
     /**
-     * The maximum number of items to normalize per level
+     * The maximum number of items to normalize per level.
      */
     public function getMaxNormalizeItemCount(): int
     {
@@ -139,13 +141,14 @@ class NormalizerFormatter implements FormatterInterface
     }
 
     /**
-     * Setting a base path will hide the base path from exception and stack trace file names to shorten them
+     * Setting a base path will hide the base path from exception and stack trace file names to shorten them.
+     *
      * @return $this
      */
     public function setBasePath(string $path = ''): self
     {
         if ($path !== '') {
-            $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+            $path = rtrim($path, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
         }
 
         $this->basePath = $path;
@@ -154,7 +157,7 @@ class NormalizerFormatter implements FormatterInterface
     }
 
     /**
-     * Provided as extension point
+     * Provided as extension point.
      *
      * Because normalize is called with sub-values of context data etc, normalizeRecord can be
      * extended when data needs to be appended on the record array but not to other normalized data.
@@ -175,13 +178,13 @@ class NormalizerFormatter implements FormatterInterface
     protected function normalize(mixed $data, int $depth = 0): mixed
     {
         if ($depth > $this->maxNormalizeDepth) {
-            return 'Over ' . $this->maxNormalizeDepth . ' levels deep, aborting normalization';
+            return 'Over '.$this->maxNormalizeDepth.' levels deep, aborting normalization';
         }
 
         if (null === $data || \is_scalar($data)) {
             if (\is_float($data)) {
                 if (is_infinite($data)) {
-                    return ($data > 0 ? '' : '-') . 'INF';
+                    return ($data > 0 ? '' : '-').'INF';
                 }
                 if (is_nan($data)) {
                     return 'NaN';
@@ -197,7 +200,7 @@ class NormalizerFormatter implements FormatterInterface
             $count = 1;
             foreach ($data as $key => $value) {
                 if ($count++ > $this->maxNormalizeItemCount) {
-                    $normalized['...'] = 'Over ' . $this->maxNormalizeItemCount . ' items ('.\count($data).' total), aborting normalization';
+                    $normalized['...'] = 'Over '.$this->maxNormalizeItemCount.' items ('.\count($data).' total), aborting normalization';
                     break;
                 }
 
@@ -253,7 +256,7 @@ class NormalizerFormatter implements FormatterInterface
     protected function normalizeException(Throwable $e, int $depth = 0)
     {
         if ($depth > $this->maxNormalizeDepth) {
-            return ['Over ' . $this->maxNormalizeDepth . ' levels deep, aborting normalization'];
+            return ['Over '.$this->maxNormalizeDepth.' levels deep, aborting normalization'];
         }
 
         if ($e instanceof \JsonSerializable) {
@@ -309,11 +312,12 @@ class NormalizerFormatter implements FormatterInterface
     }
 
     /**
-     * Return the JSON representation of a value
+     * Return the JSON representation of a value.
      *
-     * @param  mixed             $data
+     * @param  mixed  $data
+     * @return string if encoding fails and ignoreErrors is true 'null' is returned
+     *
      * @throws \RuntimeException if encoding fails and errors are not ignored
-     * @return string            if encoding fails and ignoreErrors is true 'null' is returned
      */
     protected function toJson($data, bool $ignoreErrors = false): string
     {

@@ -36,7 +36,7 @@ final class EmphasisDelimiterProcessor implements CacheableDelimiterProcessorInt
     private ConfigurationInterface $config;
 
     /**
-     * @param string $char The emphasis character to use (typically '*' or '_')
+     * @param  string  $char  The emphasis character to use (typically '*' or '_')
      */
     public function __construct(string $char)
     {
@@ -86,7 +86,7 @@ final class EmphasisDelimiterProcessor implements CacheableDelimiterProcessorInt
         if ($delimiterUse === 1) {
             $emphasis = new Emphasis($this->char);
         } elseif ($delimiterUse === 2) {
-            $emphasis = new Strong($this->char . $this->char);
+            $emphasis = new Strong($this->char.$this->char);
         } else {
             return;
         }

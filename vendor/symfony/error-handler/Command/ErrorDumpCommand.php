@@ -48,8 +48,7 @@ final class ErrorDumpCommand extends Command
         $this
             ->addArgument('path', InputArgument::REQUIRED, 'Path where to dump the error pages in')
             ->addArgument('status-codes', InputArgument::IS_ARRAY, 'Status codes to dump error pages for, all of them by default')
-            ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force directory removal before dumping new error pages')
-        ;
+            ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force directory removal before dumping new error pages');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -67,7 +66,7 @@ final class ErrorDumpCommand extends Command
 
     private function dump(SymfonyStyle $io, string $path, array $statusCodes, bool $force = false): void
     {
-        if (!$statusCodes) {
+        if (! $statusCodes) {
             $statusCodes = array_filter(array_keys(Response::$statusTexts), fn ($statusCode) => $statusCode >= 400);
         }
 

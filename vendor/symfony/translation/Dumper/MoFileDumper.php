@@ -31,7 +31,7 @@ class MoFileDumper extends FileDumper
             $offsets[] = array_map('strlen', [$sources, $source, $targets, $target]);
             $sources .= "\0".$source;
             $targets .= "\0".$target;
-            ++$size;
+            $size++;
         }
 
         $header = [

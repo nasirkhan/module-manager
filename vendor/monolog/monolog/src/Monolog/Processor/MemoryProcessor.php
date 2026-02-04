@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -12,7 +14,7 @@
 namespace Monolog\Processor;
 
 /**
- * Some methods that are common for all memory processors
+ * Some methods that are common for all memory processors.
  *
  * @author Rob Jensen
  */
@@ -29,8 +31,8 @@ abstract class MemoryProcessor implements ProcessorInterface
     protected bool $useFormatting;
 
     /**
-     * @param bool $realUsage     Set this to true to get the real size of memory allocated from system.
-     * @param bool $useFormatting If true, then format memory size to human readable string (MB, KB, B depending on size)
+     * @param  bool  $realUsage  Set this to true to get the real size of memory allocated from system.
+     * @param  bool  $useFormatting  If true, then format memory size to human readable string (MB, KB, B depending on size)
      */
     public function __construct(bool $realUsage = true, bool $useFormatting = true)
     {
@@ -39,13 +41,13 @@ abstract class MemoryProcessor implements ProcessorInterface
     }
 
     /**
-     * Formats bytes into a human readable string if $this->useFormatting is true, otherwise return $bytes as is
+     * Formats bytes into a human readable string if $this->useFormatting is true, otherwise return $bytes as is.
      *
      * @return string|int Formatted string if $this->useFormatting is true, otherwise return $bytes as int
      */
     protected function formatBytes(int $bytes)
     {
-        if (!$this->useFormatting) {
+        if (! $this->useFormatting) {
             return $bytes;
         }
 
@@ -55,6 +57,6 @@ abstract class MemoryProcessor implements ProcessorInterface
             return round($bytes / 1024, 2).' KB';
         }
 
-        return $bytes . ' B';
+        return $bytes.' B';
     }
 }

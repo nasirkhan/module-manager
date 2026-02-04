@@ -28,9 +28,8 @@ class Validator
     /**
      * Create a new validator instance.
      *
-     * @param \Dotenv\Repository\RepositoryInterface $repository
-     * @param string[]                               $variables
-     *
+     * @param  \Dotenv\Repository\RepositoryInterface  $repository
+     * @param  string[]  $variables
      * @return void
      */
     public function __construct(RepositoryInterface $repository, array $variables)
@@ -42,9 +41,9 @@ class Validator
     /**
      * Assert that each variable is present.
      *
-     * @throws \Dotenv\Exception\ValidationException
-     *
      * @return \Dotenv\Validator
+     *
+     * @throws \Dotenv\Exception\ValidationException
      */
     public function required()
     {
@@ -59,9 +58,9 @@ class Validator
     /**
      * Assert that each variable is not empty.
      *
-     * @throws \Dotenv\Exception\ValidationException
-     *
      * @return \Dotenv\Validator
+     *
+     * @throws \Dotenv\Exception\ValidationException
      */
     public function notEmpty()
     {
@@ -76,9 +75,9 @@ class Validator
     /**
      * Assert that each specified variable is an integer.
      *
-     * @throws \Dotenv\Exception\ValidationException
-     *
      * @return \Dotenv\Validator
+     *
+     * @throws \Dotenv\Exception\ValidationException
      */
     public function isInteger()
     {
@@ -93,9 +92,9 @@ class Validator
     /**
      * Assert that each specified variable is a boolean.
      *
-     * @throws \Dotenv\Exception\ValidationException
-     *
      * @return \Dotenv\Validator
+     *
+     * @throws \Dotenv\Exception\ValidationException
      */
     public function isBoolean()
     {
@@ -114,11 +113,10 @@ class Validator
     /**
      * Assert that each variable is amongst the given choices.
      *
-     * @param string[] $choices
+     * @param  string[]  $choices
+     * @return \Dotenv\Validator
      *
      * @throws \Dotenv\Exception\ValidationException
-     *
-     * @return \Dotenv\Validator
      */
     public function allowedValues(array $choices)
     {
@@ -133,11 +131,10 @@ class Validator
     /**
      * Assert that each variable matches the given regular expression.
      *
-     * @param string $regex
+     * @param  string  $regex
+     * @return \Dotenv\Validator
      *
      * @throws \Dotenv\Exception\ValidationException
-     *
-     * @return \Dotenv\Validator
      */
     public function allowedRegexValues(string $regex)
     {
@@ -152,12 +149,11 @@ class Validator
     /**
      * Assert that the callback returns true for each variable.
      *
-     * @param callable(?string):bool $callback
-     * @param string                 $message
+     * @param  callable(?string):bool  $callback
+     * @param  string  $message
+     * @return \Dotenv\Validator
      *
      * @throws \Dotenv\Exception\ValidationException
-     *
-     * @return \Dotenv\Validator
      */
     public function assert(callable $callback, string $message)
     {
@@ -184,12 +180,11 @@ class Validator
      *
      * Skip checking null variable values.
      *
-     * @param callable(string):bool $callback
-     * @param string                $message
+     * @param  callable(string):bool  $callback
+     * @param  string  $message
+     * @return \Dotenv\Validator
      *
      * @throws \Dotenv\Exception\ValidationException
-     *
-     * @return \Dotenv\Validator
      */
     public function assertNullable(callable $callback, string $message)
     {

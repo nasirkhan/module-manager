@@ -55,14 +55,14 @@ final class OutputWrapper
 
     public function wrap(string $text, int $width, string $break = "\n"): string
     {
-        if (!$width) {
+        if (! $width) {
             return $text;
         }
 
         $tagPattern = \sprintf('<(?:(?:%s)|/(?:%s)?)>', self::TAG_OPEN_REGEX_SEGMENT, self::TAG_CLOSE_REGEX_SEGMENT);
         $limitPattern = "{1,$width}";
         $patternBlocks = [$tagPattern];
-        if (!$this->allowCutUrls) {
+        if (! $this->allowCutUrls) {
             $patternBlocks[] = self::URL_PATTERN;
         }
         $patternBlocks[] = '.';

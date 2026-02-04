@@ -90,12 +90,14 @@ class ModuleDependenciesCommand extends Command
             $this->newLine();
         }
 
-        if (!$allSatisfied) {
+        if (! $allSatisfied) {
             $this->components->error('Some modules have unsatisfied dependencies!');
+
             return self::FAILURE;
         }
 
         $this->components->info('All module dependencies are satisfied.');
+
         return self::SUCCESS;
     }
 
@@ -108,6 +110,7 @@ class ModuleDependenciesCommand extends Command
 
         if (empty($moduleData)) {
             $this->components->error("Module '{$module}' not found.");
+
             return self::FAILURE;
         }
 
@@ -128,6 +131,7 @@ class ModuleDependenciesCommand extends Command
 
         if (empty($dependencies)) {
             $this->components->info('This module has no dependencies.');
+
             return self::SUCCESS;
         }
 
@@ -155,10 +159,12 @@ class ModuleDependenciesCommand extends Command
         if ($depStatus['all_satisfied']) {
             $this->newLine();
             $this->components->info('All dependencies are satisfied.');
+
             return self::SUCCESS;
         } else {
             $this->newLine();
             $this->components->error('Some dependencies are missing!');
+
             return self::FAILURE;
         }
     }

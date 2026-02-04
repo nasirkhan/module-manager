@@ -47,8 +47,7 @@ class ImportConfigurator
     /**
      * Sets the prefix to add to the path of all child routes.
      *
-     * @param string|array $prefix the prefix, or the localized prefixes
-     *
+     * @param  string|array  $prefix  the prefix, or the localized prefixes
      * @return $this
      */
     final public function prefix(string|array $prefix, bool $trailingSlashOnRoot = true): static
@@ -73,8 +72,7 @@ class ImportConfigurator
     /**
      * Sets the host to use for all child routes.
      *
-     * @param string|array $host the host, or the localized hosts
-     *
+     * @param  string|array  $host  the host, or the localized hosts
      * @return $this
      */
     final public function host(string|array $host): static

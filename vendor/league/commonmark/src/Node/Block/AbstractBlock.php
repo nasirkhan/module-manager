@@ -20,7 +20,7 @@ use League\CommonMark\Exception\InvalidArgumentException;
 use League\CommonMark\Node\Node;
 
 /**
- * Block-level element
+ * Block-level element.
  *
  * @method parent() ?AbstractBlock
  */

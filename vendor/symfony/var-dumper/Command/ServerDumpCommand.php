@@ -69,8 +69,7 @@ class ServerDumpCommand extends Command
                   <info>php %command.full_name% --format="html" > dump.html</info>
 
                 EOF
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -78,7 +77,7 @@ class ServerDumpCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $format = $input->getOption('format');
 
-        if (!$descriptor = $this->descriptors[$format] ?? null) {
+        if (! $descriptor = $this->descriptors[$format] ?? null) {
             throw new InvalidArgumentException(\sprintf('Unsupported format "%s".', $format));
         }
 

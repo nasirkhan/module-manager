@@ -53,8 +53,8 @@ class AddAnnotatedClassesToCachePass implements CompilerPassInterface
     /**
      * Expands the given class patterns using a list of existing classes.
      *
-     * @param array $patterns The class patterns to expand
-     * @param array $classes  The existing classes to match against the patterns
+     * @param  array  $patterns  The class patterns to expand
+     * @param  array  $classes  The existing classes to match against the patterns
      */
     private function expandClasses(array $patterns, array $classes): array
     {
@@ -62,7 +62,7 @@ class AddAnnotatedClassesToCachePass implements CompilerPassInterface
 
         // Explicit classes declared in the patterns are returned directly
         foreach ($patterns as $key => $pattern) {
-            if (!str_ends_with($pattern, '\\') && !str_contains($pattern, '*')) {
+            if (! str_ends_with($pattern, '\\') && ! str_contains($pattern, '*')) {
                 unset($patterns[$key]);
                 $expanded[] = ltrim($pattern, '\\');
             }
@@ -87,7 +87,7 @@ class AddAnnotatedClassesToCachePass implements CompilerPassInterface
         $classes = [];
 
         foreach (spl_autoload_functions() as $function) {
-            if (!\is_array($function)) {
+            if (! \is_array($function)) {
                 continue;
             }
 
@@ -115,7 +115,7 @@ class AddAnnotatedClassesToCachePass implements CompilerPassInterface
             $regex = strtr($regex, ['\\*\\*' => '.*?', '\\*' => '[^\\\\]*?']);
 
             // If this class does not end by a slash, anchor the end
-            if (!str_ends_with($regex, '\\')) {
+            if (! str_ends_with($regex, '\\')) {
                 $regex .= '$';
             }
 
@@ -130,7 +130,7 @@ class AddAnnotatedClassesToCachePass implements CompilerPassInterface
         $isTest = str_contains($class, 'Test');
 
         foreach ($regexps as $regex) {
-            if ($isTest && !str_contains($regex, 'Test')) {
+            if ($isTest && ! str_contains($regex, 'Test')) {
                 continue;
             }
 

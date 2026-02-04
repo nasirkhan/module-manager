@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,7 +19,7 @@ use Ramsey\Uuid\Math\CalculatorInterface;
 use Ramsey\Uuid\Type\Integer as IntegerObject;
 
 /**
- * GenericNumberConverter uses the provided calculator to convert decimal numbers to and from hexadecimal values
+ * GenericNumberConverter uses the provided calculator to convert decimal numbers to and from hexadecimal values.
  *
  * @immutable
  */

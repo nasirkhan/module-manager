@@ -43,7 +43,7 @@ final class TableStartParser implements BlockStartParserInterface
         }
 
         $lastLineBreak = \strrpos($paragraph, "\n");
-        $lastLine      = $lastLineBreak === false ? $paragraph : \substr($paragraph, $lastLineBreak + 1);
+        $lastLine = $lastLineBreak === false ? $paragraph : \substr($paragraph, $lastLineBreak + 1);
 
         $headerCells = TableParser::split($lastLine);
         if (\count($headerCells) > \count($columns)) {
@@ -77,8 +77,8 @@ final class TableStartParser implements BlockStartParserInterface
     private static function parseSeparator(Cursor $cursor): array
     {
         $columns = [];
-        $pipes   = 0;
-        $valid   = false;
+        $pipes = 0;
+        $valid = false;
 
         while (! $cursor->isAtEnd()) {
             switch ($c = $cursor->getCurrentCharacter()) {
@@ -100,7 +100,7 @@ final class TableStartParser implements BlockStartParserInterface
                         return [];
                     }
 
-                    $left  = false;
+                    $left = false;
                     $right = false;
                     if ($c === ':') {
                         $left = true;

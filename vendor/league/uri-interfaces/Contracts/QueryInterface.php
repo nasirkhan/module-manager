@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -250,7 +250,9 @@ interface QueryInterface extends Countable, IteratorAggregate, UriComponentInter
      * DEPRECATION WARNING! This method will be removed in the next major point release.
      *
      * @deprecated Since version 7.3.0
+     *
      * @codeCoverageIgnore
+     *
      * @see QueryInterface::withoutPairByKey()
      *
      * Returns an instance without the specified keys.

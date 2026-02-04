@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,8 +13,8 @@
 
 namespace Monolog\Handler;
 
-use Monolog\Level;
 use Monolog\Formatter\FormatterInterface;
+use Monolog\Level;
 use Monolog\LogRecord;
 
 /**
@@ -43,14 +45,14 @@ class OverflowHandler extends AbstractHandler implements FormattableHandlerInter
     private array $thresholdMap = [];
 
     /**
-     * Buffer of all messages passed to the handler before the threshold was reached
+     * Buffer of all messages passed to the handler before the threshold was reached.
      *
      * @var mixed[][]
      */
     private array $buffer = [];
 
     /**
-     * @param array<int, int> $thresholdMap Dictionary of log level value => threshold
+     * @param  array<int, int>  $thresholdMap  Dictionary of log level value => threshold
      */
     public function __construct(
         HandlerInterface $handler,
@@ -85,7 +87,7 @@ class OverflowHandler extends AbstractHandler implements FormattableHandlerInter
 
         $level = $record->level->value;
 
-        if (!isset($this->thresholdMap[$level])) {
+        if (! isset($this->thresholdMap[$level])) {
             $this->thresholdMap[$level] = 0;
         }
 

@@ -92,7 +92,7 @@ class InlineFragmentRenderer extends RoutableFragmentRenderer
                 return $this->render($alt, $request, $options);
             }
 
-            if (!isset($options['ignore_errors']) || !$options['ignore_errors']) {
+            if (! isset($options['ignore_errors']) || ! $options['ignore_errors']) {
                 throw $e;
             }
 
@@ -115,7 +115,9 @@ class InlineFragmentRenderer extends RoutableFragmentRenderer
 
         static $setSession;
 
-        $setSession ??= \Closure::bind(static function ($subRequest, $request) { $subRequest->session = $request->session; }, null, Request::class);
+        $setSession ??= \Closure::bind(static function ($subRequest, $request) {
+            $subRequest->session = $request->session;
+        }, null, Request::class);
         $setSession($subRequest, $request);
 
         if ($request->attributes->has('_format')) {

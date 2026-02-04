@@ -32,7 +32,7 @@ trait Modifiers
     protected static $midDayAt = 12;
 
     /**
-     * get midday/noon hour
+     * get midday/noon hour.
      *
      * @return int
      */
@@ -51,8 +51,7 @@ trait Modifiers
      *
      * Set midday/noon hour
      *
-     * @param int $hour midday hour
-     *
+     * @param  int  $hour  midday hour
      * @return void
      */
     public static function setMidDayAt($hour)
@@ -61,7 +60,7 @@ trait Modifiers
     }
 
     /**
-     * Modify to midday, default to self::$midDayAt
+     * Modify to midday, default to self::$midDayAt.
      *
      * @return static
      */
@@ -76,8 +75,7 @@ trait Modifiers
      * of the current day of the week. Use the supplied constants
      * to indicate the desired dayOfWeek, ex. static::MONDAY.
      *
-     * @param string|int|null $modifier
-     *
+     * @param  string|int|null  $modifier
      * @return static
      */
     public function next($modifier = null)
@@ -94,9 +92,8 @@ trait Modifiers
     /**
      * Go forward or backward to the next week- or weekend-day.
      *
-     * @param bool $weekday
-     * @param bool $forward
-     *
+     * @param  bool  $weekday
+     * @param  bool  $forward
      * @return static
      */
     private function nextOrPreviousDay($weekday = true, $forward = true)
@@ -158,8 +155,7 @@ trait Modifiers
      * of the current day of the week. Use the supplied constants
      * to indicate the desired dayOfWeek, ex. static::MONDAY.
      *
-     * @param string|int|null $modifier
-     *
+     * @param  string|int|null  $modifier
      * @return static
      */
     public function previous($modifier = null)
@@ -179,8 +175,7 @@ trait Modifiers
      * first day of the current month.  Use the supplied constants
      * to indicate the desired dayOfWeek, ex. static::MONDAY.
      *
-     * @param int|null $dayOfWeek
-     *
+     * @param  int|null  $dayOfWeek
      * @return static
      */
     public function firstOfMonth($dayOfWeek = null)
@@ -200,8 +195,7 @@ trait Modifiers
      * last day of the current month.  Use the supplied constants
      * to indicate the desired dayOfWeek, ex. static::MONDAY.
      *
-     * @param int|null $dayOfWeek
-     *
+     * @param  int|null  $dayOfWeek
      * @return static
      */
     public function lastOfMonth($dayOfWeek = null)
@@ -221,9 +215,8 @@ trait Modifiers
      * of the current month, then return false and no modifications are made.
      * Use the supplied constants to indicate the desired dayOfWeek, ex. static::MONDAY.
      *
-     * @param int $nth
-     * @param int $dayOfWeek
-     *
+     * @param  int  $nth
+     * @param  int  $dayOfWeek
      * @return mixed
      */
     public function nthOfMonth($nth, $dayOfWeek)
@@ -241,8 +234,7 @@ trait Modifiers
      * first day of the current quarter.  Use the supplied constants
      * to indicate the desired dayOfWeek, ex. static::MONDAY.
      *
-     * @param int|null $dayOfWeek day of the week default null
-     *
+     * @param  int|null  $dayOfWeek  day of the week default null
      * @return static
      */
     public function firstOfQuarter($dayOfWeek = null)
@@ -256,8 +248,7 @@ trait Modifiers
      * last day of the current quarter.  Use the supplied constants
      * to indicate the desired dayOfWeek, ex. static::MONDAY.
      *
-     * @param int|null $dayOfWeek day of the week default null
-     *
+     * @param  int|null  $dayOfWeek  day of the week default null
      * @return static
      */
     public function lastOfQuarter($dayOfWeek = null)
@@ -271,9 +262,8 @@ trait Modifiers
      * of the current quarter, then return false and no modifications are made.
      * Use the supplied constants to indicate the desired dayOfWeek, ex. static::MONDAY.
      *
-     * @param int $nth
-     * @param int $dayOfWeek
-     *
+     * @param  int  $nth
+     * @param  int  $dayOfWeek
      * @return mixed
      */
     public function nthOfQuarter($nth, $dayOfWeek)
@@ -292,8 +282,7 @@ trait Modifiers
      * first day of the current year.  Use the supplied constants
      * to indicate the desired dayOfWeek, ex. static::MONDAY.
      *
-     * @param int|null $dayOfWeek day of the week default null
-     *
+     * @param  int|null  $dayOfWeek  day of the week default null
      * @return static
      */
     public function firstOfYear($dayOfWeek = null)
@@ -307,8 +296,7 @@ trait Modifiers
      * last day of the current year.  Use the supplied constants
      * to indicate the desired dayOfWeek, ex. static::MONDAY.
      *
-     * @param int|null $dayOfWeek day of the week default null
-     *
+     * @param  int|null  $dayOfWeek  day of the week default null
      * @return static
      */
     public function lastOfYear($dayOfWeek = null)
@@ -322,9 +310,8 @@ trait Modifiers
      * of the current year, then return false and no modifications are made.
      * Use the supplied constants to indicate the desired dayOfWeek, ex. static::MONDAY.
      *
-     * @param int $nth
-     * @param int $dayOfWeek
-     *
+     * @param  int  $nth
+     * @param  int  $dayOfWeek
      * @return mixed
      */
     public function nthOfYear($nth, $dayOfWeek)
@@ -338,8 +325,7 @@ trait Modifiers
      * Modify the current instance to the average of a given instance (default now) and the current instance
      * (second-precision).
      *
-     * @param \Carbon\Carbon|\DateTimeInterface|null $date
-     *
+     * @param  \Carbon\Carbon|\DateTimeInterface|null  $date
      * @return static
      */
     public function average($date = null)
@@ -350,9 +336,8 @@ trait Modifiers
     /**
      * Get the closest date from the instance (second-precision).
      *
-     * @param \Carbon\Carbon|\DateTimeInterface|mixed $date1
-     * @param \Carbon\Carbon|\DateTimeInterface|mixed $date2
-     *
+     * @param  \Carbon\Carbon|\DateTimeInterface|mixed  $date1
+     * @param  \Carbon\Carbon|\DateTimeInterface|mixed  $date2
      * @return static
      */
     public function closest($date1, $date2)
@@ -363,9 +348,8 @@ trait Modifiers
     /**
      * Get the farthest date from the instance (second-precision).
      *
-     * @param \Carbon\Carbon|\DateTimeInterface|mixed $date1
-     * @param \Carbon\Carbon|\DateTimeInterface|mixed $date2
-     *
+     * @param  \Carbon\Carbon|\DateTimeInterface|mixed  $date1
+     * @param  \Carbon\Carbon|\DateTimeInterface|mixed  $date2
      * @return static
      */
     public function farthest($date1, $date2)
@@ -376,8 +360,7 @@ trait Modifiers
     /**
      * Get the minimum instance between a given instance (default now) and the current instance.
      *
-     * @param \Carbon\Carbon|\DateTimeInterface|mixed $date
-     *
+     * @param  \Carbon\Carbon|\DateTimeInterface|mixed  $date
      * @return static
      */
     public function min($date = null)
@@ -390,7 +373,7 @@ trait Modifiers
     /**
      * Get the minimum instance between a given instance (default now) and the current instance.
      *
-     * @param \Carbon\Carbon|\DateTimeInterface|mixed $date
+     * @param  \Carbon\Carbon|\DateTimeInterface|mixed  $date
      *
      * @see min()
      *
@@ -404,8 +387,7 @@ trait Modifiers
     /**
      * Get the maximum instance between a given instance (default now) and the current instance.
      *
-     * @param \Carbon\Carbon|\DateTimeInterface|mixed $date
-     *
+     * @param  \Carbon\Carbon|\DateTimeInterface|mixed  $date
      * @return static
      */
     public function max($date = null)
@@ -418,7 +400,7 @@ trait Modifiers
     /**
      * Get the maximum instance between a given instance (default now) and the current instance.
      *
-     * @param \Carbon\Carbon|\DateTimeInterface|mixed $date
+     * @param  \Carbon\Carbon|\DateTimeInterface|mixed  $date
      *
      * @see max()
      *
@@ -453,8 +435,7 @@ trait Modifiers
      *
      * @link https://php.net/manual/en/datetime.modify.php
      *
-     * @param string $modifier
-     *
+     * @param  string  $modifier
      * @return static
      */
     public function change($modifier)

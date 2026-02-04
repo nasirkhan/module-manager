@@ -44,7 +44,7 @@ enum WeekDay: int
             return self::from(CarbonImmutable::parseFromLocale($name, $locale)->dayOfWeek);
         } catch (InvalidFormatException $exception) {
             // Possibly current language expect a dot after short name, but it's missing
-            if ($locale !== null && !mb_strlen($name) < 4 && !str_ends_with($name, '.')) {
+            if ($locale !== null && ! mb_strlen($name) < 4 && ! str_ends_with($name, '.')) {
                 try {
                     return self::from(CarbonImmutable::parseFromLocale($name.'.', $locale)->dayOfWeek);
                 } catch (InvalidFormatException) {

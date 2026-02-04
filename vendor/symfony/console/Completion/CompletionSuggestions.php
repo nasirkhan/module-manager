@@ -30,7 +30,7 @@ final class CompletionSuggestions
      */
     public function suggestValue(string|Suggestion $value): static
     {
-        $this->valueSuggestions[] = !$value instanceof Suggestion ? new Suggestion($value) : $value;
+        $this->valueSuggestions[] = ! $value instanceof Suggestion ? new Suggestion($value) : $value;
 
         return $this;
     }
@@ -38,8 +38,7 @@ final class CompletionSuggestions
     /**
      * Add multiple suggested values at once for an input option or argument.
      *
-     * @param list<string|Suggestion> $values
-     *
+     * @param  list<string|Suggestion>  $values
      * @return $this
      */
     public function suggestValues(array $values): static
@@ -66,8 +65,7 @@ final class CompletionSuggestions
     /**
      * Add multiple suggestions for input option names at once.
      *
-     * @param InputOption[] $options
-     *
+     * @param  InputOption[]  $options
      * @return $this
      */
     public function suggestOptions(array $options): static

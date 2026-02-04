@@ -52,8 +52,8 @@ final class CompletionInput extends ArgvInput
     /**
      * Create an input based on an COMP_WORDS token list.
      *
-     * @param string[] $tokens       the set of split tokens (e.g. COMP_WORDS or argv)
-     * @param int      $currentIndex the index of the cursor (e.g. COMP_CWORD)
+     * @param  string[]  $tokens  the set of split tokens (e.g. COMP_WORDS or argv)
+     * @param  int  $currentIndex  the index of the cursor (e.g. COMP_CWORD)
      */
     public static function fromTokens(array $tokens, int $currentIndex): self
     {
@@ -74,7 +74,7 @@ final class CompletionInput extends ArgvInput
             [$optionToken, $optionValue] = explode('=', $relevantToken, 2) + ['', ''];
 
             $option = $this->getOptionFromToken($optionToken);
-            if (null === $option && !$this->isCursorFree()) {
+            if (null === $option && ! $this->isCursorFree()) {
                 $this->completionType = self::TYPE_OPTION_NAME;
                 $this->completionValue = $relevantToken;
 
@@ -84,7 +84,7 @@ final class CompletionInput extends ArgvInput
             if ($option?->acceptValue()) {
                 $this->completionType = self::TYPE_OPTION_VALUE;
                 $this->completionName = $option->getName();
-                $this->completionValue = $optionValue ?: (!str_starts_with($optionToken, '--') ? substr($optionToken, 2) : '');
+                $this->completionValue = $optionValue ?: (! str_starts_with($optionToken, '--') ? substr($optionToken, 2) : '');
 
                 return;
             }
@@ -107,7 +107,7 @@ final class CompletionInput extends ArgvInput
         $this->completionType = self::TYPE_ARGUMENT_VALUE;
 
         foreach ($this->definition->getArguments() as $argumentName => $argument) {
-            if (!isset($this->arguments[$argumentName])) {
+            if (! isset($this->arguments[$argumentName])) {
                 break;
             }
 
@@ -121,7 +121,7 @@ final class CompletionInput extends ArgvInput
         }
 
         if ($this->currentIndex >= \count($this->tokens)) {
-            if (!isset($this->arguments[$argumentName]) || $this->definition->getArgument($argumentName)->isArray()) {
+            if (! isset($this->arguments[$argumentName]) || $this->definition->getArgument($argumentName)->isArray()) {
                 $this->completionName = $argumentName;
             } else {
                 // we've reached the end
@@ -192,7 +192,7 @@ final class CompletionInput extends ArgvInput
     private function getOptionFromToken(string $optionToken): ?InputOption
     {
         $optionName = ltrim($optionToken, '-');
-        if (!$optionName) {
+        if (! $optionName) {
             return null;
         }
 

@@ -26,11 +26,11 @@ class Request implements RequestInterface
     private $uri;
 
     /**
-     * @param string                               $method  HTTP method
-     * @param string|UriInterface                  $uri     URI
-     * @param (string|string[])[]                  $headers Request headers
-     * @param string|resource|StreamInterface|null $body    Request body
-     * @param string                               $version Protocol version
+     * @param  string  $method  HTTP method
+     * @param  string|UriInterface  $uri  URI
+     * @param  (string|string[])[]  $headers  Request headers
+     * @param  string|resource|StreamInterface|null  $body  Request body
+     * @param  string  $version  Protocol version
      */
     public function __construct(
         string $method,
@@ -40,7 +40,7 @@ class Request implements RequestInterface
         string $version = '1.1'
     ) {
         $this->assertMethod($method);
-        if (!($uri instanceof UriInterface)) {
+        if (! ($uri instanceof UriInterface)) {
             $uri = new Uri($uri);
         }
 
@@ -49,7 +49,7 @@ class Request implements RequestInterface
         $this->setHeaders($headers);
         $this->protocol = $version;
 
-        if (!isset($this->headerNames['host'])) {
+        if (! isset($this->headerNames['host'])) {
             $this->updateHostFromUri();
         }
 
@@ -117,7 +117,7 @@ class Request implements RequestInterface
         $new = clone $this;
         $new->uri = $uri;
 
-        if (!$preserveHost || !isset($this->headerNames['host'])) {
+        if (! $preserveHost || ! isset($this->headerNames['host'])) {
             $new->updateHostFromUri();
         }
 
@@ -148,11 +148,11 @@ class Request implements RequestInterface
     }
 
     /**
-     * @param mixed $method
+     * @param  mixed  $method
      */
     private function assertMethod($method): void
     {
-        if (!is_string($method) || $method === '') {
+        if (! is_string($method) || $method === '') {
             throw new InvalidArgumentException('Method must be a non-empty string.');
         }
     }

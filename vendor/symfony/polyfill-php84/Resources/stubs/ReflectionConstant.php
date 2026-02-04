@@ -29,7 +29,7 @@ if (\PHP_VERSION_ID < 80400) {
 
         public function __construct(string $name)
         {
-            if (!defined($name) || false !== strpos($name, '::')) {
+            if (! defined($name) || false !== strpos($name, '::')) {
                 throw new ReflectionException("Constant \"$name\" does not exist");
             }
 
@@ -90,7 +90,7 @@ if (\PHP_VERSION_ID < 80400) {
             // being defined by users. If we got here, we know that it *is*
             // defined, so we just need to figure out if it is defined by the
             // user or not
-            if (!self::$persistentConstants) {
+            if (! self::$persistentConstants) {
                 $persistentConstants = get_defined_constants(true);
                 unset($persistentConstants['user']);
                 foreach ($persistentConstants as $constants) {

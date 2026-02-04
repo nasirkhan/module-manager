@@ -31,14 +31,14 @@ class IsSignatureValidAttributeListener implements EventSubscriberInterface
 
     public function onKernelControllerArguments(ControllerArgumentsEvent $event): void
     {
-        if (!$attributes = $event->getAttributes(IsSignatureValid::class)) {
+        if (! $attributes = $event->getAttributes(IsSignatureValid::class)) {
             return;
         }
 
         $request = $event->getRequest();
         foreach ($attributes as $attribute) {
             $methods = array_map('strtoupper', $attribute->methods);
-            if ($methods && !\in_array($request->getMethod(), $methods, true)) {
+            if ($methods && ! \in_array($request->getMethod(), $methods, true)) {
                 continue;
             }
 

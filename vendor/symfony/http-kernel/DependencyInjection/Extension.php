@@ -41,7 +41,7 @@ abstract class Extension extends BaseExtension
     /**
      * Adds annotated classes to the class cache.
      *
-     * @param string[] $annotatedClasses An array of class patterns
+     * @param  string[]  $annotatedClasses  An array of class patterns
      *
      * @deprecated since Symfony 7.1, to be removed in 8.0
      */

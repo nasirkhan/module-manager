@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -37,7 +37,7 @@ use const GLOB_NOSORT;
 use const PREG_PATTERN_ORDER;
 
 /**
- * SystemNodeProvider retrieves the system node ID, if possible
+ * SystemNodeProvider retrieves the system node ID, if possible.
  *
  * The system node ID, or host ID, is often the same as the MAC address for a network interface on the host.
  */
@@ -65,7 +65,7 @@ class SystemNodeProvider implements NodeProviderInterface
     }
 
     /**
-     * Returns the system node if found
+     * Returns the system node if found.
      */
     protected function getNodeFromSystem(): string
     {
@@ -90,7 +90,7 @@ class SystemNodeProvider implements NodeProviderInterface
     }
 
     /**
-     * Returns the network interface configuration for the system
+     * Returns the network interface configuration for the system.
      *
      * @codeCoverageIgnore
      */
@@ -138,7 +138,7 @@ class SystemNodeProvider implements NodeProviderInterface
     }
 
     /**
-     * Returns MAC address from the first system interface via the sysfs interface
+     * Returns MAC address from the first system interface via the sysfs interface.
      */
     protected function getSysfs(): string
     {

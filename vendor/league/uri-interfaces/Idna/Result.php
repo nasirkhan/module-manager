@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -27,7 +27,7 @@ final class Result
     }
 
     /**
-     * @param array{result:string, isTransitionalDifferent:bool, errors:int} $infos
+     * @param  array{result:string, isTransitionalDifferent:bool, errors:int}  $infos
      */
     public static function fromIntl(array $infos): self
     {

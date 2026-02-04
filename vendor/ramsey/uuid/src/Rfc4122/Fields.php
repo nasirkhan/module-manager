@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -31,7 +31,7 @@ use function unpack;
 use const STR_PAD_LEFT;
 
 /**
- * RFC 9562 (formerly RFC 4122) variant UUIDs consist of a set of named fields
+ * RFC 9562 (formerly RFC 4122) variant UUIDs consist of a set of named fields.
  *
  * Internally, this class represents the fields together as a 16-byte binary string.
  *
@@ -46,7 +46,7 @@ final class Fields implements FieldsInterface
     use VersionTrait;
 
     /**
-     * @param string $bytes A 16-byte binary string representation of a UUID
+     * @param  string  $bytes  A 16-byte binary string representation of a UUID
      *
      * @throws InvalidArgumentException if the byte string is not exactly 16 bytes
      * @throws InvalidArgumentException if the byte string does not represent an RFC 9562 (formerly RFC 4122) UUID
@@ -56,17 +56,17 @@ final class Fields implements FieldsInterface
     {
         if (strlen($this->bytes) !== 16) {
             throw new InvalidArgumentException(
-                'The byte string must be 16 bytes long; ' . 'received ' . strlen($this->bytes) . ' bytes',
+                'The byte string must be 16 bytes long; '.'received '.strlen($this->bytes).' bytes',
             );
         }
 
-        if (!$this->isCorrectVariant()) {
+        if (! $this->isCorrectVariant()) {
             throw new InvalidArgumentException(
                 'The byte string received does not conform to the RFC 9562 (formerly RFC 4122) variant',
             );
         }
 
-        if (!$this->isCorrectVersion()) {
+        if (! $this->isCorrectVersion()) {
             throw new InvalidArgumentException(
                 'The byte string received does not contain a valid RFC 9562 (formerly RFC 4122) version',
             );
@@ -84,11 +84,11 @@ final class Fields implements FieldsInterface
     public function getClockSeq(): Hexadecimal
     {
         if ($this->isMax()) {
-            $clockSeq = 0xffff;
+            $clockSeq = 0xFFFF;
         } elseif ($this->isNil()) {
             $clockSeq = 0x0000;
         } else {
-            $clockSeq = hexdec(bin2hex(substr($this->bytes, 8, 2))) & 0x3fff;
+            $clockSeq = hexdec(bin2hex(substr($this->bytes, 8, 2))) & 0x3FFF;
         }
 
         return new Hexadecimal(str_pad(dechex($clockSeq), 4, '0', STR_PAD_LEFT));
@@ -125,7 +125,7 @@ final class Fields implements FieldsInterface
     }
 
     /**
-     * Returns the full 60-bit timestamp, without the version
+     * Returns the full 60-bit timestamp, without the version.
      *
      * For version 2 UUIDs, the time_low field is the local identifier and should not be returned as part of the time.
      * For this reason, we set the bottom 32 bits of the timestamp to 0's. As a result, there is some loss of timestamp
@@ -141,7 +141,7 @@ final class Fields implements FieldsInterface
         return new Hexadecimal(match ($this->getVersion()) {
             Uuid::UUID_TYPE_DCE_SECURITY => sprintf(
                 '%03x%04s%08s',
-                hexdec($this->getTimeHiAndVersion()->toString()) & 0x0fff,
+                hexdec($this->getTimeHiAndVersion()->toString()) & 0x0FFF,
                 $this->getTimeMid()->toString(),
                 ''
             ),
@@ -149,7 +149,7 @@ final class Fields implements FieldsInterface
                 '%08s%04s%03x',
                 $this->getTimeLow()->toString(),
                 $this->getTimeMid()->toString(),
-                hexdec($this->getTimeHiAndVersion()->toString()) & 0x0fff
+                hexdec($this->getTimeHiAndVersion()->toString()) & 0x0FFF
             ),
             // The Unix timestamp in version 7 UUIDs is a 48-bit number, but for consistency, we will return a 60-bit
             // number, padded to the left with zeros.
@@ -160,7 +160,7 @@ final class Fields implements FieldsInterface
             ),
             default => sprintf(
                 '%03x%04s%08s',
-                hexdec($this->getTimeHiAndVersion()->toString()) & 0x0fff,
+                hexdec($this->getTimeHiAndVersion()->toString()) & 0x0FFF,
                 $this->getTimeMid()->toString(),
                 $this->getTimeLow()->toString()
             ),

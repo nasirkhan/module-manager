@@ -33,6 +33,6 @@ class ClosureLoader extends Loader
 
     public function supports(mixed $resource, ?string $type = null): bool
     {
-        return $resource instanceof \Closure && (!$type || 'closure' === $type);
+        return $resource instanceof \Closure && (! $type || 'closure' === $type);
     }
 }

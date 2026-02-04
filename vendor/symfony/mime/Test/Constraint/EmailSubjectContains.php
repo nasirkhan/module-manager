@@ -28,7 +28,7 @@ final class EmailSubjectContains extends Constraint
 
     protected function matches($other): bool
     {
-        if (!$other instanceof Email) {
+        if (! $other instanceof Email) {
             throw new \LogicException('Can only test a message subject on an Email instance.');
         }
 

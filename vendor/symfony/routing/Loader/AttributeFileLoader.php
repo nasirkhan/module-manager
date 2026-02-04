@@ -29,7 +29,7 @@ class AttributeFileLoader extends FileLoader
         FileLocatorInterface $locator,
         protected AttributeClassLoader $loader,
     ) {
-        if (!\function_exists('token_get_all')) {
+        if (! \function_exists('token_get_all')) {
             throw new \LogicException('The Tokenizer extension is required for the routing attribute loader.');
         }
 
@@ -63,7 +63,7 @@ class AttributeFileLoader extends FileLoader
 
     public function supports(mixed $resource, ?string $type = null): bool
     {
-        return \is_string($resource) && 'php' === pathinfo($resource, \PATHINFO_EXTENSION) && (!$type || 'attribute' === $type);
+        return \is_string($resource) && 'php' === pathinfo($resource, \PATHINFO_EXTENSION) && (! $type || 'attribute' === $type);
     }
 
     /**
@@ -80,9 +80,9 @@ class AttributeFileLoader extends FileLoader
         }
 
         $nsTokens = [\T_NS_SEPARATOR => true, \T_STRING => true, \T_NAME_QUALIFIED => true];
-        for ($i = 0; isset($tokens[$i]); ++$i) {
+        for ($i = 0; isset($tokens[$i]); $i++) {
             $token = $tokens[$i];
-            if (!isset($token[1])) {
+            if (! isset($token[1])) {
                 continue;
             }
 
@@ -101,8 +101,8 @@ class AttributeFileLoader extends FileLoader
             if (\T_CLASS === $token[0]) {
                 // Skip usage of ::class constant and anonymous classes
                 $skipClassToken = false;
-                for ($j = $i - 1; $j > 0; --$j) {
-                    if (!isset($tokens[$j][1])) {
+                for ($j = $i - 1; $j > 0; $j--) {
+                    if (! isset($tokens[$j][1])) {
                         if ('(' === $tokens[$j] || ',' === $tokens[$j]) {
                             $skipClassToken = true;
                         }
@@ -112,12 +112,12 @@ class AttributeFileLoader extends FileLoader
                     if (\T_DOUBLE_COLON === $tokens[$j][0] || \T_NEW === $tokens[$j][0]) {
                         $skipClassToken = true;
                         break;
-                    } elseif (!\in_array($tokens[$j][0], [\T_WHITESPACE, \T_DOC_COMMENT, \T_COMMENT], true)) {
+                    } elseif (! \in_array($tokens[$j][0], [\T_WHITESPACE, \T_DOC_COMMENT, \T_COMMENT], true)) {
                         break;
                     }
                 }
 
-                if (!$skipClassToken) {
+                if (! $skipClassToken) {
                     $class = true;
                 }
             }

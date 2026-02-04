@@ -26,7 +26,7 @@ class DisallowRobotsIndexingListener implements EventSubscriberInterface
 
     public function onResponse(ResponseEvent $event): void
     {
-        if (!$event->getResponse()->headers->has(static::HEADER_NAME)) {
+        if (! $event->getResponse()->headers->has(static::HEADER_NAME)) {
             $event->getResponse()->headers->set(static::HEADER_NAME, 'noindex');
         }
     }

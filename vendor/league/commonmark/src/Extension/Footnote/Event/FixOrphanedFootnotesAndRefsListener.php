@@ -24,7 +24,7 @@ final class FixOrphanedFootnotesAndRefsListener
     public function onDocumentParsed(DocumentParsedEvent $event): void
     {
         $document = $event->getDocument();
-        $map      = $this->buildMapOfKnownFootnotesAndRefs($document);
+        $map = $this->buildMapOfKnownFootnotesAndRefs($document);
 
         foreach ($map['_flat'] as $node) {
             if ($node instanceof FootnoteRef && ! isset($map[Footnote::class][$node->getReference()->getLabel()])) {

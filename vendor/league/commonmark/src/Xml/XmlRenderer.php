@@ -28,7 +28,7 @@ final class XmlRenderer implements DocumentRendererInterface
 
     public function __construct(EnvironmentInterface $environment)
     {
-        $this->environment      = $environment;
+        $this->environment = $environment;
         $this->fallbackRenderer = new FallbackNodeXmlRenderer();
     }
 
@@ -44,15 +44,15 @@ final class XmlRenderer implements DocumentRendererInterface
             $node = $event->getNode();
 
             $closeImmediately = ! $node->hasChildren();
-            $selfClosing      = $closeImmediately && ! $node instanceof StringContainerInterface;
+            $selfClosing = $closeImmediately && ! $node instanceof StringContainerInterface;
 
             $renderer = $this->findXmlRenderer($node);
-            $tagName  = $renderer->getXmlTagName($node);
+            $tagName = $renderer->getXmlTagName($node);
 
             if ($event->isEntering()) {
                 $attrs = $renderer->getXmlAttributes($node);
 
-                $xml .= "\n" . \str_repeat(self::INDENTATION, $indent);
+                $xml .= "\n".\str_repeat(self::INDENTATION, $indent);
                 $xml .= self::tag($tagName, $attrs, $selfClosing);
 
                 if ($node instanceof StringContainerInterface) {
@@ -60,7 +60,7 @@ final class XmlRenderer implements DocumentRendererInterface
                 }
 
                 if ($closeImmediately && ! $selfClosing) {
-                    $xml .= self::tag('/' . $tagName);
+                    $xml .= self::tag('/'.$tagName);
                 }
 
                 if (! $closeImmediately) {
@@ -68,20 +68,20 @@ final class XmlRenderer implements DocumentRendererInterface
                 }
             } elseif (! $closeImmediately) {
                 $indent--;
-                $xml .= "\n" . \str_repeat(self::INDENTATION, $indent);
-                $xml .= self::tag('/' . $tagName);
+                $xml .= "\n".\str_repeat(self::INDENTATION, $indent);
+                $xml .= self::tag('/'.$tagName);
             }
         }
 
-        return new RenderedContent($document, $xml . "\n");
+        return new RenderedContent($document, $xml."\n");
     }
 
     /**
-     * @param array<string, string|int|float|bool> $attrs
+     * @param  array<string, string|int|float|bool>  $attrs
      */
     private static function tag(string $name, array $attrs = [], bool $selfClosing = \false): string
     {
-        $result = '<' . $name;
+        $result = '<'.$name;
         foreach ($attrs as $key => $value) {
             $result .= \sprintf(' %s="%s"', $key, self::convertAndEscape($value));
         }
@@ -96,7 +96,7 @@ final class XmlRenderer implements DocumentRendererInterface
     }
 
     /**
-     * @param string|int|float|bool $value
+     * @param  string|int|float|bool  $value
      */
     private static function convertAndEscape($value): string
     {

@@ -35,13 +35,13 @@ class BinaryFileResponse extends Response
     protected int $chunkSize = 16 * 1024;
 
     /**
-     * @param \SplFileInfo|string $file               The file to stream
-     * @param int                 $status             The response status code (200 "OK" by default)
-     * @param array               $headers            An array of response headers
-     * @param bool                $public             Files are public by default
-     * @param string|null         $contentDisposition The type of Content-Disposition to set automatically with the filename
-     * @param bool                $autoEtag           Whether the ETag header should be automatically set
-     * @param bool                $autoLastModified   Whether the Last-Modified header should be automatically set
+     * @param  \SplFileInfo|string  $file  The file to stream
+     * @param  int  $status  The response status code (200 "OK" by default)
+     * @param  array  $headers  An array of response headers
+     * @param  bool  $public  Files are public by default
+     * @param  string|null  $contentDisposition  The type of Content-Disposition to set automatically with the filename
+     * @param  bool  $autoEtag  Whether the ETag header should be automatically set
+     * @param  bool  $autoLastModified  Whether the Last-Modified header should be automatically set
      */
     public function __construct(\SplFileInfo|string $file, int $status = 200, array $headers = [], bool $public = true, ?string $contentDisposition = null, bool $autoEtag = false, bool $autoLastModified = true)
     {
@@ -66,15 +66,15 @@ class BinaryFileResponse extends Response
         $isTemporaryFile = $file instanceof \SplTempFileObject;
         $this->tempFileObject = $isTemporaryFile ? $file : null;
 
-        if (!$file instanceof File) {
+        if (! $file instanceof File) {
             if ($file instanceof \SplFileInfo) {
-                $file = new File($file->getPathname(), !$isTemporaryFile);
+                $file = new File($file->getPathname(), ! $isTemporaryFile);
             } else {
                 $file = new File($file);
             }
         }
 
-        if (!$file->isReadable() && !$isTemporaryFile) {
+        if (! $file->isReadable() && ! $isTemporaryFile) {
             throw new FileException('File must be readable.');
         }
 
@@ -84,7 +84,7 @@ class BinaryFileResponse extends Response
             $this->setAutoEtag();
         }
 
-        if ($autoLastModified && !$isTemporaryFile) {
+        if ($autoLastModified && ! $isTemporaryFile) {
             $this->setAutoLastModified();
         }
 
@@ -146,10 +146,9 @@ class BinaryFileResponse extends Response
     /**
      * Sets the Content-Disposition header with the given filename.
      *
-     * @param string $disposition      ResponseHeaderBag::DISPOSITION_INLINE or ResponseHeaderBag::DISPOSITION_ATTACHMENT
-     * @param string $filename         Optionally use this UTF-8 encoded filename instead of the real name of the file
-     * @param string $filenameFallback A fallback filename, containing only ASCII characters. Defaults to an automatically encoded filename
-     *
+     * @param  string  $disposition  ResponseHeaderBag::DISPOSITION_INLINE or ResponseHeaderBag::DISPOSITION_ATTACHMENT
+     * @param  string  $filename  Optionally use this UTF-8 encoded filename instead of the real name of the file
+     * @param  string  $filenameFallback  A fallback filename, containing only ASCII characters. Defaults to an automatically encoded filename
      * @return $this
      */
     public function setContentDisposition(string $disposition, string $filename = '', string $filenameFallback = ''): static
@@ -158,10 +157,10 @@ class BinaryFileResponse extends Response
             $filename = $this->file->getFilename();
         }
 
-        if ('' === $filenameFallback && (!preg_match('/^[\x20-\x7e]*$/', $filename) || str_contains($filename, '%'))) {
+        if ('' === $filenameFallback && (! preg_match('/^[\x20-\x7e]*$/', $filename) || str_contains($filename, '%'))) {
             $encoding = mb_detect_encoding($filename, null, true) ?: '8bit';
 
-            for ($i = 0, $filenameLength = mb_strlen($filename, $encoding); $i < $filenameLength; ++$i) {
+            for ($i = 0, $filenameLength = mb_strlen($filename, $encoding); $i < $filenameLength; $i++) {
                 $char = mb_substr($filename, $i, 1, $encoding);
 
                 if ('%' === $char || \ord($char[0]) < 32 || \ord($char[0]) > 126) {
@@ -188,9 +187,9 @@ class BinaryFileResponse extends Response
             return $this;
         }
 
-        if (!$this->headers->has('Content-Type')) {
+        if (! $this->headers->has('Content-Type')) {
             $mimeType = null;
-            if (!$this->tempFileObject) {
+            if (! $this->tempFileObject) {
                 $mimeType = $this->file->getMimeType();
             }
 
@@ -210,7 +209,7 @@ class BinaryFileResponse extends Response
         $this->headers->remove('Transfer-Encoding');
         $this->headers->set('Content-Length', $fileSize);
 
-        if (!$this->headers->has('Accept-Ranges')) {
+        if (! $this->headers->has('Accept-Ranges')) {
             // Only accept ranges on safe HTTP methods
             $this->headers->set('Accept-Ranges', $request->isMethodSafe() ? 'bytes' : 'none');
         }
@@ -227,7 +226,7 @@ class BinaryFileResponse extends Response
                 // Do X-Accel-Mapping substitutions.
                 // @link https://github.com/rack/rack/blob/main/lib/rack/sendfile.rb
                 // @link https://mattbrictson.com/blog/accelerated-rails-downloads
-                if (!$request->headers->has('X-Accel-Mapping')) {
+                if (! $request->headers->has('X-Accel-Mapping')) {
                     throw new \LogicException('The "X-Accel-Mapping" header must be set when "X-Sendfile-Type" is set to "X-Accel-Redirect".');
                 }
                 $parts = HeaderUtils::split($request->headers->get('X-Accel-Mapping'), ',=');
@@ -248,7 +247,7 @@ class BinaryFileResponse extends Response
             }
         } elseif ($request->headers->has('Range') && $request->isMethod('GET')) {
             // Process the range headers.
-            if (!$request->headers->has('If-Range') || $this->hasValidIfRangeHeader($request->headers->get('If-Range'))) {
+            if (! $request->headers->has('If-Range') || $this->hasValidIfRangeHeader($request->headers->get('If-Range'))) {
                 $range = $request->headers->get('Range');
 
                 if (str_starts_with($range, 'bytes=')) {
@@ -304,7 +303,7 @@ class BinaryFileResponse extends Response
     public function sendContent(): static
     {
         try {
-            if (!$this->isSuccessful()) {
+            if (! $this->isSuccessful()) {
                 return $this;
             }
 
@@ -328,7 +327,7 @@ class BinaryFileResponse extends Response
             }
 
             $length = $this->maxlen;
-            while ($length && !$file->eof()) {
+            while ($length && ! $file->eof()) {
                 $read = $length > $this->chunkSize || 0 > $length ? $this->chunkSize : $length;
 
                 if (false === $data = $file->fread($read)) {

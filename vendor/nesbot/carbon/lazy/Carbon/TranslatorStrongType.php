@@ -13,7 +13,7 @@ namespace Carbon;
 
 use Symfony\Component\Translation\MessageCatalogueInterface;
 
-if (!class_exists(LazyTranslator::class, false)) {
+if (! class_exists(LazyTranslator::class, false)) {
     class LazyTranslator extends AbstractTranslator implements TranslatorStrongTypeInterface
     {
         public function trans(?string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,9 +20,10 @@ use Ramsey\Uuid\Converter\TimeConverterInterface;
 use Ramsey\Uuid\Uuid as BaseUuid;
 
 /**
- * Nonstandard\Uuid is a UUID that doesn't conform to RFC 9562 (formerly RFC 4122)
+ * Nonstandard\Uuid is a UUID that doesn't conform to RFC 9562 (formerly RFC 4122).
  *
  * @immutable
+ *
  * @pure
  */
 final class Uuid extends BaseUuid

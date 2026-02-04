@@ -26,7 +26,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class HeadingRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param Heading $node
+     * @param  Heading  $node
      *
      * {@inheritDoc}
      *
@@ -36,7 +36,7 @@ final class HeadingRenderer implements NodeRendererInterface, XmlNodeRendererInt
     {
         Heading::assertInstanceOf($node);
 
-        $tag = 'h' . $node->getLevel();
+        $tag = 'h'.$node->getLevel();
 
         $attrs = $node->data->get('attributes');
 
@@ -49,8 +49,7 @@ final class HeadingRenderer implements NodeRendererInterface, XmlNodeRendererInt
     }
 
     /**
-     * @param Heading $node
-     *
+     * @param  Heading  $node
      * @return array<string, scalar>
      *
      * @psalm-suppress MoreSpecificImplementedParamType

@@ -25,13 +25,13 @@ final class HtmlDecorator implements NodeRendererInterface
     private bool $selfClosing;
 
     /**
-     * @param array<string, string|string[]|bool> $attributes
+     * @param  array<string, string|string[]|bool>  $attributes
      */
     public function __construct(NodeRendererInterface $inner, string $tag, array $attributes = [], bool $selfClosing = false)
     {
-        $this->inner       = $inner;
-        $this->tag         = $tag;
-        $this->attributes  = $attributes;
+        $this->inner = $inner;
+        $this->tag = $tag;
+        $this->attributes = $attributes;
         $this->selfClosing = $selfClosing;
     }
 

@@ -39,7 +39,7 @@ class PhpToken implements \Stringable
     public $pos;
 
     /**
-     * @param -1|positive-int $line
+     * @param  -1|positive-int  $line
      */
     public function __construct(int $id, string $text, int $line = -1, int $position = -1)
     {
@@ -59,7 +59,7 @@ class PhpToken implements \Stringable
     }
 
     /**
-     * @param int|string|array $kind
+     * @param  int|string|array  $kind
      */
     public function is($kind): bool
     {

@@ -25,8 +25,8 @@ class IpsRequestMatcher implements RequestMatcherInterface
     private array $ips;
 
     /**
-     * @param string[]|string $ips A specific IP address or a range specified using IP/netmask like 192.168.1.0/24
-     *                             Strings can contain a comma-delimited list of IPs/ranges
+     * @param  string[]|string  $ips  A specific IP address or a range specified using IP/netmask like 192.168.1.0/24
+     *                                Strings can contain a comma-delimited list of IPs/ranges
      */
     public function __construct(array|string $ips)
     {
@@ -35,7 +35,7 @@ class IpsRequestMatcher implements RequestMatcherInterface
 
     public function matches(Request $request): bool
     {
-        if (!$this->ips) {
+        if (! $this->ips) {
             return true;
         }
 

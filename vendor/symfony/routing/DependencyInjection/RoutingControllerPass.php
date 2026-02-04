@@ -24,7 +24,7 @@ final class RoutingControllerPass implements CompilerPassInterface
 
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->hasDefinition('routing.loader.attribute.services')) {
+        if (! $container->hasDefinition('routing.loader.attribute.services')) {
             return;
         }
 

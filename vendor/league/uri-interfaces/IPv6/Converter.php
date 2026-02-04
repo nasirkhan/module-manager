@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -44,7 +44,7 @@ final class Converter
 
         return match (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             false => throw new ValueError('The submitted IP is not a valid IPv6 address.'),
-            default =>  strtolower((string) inet_ntop((string) inet_pton($ipAddress))),
+            default => strtolower((string) inet_ntop((string) inet_pton($ipAddress))),
         };
     }
 
@@ -127,11 +127,11 @@ final class Converter
             return ['ipAddress' => null, 'zoneIdentifier' => null];
         }
 
-        if (!str_starts_with($host, '[')) {
+        if (! str_starts_with($host, '[')) {
             return ['ipAddress' => null, 'zoneIdentifier' => null];
         }
 
-        if (!str_ends_with($host, ']')) {
+        if (! str_ends_with($host, ']')) {
             return ['ipAddress' => null, 'zoneIdentifier' => null];
         }
 
@@ -142,7 +142,7 @@ final class Converter
 
         return match (true) {
             null === $zoneIdentifier,
-            is_string($ipv6) && str_starts_with((string)inet_pton($ipv6), self::HOST_ADDRESS_BLOCK) =>  ['ipAddress' => $ipv6, 'zoneIdentifier' => $zoneIdentifier],
+            is_string($ipv6) && str_starts_with((string) inet_pton($ipv6), self::HOST_ADDRESS_BLOCK) => ['ipAddress' => $ipv6, 'zoneIdentifier' => $zoneIdentifier],
             default => ['ipAddress' => null, 'zoneIdentifier' => null],
         };
     }

@@ -26,7 +26,7 @@ class HelperSet implements \IteratorAggregate
     private array $helpers = [];
 
     /**
-     * @param HelperInterface[] $helpers
+     * @param  HelperInterface[]  $helpers
      */
     public function __construct(array $helpers = [])
     {
@@ -60,7 +60,7 @@ class HelperSet implements \IteratorAggregate
      */
     public function get(string $name): HelperInterface
     {
-        if (!$this->has($name)) {
+        if (! $this->has($name)) {
             throw new InvalidArgumentException(\sprintf('The helper "%s" is not defined.', $name));
         }
 

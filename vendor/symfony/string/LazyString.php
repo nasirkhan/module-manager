@@ -21,11 +21,11 @@ class LazyString implements \Stringable, \JsonSerializable
     private \Closure|string $value;
 
     /**
-     * @param callable|array $callback A callable or a [Closure, method] lazy-callable
+     * @param  callable|array  $callback  A callable or a [Closure, method] lazy-callable
      */
     public static function fromCallable(callable|array $callback, mixed ...$arguments): static
     {
-        if (\is_array($callback) && !\is_callable($callback) && !(($callback[0] ?? null) instanceof \Closure || 2 < \count($callback))) {
+        if (\is_array($callback) && ! \is_callable($callback) && ! (($callback[0] ?? null) instanceof \Closure || 2 < \count($callback))) {
             throw new \TypeError(\sprintf('Argument 1 passed to "%s()" must be a callable or a [Closure, method] lazy-callable, "%s" given.', __METHOD__, '['.implode(', ', array_map('get_debug_type', $callback)).']'));
         }
 
@@ -34,12 +34,12 @@ class LazyString implements \Stringable, \JsonSerializable
             static $value;
 
             if (null !== $arguments) {
-                if (!\is_callable($callback)) {
+                if (! \is_callable($callback)) {
                     $callback[0] = $callback[0]();
                     $callback[1] ??= '__invoke';
                 }
                 $value = $callback(...$arguments);
-                $callback = !\is_scalar($value) && !$value instanceof \Stringable ? self::getPrettyName($callback) : 'callable';
+                $callback = ! \is_scalar($value) && ! $value instanceof \Stringable ? self::getPrettyName($callback) : 'callable';
                 $arguments = null;
             }
 
@@ -158,7 +158,7 @@ class LazyString implements \Stringable, \JsonSerializable
         } elseif ($callback instanceof \Closure) {
             $r = new \ReflectionFunction($callback);
 
-            if ($r->isAnonymous() || !$class = $r->getClosureCalledClass()) {
+            if ($r->isAnonymous() || ! $class = $r->getClosureCalledClass()) {
                 return $r->name;
             }
 

@@ -33,14 +33,14 @@ class RoundRobinTransport implements TransportInterface
     private int $cursor = -1;
 
     /**
-     * @param TransportInterface[] $transports
+     * @param  TransportInterface[]  $transports
      */
     public function __construct(
         private array $transports,
         private int $retryPeriod = 60,
         private LoggerInterface $logger = new NullLogger(),
     ) {
-        if (!$transports) {
+        if (! $transports) {
             throw new TransportException(\sprintf('"%s" must have at least one transport configured.', static::class));
         }
 
@@ -83,7 +83,7 @@ class RoundRobinTransport implements TransportInterface
         while (true) {
             $transport = $this->transports[$cursor];
 
-            if (!$this->isTransportDead($transport)) {
+            if (! $this->isTransportDead($transport)) {
                 break;
             }
 

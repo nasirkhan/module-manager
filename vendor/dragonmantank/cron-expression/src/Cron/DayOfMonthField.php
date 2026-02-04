@@ -40,10 +40,9 @@ class DayOfMonthField extends AbstractField
     /**
      * Get the nearest day of the week for a given day in a month.
      *
-     * @param int $currentYear Current year
-     * @param int $currentMonth Current month
-     * @param int $targetDay Target day of the month
-     *
+     * @param  int  $currentYear  Current year
+     * @param  int  $currentMonth  Current month
+     * @param  int  $targetDay  Target day of the month
      * @return \DateTime|null Returns the nearest date
      */
     private static function getNearestWeekday(int $currentYear, int $currentMonth, int $targetDay): ?DateTime
@@ -116,7 +115,7 @@ class DayOfMonthField extends AbstractField
     /**
      * @inheritDoc
      *
-     * @param \DateTime|\DateTimeImmutable $date
+     * @param  \DateTime|\DateTimeImmutable  $date
      */
     public function increment(DateTimeInterface &$date, $invert = false, $parts = null): FieldInterface
     {
@@ -143,7 +142,7 @@ class DayOfMonthField extends AbstractField
             return false;
         }
 
-        if (!$basicChecks) {
+        if (! $basicChecks) {
             if ('?' === $value) {
                 return true;
             }

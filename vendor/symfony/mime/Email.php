@@ -120,7 +120,7 @@ class Email extends Message
      */
     public function from(Address|string ...$addresses): static
     {
-        if (!$addresses) {
+        if (! $addresses) {
             throw new LogicException('"from()" must be called with at least one address.');
         }
 
@@ -263,13 +263,12 @@ class Email extends Message
     }
 
     /**
-     * @param resource|string|null $body
-     *
+     * @param  resource|string|null  $body
      * @return $this
      */
     public function text($body, string $charset = 'utf-8'): static
     {
-        if (null !== $body && !\is_string($body) && !\is_resource($body)) {
+        if (null !== $body && ! \is_string($body) && ! \is_resource($body)) {
             throw new \TypeError(\sprintf('The body must be a string, a resource or null (got "%s").', get_debug_type($body)));
         }
 
@@ -294,13 +293,12 @@ class Email extends Message
     }
 
     /**
-     * @param resource|string|null $body
-     *
+     * @param  resource|string|null  $body
      * @return $this
      */
     public function html($body, string $charset = 'utf-8'): static
     {
-        if (null !== $body && !\is_string($body) && !\is_resource($body)) {
+        if (null !== $body && ! \is_string($body) && ! \is_resource($body)) {
             throw new \TypeError(\sprintf('The body must be a string, a resource or null (got "%s").', get_debug_type($body)));
         }
 
@@ -325,8 +323,7 @@ class Email extends Message
     }
 
     /**
-     * @param resource|string $body
-     *
+     * @param  resource|string  $body
      * @return $this
      */
     public function attach($body, ?string $name = null, ?string $contentType = null): static
@@ -343,8 +340,7 @@ class Email extends Message
     }
 
     /**
-     * @param resource|string $body
-     *
+     * @param  resource|string  $body
      * @return $this
      */
     public function embed($body, ?string $name = null, ?string $contentType = null): static
@@ -401,7 +397,7 @@ class Email extends Message
 
     private function ensureBodyValid(): void
     {
-        if (null === $this->text && null === $this->html && !$this->attachments && null === parent::getBody()) {
+        if (null === $this->text && null === $this->html && ! $this->attachments && null === parent::getBody()) {
             throw new LogicException('A message must have a text or an HTML part or attachments.');
         }
     }
@@ -484,7 +480,7 @@ class Email extends Message
         $otherParts = $relatedParts = [];
         foreach ($this->attachments as $part) {
             foreach ($names as $name) {
-                if ($name !== $part->getName() && (!$part->hasContentId() || $name !== $part->getContentId())) {
+                if ($name !== $part->getName() && (! $part->hasContentId() || $name !== $part->getContentId())) {
                     continue;
                 }
                 if (isset($relatedParts[$name])) {
@@ -524,7 +520,7 @@ class Email extends Message
      */
     private function addListAddressHeaderBody(string $name, array $addresses): static
     {
-        if (!$header = $this->getHeaders()->get($name)) {
+        if (! $header = $this->getHeaders()->get($name)) {
             return $this->setListAddressHeaderBody($name, $addresses);
         }
         $header->addAddresses(Address::createArray($addresses));

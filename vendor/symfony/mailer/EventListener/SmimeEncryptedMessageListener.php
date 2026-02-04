@@ -32,10 +32,10 @@ final class SmimeEncryptedMessageListener implements EventSubscriberInterface
     public function onMessage(MessageEvent $event): void
     {
         $message = $event->getMessage();
-        if (!$message instanceof Message) {
+        if (! $message instanceof Message) {
             return;
         }
-        if (!$message->getHeaders()->has('X-SMime-Encrypt')) {
+        if (! $message->getHeaders()->has('X-SMime-Encrypt')) {
             return;
         }
         $message->getHeaders()->remove('X-SMime-Encrypt');

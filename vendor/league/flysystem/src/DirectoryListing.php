@@ -15,15 +15,14 @@ use Traversable;
 class DirectoryListing implements IteratorAggregate
 {
     /**
-     * @param iterable<T> $listing
+     * @param  iterable<T>  $listing
      */
     public function __construct(private iterable $listing)
     {
     }
 
     /**
-     * @param callable(T): bool $filter
-     *
+     * @param  callable(T): bool  $filter
      * @return DirectoryListing<T>
      */
     public function filter(callable $filter): DirectoryListing
@@ -42,8 +41,7 @@ class DirectoryListing implements IteratorAggregate
     /**
      * @template R
      *
-     * @param callable(T): R $mapper
-     *
+     * @param  callable(T): R  $mapper
      * @return DirectoryListing<R>
      */
     public function map(callable $mapper): DirectoryListing

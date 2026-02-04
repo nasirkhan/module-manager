@@ -39,8 +39,8 @@ class ProfilerListener implements EventSubscriberInterface
     private \SplObjectStorage $parents;
 
     /**
-     * @param bool $onlyException    True if the profiler only collects data when an exception occurs, false otherwise
-     * @param bool $onlyMainRequests True if the profiler only collects data when the request is the main request, false otherwise
+     * @param  bool  $onlyException  True if the profiler only collects data when an exception occurs, false otherwise
+     * @param  bool  $onlyMainRequests  True if the profiler only collects data when the request is the main request, false otherwise
      */
     public function __construct(
         private Profiler $profiler,
@@ -59,7 +59,7 @@ class ProfilerListener implements EventSubscriberInterface
      */
     public function onKernelException(ExceptionEvent $event): void
     {
-        if ($this->onlyMainRequests && !$event->isMainRequest()) {
+        if ($this->onlyMainRequests && ! $event->isMainRequest()) {
             return;
         }
 
@@ -71,7 +71,7 @@ class ProfilerListener implements EventSubscriberInterface
      */
     public function onKernelResponse(ResponseEvent $event): void
     {
-        if ($this->onlyMainRequests && !$event->isMainRequest()) {
+        if ($this->onlyMainRequests && ! $event->isMainRequest()) {
             return;
         }
 
@@ -87,11 +87,11 @@ class ProfilerListener implements EventSubscriberInterface
         $exception = $this->exception;
         $this->exception = null;
 
-        if (null !== $this->matcher && !$this->matcher->matches($request)) {
+        if (null !== $this->matcher && ! $this->matcher->matches($request)) {
             return;
         }
 
-        $session = !$request->attributes->getBoolean('_stateless') && $request->hasPreviousSession() ? $request->getSession() : null;
+        $session = ! $request->attributes->getBoolean('_stateless') && $request->hasPreviousSession() ? $request->getSession() : null;
 
         if ($session instanceof Session) {
             $usageIndexValue = $usageIndexReference = &$session->getUsageIndex();
@@ -99,7 +99,7 @@ class ProfilerListener implements EventSubscriberInterface
         }
 
         try {
-            if (!$profile = $this->profiler->collect($request, $event->getResponse(), $exception)) {
+            if (! $profile = $this->profiler->collect($request, $event->getResponse(), $exception)) {
                 return;
             }
         } finally {

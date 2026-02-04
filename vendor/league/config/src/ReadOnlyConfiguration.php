@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace League\Config;
 
 /**
- * Provides read-only access to a given Configuration object
+ * Provides read-only access to a given Configuration object.
  */
 final class ReadOnlyConfiguration implements ConfigurationInterface
 {

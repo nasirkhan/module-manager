@@ -52,8 +52,8 @@ class EachPromise implements PromisorInterface
      *   allowed number of outstanding concurrently executing promises,
      *   creating a capped pool of promises. There is no limit by default.
      *
-     * @param mixed $iterable Promises or values to iterate.
-     * @param array $config   Configuration options
+     * @param  mixed  $iterable  Promises or values to iterate.
+     * @param  array  $config  Configuration options
      */
     public function __construct($iterable, array $config = [])
     {
@@ -125,7 +125,7 @@ class EachPromise implements PromisorInterface
 
     private function refillPending(): void
     {
-        if (!$this->concurrency) {
+        if (! $this->concurrency) {
             // Add all pending promises.
             while ($this->addPending() && $this->advanceIterator()) {
             }
@@ -139,7 +139,7 @@ class EachPromise implements PromisorInterface
             : $this->concurrency;
         $concurrency = max($concurrency - count($this->pending), 0);
         // Concurrency may be set to 0 to disallow new promises.
-        if (!$concurrency) {
+        if (! $concurrency) {
             return;
         }
         // Add the first pending promise.
@@ -156,7 +156,7 @@ class EachPromise implements PromisorInterface
 
     private function addPending(): bool
     {
-        if (!$this->iterable || !$this->iterable->valid()) {
+        if (! $this->iterable || ! $this->iterable->valid()) {
             return false;
         }
 
@@ -228,7 +228,7 @@ class EachPromise implements PromisorInterface
         // Only refill pending promises if we are not locked, preventing the
         // EachPromise to recursively invoke the provided iterator, which
         // cause a fatal error: "Cannot resume an already running generator"
-        if ($this->advanceIterator() && !$this->checkIfFinished()) {
+        if ($this->advanceIterator() && ! $this->checkIfFinished()) {
             // Add more pending promises if possible.
             $this->refillPending();
         }
@@ -236,7 +236,7 @@ class EachPromise implements PromisorInterface
 
     private function checkIfFinished(): bool
     {
-        if (!$this->pending && !$this->iterable->valid()) {
+        if (! $this->pending && ! $this->iterable->valid()) {
             // Resolve the promise if there's nothing left to do.
             $this->aggregate->resolve(null);
 

@@ -22,7 +22,7 @@ class DebugLoggerConfigurator
 
     public function __construct(callable $processor, ?bool $enable = null)
     {
-        if ($enable ?? !\in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
+        if ($enable ?? ! \in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
             $this->processor = \is_object($processor) ? $processor : $processor(...);
         }
     }
@@ -40,7 +40,7 @@ class DebugLoggerConfigurator
             return $logger;
         }
 
-        if (!$logger instanceof Logger) {
+        if (! $logger instanceof Logger) {
             return null;
         }
 

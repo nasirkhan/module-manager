@@ -21,7 +21,7 @@ class FieldFactory implements FieldFactoryInterface
     /**
      * Get an instance of a field object for a cron expression position.
      *
-     * @param int $position CRON expression position value to retrieve
+     * @param  int  $position  CRON expression position value to retrieve
      *
      * @throws InvalidArgumentException if a position is not valid
      */
@@ -46,7 +46,7 @@ class FieldFactory implements FieldFactoryInterface
         }
 
         throw new InvalidArgumentException(
-            ($position + 1) . ' is not a valid position'
+            ($position + 1).' is not a valid position'
         );
     }
 }

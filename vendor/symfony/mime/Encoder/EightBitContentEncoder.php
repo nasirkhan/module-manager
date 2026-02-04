@@ -18,7 +18,7 @@ final class EightBitContentEncoder implements ContentEncoderInterface
 {
     public function encodeByteStream($stream, int $maxLineLength = 0): iterable
     {
-        while (!feof($stream)) {
+        while (! feof($stream)) {
             yield fread($stream, 16372);
         }
     }

@@ -44,7 +44,7 @@ class MarkdownInput implements MarkdownInputInterface
             $content = \substr($content, 3);
         }
 
-        $this->content    = $content;
+        $this->content = $content;
         $this->lineOffset = $lineOffset;
     }
 

@@ -49,7 +49,7 @@ enum Month: int
             return self::from(CarbonImmutable::parseFromLocale("$name 1", $locale)->month);
         } catch (InvalidFormatException $exception) {
             // Possibly current language expect a dot after short name, but it's missing
-            if ($locale !== null && !mb_strlen($name) < 4 && !str_ends_with($name, '.')) {
+            if ($locale !== null && ! mb_strlen($name) < 4 && ! str_ends_with($name, '.')) {
                 try {
                     return self::from(CarbonImmutable::parseFromLocale("$name. 1", $locale)->month);
                 } catch (InvalidFormatException $e) {

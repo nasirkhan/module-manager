@@ -47,57 +47,57 @@ class Key
     const END = ["\e[4~", "\eOF", "\e[F", "\e[8~"];
 
     /**
-     * Cancel/SIGINT
+     * Cancel/SIGINT.
      */
     const CTRL_C = "\x03";
 
     /**
-     * Previous/Up
+     * Previous/Up.
      */
     const CTRL_P = "\x10";
 
     /**
-     * Next/Down
+     * Next/Down.
      */
     const CTRL_N = "\x0E";
 
     /**
-     * Forward/Right
+     * Forward/Right.
      */
     const CTRL_F = "\x06";
 
     /**
-     * Back/Left
+     * Back/Left.
      */
     const CTRL_B = "\x02";
 
     /**
-     * Backspace
+     * Backspace.
      */
     const CTRL_H = "\x08";
 
     /**
-     * Home
+     * Home.
      */
     const CTRL_A = "\x01";
 
     /**
-     * EOF
+     * EOF.
      */
     const CTRL_D = "\x04";
 
     /**
-     * End
+     * End.
      */
     const CTRL_E = "\x05";
 
     /**
-     * Negative affirmation
+     * Negative affirmation.
      */
     const CTRL_U = "\x15";
 
     /**
-     * Checks for the constant values for the given match and returns the match
+     * Checks for the constant values for the given match and returns the match.
      *
      * @param  array<string|array<string>>  $keys
      */

@@ -99,6 +99,7 @@ class MigrationTracker
 
             return array_filter($allMigrations, function ($migration) use ($ranMigrations) {
                 $migrationName = pathinfo($migration, PATHINFO_FILENAME);
+
                 return ! in_array($migrationName, $ranMigrations) && ! in_array($migration, $ranMigrations);
             });
         } catch (\Exception $e) {

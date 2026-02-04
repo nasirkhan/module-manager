@@ -33,7 +33,7 @@ abstract class AbstractHttpTransport extends AbstractTransport
         ?LoggerInterface $logger = null,
     ) {
         if (null === $client) {
-            if (!class_exists(HttpClient::class)) {
+            if (! class_exists(HttpClient::class)) {
                 throw new \LogicException(\sprintf('You cannot use "%s" as the HttpClient component is not installed. Try running "composer require symfony/http-client".', __CLASS__));
             }
 

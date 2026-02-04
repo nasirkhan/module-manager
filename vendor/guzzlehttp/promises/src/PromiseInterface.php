@@ -23,8 +23,8 @@ interface PromiseInterface
      * Appends fulfillment and rejection handlers to the promise, and returns
      * a new promise resolving to the return value of the called handler.
      *
-     * @param callable $onFulfilled Invoked when the promise fulfills.
-     * @param callable $onRejected  Invoked when the promise is rejected.
+     * @param  callable  $onFulfilled  Invoked when the promise fulfills.
+     * @param  callable  $onRejected  Invoked when the promise is rejected.
      */
     public function then(
         ?callable $onFulfilled = null,
@@ -37,7 +37,7 @@ interface PromiseInterface
      * or to its original fulfillment value if the promise is instead
      * fulfilled.
      *
-     * @param callable $onRejected Invoked when the promise is rejected.
+     * @param  callable  $onRejected  Invoked when the promise is rejected.
      */
     public function otherwise(callable $onRejected): PromiseInterface;
 
@@ -52,7 +52,7 @@ interface PromiseInterface
     /**
      * Resolve the promise with the given value.
      *
-     * @param mixed $value
+     * @param  mixed  $value
      *
      * @throws \RuntimeException if the promise is already resolved.
      */
@@ -61,7 +61,7 @@ interface PromiseInterface
     /**
      * Reject the promise with the given reason.
      *
-     * @param mixed $reason
+     * @param  mixed  $reason
      *
      * @throws \RuntimeException if the promise is already resolved.
      */

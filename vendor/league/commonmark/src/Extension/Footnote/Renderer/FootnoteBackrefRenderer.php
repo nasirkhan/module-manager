@@ -30,7 +30,7 @@ final class FootnoteBackrefRenderer implements NodeRendererInterface, XmlNodeRen
     private ConfigurationInterface $config;
 
     /**
-     * @param FootnoteBackref $node
+     * @param  FootnoteBackref  $node
      *
      * {@inheritDoc}
      *
@@ -50,7 +50,7 @@ final class FootnoteBackrefRenderer implements NodeRendererInterface, XmlNodeRen
         $symbol = $this->config->get('footnote/backref_symbol');
         \assert(\is_string($symbol));
 
-        return '&nbsp;' . new HtmlElement('a', $attrs->export(), \htmlspecialchars($symbol), true);
+        return '&nbsp;'.new HtmlElement('a', $attrs->export(), \htmlspecialchars($symbol), true);
     }
 
     public function setConfiguration(ConfigurationInterface $configuration): void
@@ -64,8 +64,7 @@ final class FootnoteBackrefRenderer implements NodeRendererInterface, XmlNodeRen
     }
 
     /**
-     * @param FootnoteBackref $node
-     *
+     * @param  FootnoteBackref  $node
      * @return array<string, scalar>
      *
      * @psalm-suppress MoreSpecificImplementedParamType

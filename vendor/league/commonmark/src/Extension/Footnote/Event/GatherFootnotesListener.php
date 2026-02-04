@@ -30,7 +30,7 @@ final class GatherFootnotesListener implements ConfigurationAwareInterface
 
     public function onDocumentParsed(DocumentParsedEvent $event): void
     {
-        $document  = $event->getDocument();
+        $document = $event->getDocument();
         $footnotes = [];
 
         foreach ($document->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
@@ -48,7 +48,7 @@ final class GatherFootnotesListener implements ConfigurationAwareInterface
                 $footnotes[\PHP_INT_MAX] = $node;
             }
 
-            $key = '#' . $this->config->get('footnote/footnote_id_prefix') . $node->getReference()->getDestination();
+            $key = '#'.$this->config->get('footnote/footnote_id_prefix').$node->getReference()->getDestination();
             if ($document->data->has($key)) {
                 $this->createBackrefs($node, $document->data->get($key));
             }
@@ -78,8 +78,8 @@ final class GatherFootnotesListener implements ConfigurationAwareInterface
     /**
      * Look for all footnote refs pointing to this footnote and create each footnote backrefs.
      *
-     * @param Footnote    $node     The target footnote
-     * @param Reference[] $backrefs References to create backrefs for
+     * @param  Footnote  $node  The target footnote
+     * @param  Reference[]  $backrefs  References to create backrefs for
      */
     private function createBackrefs(Footnote $node, array $backrefs): void
     {
@@ -93,7 +93,7 @@ final class GatherFootnotesListener implements ConfigurationAwareInterface
         foreach ($backrefs as $backref) {
             $target->appendChild(new FootnoteBackref(new Reference(
                 $backref->getLabel(),
-                '#' . $this->config->get('footnote/ref_id_prefix') . $backref->getLabel(),
+                '#'.$this->config->get('footnote/ref_id_prefix').$backref->getLabel(),
                 $backref->getTitle()
             )));
         }

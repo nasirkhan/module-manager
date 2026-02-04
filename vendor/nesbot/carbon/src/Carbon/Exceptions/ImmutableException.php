@@ -28,9 +28,9 @@ class ImmutableException extends BaseRuntimeException implements RuntimeExceptio
     /**
      * Constructor.
      *
-     * @param string         $value    the immutable type/value
-     * @param int            $code
-     * @param Throwable|null $previous
+     * @param  string  $value  the immutable type/value
+     * @param  int  $code
+     * @param  Throwable|null  $previous
      */
     public function __construct($value, $code = 0, ?Throwable $previous = null)
     {

@@ -30,9 +30,8 @@ final class ReplacingWriter implements WriterInterface
     /**
      * Create a new replacement writer instance.
      *
-     * @param \Dotenv\Repository\Adapter\WriterInterface $writer
-     * @param \Dotenv\Repository\Adapter\ReaderInterface $reader
-     *
+     * @param  \Dotenv\Repository\Adapter\WriterInterface  $writer
+     * @param  \Dotenv\Repository\Adapter\ReaderInterface  $reader
      * @return void
      */
     public function __construct(WriterInterface $writer, ReaderInterface $reader)
@@ -45,9 +44,8 @@ final class ReplacingWriter implements WriterInterface
     /**
      * Write to an environment variable, if possible.
      *
-     * @param non-empty-string $name
-     * @param string           $value
-     *
+     * @param  non-empty-string  $name
+     * @param  string  $value
      * @return bool
      */
     public function write(string $name, string $value)
@@ -63,8 +61,7 @@ final class ReplacingWriter implements WriterInterface
     /**
      * Delete an environment variable, if possible.
      *
-     * @param non-empty-string $name
-     *
+     * @param  non-empty-string  $name
      * @return bool
      */
     public function delete(string $name)
@@ -83,8 +80,7 @@ final class ReplacingWriter implements WriterInterface
      * Returns true if it currently exists, or existed at any point in the past
      * that we are aware of.
      *
-     * @param non-empty-string $name
-     *
+     * @param  non-empty-string  $name
      * @return bool
      */
     private function exists(string $name)

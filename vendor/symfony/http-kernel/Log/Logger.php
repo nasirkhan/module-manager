@@ -55,7 +55,7 @@ class Logger extends AbstractLogger implements DebugLoggerInterface
     private $handle;
 
     /**
-     * @param string|resource|null $output
+     * @param  string|resource|null  $output
      */
     public function __construct(?string $minLevel = null, $output = null, ?callable $formatter = null, private readonly ?RequestStack $requestStack = null, bool $debug = false)
     {
@@ -67,7 +67,7 @@ class Logger extends AbstractLogger implements DebugLoggerInterface
             default => null === $output || 'php://stdout' === $output || 'php://stderr' === $output ? LogLevel::ERROR : LogLevel::WARNING,
         };
 
-        if (!isset(self::LEVELS[$minLevel])) {
+        if (! isset(self::LEVELS[$minLevel])) {
             throw new InvalidArgumentException(\sprintf('The log level "%s" does not exist.', $minLevel));
         }
 
@@ -86,7 +86,7 @@ class Logger extends AbstractLogger implements DebugLoggerInterface
 
     public function log($level, $message, array $context = []): void
     {
-        if (!isset(self::LEVELS[$level])) {
+        if (! isset(self::LEVELS[$level])) {
             throw new InvalidArgumentException(\sprintf('The log level "%s" does not exist.', $level));
         }
 

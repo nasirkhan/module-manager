@@ -56,8 +56,7 @@ trait Timestamp
      *
      * Timestamp input can be given as int, float or a string containing one or more numbers.
      *
-     * @param float|int|string $timestamp
-     *
+     * @param  float|int|string  $timestamp
      * @return static
      */
     public static function createFromTimestampMsUTC($timestamp): static
@@ -113,8 +112,7 @@ trait Timestamp
      * @example getPreciseTimestamp(-1) 153208746        (10 second precision)
      * @example getPreciseTimestamp(-2) 15320875         (100 second precision)
      *
-     * @param int $precision
-     *
+     * @param  int  $precision
      * @return float
      */
     public function getPreciseTimestamp($precision = 6): float
@@ -161,9 +159,8 @@ trait Timestamp
      * By splitting integer and decimal, this method obtain a better precision than
      * number_format when the input is a string.
      *
-     * @param float|int|string $numbers  one or more numbers
-     * @param int              $decimals number of decimals precision (6 by default)
-     *
+     * @param  float|int|string  $numbers  one or more numbers
+     * @param  int  $decimals  number of decimals precision (6 by default)
      * @return array 0-index is integer part, 1-index is decimal part digits
      */
     private static function getIntegerAndDecimalParts($numbers, $decimals = 6): array

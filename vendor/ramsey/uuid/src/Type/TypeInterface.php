@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,7 +18,7 @@ use JsonSerializable;
 use Serializable;
 
 /**
- * TypeInterface ensures consistency in typed values returned by ramsey/uuid
+ * TypeInterface ensures consistency in typed values returned by ramsey/uuid.
  *
  * @immutable
  */

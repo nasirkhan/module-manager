@@ -33,7 +33,7 @@ class EventDataCollector extends DataCollector implements LateDataCollectorInter
     private ?Request $currentRequest = null;
 
     /**
-     * @param iterable<EventDispatcherInterface>|EventDispatcherInterface|null $dispatchers
+     * @param  iterable<EventDispatcherInterface>|EventDispatcherInterface|null  $dispatchers
      */
     public function __construct(
         iterable|EventDispatcherInterface|null $dispatchers = null,
@@ -66,7 +66,7 @@ class EventDataCollector extends DataCollector implements LateDataCollectorInter
     public function lateCollect(): void
     {
         foreach ($this->dispatchers as $name => $dispatcher) {
-            if (!$dispatcher instanceof TraceableEventDispatcher) {
+            if (! $dispatcher instanceof TraceableEventDispatcher) {
                 continue;
             }
 
@@ -116,7 +116,7 @@ class EventDataCollector extends DataCollector implements LateDataCollectorInter
     }
 
     /**
-     * @param array $events An array of orphaned events
+     * @param  array  $events  An array of orphaned events
      *
      * @see TraceableEventDispatcher
      */

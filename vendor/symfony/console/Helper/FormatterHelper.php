@@ -33,7 +33,7 @@ class FormatterHelper extends Helper
      */
     public function formatBlock(string|array $messages, string $style, bool $large = false): string
     {
-        if (!\is_array($messages)) {
+        if (! \is_array($messages)) {
             $messages = [$messages];
         }
 
@@ -46,14 +46,14 @@ class FormatterHelper extends Helper
         }
 
         $messages = $large ? [str_repeat(' ', $len)] : [];
-        for ($i = 0; isset($lines[$i]); ++$i) {
+        for ($i = 0; isset($lines[$i]); $i++) {
             $messages[] = $lines[$i].str_repeat(' ', $len - self::width($lines[$i]));
         }
         if ($large) {
             $messages[] = str_repeat(' ', $len);
         }
 
-        for ($i = 0; isset($messages[$i]); ++$i) {
+        for ($i = 0; isset($messages[$i]); $i++) {
             $messages[$i] = \sprintf('<%s>%s</%s>', $style, $messages[$i], $style);
         }
 

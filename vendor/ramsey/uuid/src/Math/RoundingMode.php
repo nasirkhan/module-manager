@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file was originally part of brick/math
+ * This file was originally part of brick/math.
  *
  * Copyright (c) 2013-present Benjamin Morel
  *

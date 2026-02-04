@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,7 +20,7 @@ use Ramsey\Uuid\Converter\TimeConverterInterface;
 use Ramsey\Uuid\Uuid;
 
 /**
- * Guid represents a UUID with "native" (little-endian) byte order
+ * Guid represents a UUID with "native" (little-endian) byte order.
  *
  * From Wikipedia:
  *

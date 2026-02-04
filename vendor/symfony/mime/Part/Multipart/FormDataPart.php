@@ -23,7 +23,7 @@ use Symfony\Component\Mime\Part\TextPart;
 final class FormDataPart extends AbstractMultipartPart
 {
     /**
-     * @param array<string|array|TextPart> $fields
+     * @param  array<string|array|TextPart>  $fields
      */
     public function __construct(
         private array $fields = [],
@@ -66,7 +66,7 @@ final class FormDataPart extends AbstractMultipartPart
                 return;
             }
 
-            if (!\is_string($item) && !$item instanceof TextPart) {
+            if (! \is_string($item) && ! $item instanceof TextPart) {
                 throw new InvalidArgumentException(\sprintf('The value of the form field "%s" can only be a string, an array, or an instance of TextPart, "%s" given.', $fieldName, get_debug_type($item)));
             }
 

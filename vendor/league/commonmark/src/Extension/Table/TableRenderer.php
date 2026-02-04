@@ -24,7 +24,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class TableRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param Table $node
+     * @param  Table  $node
      *
      * {@inheritDoc}
      *
@@ -40,7 +40,7 @@ final class TableRenderer implements NodeRendererInterface, XmlNodeRendererInter
 
         $children = $childRenderer->renderNodes($node->children());
 
-        return new HtmlElement('table', $attrs, $separator . \trim($children) . $separator);
+        return new HtmlElement('table', $attrs, $separator.\trim($children).$separator);
     }
 
     public function getXmlTagName(Node $node): string

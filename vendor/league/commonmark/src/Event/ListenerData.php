@@ -27,11 +27,11 @@ final class ListenerData
     private $listener;
 
     /**
-     * @param class-string $event
+     * @param  class-string  $event
      */
     public function __construct(string $event, callable $listener)
     {
-        $this->event    = $event;
+        $this->event = $event;
         $this->listener = $listener;
     }
 

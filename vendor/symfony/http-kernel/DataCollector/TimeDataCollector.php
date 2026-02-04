@@ -63,7 +63,7 @@ class TimeDataCollector extends DataCollector implements LateDataCollectorInterf
     }
 
     /**
-     * @param StopwatchEvent[] $events The request events
+     * @param  StopwatchEvent[]  $events  The request events
      */
     public function setEvents(array $events): void
     {
@@ -87,7 +87,7 @@ class TimeDataCollector extends DataCollector implements LateDataCollectorInterf
      */
     public function getDuration(): float
     {
-        if (!isset($this->data['events']['__section__'])) {
+        if (! isset($this->data['events']['__section__'])) {
             return 0;
         }
 
@@ -103,7 +103,7 @@ class TimeDataCollector extends DataCollector implements LateDataCollectorInterf
      */
     public function getInitTime(): float
     {
-        if (!isset($this->data['events']['__section__'])) {
+        if (! isset($this->data['events']['__section__'])) {
             return 0;
         }
 

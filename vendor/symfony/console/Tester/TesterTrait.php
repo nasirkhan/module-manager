@@ -40,7 +40,7 @@ trait TesterTrait
      */
     public function getDisplay(bool $normalize = false): string
     {
-        if (!isset($this->output)) {
+        if (! isset($this->output)) {
             throw new \RuntimeException('Output not initialized, did you execute the command before requesting the display?');
         }
 
@@ -58,11 +58,11 @@ trait TesterTrait
     /**
      * Gets the output written to STDERR by the application.
      *
-     * @param bool $normalize Whether to normalize end of lines to \n or not
+     * @param  bool  $normalize  Whether to normalize end of lines to \n or not
      */
     public function getErrorOutput(bool $normalize = false): string
     {
-        if (!$this->captureStreamsIndependently) {
+        if (! $this->captureStreamsIndependently) {
             throw new \LogicException('The error output is not available when the tester is run without "capture_stderr_separately" option set.');
         }
 
@@ -111,9 +111,8 @@ trait TesterTrait
     /**
      * Sets the user inputs.
      *
-     * @param list<string> $inputs An array of strings representing each input
-     *                             passed to the command input stream
-     *
+     * @param  list<string>  $inputs  An array of strings representing each input
+     *                                passed to the command input stream
      * @return $this
      */
     public function setInputs(array $inputs): static
@@ -135,7 +134,7 @@ trait TesterTrait
     private function initOutput(array $options): void
     {
         $this->captureStreamsIndependently = $options['capture_stderr_separately'] ?? false;
-        if (!$this->captureStreamsIndependently) {
+        if (! $this->captureStreamsIndependently) {
             $this->output = new StreamOutput(fopen('php://memory', 'w', false));
             if (isset($options['decorated'])) {
                 $this->output->setDecorated($options['decorated']);
@@ -165,8 +164,7 @@ trait TesterTrait
     }
 
     /**
-     * @param list<string> $inputs
-     *
+     * @param  list<string>  $inputs
      * @return resource
      */
     private static function createStream(array $inputs)
@@ -176,7 +174,7 @@ trait TesterTrait
         foreach ($inputs as $input) {
             fwrite($stream, $input);
 
-            if (!str_ends_with($input, "\x4")) {
+            if (! str_ends_with($input, "\x4")) {
                 fwrite($stream, \PHP_EOL);
             }
         }

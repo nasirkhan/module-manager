@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,11 +13,11 @@
 
 namespace Monolog\Handler;
 
-use Monolog\Level;
-use Monolog\Utils;
-use Monolog\Formatter\NormalizerFormatter;
 use Monolog\Formatter\FormatterInterface;
+use Monolog\Formatter\NormalizerFormatter;
+use Monolog\Level;
 use Monolog\LogRecord;
+use Monolog\Utils;
 
 /**
  * Class to record a log on a NewRelic application.
@@ -38,7 +40,7 @@ class NewRelicHandler extends AbstractProcessingHandler
         /**
          * Name of the New Relic application that will receive logs from this handler.
          */
-        protected string|null $appName = null,
+        protected ?string $appName = null,
 
         /**
          * Some context and extra data is passed into the handler as arrays of values. Do we send them as is
@@ -47,9 +49,9 @@ class NewRelicHandler extends AbstractProcessingHandler
         protected bool $explodeArrays = false,
 
         /**
-         * Name of the current transaction
+         * Name of the current transaction.
          */
-        protected string|null $transactionName = null
+        protected ?string $transactionName = null
     ) {
         parent::__construct($level, $bubble);
     }
@@ -59,7 +61,7 @@ class NewRelicHandler extends AbstractProcessingHandler
      */
     protected function write(LogRecord $record): void
     {
-        if (!$this->isNewRelicEnabled()) {
+        if (! $this->isNewRelicEnabled()) {
             throw new MissingExtensionException('The newrelic PHP extension is required to use the NewRelicHandler');
         }
 
@@ -83,10 +85,10 @@ class NewRelicHandler extends AbstractProcessingHandler
             foreach ($record->formatted['context'] as $key => $parameter) {
                 if (\is_array($parameter) && $this->explodeArrays) {
                     foreach ($parameter as $paramKey => $paramValue) {
-                        $this->setNewRelicParameter('context_' . $key . '_' . $paramKey, $paramValue);
+                        $this->setNewRelicParameter('context_'.$key.'_'.$paramKey, $paramValue);
                     }
                 } else {
-                    $this->setNewRelicParameter('context_' . $key, $parameter);
+                    $this->setNewRelicParameter('context_'.$key, $parameter);
                 }
             }
         }
@@ -95,10 +97,10 @@ class NewRelicHandler extends AbstractProcessingHandler
             foreach ($record->formatted['extra'] as $key => $parameter) {
                 if (\is_array($parameter) && $this->explodeArrays) {
                     foreach ($parameter as $paramKey => $paramValue) {
-                        $this->setNewRelicParameter('extra_' . $key . '_' . $paramKey, $paramValue);
+                        $this->setNewRelicParameter('extra_'.$key.'_'.$paramKey, $paramValue);
                     }
                 } else {
-                    $this->setNewRelicParameter('extra_' . $key, $parameter);
+                    $this->setNewRelicParameter('extra_'.$key, $parameter);
                 }
             }
         }
@@ -116,7 +118,7 @@ class NewRelicHandler extends AbstractProcessingHandler
      * Returns the appname where this log should be sent. Each log can override the default appname, set in this
      * handler's constructor, by providing the appname in it's context.
      *
-     * @param mixed[] $context
+     * @param  mixed[]  $context
      */
     protected function getAppName(array $context): ?string
     {
@@ -129,9 +131,9 @@ class NewRelicHandler extends AbstractProcessingHandler
 
     /**
      * Returns the name of the current transaction. Each log can override the default transaction name, set in this
-     * handler's constructor, by providing the transaction_name in it's context
+     * handler's constructor, by providing the transaction_name in it's context.
      *
-     * @param mixed[] $context
+     * @param  mixed[]  $context
      */
     protected function getTransactionName(array $context): ?string
     {
@@ -151,7 +153,7 @@ class NewRelicHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Overwrites the name of the current transaction
+     * Overwrites the name of the current transaction.
      */
     protected function setNewRelicTransactionName(string $transactionName): void
     {
@@ -159,7 +161,7 @@ class NewRelicHandler extends AbstractProcessingHandler
     }
 
     /**
-     * @param mixed $value
+     * @param  mixed  $value
      */
     protected function setNewRelicParameter(string $key, $value): void
     {

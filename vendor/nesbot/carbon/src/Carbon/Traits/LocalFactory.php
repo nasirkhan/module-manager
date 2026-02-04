@@ -24,7 +24,7 @@ use Closure;
 trait LocalFactory
 {
     /**
-     * The clock that generated the current instance (or FactoryImmutable::getDefaultInstance() if none)
+     * The clock that generated the current instance (or FactoryImmutable::getDefaultInstance() if none).
      */
     private ?WrapperClock $clock = null;
 
@@ -44,8 +44,7 @@ trait LocalFactory
      *
      * @template T
      *
-     * @param Closure(): T $action
-     *
+     * @param  Closure(): T  $action
      * @return T
      */
     private function transmitFactory(Closure $action): mixed

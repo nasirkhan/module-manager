@@ -26,7 +26,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class ThematicBreakRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param ThematicBreak $node
+     * @param  ThematicBreak  $node
      *
      * {@inheritDoc}
      *

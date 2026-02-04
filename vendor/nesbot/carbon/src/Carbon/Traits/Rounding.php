@@ -70,7 +70,7 @@ trait Rounding
 
         $precision *= $factor;
 
-        if (!isset($ranges[$normalizedUnit])) {
+        if (! isset($ranges[$normalizedUnit])) {
             throw new UnknownUnitException($unit);
         }
 
@@ -182,7 +182,7 @@ trait Rounding
     /**
      * Round the current instance week.
      *
-     * @param WeekDay|int|null $weekStartsAt optional start allow you to specify the day of week to use to start the week
+     * @param  WeekDay|int|null  $weekStartsAt  optional start allow you to specify the day of week to use to start the week
      */
     public function roundWeek(WeekDay|int|null $weekStartsAt = null): static
     {
@@ -195,7 +195,7 @@ trait Rounding
     /**
      * Truncate the current instance week.
      *
-     * @param WeekDay|int|null $weekStartsAt optional start allow you to specify the day of week to use to start the week
+     * @param  WeekDay|int|null  $weekStartsAt  optional start allow you to specify the day of week to use to start the week
      */
     public function floorWeek(WeekDay|int|null $weekStartsAt = null): static
     {
@@ -205,7 +205,7 @@ trait Rounding
     /**
      * Ceil the current instance week.
      *
-     * @param WeekDay|int|null $weekStartsAt optional start allow you to specify the day of week to use to start the week
+     * @param  WeekDay|int|null  $weekStartsAt  optional start allow you to specify the day of week to use to start the week
      */
     public function ceilWeek(WeekDay|int|null $weekStartsAt = null): static
     {

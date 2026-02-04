@@ -100,7 +100,7 @@ final class TraceableCommand extends Command
 
         $event->stop();
 
-        if (!isset($this->handledSignals[$signal])) {
+        if (! isset($this->handledSignals[$signal])) {
             $this->handledSignals[$signal] = [
                 'handled' => 0,
                 'duration' => 0,
@@ -108,7 +108,7 @@ final class TraceableCommand extends Command
             ];
         }
 
-        ++$this->handledSignals[$signal]['handled'];
+        $this->handledSignals[$signal]['handled']++;
         $this->handledSignals[$signal]['duration'] += $event->getDuration();
         $this->handledSignals[$signal]['memory'] = max(
             $this->handledSignals[$signal]['memory'],
@@ -322,7 +322,7 @@ final class TraceableCommand extends Command
 
     protected function interact(InputInterface $input, OutputInterface $output): void
     {
-        if (!$this->isInteractive = Command::class !== (new \ReflectionMethod($this->command, 'interact'))->getDeclaringClass()->getName()) {
+        if (! $this->isInteractive = Command::class !== (new \ReflectionMethod($this->command, 'interact'))->getDeclaringClass()->getName()) {
             return;
         }
 

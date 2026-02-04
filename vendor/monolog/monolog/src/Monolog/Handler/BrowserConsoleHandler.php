@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -13,15 +15,15 @@ namespace Monolog\Handler;
 
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\LineFormatter;
-use Monolog\Utils;
-use Monolog\LogRecord;
 use Monolog\Level;
+use Monolog\LogRecord;
+use Monolog\Utils;
 
 use function headers_list;
 use function stripos;
 
 /**
- * Handler sending logs to browser's javascript console with no browser extension required
+ * Handler sending logs to browser's javascript console with no browser extension required.
  *
  * @author Olivier Poitrey <rs@dailymotion.com>
  */
@@ -59,7 +61,7 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
         static::$records[] = $record;
 
         // Register shutdown handler if not already done
-        if (!static::$initialized) {
+        if (! static::$initialized) {
             static::$initialized = true;
             $this->registerShutdownFunction();
         }
@@ -78,7 +80,7 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
 
         if (\count(static::$records) > 0) {
             if ($format === self::FORMAT_HTML) {
-                static::writeOutput('<script>' . self::generateScript() . '</script>');
+                static::writeOutput('<script>'.self::generateScript().'</script>');
             } else { // js format
                 static::writeOutput(self::generateScript());
             }
@@ -99,7 +101,7 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Forget all logged records
+     * Forget all logged records.
      */
     public static function resetStatic(): void
     {
@@ -107,7 +109,7 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Wrapper for register_shutdown_function to allow overriding
+     * Wrapper for register_shutdown_function to allow overriding.
      */
     protected function registerShutdownFunction(): void
     {
@@ -117,7 +119,7 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Wrapper for echo to allow overriding
+     * Wrapper for echo to allow overriding.
      */
     protected static function writeOutput(string $str): void
     {
@@ -125,13 +127,14 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Checks the format of the response
+     * Checks the format of the response.
      *
      * If Content-Type is set to application/javascript or text/javascript -> js
      * If Content-Type is set to text/html, or is unset -> html
      * If Content-Type is anything else -> unknown
      *
      * @return string One of 'js', 'html' or 'unknown'
+     *
      * @phpstan-return self::FORMAT_*
      */
     protected static function getResponseFormat(): string
@@ -148,6 +151,7 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
 
     /**
      * @return string One of 'js', 'html' or 'unknown'
+     *
      * @phpstan-return self::FORMAT_*
      */
     protected static function getResponseFormatFromContentType(string $contentType): string
@@ -185,7 +189,7 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
             }
         }
 
-        return "(function (c) {if (c && c.groupCollapsed) {\n" . implode("\n", $script) . "\n}})(console);";
+        return "(function (c) {if (c && c.groupCollapsed) {\n".implode("\n", $script)."\n}})(console);";
     }
 
     private static function getConsoleMethodForLevel(Level $level): string
@@ -204,7 +208,7 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
     private static function handleStyles(string $formatted): array
     {
         $args = [];
-        $format = '%c' . $formatted;
+        $format = '%c'.$formatted;
         preg_match_all('/\[\[(.*?)\]\]\{([^}]*)\}/s', $format, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER);
 
         foreach (array_reverse($matches) as $match) {
@@ -212,7 +216,7 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
             $args[] = self::quote(self::handleCustomStyles($match[2][0], $match[1][0]));
 
             $pos = $match[0][1];
-            $format = Utils::substr($format, 0, $pos) . '%c' . $match[1][0] . '%c' . Utils::substr($format, $pos + \strlen($match[0][0]));
+            $format = Utils::substr($format, 0, $pos).'%c'.$match[1][0].'%c'.Utils::substr($format, $pos + \strlen($match[0][0]));
         }
 
         $args[] = self::quote('font-weight: normal');
@@ -229,7 +233,7 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
         $style = preg_replace_callback('/macro\s*:(.*?)(?:;|$)/', function (array $m) use ($string, &$colors, &$labels) {
             if (trim($m[1]) === 'autolabel') {
                 // Format the string as a label with consistent auto assigned background color
-                if (!isset($labels[$string])) {
+                if (! isset($labels[$string])) {
                     $labels[$string] = $colors[\count($labels) % \count($colors)];
                 }
                 $color = $labels[$string];
@@ -243,14 +247,14 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
         if (null === $style) {
             $pcreErrorCode = preg_last_error();
 
-            throw new \RuntimeException('Failed to run preg_replace_callback: ' . $pcreErrorCode . ' / ' . preg_last_error_msg());
+            throw new \RuntimeException('Failed to run preg_replace_callback: '.$pcreErrorCode.' / '.preg_last_error_msg());
         }
 
         return $style;
     }
 
     /**
-     * @param  mixed[] $dict
+     * @param  mixed[]  $dict
      * @return mixed[]
      */
     private static function dump(string $title, array $dict): array
@@ -274,16 +278,16 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
 
     private static function quote(string $arg): string
     {
-        return '"' . addcslashes($arg, "\"\n\\") . '"';
+        return '"'.addcslashes($arg, "\"\n\\").'"';
     }
 
     /**
-     * @param mixed $args
+     * @param  mixed  $args
      */
     private static function call(...$args): string
     {
         $method = array_shift($args);
-        if (!\is_string($method)) {
+        if (! \is_string($method)) {
             throw new \UnexpectedValueException('Expected the first arg to be a string, got: '.var_export($method, true));
         }
 
@@ -291,10 +295,10 @@ class BrowserConsoleHandler extends AbstractProcessingHandler
     }
 
     /**
-     * @param mixed[] $args
+     * @param  mixed[]  $args
      */
     private static function call_array(string $method, array $args): string
     {
-        return 'c.' . $method . '(' . implode(', ', $args) . ');';
+        return 'c.'.$method.'('.implode(', ', $args).');';
     }
 }

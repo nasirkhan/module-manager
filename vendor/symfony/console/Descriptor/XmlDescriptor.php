@@ -103,7 +103,7 @@ class XmlDescriptor extends Descriptor
             $this->appendDocument($commandsXML, $this->getCommandDocument($command, $short));
         }
 
-        if (!$namespace) {
+        if (! $namespace) {
             $rootXml->appendChild($namespacesXML = $dom->createElement('namespaces'));
 
             foreach ($description->getNamespaces() as $namespaceDescription) {

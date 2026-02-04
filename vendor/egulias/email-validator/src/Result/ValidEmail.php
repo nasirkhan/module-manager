@@ -16,12 +16,11 @@ class ValidEmail implements Result
 
     public function description(): string
     {
-        return "Valid email";
+        return 'Valid email';
     }
 
     public function code(): int
     {
         return 0;
     }
-
 }

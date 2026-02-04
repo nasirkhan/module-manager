@@ -69,7 +69,7 @@ class CliDumper extends AbstractDumper
     {
         parent::__construct($output, $charset, $flags);
 
-        if ('\\' === \DIRECTORY_SEPARATOR && !$this->isWindowsTrueColor()) {
+        if ('\\' === \DIRECTORY_SEPARATOR && ! $this->isWindowsTrueColor()) {
             // Use only the base 16 xterm colors when using ANSICON or standard Windows 10 CLI
             $this->setStyles([
                 'default' => '31',
@@ -106,7 +106,7 @@ class CliDumper extends AbstractDumper
     /**
      * Configures styles.
      *
-     * @param array $styles A map of style names to style definitions
+     * @param  array  $styles  A map of style names to style definitions
      */
     public function setStyles(array $styles): void
     {
@@ -116,7 +116,7 @@ class CliDumper extends AbstractDumper
     /**
      * Configures display options.
      *
-     * @param array $displayOptions A map of display options to customize the behavior
+     * @param  array  $displayOptions  A map of display options to customize the behavior
      */
     public function setDisplayOptions(array $displayOptions): void
     {
@@ -161,7 +161,7 @@ class CliDumper extends AbstractDumper
                     \INF === $value => 'INF',
                     -\INF === $value => '-INF',
                     is_nan($value) => 'NAN',
-                    default => !str_contains($value = (string) $value, $this->decimalPoint) ? $value .= $this->decimalPoint.'0' : $value,
+                    default => ! str_contains($value = (string) $value, $this->decimalPoint) ? $value .= $this->decimalPoint.'0' : $value,
                 };
                 break;
 
@@ -205,7 +205,7 @@ class CliDumper extends AbstractDumper
                 'binary' => $bin,
             ];
             $str = $bin && str_contains($str, "\0") ? [$str] : explode("\n", $str);
-            if (isset($str[1]) && !isset($str[2]) && !isset($str[1][0])) {
+            if (isset($str[1]) && ! isset($str[2]) && ! isset($str[1][0])) {
                 unset($str[1]);
                 $str[0] .= "\n";
             }
@@ -292,14 +292,14 @@ class CliDumper extends AbstractDumper
         } elseif (Cursor::HASH_RESOURCE === $type) {
             $prefix = $this->style('note', $class.' resource', $attr).($hasChild ? ' {' : ' ');
         } else {
-            $prefix = $class && !(self::DUMP_LIGHT_ARRAY & $this->flags) ? $this->style('note', 'array:'.$class).' [' : '[';
+            $prefix = $class && ! (self::DUMP_LIGHT_ARRAY & $this->flags) ? $this->style('note', 'array:'.$class).' [' : '[';
         }
 
         if (($cursor->softRefCount || 0 < $cursor->softRefHandle) && empty($attr['cut_hash'])) {
             $prefix .= $this->style('ref', (Cursor::HASH_RESOURCE === $type ? '@' : '#').(0 < $cursor->softRefHandle ? $cursor->softRefHandle : $cursor->softRefTo), ['count' => $cursor->softRefCount]);
-        } elseif ($cursor->hardRefTo && !$cursor->refIndex && $class) {
+        } elseif ($cursor->hardRefTo && ! $cursor->refIndex && $class) {
             $prefix .= $this->style('ref', '&'.$cursor->hardRefTo, ['count' => $cursor->hardRefCount]);
-        } elseif (!$hasChild && Cursor::HASH_RESOURCE === $type) {
+        } elseif (! $hasChild && Cursor::HASH_RESOURCE === $type) {
             $prefix = substr($prefix, 0, -1);
         }
 
@@ -323,8 +323,8 @@ class CliDumper extends AbstractDumper
     /**
      * Dumps an ellipsis for cut children.
      *
-     * @param bool $hasChild When the dump of the hash has child item
-     * @param int  $cut      The number of items the hash has been cut by
+     * @param  bool  $hasChild  When the dump of the hash has child item
+     * @param  int  $cut  The number of items the hash has been cut by
      */
     protected function dumpEllipsis(Cursor $cursor, bool $hasChild, int $cut): void
     {
@@ -374,7 +374,7 @@ class CliDumper extends AbstractDumper
                     $key = "\0~\0".$key;
                     // no break
                 case Cursor::HASH_OBJECT:
-                    if (!isset($key[0]) || "\0" !== $key[0]) {
+                    if (! isset($key[0]) || "\0" !== $key[0]) {
                         $this->line .= '+'.$bin.$this->style('public', $key, $attr).': ';
                     } elseif (0 < strpos($key, "\0", 1)) {
                         $key = explode("\0", substr($key, 1), 2);
@@ -427,24 +427,24 @@ class CliDumper extends AbstractDumper
     /**
      * Decorates a value with some style.
      *
-     * @param string $style The type of style being applied
-     * @param string $value The value being styled
-     * @param array  $attr  Optional context information
+     * @param  string  $style  The type of style being applied
+     * @param  string  $value  The value being styled
+     * @param  array  $attr  Optional context information
      */
     protected function style(string $style, string $value, array $attr = []): string
     {
         $this->colors ??= $this->supportsColors();
 
         $this->handlesHrefGracefully ??= 'JetBrains-JediTerm' !== getenv('TERMINAL_EMULATOR')
-            && (!getenv('KONSOLE_VERSION') || (int) getenv('KONSOLE_VERSION') > 201100)
-            && !isset($_SERVER['IDEA_INITIAL_DIRECTORY']);
+            && (! getenv('KONSOLE_VERSION') || (int) getenv('KONSOLE_VERSION') > 201100)
+            && ! isset($_SERVER['IDEA_INITIAL_DIRECTORY']);
 
         if (isset($attr['ellipsis'], $attr['ellipsis-type'])) {
             $prefix = substr($value, 0, -$attr['ellipsis']);
             if ('cli' === \PHP_SAPI && 'path' === $attr['ellipsis-type'] && isset($_SERVER[$pwd = '\\' === \DIRECTORY_SEPARATOR ? 'CD' : 'PWD']) && str_starts_with($prefix, $_SERVER[$pwd])) {
                 $prefix = '.'.substr($prefix, \strlen($_SERVER[$pwd]));
             }
-            if (!empty($attr['ellipsis-tail'])) {
+            if (! empty($attr['ellipsis-tail'])) {
                 $prefix .= substr($value, -$attr['ellipsis'], $attr['ellipsis-tail']);
                 $value = substr($value, -$attr['ellipsis'] + $attr['ellipsis-tail']);
             } else {
@@ -469,9 +469,9 @@ class CliDumper extends AbstractDumper
             return $s.$endCchr;
         }, $value, -1, $cchrCount);
 
-        if (!($attr['binary'] ?? false)) {
+        if (! ($attr['binary'] ?? false)) {
             $value = preg_replace_callback(static::$unicodeCharsRx, function ($c) use (&$cchrCount, $startCchr, $endCchr) {
-                ++$cchrCount;
+                $cchrCount++;
 
                 return $startCchr.'\u{'.strtoupper(dechex(mb_ord($c[0]))).'}'.$endCchr;
             }, $value);
@@ -589,7 +589,7 @@ class CliDumper extends AbstractDumper
      */
     private function hasColorSupport(mixed $stream): bool
     {
-        if (!\is_resource($stream) || 'stream' !== get_resource_type($stream)) {
+        if (! \is_resource($stream) || 'stream' !== get_resource_type($stream)) {
             return false;
         }
 
@@ -605,7 +605,7 @@ class CliDumper extends AbstractDumper
 
         // Detect msysgit/mingw and assume this is a tty because detection
         // does not work correctly, see https://github.com/composer/composer/issues/9690
-        if (!@stream_isatty($stream) && !\in_array(strtoupper((string) getenv('MSYSTEM')), ['MINGW32', 'MINGW64'], true)) {
+        if (! @stream_isatty($stream) && ! \in_array(strtoupper((string) getenv('MSYSTEM')), ['MINGW32', 'MINGW64'], true)) {
             return false;
         }
 
@@ -643,7 +643,7 @@ class CliDumper extends AbstractDumper
             || 'xterm' === getenv('TERM')
             || 'Hyper' === getenv('TERM_PROGRAM');
 
-        if (!$result) {
+        if (! $result) {
             $version = \sprintf(
                 '%s.%s.%s',
                 PHP_WINDOWS_VERSION_MAJOR,

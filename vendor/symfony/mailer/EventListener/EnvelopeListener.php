@@ -32,8 +32,8 @@ class EnvelopeListener implements EventSubscriberInterface
     private ?array $recipients = null;
 
     /**
-     * @param array<Address|string> $recipients
-     * @param string[]              $allowedRecipients An array of regex to match the allowed recipients
+     * @param  array<Address|string>  $recipients
+     * @param  string[]  $allowedRecipients  An array of regex to match the allowed recipients
      */
     public function __construct(
         Address|string|null $sender = null,
@@ -55,7 +55,7 @@ class EnvelopeListener implements EventSubscriberInterface
 
             $message = $event->getMessage();
             if ($message instanceof Message) {
-                if (!$message->getHeaders()->has('Sender') && !$message->getHeaders()->has('From')) {
+                if (! $message->getHeaders()->has('Sender') && ! $message->getHeaders()->has('From')) {
                     $message->getHeaders()->addMailboxHeader('Sender', $this->sender);
                 }
             }
@@ -66,7 +66,7 @@ class EnvelopeListener implements EventSubscriberInterface
             if ($this->allowedRecipients) {
                 foreach ($event->getEnvelope()->getRecipients() as $recipient) {
                     foreach ($this->allowedRecipients as $allowedRecipient) {
-                        if (!preg_match('{\A'.$allowedRecipient.'\z}', $recipient->getAddress())) {
+                        if (! preg_match('{\A'.$allowedRecipient.'\z}', $recipient->getAddress())) {
                             continue;
                         }
                         // dedup

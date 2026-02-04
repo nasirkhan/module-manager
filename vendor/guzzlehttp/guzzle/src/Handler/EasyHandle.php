@@ -72,7 +72,7 @@ final class EasyHandle
 
         $normalizedKeys = Utils::normalizeHeaderKeys($headers);
 
-        if (!empty($this->options['decode_content']) && isset($normalizedKeys['content-encoding'])) {
+        if (! empty($this->options['decode_content']) && isset($normalizedKeys['content-encoding'])) {
             $headers['x-encoded-content-encoding'] = $headers[$normalizedKeys['content-encoding']];
             unset($headers[$normalizedKeys['content-encoding']]);
             if (isset($normalizedKeys['content-length'])) {
@@ -98,8 +98,7 @@ final class EasyHandle
     }
 
     /**
-     * @param string $name
-     *
+     * @param  string  $name
      * @return void
      *
      * @throws \BadMethodCallException

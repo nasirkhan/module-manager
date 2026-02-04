@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -11,15 +13,15 @@
 
 namespace Monolog\Handler;
 
-use Monolog\Formatter\LineFormatter;
 use Monolog\Formatter\FormatterInterface;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Level;
 use Monolog\LogRecord;
 use Predis\Client as Predis;
 use Redis;
 
 /**
- * Sends the message to a Redis Pub/Sub channel using PUBLISH
+ * Sends the message to a Redis Pub/Sub channel using PUBLISH.
  *
  * usage example:
  *
@@ -36,8 +38,8 @@ class RedisPubSubHandler extends AbstractProcessingHandler
     private string $channelKey;
 
     /**
-     * @param Predis<Predis>|Redis $redis The redis instance
-     * @param string               $key   The channel key to publish records to
+     * @param  Predis<Predis>|Redis  $redis  The redis instance
+     * @param  string  $key  The channel key to publish records to
      */
     public function __construct(Predis|Redis $redis, string $key, int|string|Level $level = Level::Debug, bool $bubble = true)
     {

@@ -48,7 +48,7 @@ class Glob
             $glob = '/'.$glob;
         }
         $sizeGlob = \strlen($glob);
-        for ($i = 0; $i < $sizeGlob; ++$i) {
+        for ($i = 0; $i < $sizeGlob; $i++) {
             $car = $glob[$i];
             if ($firstByte && $strictLeadingDot && '.' !== $car) {
                 $regex .= '(?=[^\.])';
@@ -56,9 +56,9 @@ class Glob
 
             $firstByte = '/' === $car;
 
-            if ($firstByte && $strictWildcardSlash && isset($glob[$i + 2]) && '**' === $glob[$i + 1].$glob[$i + 2] && (!isset($glob[$i + 3]) || '/' === $glob[$i + 3])) {
+            if ($firstByte && $strictWildcardSlash && isset($glob[$i + 2]) && '**' === $glob[$i + 1].$glob[$i + 2] && (! isset($glob[$i + 3]) || '/' === $glob[$i + 3])) {
                 $car = '[^/]++/';
-                if (!isset($glob[$i + 3])) {
+                if (! isset($glob[$i + 3])) {
                     $car .= '?';
                 }
 
@@ -82,13 +82,13 @@ class Glob
                 $regex .= $escaping ? '\\?' : ($strictWildcardSlash ? '[^/]' : '.');
             } elseif ('{' === $car) {
                 $regex .= $escaping ? '\\{' : '(';
-                if (!$escaping) {
-                    ++$inCurlies;
+                if (! $escaping) {
+                    $inCurlies++;
                 }
             } elseif ('}' === $car && $inCurlies) {
                 $regex .= $escaping ? '}' : ')';
-                if (!$escaping) {
-                    --$inCurlies;
+                if (! $escaping) {
+                    $inCurlies--;
                 }
             } elseif (',' === $car && $inCurlies) {
                 $regex .= $escaping ? ',' : '|';

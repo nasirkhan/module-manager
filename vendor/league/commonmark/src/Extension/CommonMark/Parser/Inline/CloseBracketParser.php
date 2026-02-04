@@ -61,7 +61,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
 
         $cursor = $inlineContext->getCursor();
 
-        $startPos      = $cursor->getPosition();
+        $startPos = $cursor->getPosition();
         $previousState = $cursor->saveState();
 
         $cursor->advanceBy(1);
@@ -73,7 +73,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
             $link = $result;
         } elseif ($link = $this->tryParseReference($cursor, $inlineContext->getReferenceMap(), $opener, $startPos)) {
             $reference = $link;
-            $link      = ['url' => $link->getDestination(), 'title' => $link->getTitle()];
+            $link = ['url' => $link->getDestination(), 'title' => $link->getTitle()];
         } else {
             // No match; remove this opener from stack
             $inlineContext->getDelimiterStack()->removeBracket();
@@ -88,7 +88,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
             // Is there a Mention or Link contained within this link?
             // CommonMark does not allow nested links, so we'll restore the original text.
             if ($label instanceof Mention) {
-                $label->replaceWith($replacement = new Text($label->getPrefix() . $label->getIdentifier()));
+                $label->replaceWith($replacement = new Text($label->getPrefix().$label->getIdentifier()));
                 $inline->appendChild($replacement);
             } elseif ($label instanceof Link) {
                 foreach ($label->children() as $child) {
@@ -103,7 +103,7 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
 
         // Process delimiters such as emphasis inside link/image
         $delimiterStack = $inlineContext->getDelimiterStack();
-        $stackBottom    = $opener->getPosition();
+        $stackBottom = $opener->getPosition();
         $delimiterStack->processDelimiters($stackBottom, $this->environment->getDelimiterProcessors());
         $delimiterStack->removeBracket();
         $delimiterStack->removeAll($stackBottom);
@@ -170,16 +170,16 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
 
     private function tryParseReference(Cursor $cursor, ReferenceMapInterface $referenceMap, Bracket $opener, int $startPos): ?ReferenceInterface
     {
-        $savePos     = $cursor->saveState();
+        $savePos = $cursor->saveState();
         $beforeLabel = $cursor->getPosition();
-        $n           = LinkParserHelper::parseLinkLabel($cursor);
+        $n = LinkParserHelper::parseLinkLabel($cursor);
         if ($n > 2) {
-            $start  = $beforeLabel + 1;
+            $start = $beforeLabel + 1;
             $length = $n - 2;
         } elseif (! $opener->hasNext()) {
             // Empty or missing second label means to use the first label as the reference.
             // The reference must not contain a bracket. If we know there's a bracket, we don't even bother checking it.
-            $start  = $opener->getPosition();
+            $start = $opener->getPosition();
             $length = $startPos - $start;
         } else {
             $cursor->restoreState($savePos);

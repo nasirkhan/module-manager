@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -13,11 +15,11 @@ namespace Monolog\Processor;
 
 use Monolog\Level;
 use Monolog\Logger;
-use Psr\Log\LogLevel;
 use Monolog\LogRecord;
+use Psr\Log\LogLevel;
 
 /**
- * Injects Git branch and Git commit SHA in all records
+ * Injects Git branch and Git commit SHA in all records.
  *
  * @author Nick Otter
  * @author Jordi Boggiano <j.boggiano@seld.be>
@@ -29,7 +31,7 @@ class GitProcessor implements ProcessorInterface
     private static $cache = null;
 
     /**
-     * @param int|string|Level|LogLevel::* $level The minimum logging level at which this Processor will be triggered
+     * @param  int|string|Level|LogLevel::*  $level  The minimum logging level at which this Processor will be triggered
      *
      * @phpstan-param value-of<Level::VALUES>|value-of<Level::NAMES>|Level|LogLevel::* $level
      */

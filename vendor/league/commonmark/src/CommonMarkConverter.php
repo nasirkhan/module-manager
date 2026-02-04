@@ -25,9 +25,9 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 final class CommonMarkConverter extends MarkdownConverter
 {
     /**
-     * Create a new Markdown converter pre-configured for CommonMark
+     * Create a new Markdown converter pre-configured for CommonMark.
      *
-     * @param array<string, mixed> $config
+     * @param  array<string, mixed>  $config
      */
     public function __construct(array $config = [])
     {

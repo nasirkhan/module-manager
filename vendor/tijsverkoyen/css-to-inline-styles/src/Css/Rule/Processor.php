@@ -3,15 +3,14 @@
 namespace TijsVerkoyen\CssToInlineStyles\Css\Rule;
 
 use Symfony\Component\CssSelector\Node\Specificity;
-use \TijsVerkoyen\CssToInlineStyles\Css\Property\Processor as PropertyProcessor;
+use TijsVerkoyen\CssToInlineStyles\Css\Property\Processor as PropertyProcessor;
 
 class Processor
 {
     /**
-     * Splits a string into separate rules
+     * Splits a string into separate rules.
      *
-     * @param string $rulesString
-     *
+     * @param  string  $rulesString
      * @return string[]
      */
     public function splitIntoSeparateRules($rulesString)
@@ -22,14 +21,13 @@ class Processor
     }
 
     /**
-     * @param string $string
-     *
+     * @param  string  $string
      * @return string
      */
     private function cleanup($string)
     {
-        $string = str_replace(array("\r", "\n"), '', $string);
-        $string = str_replace(array("\t"), ' ', $string);
+        $string = str_replace(["\r", "\n"], '', $string);
+        $string = str_replace(["\t"], ' ', $string);
         $string = str_replace('"', '\'', $string);
         $string = preg_replace('|/\*.*?\*/|', '', $string) ?? $string;
         $string = preg_replace('/\s\s+/', ' ', $string) ?? $string;
@@ -41,11 +39,10 @@ class Processor
     }
 
     /**
-     * Converts a rule-string into an object
+     * Converts a rule-string into an object.
      *
-     * @param string $rule
-     * @param int    $originalOrder
-     *
+     * @param  string  $rule
+     * @param  int  $originalOrder
      * @return Rule[]
      */
     public function convertToObjects($rule, $originalOrder)
@@ -53,11 +50,11 @@ class Processor
         $rule = $this->cleanup($rule);
 
         $chunks = explode('{', $rule);
-        if (!isset($chunks[1])) {
-            return array();
+        if (! isset($chunks[1])) {
+            return [];
         }
         $propertiesProcessor = new PropertyProcessor();
-        $rules = array();
+        $rules = [];
         $selectors = (array) explode(',', trim($chunks[0]));
         $properties = $propertiesProcessor->splitIntoSeparateProperties($chunks[1]);
 
@@ -78,12 +75,11 @@ class Processor
 
     /**
      * Calculates the specificity based on a CSS Selector string,
-     * Based on the patterns from premailer/css_parser by Alex Dunae
+     * Based on the patterns from premailer/css_parser by Alex Dunae.
      *
      * @see https://github.com/premailer/css_parser/blob/master/lib/css_parser/regexps.rb
      *
-     * @param string $selector
-     *
+     * @param  string  $selector
      * @return Specificity
      */
     public function calculateSpecificityBasedOnASelector($selector)
@@ -129,12 +125,11 @@ class Processor
     }
 
     /**
-     * @param string[] $rules
-     * @param Rule[]   $objects
-     *
+     * @param  string[]  $rules
+     * @param  Rule[]  $objects
      * @return Rule[]
      */
-    public function convertArrayToObjects(array $rules, array $objects = array())
+    public function convertArrayToObjects(array $rules, array $objects = [])
     {
         $order = 1;
         foreach ($rules as $rule) {
@@ -147,11 +142,10 @@ class Processor
 
     /**
      * Sorts an array on the specificity element in an ascending way
-     * Lower specificity will be sorted to the beginning of the array
+     * Lower specificity will be sorted to the beginning of the array.
      *
-     * @param Rule $e1 The first element.
-     * @param Rule $e2 The second element.
-     *
+     * @param  Rule  $e1  The first element.
+     * @param  Rule  $e2  The second element.
      * @return int
      */
     public static function sortOnSpecificity(Rule $e1, Rule $e2)

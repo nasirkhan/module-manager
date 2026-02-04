@@ -19,7 +19,7 @@ use Symfony\Component\Translation\Exception\UnsupportedSchemeException;
 class TranslationProviderCollectionFactory
 {
     /**
-     * @param iterable<mixed, ProviderFactoryInterface> $factories
+     * @param  iterable<mixed, ProviderFactoryInterface>  $factories
      */
     public function __construct(
         private iterable $factories,
@@ -33,8 +33,8 @@ class TranslationProviderCollectionFactory
         foreach ($config as $name => $currentConfig) {
             $providers[$name] = $this->fromDsnObject(
                 new Dsn($currentConfig['dsn']),
-                !$currentConfig['locales'] ? $this->enabledLocales : $currentConfig['locales'],
-                !$currentConfig['domains'] ? [] : $currentConfig['domains']
+                ! $currentConfig['locales'] ? $this->enabledLocales : $currentConfig['locales'],
+                ! $currentConfig['domains'] ? [] : $currentConfig['domains']
             );
         }
 

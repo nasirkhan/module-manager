@@ -43,7 +43,7 @@ abstract class DataCollector implements DataCollectorInterface
         if ($var instanceof Data) {
             return $var;
         }
-        if (!isset($this->cloner)) {
+        if (! isset($this->cloner)) {
             $this->cloner = new VarCloner();
             $this->cloner->setMaxItems(-1);
             $this->cloner->addCasters($this->getCasters());
@@ -59,10 +59,10 @@ abstract class DataCollector implements DataCollectorInterface
     {
         return [
             '*' => function ($v, array $a, Stub $s, $isNested) {
-                if (!$v instanceof Stub) {
+                if (! $v instanceof Stub) {
                     $b = $a;
                     foreach ($a as $k => $v) {
-                        if (!\is_object($v) || $v instanceof \DateTimeInterface || $v instanceof Stub) {
+                        if (! \is_object($v) || $v instanceof \DateTimeInterface || $v instanceof Stub) {
                             continue;
                         }
 

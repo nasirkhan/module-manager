@@ -138,7 +138,7 @@ class RouteCollection implements \IteratorAggregate, \Countable
     /**
      * Removes a route or an array of routes by name from the collection.
      *
-     * @param string|string[] $name The route name or an array of route names
+     * @param  string|string[]  $name  The route name or an array of route names
      */
     public function remove(string|array $name): void
     {
@@ -151,7 +151,7 @@ class RouteCollection implements \IteratorAggregate, \Countable
             unset($this->routes[$n], $this->priorities[$n], $this->aliases[$n]);
         }
 
-        if (!$routes) {
+        if (! $routes) {
             return;
         }
 
@@ -311,7 +311,7 @@ class RouteCollection implements \IteratorAggregate, \Countable
     /**
      * Sets the schemes (e.g. 'https') all child routes are restricted to.
      *
-     * @param string|string[] $schemes The scheme or an array of schemes
+     * @param  string|string[]  $schemes  The scheme or an array of schemes
      */
     public function setSchemes(string|array $schemes): void
     {
@@ -323,7 +323,7 @@ class RouteCollection implements \IteratorAggregate, \Countable
     /**
      * Sets the HTTP methods (e.g. 'POST') all child routes are restricted to.
      *
-     * @param string|string[] $methods The method or an array of methods
+     * @param  string|string[]  $methods  The method or an array of methods
      */
     public function setMethods(string|array $methods): void
     {
@@ -350,7 +350,7 @@ class RouteCollection implements \IteratorAggregate, \Countable
     {
         $key = (string) $resource;
 
-        if (!isset($this->resources[$key])) {
+        if (! isset($this->resources[$key])) {
             $this->resources[$key] = $resource;
         }
     }
@@ -358,8 +358,8 @@ class RouteCollection implements \IteratorAggregate, \Countable
     /**
      * Sets an alias for an existing route.
      *
-     * @param string $name  The alias to create
-     * @param string $alias The route to alias
+     * @param  string  $name  The alias to create
+     * @param  string  $alias  The route to alias
      *
      * @throws InvalidArgumentException if the alias is for itself
      */

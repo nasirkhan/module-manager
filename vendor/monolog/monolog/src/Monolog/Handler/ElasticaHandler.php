@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -12,16 +14,16 @@
 namespace Monolog\Handler;
 
 use Elastic\Transport\Exception\TransportException;
-use Elastica\Document;
-use Monolog\Formatter\FormatterInterface;
-use Monolog\Formatter\ElasticaFormatter;
-use Monolog\Level;
 use Elastica\Client;
+use Elastica\Document;
 use Elastica\Exception\ExceptionInterface;
+use Monolog\Formatter\ElasticaFormatter;
+use Monolog\Formatter\FormatterInterface;
+use Monolog\Level;
 use Monolog\LogRecord;
 
 /**
- * Elastic Search handler
+ * Elastic Search handler.
  *
  * Usage example:
  *
@@ -35,6 +37,7 @@ use Monolog\LogRecord;
  *    $log->pushHandler($handler);
  *
  * @author Jelle Vink <jelle.vink@gmail.com>
+ *
  * @phpstan-type Options array{
  *     index: string,
  *     type: string,
@@ -52,13 +55,14 @@ class ElasticaHandler extends AbstractProcessingHandler
 
     /**
      * @var mixed[] Handler config options
+     *
      * @phpstan-var Options
      */
     protected array $options;
 
     /**
-     * @param Client  $client  Elastica Client object
-     * @param mixed[] $options Handler configuration
+     * @param  Client  $client  Elastica Client object
+     * @param  mixed[]  $options  Handler configuration
      *
      * @phpstan-param InputOptions $options
      */
@@ -68,9 +72,9 @@ class ElasticaHandler extends AbstractProcessingHandler
         $this->client = $client;
         $this->options = array_merge(
             [
-                'index'          => 'monolog',      // Elastic index name
-                'type'           => 'record',       // Elastic document type
-                'ignore_error'   => false,          // Suppress Elastica exceptions
+                'index' => 'monolog',      // Elastic index name
+                'type' => 'record',       // Elastic document type
+                'ignore_error' => false,          // Suppress Elastica exceptions
             ],
             $options
         );
@@ -124,9 +128,9 @@ class ElasticaHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Use Elasticsearch bulk API to send list of documents
+     * Use Elasticsearch bulk API to send list of documents.
      *
-     * @param Document[] $documents
+     * @param  Document[]  $documents
      *
      * @throws \RuntimeException
      */
@@ -134,9 +138,9 @@ class ElasticaHandler extends AbstractProcessingHandler
     {
         try {
             $this->client->addDocuments($documents);
-        } catch (ExceptionInterface | TransportException $e) {
-            if (!$this->options['ignore_error']) {
-                throw new \RuntimeException("Error sending messages to Elasticsearch", 0, $e);
+        } catch (ExceptionInterface|TransportException $e) {
+            if (! $this->options['ignore_error']) {
+                throw new \RuntimeException('Error sending messages to Elasticsearch', 0, $e);
             }
         }
     }

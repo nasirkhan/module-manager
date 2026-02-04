@@ -50,7 +50,8 @@ final class Styles
         private array $textModifiers = [],
         private array $styleModifiers = [],
         private array $defaultStyles = []
-    ) {}
+    ) {
+    }
 
     /**
      * @return $this

@@ -136,11 +136,10 @@ final class Idn
     /**
      * @see https://www.unicode.org/reports/tr46/#ToASCII
      *
-     * @param string $domainName
-     * @param int    $options
-     * @param int    $variant
-     * @param array  $idna_info
-     *
+     * @param  string  $domainName
+     * @param  int  $options
+     * @param  int  $variant
+     * @param  array  $idna_info
      * @return string|false
      */
     public static function idn_to_ascii($domainName, $options = self::IDNA_DEFAULT, $variant = self::INTL_IDNA_VARIANT_UTS46, &$idna_info = [])
@@ -193,11 +192,10 @@ final class Idn
     /**
      * @see https://www.unicode.org/reports/tr46/#ToUnicode
      *
-     * @param string $domainName
-     * @param int    $options
-     * @param int    $variant
-     * @param array  $idna_info
-     *
+     * @param  string  $domainName
+     * @param  int  $options
+     * @param  int  $variant
+     * @param  array  $idna_info
      * @return string|false
      */
     public static function idn_to_utf8($domainName, $options = self::IDNA_DEFAULT, $variant = self::INTL_IDNA_VARIANT_UTS46, &$idna_info = [])
@@ -228,13 +226,12 @@ final class Idn
     }
 
     /**
-     * @param string $label
-     *
+     * @param  string  $label
      * @return bool
      */
     private static function isValidContextJ(array $codePoints, $label)
     {
-        if (!isset(self::$virama)) {
+        if (! isset(self::$virama)) {
             self::$virama = require __DIR__.\DIRECTORY_SEPARATOR.'Resources'.\DIRECTORY_SEPARATOR.'unidata'.\DIRECTORY_SEPARATOR.'virama.php';
         }
 
@@ -245,7 +242,7 @@ final class Idn
                 continue;
             }
 
-            if (!isset($codePoints[$i - 1])) {
+            if (! isset($codePoints[$i - 1])) {
                 return false;
             }
 
@@ -272,9 +269,8 @@ final class Idn
     /**
      * @see https://www.unicode.org/reports/tr46/#ProcessingStepMap
      *
-     * @param string              $input
-     * @param array<string, bool> $options
-     *
+     * @param  string  $input
+     * @param  array<string, bool>  $options
      * @return string
      */
     private static function mapCodePoints($input, array $options, Info $info)
@@ -316,16 +312,15 @@ final class Idn
     /**
      * @see https://www.unicode.org/reports/tr46/#Processing
      *
-     * @param string              $domain
-     * @param array<string, bool> $options
-     *
+     * @param  string  $domain
+     * @param  array<string, bool>  $options
      * @return array<int, string>
      */
     private static function process($domain, array $options, Info $info)
     {
         // If VerifyDnsLength is not set, we are doing ToUnicode otherwise we are doing ToASCII and
         // we need to respect the VerifyDnsLength option.
-        $checkForEmptyLabels = !isset($options['VerifyDnsLength']) || $options['VerifyDnsLength'];
+        $checkForEmptyLabels = ! isset($options['VerifyDnsLength']) || $options['VerifyDnsLength'];
 
         if ($checkForEmptyLabels && '' === $domain) {
             $info->errors |= self::ERROR_EMPTY_LABEL;
@@ -337,7 +332,7 @@ final class Idn
         $domain = self::mapCodePoints($domain, $options, $info);
 
         // Step 2. Normalize the domain name string to Unicode Normalization Form C.
-        if (!\Normalizer::isNormalized($domain, \Normalizer::FORM_C)) {
+        if (! \Normalizer::isNormalized($domain, \Normalizer::FORM_C)) {
             $domain = \Normalizer::normalize($domain, \Normalizer::FORM_C);
         }
 
@@ -377,7 +372,7 @@ final class Idn
             self::validateLabel($label, $info, $validationOptions, $i > 0 && $i === $lastLabelIndex);
         }
 
-        if ($info->bidiDomain && !$info->validBidiDomain) {
+        if ($info->bidiDomain && ! $info->validBidiDomain) {
             $info->errors |= self::ERROR_BIDI;
         }
 
@@ -391,7 +386,7 @@ final class Idn
     /**
      * @see https://tools.ietf.org/html/rfc5893#section-2
      *
-     * @param string $label
+     * @param  string  $label
      */
     private static function validateBidiLabel($label, Info $info)
     {
@@ -459,7 +454,7 @@ final class Idn
     }
 
     /**
-     * @param array<int, string> $labels
+     * @param  array<int, string>  $labels
      */
     private static function validateDomainAndLabelLength(array $labels, Info $info)
     {
@@ -474,11 +469,11 @@ final class Idn
         // delimiter. This also means we don't need to check the last label's length for being too
         // long.
         if ($length > 1 && '' === $labels[$length - 1]) {
-            ++$maxDomainSize;
-            --$length;
+            $maxDomainSize++;
+            $length--;
         }
 
-        for ($i = 0; $i < $length; ++$i) {
+        for ($i = 0; $i < $length; $i++) {
             $bytes = \strlen($labels[$i]);
             $domainLength += $bytes;
 
@@ -495,14 +490,14 @@ final class Idn
     /**
      * @see https://www.unicode.org/reports/tr46/#Validity_Criteria
      *
-     * @param string              $label
-     * @param array<string, bool> $options
-     * @param bool                $canBeEmpty
+     * @param  string  $label
+     * @param  array<string, bool>  $options
+     * @param  bool  $canBeEmpty
      */
     private static function validateLabel($label, Info $info, array $options, $canBeEmpty)
     {
         if ('' === $label) {
-            if (!$canBeEmpty && (!isset($options['VerifyDnsLength']) || $options['VerifyDnsLength'])) {
+            if (! $canBeEmpty && (! isset($options['VerifyDnsLength']) || $options['VerifyDnsLength'])) {
                 $info->errors |= self::ERROR_EMPTY_LABEL;
             }
 
@@ -510,7 +505,7 @@ final class Idn
         }
 
         // Step 1. The label must be in Unicode Normalization Form C.
-        if (!\Normalizer::isNormalized($label, \Normalizer::FORM_C)) {
+        if (! \Normalizer::isNormalized($label, \Normalizer::FORM_C)) {
             $info->errors |= self::ERROR_INVALID_ACE_LABEL;
         }
 
@@ -555,7 +550,7 @@ final class Idn
             $data = self::lookupCodePointStatus($codePoint, $useSTD3ASCIIRules);
             $status = $data['status'];
 
-            if ('valid' === $status || (!$transitional && 'deviation' === $status)) {
+            if ('valid' === $status || (! $transitional && 'deviation' === $status)) {
                 continue;
             }
 
@@ -567,13 +562,13 @@ final class Idn
         // Step 7. If CheckJoiners, the label must satisify the ContextJ rules from Appendix A, in
         // The Unicode Code Points and Internationalized Domain Names for Applications (IDNA)
         // [IDNA2008].
-        if ($options['CheckJoiners'] && !self::isValidContextJ($codePoints, $label)) {
+        if ($options['CheckJoiners'] && ! self::isValidContextJ($codePoints, $label)) {
             $info->errors |= self::ERROR_CONTEXTJ;
         }
 
         // Step 8. If CheckBidi, and if the domain name is a  Bidi domain name, then the label must
         // satisfy all six of the numbered conditions in [IDNA2008] RFC 5893, Section 2.
-        if ($options['CheckBidi'] && (!$info->bidiDomain || $info->validBidiDomain)) {
+        if ($options['CheckBidi'] && (! $info->bidiDomain || $info->validBidiDomain)) {
             self::validateBidiLabel($label, $info);
         }
     }
@@ -581,8 +576,7 @@ final class Idn
     /**
      * @see https://tools.ietf.org/html/rfc3492#section-6.2
      *
-     * @param string $input
-     *
+     * @param  string  $input
      * @return string
      */
     private static function punycodeDecode($input)
@@ -597,7 +591,7 @@ final class Idn
         $output = [];
         $bytes = array_map('ord', str_split($input));
 
-        for ($j = 0; $j < $b; ++$j) {
+        for ($j = 0; $j < $b; $j++) {
             if ($bytes[$j] > 0x7F) {
                 throw new \Exception('Invalid input');
             }
@@ -606,10 +600,10 @@ final class Idn
         }
 
         if ($b > 0) {
-            ++$b;
+            $b++;
         }
 
-        for ($in = $b; $in < $inputLength; ++$out) {
+        for ($in = $b; $in < $inputLength; $out++) {
             $oldi = $i;
             $w = 1;
 
@@ -669,8 +663,7 @@ final class Idn
     /**
      * @see https://tools.ietf.org/html/rfc3492#section-6.3
      *
-     * @param string $input
-     *
+     * @param  string  $input
      * @return string
      */
     private static function punycodeEncode($input)
@@ -684,11 +677,11 @@ final class Idn
         $iter = self::utf8Decode($input);
 
         foreach ($iter as $codePoint) {
-            ++$inputLength;
+            $inputLength++;
 
             if ($codePoint < 0x80) {
                 $output .= \chr($codePoint);
-                ++$out;
+                $out++;
             }
         }
 
@@ -697,7 +690,7 @@ final class Idn
 
         if ($b > 0) {
             $output .= self::DELIMITER;
-            ++$out;
+            $out++;
         }
 
         while ($h < $inputLength) {
@@ -740,20 +733,20 @@ final class Idn
                         $qMinusT = $q - $t;
                         $baseMinusT = self::BASE - $t;
                         $output .= self::encodeDigit($t + $qMinusT % $baseMinusT, false);
-                        ++$out;
+                        $out++;
                         $q = intdiv($qMinusT, $baseMinusT);
                     }
 
                     $output .= self::encodeDigit($q, false);
-                    ++$out;
+                    $out++;
                     $bias = self::adaptBias($delta, $h + 1, $h === $b);
                     $delta = 0;
-                    ++$h;
+                    $h++;
                 }
             }
 
-            ++$delta;
-            ++$n;
+            $delta++;
+            $n++;
         }
 
         return $output;
@@ -762,10 +755,9 @@ final class Idn
     /**
      * @see https://tools.ietf.org/html/rfc3492#section-6.1
      *
-     * @param int  $delta
-     * @param int  $numPoints
-     * @param bool $firstTime
-     *
+     * @param  int  $delta
+     * @param  int  $numPoints
+     * @param  bool  $firstTime
      * @return int
      */
     private static function adaptBias($delta, $numPoints, $firstTime)
@@ -784,9 +776,8 @@ final class Idn
     }
 
     /**
-     * @param int  $d
-     * @param bool $flag
-     *
+     * @param  int  $d
+     * @param  bool  $flag
      * @return string
      */
     private static function encodeDigit($d, $flag)
@@ -800,8 +791,7 @@ final class Idn
      *
      * @see https://encoding.spec.whatwg.org/#utf-8-decoder
      *
-     * @param string $input
-     *
+     * @param  string  $input
      * @return array<int, int>
      */
     private static function utf8Decode($input)
@@ -814,7 +804,7 @@ final class Idn
         $codePoints = [];
         $length = \strlen($input);
 
-        for ($i = 0; $i < $length; ++$i) {
+        for ($i = 0; $i < $length; $i++) {
             $byte = \ord($input[$i]);
 
             if (0 === $bytesNeeded) {
@@ -858,7 +848,7 @@ final class Idn
                 $bytesSeen = 0;
                 $lowerBoundary = 0x80;
                 $upperBoundary = 0xBF;
-                --$i;
+                $i--;
                 $codePoints[] = 0xFFFD;
 
                 continue;
@@ -887,14 +877,13 @@ final class Idn
     }
 
     /**
-     * @param int  $codePoint
-     * @param bool $useSTD3ASCIIRules
-     *
+     * @param  int  $codePoint
+     * @param  bool  $useSTD3ASCIIRules
      * @return array{status: string, mapping?: string}
      */
     private static function lookupCodePointStatus($codePoint, $useSTD3ASCIIRules)
     {
-        if (!self::$mappingTableLoaded) {
+        if (! self::$mappingTableLoaded) {
             self::$mappingTableLoaded = true;
             self::$mapped = require __DIR__.'/Resources/unidata/mapped.php';
             self::$ignored = require __DIR__.'/Resources/unidata/ignored.php';
@@ -925,7 +914,7 @@ final class Idn
         if ($isDisallowedMapped || isset(self::$disallowed_STD3_valid[$codePoint])) {
             $status = 'disallowed';
 
-            if (!$useSTD3ASCIIRules) {
+            if (! $useSTD3ASCIIRules) {
                 $status = $isDisallowedMapped ? 'mapped' : 'valid';
             }
 

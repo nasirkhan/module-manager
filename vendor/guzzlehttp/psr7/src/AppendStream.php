@@ -26,8 +26,8 @@ final class AppendStream implements StreamInterface
     private $pos = 0;
 
     /**
-     * @param StreamInterface[] $streams Streams to decorate. Each stream must
-     *                                   be readable.
+     * @param  StreamInterface[]  $streams  Streams to decorate. Each stream must
+     *                                      be readable.
      */
     public function __construct(array $streams = [])
     {
@@ -53,20 +53,20 @@ final class AppendStream implements StreamInterface
     }
 
     /**
-     * Add a stream to the AppendStream
+     * Add a stream to the AppendStream.
      *
-     * @param StreamInterface $stream Stream to append. Must be readable.
+     * @param  StreamInterface  $stream  Stream to append. Must be readable.
      *
      * @throws \InvalidArgumentException if the stream is not readable
      */
     public function addStream(StreamInterface $stream): void
     {
-        if (!$stream->isReadable()) {
+        if (! $stream->isReadable()) {
             throw new \InvalidArgumentException('Each stream must be readable');
         }
 
         // The stream is only seekable if all streams are seekable
-        if (!$stream->isSeekable()) {
+        if (! $stream->isSeekable()) {
             $this->seekable = false;
         }
 
@@ -140,7 +140,7 @@ final class AppendStream implements StreamInterface
 
     public function eof(): bool
     {
-        return !$this->streams
+        return ! $this->streams
             || ($this->current >= count($this->streams) - 1
              && $this->streams[$this->current]->eof());
     }
@@ -155,7 +155,7 @@ final class AppendStream implements StreamInterface
      */
     public function seek($offset, $whence = SEEK_SET): void
     {
-        if (!$this->seekable) {
+        if (! $this->seekable) {
             throw new \RuntimeException('This AppendStream is not seekable');
         } elseif ($whence !== SEEK_SET) {
             throw new \RuntimeException('The AppendStream can only seek with SEEK_SET');
@@ -174,7 +174,7 @@ final class AppendStream implements StreamInterface
         }
 
         // Seek to the actual position by reading from each stream
-        while ($this->pos < $offset && !$this->eof()) {
+        while ($this->pos < $offset && ! $this->eof()) {
             $result = $this->read(min(8096, $offset - $this->pos));
             if ($result === '') {
                 break;
@@ -199,7 +199,7 @@ final class AppendStream implements StreamInterface
                 if ($this->current === $total) {
                     break;
                 }
-                ++$this->current;
+                $this->current++;
             }
 
             $result = $this->streams[$this->current]->read($remaining);

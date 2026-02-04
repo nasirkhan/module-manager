@@ -31,7 +31,7 @@ final class FencedCodeParser extends AbstractBlockContinueParser
 
     public function __construct(int $fenceLength, string $fenceChar, int $fenceOffset)
     {
-        $this->block   = new FencedCode($fenceLength, $fenceChar, $fenceOffset);
+        $this->block = new FencedCode($fenceLength, $fenceChar, $fenceOffset);
         $this->strings = new ArrayCollection();
     }
 
@@ -54,7 +54,7 @@ final class FencedCodeParser extends AbstractBlockContinueParser
         // Skip optional spaces of fence offset
         // Optimization: don't attempt to match if we're at a non-space position
         if ($cursor->getNextNonSpacePosition() > $cursor->getPosition()) {
-            $cursor->match('/^ {0,' . $this->block->getOffset() . '}/');
+            $cursor->match('/^ {0,'.$this->block->getOffset().'}/');
         }
 
         return BlockContinue::at($cursor);
@@ -78,7 +78,7 @@ final class FencedCodeParser extends AbstractBlockContinueParser
         if ($this->strings->count() === 1) {
             $this->block->setLiteral('');
         } else {
-            $this->block->setLiteral(\implode("\n", $this->strings->slice(1)) . "\n");
+            $this->block->setLiteral(\implode("\n", $this->strings->slice(1))."\n");
         }
     }
 }

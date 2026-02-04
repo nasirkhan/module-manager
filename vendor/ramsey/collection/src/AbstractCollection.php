@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/collection library
+ * This file is part of the ramsey/collection library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -42,10 +42,12 @@ use function usort;
 
 /**
  * This class provides a basic implementation of `CollectionInterface`, to
- * minimize the effort required to implement this interface
+ * minimize the effort required to implement this interface.
  *
  * @template T
+ *
  * @extends AbstractArray<T>
+ *
  * @implements CollectionInterface<T>
  */
 abstract class AbstractCollection extends AbstractArray implements CollectionInterface
@@ -76,8 +78,8 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     {
         if ($this->checkType($this->getType(), $value) === false) {
             throw new InvalidArgumentException(
-                'Value must be of type ' . $this->getType() . '; value is '
-                . $this->toolValueToString($value),
+                'Value must be of type '.$this->getType().'; value is '
+                .$this->toolValueToString($value),
             );
         }
 
@@ -101,9 +103,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
     /**
      * @throws InvalidPropertyOrMethod if the $propertyOrMethod does not exist
-     *     on the elements in this collection.
+     *                                 on the elements in this collection.
      * @throws UnsupportedOperationException if unable to call column() on this
-     *     collection.
+     *                                       collection.
      *
      * @inheritDoc
      */
@@ -154,9 +156,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      * @return CollectionInterface<T>
      *
      * @throws InvalidPropertyOrMethod if the $propertyOrMethod does not exist
-     *     on the elements in this collection.
+     *                                 on the elements in this collection.
      * @throws UnsupportedOperationException if unable to call sort() on this
-     *     collection.
+     *                                       collection.
      */
     public function sort(?string $propertyOrMethod = null, Sort $order = Sort::Ascending): CollectionInterface
     {
@@ -176,8 +178,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @param callable(T): bool $callback A callable to use for filtering elements.
-     *
+     * @param  callable(T): bool  $callback  A callable to use for filtering elements.
      * @return CollectionInterface<T>
      */
     public function filter(callable $callback): CollectionInterface
@@ -192,9 +193,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
      * @return CollectionInterface<T>
      *
      * @throws InvalidPropertyOrMethod if the $propertyOrMethod does not exist
-     *     on the elements in this collection.
+     *                                 on the elements in this collection.
      * @throws UnsupportedOperationException if unable to call where() on this
-     *     collection.
+     *                                       collection.
      */
     public function where(?string $propertyOrMethod, mixed $value): CollectionInterface
     {
@@ -204,9 +205,8 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @param callable(T): TCallbackReturn $callback A callable to apply to each
-     *     item of the collection.
-     *
+     * @param  callable(T): TCallbackReturn  $callback  A callable to apply to each
+     *                                                  item of the collection.
      * @return CollectionInterface<TCallbackReturn>
      *
      * @template TCallbackReturn
@@ -217,10 +217,9 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @param callable(TCarry, T): TCarry $callback A callable to apply to each
-     *     item of the collection to reduce it to a single value.
-     * @param TCarry $initial This is the initial value provided to the callback.
-     *
+     * @param  callable(TCarry, T): TCarry  $callback  A callable to apply to each
+     *                                                 item of the collection to reduce it to a single value.
+     * @param  TCarry  $initial  This is the initial value provided to the callback.
      * @return TCarry
      *
      * @template TCarry
@@ -231,13 +230,12 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @param CollectionInterface<T> $other The collection to check for divergent
-     *     items.
-     *
+     * @param  CollectionInterface<T>  $other  The collection to check for divergent
+     *                                         items.
      * @return CollectionInterface<T>
      *
      * @throws CollectionMismatchException if the compared collections are of
-     *     differing types.
+     *                                     differing types.
      */
     public function diff(CollectionInterface $other): CollectionInterface
     {
@@ -253,13 +251,12 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @param CollectionInterface<T> $other The collection to check for
-     *     intersecting items.
-     *
+     * @param  CollectionInterface<T>  $other  The collection to check for
+     *                                         intersecting items.
      * @return CollectionInterface<T>
      *
      * @throws CollectionMismatchException if the compared collections are of
-     *     differing types.
+     *                                     differing types.
      */
     public function intersect(CollectionInterface $other): CollectionInterface
     {
@@ -272,20 +269,19 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @param CollectionInterface<T> ...$collections The collections to merge.
-     *
+     * @param  CollectionInterface<T>  ...$collections  The collections to merge.
      * @return CollectionInterface<T>
      *
      * @throws CollectionMismatchException if unable to merge any of the given
-     *     collections or items within the given collections due to type
-     *     mismatch errors.
+     *                                     collections or items within the given collections due to type
+     *                                     mismatch errors.
      */
     public function merge(CollectionInterface ...$collections): CollectionInterface
     {
         $mergedCollection = clone $this;
 
         foreach ($collections as $index => $collection) {
-            if (!$collection instanceof static) {
+            if (! $collection instanceof static) {
                 throw new CollectionMismatchException(
                     sprintf('Collection with index %d must be of type %s', $index, static::class),
                 );
@@ -316,20 +312,20 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @param CollectionInterface<T> $other
+     * @param  CollectionInterface<T>  $other
      *
      * @throws CollectionMismatchException
      */
     private function compareCollectionTypes(CollectionInterface $other): void
     {
-        if (!$other instanceof static) {
-            throw new CollectionMismatchException('Collection must be of type ' . static::class);
+        if (! $other instanceof static) {
+            throw new CollectionMismatchException('Collection must be of type '.static::class);
         }
 
         // When using generics (Collection.php, Set.php, etc),
         // we also need to make sure that the internal types match each other
         if ($this->getUniformType($other) !== $this->getUniformType($this)) {
-            throw new CollectionMismatchException('Collection items must be of type ' . $this->getType());
+            throw new CollectionMismatchException('Collection items must be of type '.$this->getType());
         }
     }
 
@@ -351,7 +347,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
     }
 
     /**
-     * @param CollectionInterface<mixed> $collection
+     * @param  CollectionInterface<mixed>  $collection
      */
     private function getUniformType(CollectionInterface $collection): string
     {

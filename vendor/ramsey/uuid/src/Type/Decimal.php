@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -22,7 +22,7 @@ use function sprintf;
 use function str_starts_with;
 
 /**
- * A value object representing a decimal
+ * A value object representing a decimal.
  *
  * This class exists for type-safety purposes, to ensure that decimals returned from ramsey/uuid methods as strings are
  * truly decimals and not some other kind of string.
@@ -36,14 +36,14 @@ final class Decimal implements NumberInterface
     private string $value;
     private bool $isNegative;
 
-    public function __construct(float | int | string | self $value)
+    public function __construct(float|int|string|self $value)
     {
         $value = (string) $value;
 
-        if (!is_numeric($value)) {
+        if (! is_numeric($value)) {
             throw new InvalidArgumentException(
                 'Value must be a signed decimal or a string containing only '
-                . 'digits 0-9 and, optionally, a decimal point or sign (+ or -)'
+                .'digits 0-9 and, optionally, a decimal point or sign (+ or -)'
             );
         }
 
@@ -100,9 +100,9 @@ final class Decimal implements NumberInterface
     }
 
     /**
-     * Constructs the object from a serialized string representation
+     * Constructs the object from a serialized string representation.
      *
-     * @param string $data The serialized string representation of the object
+     * @param  string  $data  The serialized string representation of the object
      */
     public function unserialize(string $data): void
     {
@@ -110,12 +110,12 @@ final class Decimal implements NumberInterface
     }
 
     /**
-     * @param array{string?: string} $data
+     * @param  array{string?: string}  $data
      */
     public function __unserialize(array $data): void
     {
         // @codeCoverageIgnoreStart
-        if (!isset($data['string'])) {
+        if (! isset($data['string'])) {
             throw new ValueError(sprintf('%s(): Argument #1 ($data) is invalid', __METHOD__));
         }
         // @codeCoverageIgnoreEnd

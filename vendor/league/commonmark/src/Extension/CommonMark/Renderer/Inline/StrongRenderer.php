@@ -26,7 +26,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class StrongRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param Strong $node
+     * @param  Strong  $node
      *
      * {@inheritDoc}
      *

@@ -62,7 +62,7 @@ class ConsoleLogger extends AbstractLogger
 
     public function log($level, $message, array $context = []): void
     {
-        if (!isset($this->verbosityLevelMap[$level])) {
+        if (! isset($this->verbosityLevelMap[$level])) {
             throw new InvalidArgumentException(\sprintf('The log level "%s" does not exist.', $level));
         }
 
@@ -98,7 +98,7 @@ class ConsoleLogger extends AbstractLogger
      */
     private function interpolate(string $message, array $context): string
     {
-        if (!str_contains($message, '{')) {
+        if (! str_contains($message, '{')) {
             return $message;
         }
 

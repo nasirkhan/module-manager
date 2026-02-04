@@ -39,7 +39,7 @@ class Argument
      *
      * If unset, the `name` value will be inferred from the parameter definition.
      *
-     * @param array<string|Suggestion>|callable(CompletionInput):list<string|Suggestion> $suggestedValues The values used for input completion
+     * @param  array<string|Suggestion>|callable(CompletionInput):list<string|Suggestion>  $suggestedValues  The values used for input completion
      */
     public function __construct(
         public string $description = '',
@@ -56,25 +56,25 @@ class Argument
     {
         $reflection = new ReflectionMember($member);
 
-        if (!$self = $reflection->getAttribute(self::class)) {
+        if (! $self = $reflection->getAttribute(self::class)) {
             return null;
         }
 
         $type = $reflection->getType();
         $name = $reflection->getName();
 
-        if (!$type instanceof \ReflectionNamedType) {
+        if (! $type instanceof \ReflectionNamedType) {
             throw new LogicException(\sprintf('The %s "$%s" of "%s" must have a named type. Untyped, Union or Intersection types are not supported for command arguments.', $reflection->getMemberName(), $name, $reflection->getSourceName()));
         }
 
         $self->typeName = $type->getName();
         $isBackedEnum = is_subclass_of($self->typeName, \BackedEnum::class);
 
-        if (!\in_array($self->typeName, self::ALLOWED_TYPES, true) && !$isBackedEnum) {
+        if (! \in_array($self->typeName, self::ALLOWED_TYPES, true) && ! $isBackedEnum) {
             throw new LogicException(\sprintf('The type "%s" on %s "$%s" of "%s" is not supported as a command argument. Only "%s" types and backed enums are allowed.', $self->typeName, $reflection->getMemberName(), $name, $reflection->getSourceName(), implode('", "', self::ALLOWED_TYPES)));
         }
 
-        if (!$self->name) {
+        if (! $self->name) {
             $self->name = (new UnicodeString($name))->kebab();
         }
 
@@ -86,13 +86,13 @@ class Argument
             $self->mode |= InputArgument::IS_ARRAY;
         }
 
-        if (\is_array($self->suggestedValues) && !\is_callable($self->suggestedValues) && 2 === \count($self->suggestedValues) && ($instance = $reflection->getSourceThis()) && $instance::class === $self->suggestedValues[0] && \is_callable([$instance, $self->suggestedValues[1]])) {
+        if (\is_array($self->suggestedValues) && ! \is_callable($self->suggestedValues) && 2 === \count($self->suggestedValues) && ($instance = $reflection->getSourceThis()) && $instance::class === $self->suggestedValues[0] && \is_callable([$instance, $self->suggestedValues[1]])) {
             // In case that the callback is declared as a static method `[Foo::class, 'methodName']` - yet it is not callable,
             // while non-static method `[Foo $instance, 'methodName']` would be callable, we transform the callback on the fly into a non-static version.
             $self->suggestedValues = [$instance, $self->suggestedValues[1]];
         }
 
-        if ($isBackedEnum && !$self->suggestedValues) {
+        if ($isBackedEnum && ! $self->suggestedValues) {
             $self->suggestedValues = array_column($self->typeName::cases(), 'value');
         }
 

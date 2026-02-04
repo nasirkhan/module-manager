@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace League\CommonMark\Node;
 
 /**
- * Interface for a node which directly contains line(s) of text
+ * Interface for a node which directly contains line(s) of text.
  */
 interface StringContainerInterface
 {

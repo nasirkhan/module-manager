@@ -37,7 +37,7 @@ class InputDefinition
     private array $shortcuts = [];
 
     /**
-     * @param array $definition An array of InputArgument and InputOption instance
+     * @param  array  $definition  An array of InputArgument and InputOption instance
      */
     public function __construct(array $definition = [])
     {
@@ -66,7 +66,7 @@ class InputDefinition
     /**
      * Sets the InputArgument objects.
      *
-     * @param InputArgument[] $arguments An array of InputArgument objects
+     * @param  InputArgument[]  $arguments  An array of InputArgument objects
      */
     public function setArguments(array $arguments = []): void
     {
@@ -80,7 +80,7 @@ class InputDefinition
     /**
      * Adds an array of InputArgument objects.
      *
-     * @param InputArgument[] $arguments An array of InputArgument objects
+     * @param  InputArgument[]  $arguments  An array of InputArgument objects
      */
     public function addArguments(?array $arguments = []): void
     {
@@ -113,7 +113,7 @@ class InputDefinition
         }
 
         if ($argument->isRequired()) {
-            ++$this->requiredCount;
+            $this->requiredCount++;
         } else {
             $this->lastOptionalArgument = $argument;
         }
@@ -128,7 +128,7 @@ class InputDefinition
      */
     public function getArgument(string|int $name): InputArgument
     {
-        if (!$this->hasArgument($name)) {
+        if (! $this->hasArgument($name)) {
             throw new InvalidArgumentException(\sprintf('The "%s" argument does not exist.', $name));
         }
 
@@ -189,7 +189,7 @@ class InputDefinition
     /**
      * Sets the InputOption objects.
      *
-     * @param InputOption[] $options An array of InputOption objects
+     * @param  InputOption[]  $options  An array of InputOption objects
      */
     public function setOptions(array $options = []): void
     {
@@ -202,7 +202,7 @@ class InputDefinition
     /**
      * Adds an array of InputOption objects.
      *
-     * @param InputOption[] $options An array of InputOption objects
+     * @param  InputOption[]  $options  An array of InputOption objects
      */
     public function addOptions(array $options = []): void
     {
@@ -216,7 +216,7 @@ class InputDefinition
      */
     public function addOption(InputOption $option): void
     {
-        if (isset($this->options[$option->getName()]) && !$option->equals($this->options[$option->getName()])) {
+        if (isset($this->options[$option->getName()]) && ! $option->equals($this->options[$option->getName()])) {
             throw new LogicException(\sprintf('An option named "%s" already exists.', $option->getName()));
         }
         if (isset($this->negations[$option->getName()])) {
@@ -225,7 +225,7 @@ class InputDefinition
 
         if ($option->getShortcut()) {
             foreach (explode('|', $option->getShortcut()) as $shortcut) {
-                if (isset($this->shortcuts[$shortcut]) && !$option->equals($this->options[$this->shortcuts[$shortcut]])) {
+                if (isset($this->shortcuts[$shortcut]) && ! $option->equals($this->options[$this->shortcuts[$shortcut]])) {
                     throw new LogicException(\sprintf('An option with shortcut "%s" already exists.', $shortcut));
                 }
             }
@@ -254,7 +254,7 @@ class InputDefinition
      */
     public function getOption(string $name): InputOption
     {
-        if (!$this->hasOption($name)) {
+        if (! $this->hasOption($name)) {
             throw new InvalidArgumentException(\sprintf('The "--%s" option does not exist.', $name));
         }
 
@@ -328,7 +328,7 @@ class InputDefinition
      */
     public function shortcutToName(string $shortcut): string
     {
-        if (!isset($this->shortcuts[$shortcut])) {
+        if (! isset($this->shortcuts[$shortcut])) {
             throw new InvalidArgumentException(\sprintf('The "-%s" option does not exist.', $shortcut));
         }
 
@@ -344,7 +344,7 @@ class InputDefinition
      */
     public function negationToName(string $negation): string
     {
-        if (!isset($this->negations[$negation])) {
+        if (! isset($this->negations[$negation])) {
             throw new InvalidArgumentException(\sprintf('The "--%s" option does not exist.', $negation));
         }
 
@@ -360,7 +360,7 @@ class InputDefinition
 
         if ($short && $this->getOptions()) {
             $elements[] = '[options]';
-        } elseif (!$short) {
+        } elseif (! $short) {
             foreach ($this->getOptions() as $option) {
                 $value = '';
                 if ($option->acceptValue()) {
@@ -389,7 +389,7 @@ class InputDefinition
                 $element .= '...';
             }
 
-            if (!$argument->isRequired()) {
+            if (! $argument->isRequired()) {
                 $element = '['.$element;
                 $tail .= ']';
             }

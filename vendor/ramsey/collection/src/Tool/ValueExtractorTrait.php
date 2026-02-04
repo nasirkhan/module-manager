@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/collection library
+ * This file is part of the ramsey/collection library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -40,12 +40,11 @@ trait ValueExtractorTrait
      *
      * If `$propertyOrMethod` is `null`, we return the element as-is.
      *
-     * @param mixed $element The element to extract the value from.
-     * @param string | null $propertyOrMethod The property or method for which the
-     *     value should be extracted.
-     *
+     * @param  mixed  $element  The element to extract the value from.
+     * @param  string | null  $propertyOrMethod  The property or method for which the
+     *                                           value should be extracted.
      * @return mixed the value extracted from the specified property, method,
-     *     or array key, or the element itself.
+     *               or array key, or the element itself.
      *
      * @throws InvalidPropertyOrMethod
      * @throws UnsupportedOperationException
@@ -56,7 +55,7 @@ trait ValueExtractorTrait
             return $element;
         }
 
-        if (!is_object($element) && !is_array($element)) {
+        if (! is_object($element) && ! is_array($element)) {
             throw new UnsupportedOperationException(sprintf(
                 'The collection type "%s" does not support the $propertyOrMethod parameter',
                 $this->getType(),

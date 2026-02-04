@@ -35,18 +35,18 @@ namespace Symfony\Component\Finder\Comparator;
 class NumberComparator extends Comparator
 {
     /**
-     * @param string|null $test A comparison string or null
+     * @param  string|null  $test  A comparison string or null
      *
      * @throws \InvalidArgumentException If the test is not understood
      */
     public function __construct(?string $test)
     {
-        if (null === $test || !preg_match('#^\s*(==|!=|[<>]=?)?\s*([0-9\.]+)\s*([kmg]i?)?\s*$#i', $test, $matches)) {
+        if (null === $test || ! preg_match('#^\s*(==|!=|[<>]=?)?\s*([0-9\.]+)\s*([kmg]i?)?\s*$#i', $test, $matches)) {
             throw new \InvalidArgumentException(\sprintf('Don\'t understand "%s" as a number test.', $test ?? 'null'));
         }
 
         $target = $matches[2];
-        if (!is_numeric($target)) {
+        if (! is_numeric($target)) {
             throw new \InvalidArgumentException(\sprintf('Invalid number "%s".', $target));
         }
         if (isset($matches[3])) {

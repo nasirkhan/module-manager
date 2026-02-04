@@ -32,8 +32,7 @@ final class Success extends Result
     /**
      * Internal constructor for a success value.
      *
-     * @param T $value
-     *
+     * @param  T  $value
      * @return void
      */
     private function __construct($value)
@@ -46,8 +45,7 @@ final class Success extends Result
      *
      * @template S
      *
-     * @param S $value
-     *
+     * @param  S  $value
      * @return \GrahamCampbell\ResultType\Result<S,E>
      */
     public static function create($value)
@@ -70,8 +68,7 @@ final class Success extends Result
      *
      * @template S
      *
-     * @param callable(T):S $f
-     *
+     * @param  callable(T):S  $f
      * @return \GrahamCampbell\ResultType\Result<S,E>
      */
     public function map(callable $f)
@@ -85,8 +82,7 @@ final class Success extends Result
      * @template S
      * @template F
      *
-     * @param callable(T):\GrahamCampbell\ResultType\Result<S,F> $f
-     *
+     * @param  callable(T):\GrahamCampbell\ResultType\Result<S,F>  $f
      * @return \GrahamCampbell\ResultType\Result<S,F>
      */
     public function flatMap(callable $f)
@@ -109,8 +105,7 @@ final class Success extends Result
      *
      * @template F
      *
-     * @param callable(E):F $f
-     *
+     * @param  callable(E):F  $f
      * @return \GrahamCampbell\ResultType\Result<T,F>
      */
     public function mapError(callable $f)

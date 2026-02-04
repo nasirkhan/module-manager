@@ -26,7 +26,7 @@ class MountManager implements FilesystemOperator
     /**
      * MountManager constructor.
      *
-     * @param array<string,FilesystemOperator> $filesystems
+     * @param  array<string,FilesystemOperator>  $filesystems
      */
     public function __construct(array $filesystems = [], array $config = [])
     {
@@ -44,7 +44,7 @@ class MountManager implements FilesystemOperator
     }
 
     /**
-     * @param array<string,FilesystemOperator> $filesystems
+     * @param  array<string,FilesystemOperator>  $filesystems
      */
     public function extend(array $filesystems, array $config = []): MountManager
     {
@@ -287,7 +287,7 @@ class MountManager implements FilesystemOperator
         /** @var FilesystemOperator $filesystem */
         [$filesystem, $path] = $this->determineFilesystemAndPath($path);
 
-        if ( ! method_exists($filesystem, 'publicUrl')) {
+        if (! method_exists($filesystem, 'publicUrl')) {
             throw new UnableToGeneratePublicUrl(sprintf('%s does not support generating public urls.', $filesystem::class), $path);
         }
 
@@ -299,7 +299,7 @@ class MountManager implements FilesystemOperator
         /** @var FilesystemOperator $filesystem */
         [$filesystem, $path] = $this->determineFilesystemAndPath($path);
 
-        if ( ! method_exists($filesystem, 'temporaryUrl')) {
+        if (! method_exists($filesystem, 'temporaryUrl')) {
             throw new UnableToGenerateTemporaryUrl(sprintf('%s does not support generating public urls.', $filesystem::class), $path);
         }
 
@@ -311,7 +311,7 @@ class MountManager implements FilesystemOperator
         /** @var FilesystemOperator $filesystem */
         [$filesystem, $path] = $this->determineFilesystemAndPath($path);
 
-        if ( ! method_exists($filesystem, 'checksum')) {
+        if (! method_exists($filesystem, 'checksum')) {
             throw new UnableToProvideChecksum(sprintf('%s does not support providing checksums.', $filesystem::class), $path);
         }
 
@@ -330,11 +330,11 @@ class MountManager implements FilesystemOperator
 
     private function guardAgainstInvalidMount(mixed $key, mixed $filesystem): void
     {
-        if ( ! is_string($key)) {
+        if (! is_string($key)) {
             throw UnableToMountFilesystem::becauseTheKeyIsNotValid($key);
         }
 
-        if ( ! $filesystem instanceof FilesystemOperator) {
+        if (! $filesystem instanceof FilesystemOperator) {
             throw UnableToMountFilesystem::becauseTheFilesystemWasNotValid($filesystem);
         }
     }
@@ -345,8 +345,7 @@ class MountManager implements FilesystemOperator
     }
 
     /**
-     * @param string $path
-     *
+     * @param  string  $path
      * @return array{0:FilesystemOperator, 1:string, 2:string}
      */
     private function determineFilesystemAndPath(string $path): array
@@ -359,7 +358,7 @@ class MountManager implements FilesystemOperator
         /** @var string $mountPath */
         [$mountIdentifier, $mountPath] = explode('://', $path, 2);
 
-        if ( ! array_key_exists($mountIdentifier, $this->filesystems)) {
+        if (! array_key_exists($mountIdentifier, $this->filesystems)) {
             throw UnableToResolveFilesystemMount::becauseTheMountWasNotRegistered($mountIdentifier);
         }
 
@@ -402,7 +401,7 @@ class MountManager implements FilesystemOperator
 
             $stream = $sourceFilesystem->readStream($sourcePath);
             $destinationFilesystem->writeStream($destinationPath, $stream, $config->toArray());
-        } catch (UnableToRetrieveMetadata | UnableToReadFile | UnableToWriteFile $exception) {
+        } catch (UnableToRetrieveMetadata|UnableToReadFile|UnableToWriteFile $exception) {
             throw UnableToCopyFile::fromLocationTo($source, $destination, $exception);
         }
     }
@@ -427,7 +426,7 @@ class MountManager implements FilesystemOperator
         try {
             $this->copy($source, $destination, $config);
             $this->delete($source);
-        } catch (UnableToCopyFile | UnableToDeleteFile $exception) {
+        } catch (UnableToCopyFile|UnableToDeleteFile $exception) {
             throw UnableToMoveFile::fromLocationTo($source, $destination, $exception);
         }
     }

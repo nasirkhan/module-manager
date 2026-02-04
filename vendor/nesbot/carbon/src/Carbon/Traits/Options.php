@@ -96,10 +96,9 @@ trait Options
      *  - locale: string|null
      *  - timezone: \DateTimeZone|string|int|null
      *  - macros: array|null
-     *  - genericMacros: array|null
+     *  - genericMacros: array|null.
      *
-     * @param array $settings
-     *
+     * @param  array  $settings
      * @return $this|static
      */
     public function settings(array $settings): static
@@ -117,7 +116,7 @@ trait Options
         if (isset($settings['locale'])) {
             $locales = $settings['locale'];
 
-            if (!\is_array($locales)) {
+            if (! \is_array($locales)) {
                 $locales = [$locales];
             }
 

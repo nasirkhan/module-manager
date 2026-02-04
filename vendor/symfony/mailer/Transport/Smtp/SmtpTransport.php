@@ -59,9 +59,8 @@ class SmtpTransport extends AbstractTransport
      *
      * By default, the threshold is set to 100 (and no sleep at restart).
      *
-     * @param int $threshold The maximum number of messages (0 to disable)
-     * @param int $sleep     The number of seconds to sleep between stopping and re-starting the transport
-     *
+     * @param  int  $threshold  The maximum number of messages (0 to disable)
+     * @param  int  $sleep  The number of seconds to sleep between stopping and re-starting the transport
      * @return $this
      */
     public function setRestartThreshold(int $threshold, int $sleep = 0): static
@@ -83,8 +82,7 @@ class SmtpTransport extends AbstractTransport
      *
      * By default, the threshold is set to 100 seconds.
      *
-     * @param int $seconds The minimum number of seconds between two messages required to ping the server
-     *
+     * @param  int  $seconds  The minimum number of seconds between two messages required to ping the server
      * @return $this
      */
     public function setPingThreshold(int $seconds): static
@@ -163,7 +161,7 @@ class SmtpTransport extends AbstractTransport
         if ($this->stream instanceof SocketStream) {
             $name = \sprintf('smtp%s://%s', ($tls = $this->stream->isTLS()) ? 's' : '', $this->stream->getHost());
             $port = $this->stream->getPort();
-            if (!(25 === $port || ($tls && 465 === $port))) {
+            if (! (25 === $port || ($tls && 465 === $port))) {
                 $name .= ':'.$port;
             }
 
@@ -176,7 +174,7 @@ class SmtpTransport extends AbstractTransport
     /**
      * Runs a command against the stream, expecting the given response codes.
      *
-     * @param int[] $codes
+     * @param  int[]  $codes
      *
      * @throws TransportException when an invalid response if received
      */
@@ -196,7 +194,7 @@ class SmtpTransport extends AbstractTransport
         }
 
         try {
-            if (!$this->started) {
+            if (! $this->started) {
                 $this->start();
             }
 
@@ -246,7 +244,7 @@ class SmtpTransport extends AbstractTransport
 
     private function doMailFromCommand(string $address, bool $smtputf8): void
     {
-        if ($smtputf8 && !$this->serverSupportsSmtpUtf8()) {
+        if ($smtputf8 && ! $this->serverSupportsSmtpUtf8()) {
             throw new InvalidArgumentException('Invalid addresses: non-ASCII characters not supported in local-part of email.');
         }
         $this->executeCommand(\sprintf("MAIL FROM:<%s>%s\r\n", $address, $smtputf8 ? ' SMTPUTF8' : ''), [250]);
@@ -283,7 +281,7 @@ class SmtpTransport extends AbstractTransport
      */
     public function stop(): void
     {
-        if (!$this->started) {
+        if (! $this->started) {
             return;
         }
 
@@ -301,7 +299,7 @@ class SmtpTransport extends AbstractTransport
 
     private function ping(): void
     {
-        if (!$this->started) {
+        if (! $this->started) {
             return;
         }
 
@@ -317,14 +315,14 @@ class SmtpTransport extends AbstractTransport
      */
     private function assertResponseCode(string $response, array $codes): void
     {
-        if (!$codes) {
+        if (! $codes) {
             throw new LogicException('You must set the expected response code.');
         }
 
         [$code] = sscanf($response, '%3d');
         $valid = \in_array($code, $codes);
 
-        if (!$valid || !$response) {
+        if (! $valid || ! $response) {
             $codeStr = $code ? \sprintf('code "%s"', $code) : 'empty code';
             $responseStr = $response ? \sprintf(', with message "%s"', trim($response)) : '';
 
@@ -346,11 +344,11 @@ class SmtpTransport extends AbstractTransport
     private function checkRestartThreshold(): void
     {
         // when using sendmail via non-interactive mode, the transport is never "started"
-        if (!$this->started) {
+        if (! $this->started) {
             return;
         }
 
-        ++$this->restartCounter;
+        $this->restartCounter++;
         if ($this->restartCounter < $this->restartThreshold) {
             return;
         }

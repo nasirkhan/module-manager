@@ -23,9 +23,10 @@ final class Property
 
     /**
      * Property constructor.
-     * @param string           $name
-     * @param string           $value
-     * @param Specificity|null $specificity
+     *
+     * @param  string  $name
+     * @param  string  $value
+     * @param  Specificity|null  $specificity
      */
     public function __construct($name, $value, ?Specificity $specificity = null)
     {
@@ -35,7 +36,7 @@ final class Property
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -45,7 +46,7 @@ final class Property
     }
 
     /**
-     * Get value
+     * Get value.
      *
      * @return string
      */
@@ -55,7 +56,7 @@ final class Property
     }
 
     /**
-     * Get originalSpecificity
+     * Get originalSpecificity.
      *
      * @return Specificity|null
      */
@@ -71,11 +72,11 @@ final class Property
      */
     public function isImportant()
     {
-        return (stripos($this->value, '!important') !== false);
+        return stripos($this->value, '!important') !== false;
     }
 
     /**
-     * Get the textual representation of the property
+     * Get the textual representation of the property.
      *
      * @return string
      */

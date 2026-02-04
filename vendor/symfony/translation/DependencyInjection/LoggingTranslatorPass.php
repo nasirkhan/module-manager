@@ -24,11 +24,11 @@ class LoggingTranslatorPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->hasAlias('logger') || !$container->hasAlias('translator')) {
+        if (! $container->hasAlias('logger') || ! $container->hasAlias('translator')) {
             return;
         }
 
-        if (!$container->hasParameter('translator.logging') || !$container->getParameter('translator.logging')) {
+        if (! $container->hasParameter('translator.logging') || ! $container->getParameter('translator.logging')) {
             return;
         }
 
@@ -36,11 +36,11 @@ class LoggingTranslatorPass implements CompilerPassInterface
         $definition = $container->getDefinition((string) $translatorAlias);
         $class = $container->getParameterBag()->resolveValue($definition->getClass());
 
-        if (!$r = $container->getReflectionClass($class)) {
+        if (! $r = $container->getReflectionClass($class)) {
             throw new InvalidArgumentException(\sprintf('Class "%s" used for service "%s" cannot be found.', $class, $translatorAlias));
         }
 
-        if (!$r->isSubclassOf(TranslatorInterface::class) || !$r->isSubclassOf(TranslatorBagInterface::class)) {
+        if (! $r->isSubclassOf(TranslatorInterface::class) || ! $r->isSubclassOf(TranslatorBagInterface::class)) {
             return;
         }
 
@@ -50,7 +50,7 @@ class LoggingTranslatorPass implements CompilerPassInterface
         $warmer->clearTag('container.service_subscriber');
 
         foreach ($subscriberAttributes as $k => $v) {
-            if ((!isset($v['id']) || 'translator' !== $v['id']) && (!isset($v['key']) || 'translator' !== $v['key'])) {
+            if ((! isset($v['id']) || 'translator' !== $v['id']) && (! isset($v['key']) || 'translator' !== $v['key'])) {
                 $warmer->addTag('container.service_subscriber', $v);
             }
         }

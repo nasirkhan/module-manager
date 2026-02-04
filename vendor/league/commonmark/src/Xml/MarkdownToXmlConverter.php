@@ -31,12 +31,12 @@ final class MarkdownToXmlConverter implements ConverterInterface
 
     public function __construct(EnvironmentInterface $environment)
     {
-        $this->parser   = new MarkdownParser($environment);
+        $this->parser = new MarkdownParser($environment);
         $this->renderer = new XmlRenderer($environment);
     }
 
     /**
-     * Converts Markdown to XML
+     * Converts Markdown to XML.
      *
      * @throws CommonMarkException
      */

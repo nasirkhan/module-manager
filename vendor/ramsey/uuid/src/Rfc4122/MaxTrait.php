@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,21 +15,21 @@ declare(strict_types=1);
 namespace Ramsey\Uuid\Rfc4122;
 
 /**
- * Provides common functionality for max UUIDs
+ * Provides common functionality for max UUIDs.
  *
  * @immutable
  */
 trait MaxTrait
 {
     /**
-     * Returns the bytes that comprise the fields
+     * Returns the bytes that comprise the fields.
      *
      * @pure
      */
     abstract public function getBytes(): string;
 
     /**
-     * Returns true if the byte string represents a max UUID
+     * Returns true if the byte string represents a max UUID.
      *
      * @pure
      */

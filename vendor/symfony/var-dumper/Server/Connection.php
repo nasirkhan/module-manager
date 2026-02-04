@@ -29,14 +29,14 @@ class Connection
     private $socket;
 
     /**
-     * @param string                     $host             The server host
-     * @param ContextProviderInterface[] $contextProviders Context providers indexed by context name
+     * @param  string  $host  The server host
+     * @param  ContextProviderInterface[]  $contextProviders  Context providers indexed by context name
      */
     public function __construct(
         string $host,
         private array $contextProviders = [],
     ) {
-        if (!str_contains($host, '://')) {
+        if (! str_contains($host, '://')) {
             $host = 'tcp://'.$host;
         }
 
@@ -50,8 +50,8 @@ class Connection
 
     public function write(Data $data): bool
     {
-        $socketIsFresh = !$this->socket;
-        if (!$this->socket = $this->socket ?: $this->createSocket()) {
+        $socketIsFresh = ! $this->socket;
+        if (! $this->socket = $this->socket ?: $this->createSocket()) {
             return false;
         }
 
@@ -67,7 +67,7 @@ class Connection
             if (-1 !== stream_socket_sendto($this->socket, $encodedPayload)) {
                 return true;
             }
-            if (!$socketIsFresh) {
+            if (! $socketIsFresh) {
                 stream_socket_shutdown($this->socket, \STREAM_SHUT_RDWR);
                 fclose($this->socket);
                 $this->socket = $this->createSocket();

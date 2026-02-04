@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Embed;
 
 /**
- * Interface for a service which updates the embed code(s) for the given array of embeds
+ * Interface for a service which updates the embed code(s) for the given array of embeds.
  */
 interface EmbedAdapterInterface
 {
     /**
-     * @param Embed[] $embeds
+     * @param  Embed[]  $embeds
      */
     public function updateEmbeds(array $embeds): void;
 }

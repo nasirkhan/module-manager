@@ -45,7 +45,7 @@ class Parser implements ParserInterface
     /**
      * Parses the arguments for ":nth-child()" and friends.
      *
-     * @param Token[] $tokens
+     * @param  Token[]  $tokens
      *
      * @throws SyntaxErrorException
      */
@@ -60,7 +60,7 @@ class Parser implements ParserInterface
         $joined = trim(implode('', array_map(fn (Token $token) => $token->getValue(), $tokens)));
 
         $int = function ($string) {
-            if (!is_numeric($string)) {
+            if (! is_numeric($string)) {
                 throw SyntaxErrorException::stringAsFunctionArgument();
             }
 
@@ -74,7 +74,7 @@ class Parser implements ParserInterface
                 return [2, 0];
             case 'n' === $joined:
                 return [1, 0];
-            case !str_contains($joined, 'n'):
+            case ! str_contains($joined, 'n'):
                 return [0, $int($joined)];
         }
 
@@ -198,11 +198,11 @@ class Parser implements ParserInterface
                     continue;
                 }
 
-                if (!$stream->getPeek()->isDelimiter(['('])) {
+                if (! $stream->getPeek()->isDelimiter(['('])) {
                     $result = new Node\PseudoNode($result, $identifier);
                     if ('Pseudo[Element[*]:scope]' === $result->__toString()) {
                         $used = \count($stream->getUsed());
-                        if (!(2 === $used
+                        if (! (2 === $used
                            || 3 === $used && $stream->getUsed()[0]->isWhiteSpace()
                            || $used >= 3 && $stream->getUsed()[$used - 3]->isDelimiter([','])
                            || $used >= 4
@@ -230,7 +230,7 @@ class Parser implements ParserInterface
                         throw SyntaxErrorException::pseudoElementFound($argumentPseudoElement, 'inside ::not()');
                     }
 
-                    if (!$next->isDelimiter([')'])) {
+                    if (! $next->isDelimiter([')'])) {
                         throw SyntaxErrorException::unexpectedToken('")"', $next);
                     }
 
@@ -239,7 +239,7 @@ class Parser implements ParserInterface
                     $selectors = $this->parseSelectorList($stream, true);
 
                     $next = $stream->getNext();
-                    if (!$next->isDelimiter([')'])) {
+                    if (! $next->isDelimiter([')'])) {
                         throw SyntaxErrorException::unexpectedToken('")"', $next);
                     }
 
@@ -248,7 +248,7 @@ class Parser implements ParserInterface
                     $selectors = $this->parseSelectorList($stream, true);
 
                     $next = $stream->getNext();
-                    if (!$next->isDelimiter([')'])) {
+                    if (! $next->isDelimiter([')'])) {
                         throw SyntaxErrorException::unexpectedToken('")"', $next);
                     }
 
@@ -274,7 +274,7 @@ class Parser implements ParserInterface
                         }
                     }
 
-                    if (!$arguments) {
+                    if (! $arguments) {
                         throw SyntaxErrorException::unexpectedToken('at least one argument', $next);
                     }
 
@@ -323,7 +323,7 @@ class Parser implements ParserInterface
         $stream->skipWhitespace();
         $attribute = $stream->getNextIdentifierOrStar();
 
-        if (null === $attribute && !$stream->getPeek()->isDelimiter(['|'])) {
+        if (null === $attribute && ! $stream->getPeek()->isDelimiter(['|'])) {
             throw SyntaxErrorException::unexpectedToken('"|"', $stream->getPeek());
         }
 
@@ -369,14 +369,14 @@ class Parser implements ParserInterface
             $value = new Token(Token::TYPE_STRING, (string) $value->getValue(), $value->getPosition());
         }
 
-        if (!($value->isIdentifier() || $value->isString())) {
+        if (! ($value->isIdentifier() || $value->isString())) {
             throw SyntaxErrorException::unexpectedToken('string or identifier', $value);
         }
 
         $stream->skipWhitespace();
         $next = $stream->getNext();
 
-        if (!$next->isDelimiter([']'])) {
+        if (! $next->isDelimiter([']'])) {
             throw SyntaxErrorException::unexpectedToken('"]"', $next);
         }
 

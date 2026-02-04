@@ -28,8 +28,8 @@ class EmailValidator
     }
 
     /**
-     * @param string          $email
-     * @param EmailValidation $emailValidation
+     * @param  string  $email
+     * @param  EmailValidation  $emailValidation
      * @return bool
      */
     public function isValid(string $email, EmailValidation $emailValidation)
@@ -42,11 +42,11 @@ class EmailValidator
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function hasWarnings()
     {
-        return !empty($this->warnings);
+        return ! empty($this->warnings);
     }
 
     /**

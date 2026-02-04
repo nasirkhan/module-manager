@@ -41,7 +41,7 @@ final class Uuid
 
     public static function uuid_create($uuid_type = \UUID_TYPE_DEFAULT)
     {
-        if (!is_numeric($uuid_type) && null !== $uuid_type) {
+        if (! is_numeric($uuid_type) && null !== $uuid_type) {
             trigger_error(sprintf('uuid_create() expects parameter 1 to be int, %s given', \gettype($uuid_type)), \E_USER_WARNING);
 
             return null;
@@ -64,19 +64,19 @@ final class Uuid
 
     public static function uuid_generate_md5($uuid_ns, $name)
     {
-        if (!\is_string($uuid_ns = self::toString($uuid_ns))) {
+        if (! \is_string($uuid_ns = self::toString($uuid_ns))) {
             trigger_error(sprintf('uuid_generate_md5() expects parameter 1 to be string, %s given', \gettype($uuid_ns)), \E_USER_WARNING);
 
             return null;
         }
 
-        if (!\is_string($name = self::toString($name))) {
+        if (! \is_string($name = self::toString($name))) {
             trigger_error(sprintf('uuid_generate_md5() expects parameter 2 to be string, %s given', \gettype($name)), \E_USER_WARNING);
 
             return null;
         }
 
-        if (!self::isValid($uuid_ns)) {
+        if (! self::isValid($uuid_ns)) {
             if (80000 > \PHP_VERSION_ID) {
                 return false;
             }
@@ -105,19 +105,19 @@ final class Uuid
 
     public static function uuid_generate_sha1($uuid_ns, $name)
     {
-        if (!\is_string($uuid_ns = self::toString($uuid_ns))) {
+        if (! \is_string($uuid_ns = self::toString($uuid_ns))) {
             trigger_error(sprintf('uuid_generate_sha1() expects parameter 1 to be string, %s given', \gettype($uuid_ns)), \E_USER_WARNING);
 
             return null;
         }
 
-        if (!\is_string($name = self::toString($name))) {
+        if (! \is_string($name = self::toString($name))) {
             trigger_error(sprintf('uuid_generate_sha1() expects parameter 2 to be string, %s given', \gettype($name)), \E_USER_WARNING);
 
             return null;
         }
 
-        if (!self::isValid($uuid_ns)) {
+        if (! self::isValid($uuid_ns)) {
             if (80000 > \PHP_VERSION_ID) {
                 return false;
             }
@@ -148,7 +148,7 @@ final class Uuid
 
     public static function uuid_is_valid($uuid)
     {
-        if (!\is_string($uuid = self::toString($uuid))) {
+        if (! \is_string($uuid = self::toString($uuid))) {
             trigger_error(sprintf('uuid_is_valid() expects parameter 1 to be string, %s given', \gettype($uuid)), \E_USER_WARNING);
 
             return null;
@@ -159,19 +159,19 @@ final class Uuid
 
     public static function uuid_compare($uuid1, $uuid2)
     {
-        if (!\is_string($uuid1 = self::toString($uuid1))) {
+        if (! \is_string($uuid1 = self::toString($uuid1))) {
             trigger_error(sprintf('uuid_compare() expects parameter 1 to be string, %s given', \gettype($uuid1)), \E_USER_WARNING);
 
             return null;
         }
 
-        if (!\is_string($uuid2 = self::toString($uuid2))) {
+        if (! \is_string($uuid2 = self::toString($uuid2))) {
             trigger_error(sprintf('uuid_compare() expects parameter 2 to be string, %s given', \gettype($uuid2)), \E_USER_WARNING);
 
             return null;
         }
 
-        if (!self::isValid($uuid1)) {
+        if (! self::isValid($uuid1)) {
             if (80000 > \PHP_VERSION_ID) {
                 return false;
             }
@@ -179,7 +179,7 @@ final class Uuid
             throw new \ValueError('uuid_compare(): Argument #1 ($uuid1) UUID expected');
         }
 
-        if (!self::isValid($uuid2)) {
+        if (! self::isValid($uuid2)) {
             if (80000 > \PHP_VERSION_ID) {
                 return false;
             }
@@ -192,12 +192,12 @@ final class Uuid
 
     public static function uuid_is_null($uuid)
     {
-        if (!\is_string($uuid = self::toString($uuid))) {
+        if (! \is_string($uuid = self::toString($uuid))) {
             trigger_error(sprintf('uuid_is_null() expects parameter 1 to be string, %s given', \gettype($uuid)), \E_USER_WARNING);
 
             return null;
         }
-        if (80000 <= \PHP_VERSION_ID && !self::isValid($uuid)) {
+        if (80000 <= \PHP_VERSION_ID && ! self::isValid($uuid)) {
             throw new \ValueError('uuid_is_null(): Argument #1 ($uuid) UUID expected');
         }
 
@@ -206,7 +206,7 @@ final class Uuid
 
     public static function uuid_type($uuid)
     {
-        if (!\is_string($uuid = self::toString($uuid))) {
+        if (! \is_string($uuid = self::toString($uuid))) {
             trigger_error(sprintf('uuid_type() expects parameter 1 to be string, %s given', \gettype($uuid)), \E_USER_WARNING);
 
             return null;
@@ -229,7 +229,7 @@ final class Uuid
 
     public static function uuid_variant($uuid)
     {
-        if (!\is_string($uuid = self::toString($uuid))) {
+        if (! \is_string($uuid = self::toString($uuid))) {
             trigger_error(sprintf('uuid_variant() expects parameter 1 to be string, %s given', \gettype($uuid)), \E_USER_WARNING);
 
             return null;
@@ -262,7 +262,7 @@ final class Uuid
 
     public static function uuid_time($uuid)
     {
-        if (!\is_string($uuid = self::toString($uuid))) {
+        if (! \is_string($uuid = self::toString($uuid))) {
             trigger_error(sprintf('uuid_time() expects parameter 1 to be string, %s given', \gettype($uuid)), \E_USER_WARNING);
 
             return null;
@@ -291,7 +291,7 @@ final class Uuid
 
     public static function uuid_mac($uuid)
     {
-        if (!\is_string($uuid = self::toString($uuid))) {
+        if (! \is_string($uuid = self::toString($uuid))) {
             trigger_error(sprintf('uuid_mac() expects parameter 1 to be string, %s given', \gettype($uuid)), \E_USER_WARNING);
 
             return null;
@@ -312,13 +312,13 @@ final class Uuid
 
     public static function uuid_parse($uuid)
     {
-        if (!\is_string($uuid = self::toString($uuid))) {
+        if (! \is_string($uuid = self::toString($uuid))) {
             trigger_error(sprintf('uuid_parse() expects parameter 1 to be string, %s given', \gettype($uuid)), \E_USER_WARNING);
 
             return null;
         }
 
-        if (!self::isValid($uuid)) {
+        if (! self::isValid($uuid)) {
             if (80000 > \PHP_VERSION_ID) {
                 return false;
             }
@@ -331,7 +331,7 @@ final class Uuid
 
     public static function uuid_unparse($bytes)
     {
-        if (!\is_string($bytes = self::toString($bytes))) {
+        if (! \is_string($bytes = self::toString($bytes))) {
             trigger_error(sprintf('uuid_unparse() expects parameter 1 to be string, %s given', \gettype($bytes)), \E_USER_WARNING);
 
             return null;
@@ -444,7 +444,7 @@ final class Uuid
 
     private static function parse($uuid)
     {
-        if (!preg_match('{^(?<time_low>[0-9a-f]{8})-(?<time_mid>[0-9a-f]{4})-(?<version>[0-9a-f])(?<time_hi>[0-9a-f]{3})-(?<clock_seq>[0-9a-f]{4})-(?<node>[0-9a-f]{12})$}Di', $uuid, $matches)) {
+        if (! preg_match('{^(?<time_low>[0-9a-f]{8})-(?<time_mid>[0-9a-f]{4})-(?<version>[0-9a-f])(?<time_hi>[0-9a-f]{3})-(?<clock_seq>[0-9a-f]{4})-(?<node>[0-9a-f]{12})$}Di', $uuid, $matches)) {
             return null;
         }
 
@@ -474,7 +474,7 @@ final class Uuid
             $quotient = [];
             $remainder = 0;
 
-            for ($i = 0; $i !== $count; ++$i) {
+            for ($i = 0; $i !== $count; $i++) {
                 $carry = $digits[$i] + $remainder * 10;
                 $digit = $carry >> 8;
                 $remainder = $carry & 0xFF;
@@ -500,7 +500,7 @@ final class Uuid
             $quotient = [];
             $remainder = 0;
 
-            for ($i = 0; $i !== $count; ++$i) {
+            for ($i = 0; $i !== $count; $i++) {
                 $carry = $bytes[$i] + ($remainder << 8);
                 $digit = (int) ($carry / 10);
                 $remainder = $carry % 10;
@@ -520,7 +520,7 @@ final class Uuid
     private static function binaryAdd($a, $b)
     {
         $sum = 0;
-        for ($i = 7; 0 <= $i; --$i) {
+        for ($i = 7; 0 <= $i; $i--) {
             $sum += \ord($a[$i]) + \ord($b[$i]);
             $a[$i] = \chr($sum & 0xFF);
             $sum >>= 8;

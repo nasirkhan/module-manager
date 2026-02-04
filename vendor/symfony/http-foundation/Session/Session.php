@@ -128,7 +128,7 @@ class Session implements FlashBagAwareSessionInterface, \IteratorAggregate, \Cou
     public function isEmpty(): bool
     {
         if ($this->isStarted()) {
-            ++$this->usageIndex;
+            $this->usageIndex++;
             if ($this->usageReporter && 0 <= $this->usageIndex) {
                 ($this->usageReporter)();
             }
@@ -183,7 +183,7 @@ class Session implements FlashBagAwareSessionInterface, \IteratorAggregate, \Cou
 
     public function getMetadataBag(): MetadataBag
     {
-        ++$this->usageIndex;
+        $this->usageIndex++;
         if ($this->usageReporter && 0 <= $this->usageIndex) {
             ($this->usageReporter)();
         }

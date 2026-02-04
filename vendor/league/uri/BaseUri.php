@@ -1,7 +1,7 @@
 <?php
 
 /**
- * League.Uri (https://uri.thephpleague.com)
+ * League.Uri (https://uri.thephpleague.com).
  *
  * (c) Ignace Nyamagana Butera <nyamsprod@gmail.com>
  *
@@ -42,8 +42,8 @@ use function substr;
 
 /**
  * @phpstan-import-type ComponentMap from UriInterface
- * @deprecated since version 7.6.0
  *
+ * @deprecated since version 7.6.0
  * @see Modifier
  * @see Uri
  */
@@ -59,7 +59,7 @@ class BaseUri implements Stringable, JsonSerializable, UriAccess
     protected readonly ?string $nullValue;
 
     /**
-     * @param UriFactoryInterface|null $uriFactory Deprecated, will be removed in the next major release
+     * @param  UriFactoryInterface|null  $uriFactory  Deprecated, will be removed in the next major release
      */
     final protected function __construct(
         protected readonly Psr7UriInterface|UriInterface $uri,
@@ -72,6 +72,7 @@ class BaseUri implements Stringable, JsonSerializable, UriAccess
     public static function from(Stringable|string $uri, ?UriFactoryInterface $uriFactory = null): static
     {
         $uri = static::formatHost(static::filterUri($uri, $uriFactory));
+
         return new static($uri, $uriFactory);
     }
 
@@ -135,7 +136,7 @@ class BaseUri implements Stringable, JsonSerializable, UriAccess
     {
         static $regexpWindowsPath = ',^(?<root>[a-zA-Z]:),';
 
-        if (!in_array($this->uri->getScheme(), ['file', $this->nullValue], true)) {
+        if (! in_array($this->uri->getScheme(), ['file', $this->nullValue], true)) {
             return null;
         }
 
@@ -216,7 +217,7 @@ class BaseUri implements Stringable, JsonSerializable, UriAccess
         $uri = static::filterUri($uri);
         $uriOrigin = $this->computeOrigin($uri, $uri instanceof Psr7UriInterface ? '' : null);
 
-        return match(true) {
+        return match (true) {
             null === $uriOrigin,
             $uriOrigin->__toString() !== $this->origin->__toString() => true,
             default => false,
@@ -392,7 +393,7 @@ class BaseUri implements Stringable, JsonSerializable, UriAccess
     /**
      * Input URI normalization to allow Stringable and string URI.
      */
-    final protected static function filterUri(Stringable|string $uri, UriFactoryInterface|null $uriFactory = null): Psr7UriInterface|UriInterface
+    final protected static function filterUri(Stringable|string $uri, ?UriFactoryInterface $uriFactory = null): Psr7UriInterface|UriInterface
     {
         return match (true) {
             $uri instanceof UriAccess => $uri->getUri(),
@@ -455,8 +456,8 @@ class BaseUri implements Stringable, JsonSerializable, UriAccess
      */
     final protected function canNotBeRelativize(Psr7UriInterface|UriInterface $uri): bool
     {
-        return !static::componentEquals('scheme', $uri)
-            || !static::componentEquals('authority', $uri)
+        return ! static::componentEquals('scheme', $uri)
+            || ! static::componentEquals('authority', $uri)
             || static::from($uri)->isRelativePath();
     }
 
@@ -470,7 +471,7 @@ class BaseUri implements Stringable, JsonSerializable, UriAccess
         $targetBasename = array_pop($targetSegments);
         array_pop($baseSegments);
         foreach ($baseSegments as $offset => $segment) {
-            if (!isset($targetSegments[$offset]) || $segment !== $targetSegments[$offset]) {
+            if (! isset($targetSegments[$offset]) || $segment !== $targetSegments[$offset]) {
                 break;
             }
             unset($baseSegments[$offset], $targetSegments[$offset]);
@@ -513,7 +514,7 @@ class BaseUri implements Stringable, JsonSerializable, UriAccess
             },
             false === $colonPosition => $path,
             false === $slashPosition,
-            $colonPosition < $slashPosition  =>  "./$path",
+            $colonPosition < $slashPosition => "./$path",
             default => $path,
         };
     }
@@ -547,7 +548,6 @@ class BaseUri implements Stringable, JsonSerializable, UriAccess
         return UriString::normalize($newUri);
     }
 
-
     /**
      * Remove dot segments from the URI path as per RFC specification.
      *
@@ -558,7 +558,7 @@ class BaseUri implements Stringable, JsonSerializable, UriAccess
     #[Deprecated(message:'no longer used by the isSameDocument method', since:'league/uri-interfaces:7.6.0')]
     final protected function removeDotSegments(string $path): string
     {
-        if (!str_contains($path, '.')) {
+        if (! str_contains($path, '.')) {
             return $path;
         }
 
@@ -569,7 +569,7 @@ class BaseUri implements Stringable, JsonSerializable, UriAccess
                 return $carry;
             }
 
-            if (!isset(static::DOT_SEGMENTS[$segment])) {
+            if (! isset(static::DOT_SEGMENTS[$segment])) {
                 $carry[] = $segment;
             }
 
@@ -584,7 +584,7 @@ class BaseUri implements Stringable, JsonSerializable, UriAccess
 
         // @codeCoverageIgnoreStart
         // added because some PSR-7 implementations do not respect RFC3986
-        if (str_starts_with($path, '/') && !str_starts_with($newPath, '/')) {
+        if (str_starts_with($path, '/') && ! str_starts_with($newPath, '/')) {
             return '/'.$newPath;
         }
         // @codeCoverageIgnoreEnd
@@ -620,7 +620,7 @@ class BaseUri implements Stringable, JsonSerializable, UriAccess
             $targetPath = $this->uri->getPath();
             //@codeCoverageIgnoreStart
             //because some PSR-7 Uri implementations allow this RFC3986 forbidden construction
-            if (null !== $this->uri->getAuthority() && !str_starts_with($targetPath, '/')) {
+            if (null !== $this->uri->getAuthority() && ! str_starts_with($targetPath, '/')) {
                 $targetPath = '/'.$targetPath;
             }
             //@codeCoverageIgnoreEnd

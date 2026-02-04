@@ -30,7 +30,7 @@ class DsCaster
         $a[Caster::PREFIX_VIRTUAL.'count'] = $c->count();
         $a[Caster::PREFIX_VIRTUAL.'capacity'] = $c->capacity();
 
-        if (!$c instanceof Map) {
+        if (! $c instanceof Map) {
             $a += $c->toArray();
         }
 

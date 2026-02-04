@@ -40,7 +40,7 @@ class PhpFileLoader extends FileLoader
         $this->setCurrentDir(\dirname($path));
 
         // Expose RoutesReference::config() as Routes::config()
-        if (!class_exists(Routes::class)) {
+        if (! class_exists(Routes::class)) {
             class_alias(RoutesReference::class, Routes::class);
         }
 
@@ -73,7 +73,7 @@ class PhpFileLoader extends FileLoader
             $loader = new YamlFileLoader($this->locator, $this->env);
             $loader->setResolver($this->resolver ?? new LoaderResolver([$this]));
             (new \ReflectionMethod(YamlFileLoader::class, 'loadContent'))->invoke($loader, $collection, $result, $path, $file);
-        } elseif (!($collection = $result) instanceof RouteCollection) {
+        } elseif (! ($collection = $result) instanceof RouteCollection) {
             throw new InvalidArgumentException(\sprintf('The return value in config file "%s" is expected to be a RouteCollection, an array or a configurator callable, but got "%s".', $path, get_debug_type($result)));
         }
 
@@ -84,7 +84,7 @@ class PhpFileLoader extends FileLoader
 
     public function supports(mixed $resource, ?string $type = null): bool
     {
-        return \is_string($resource) && 'php' === pathinfo($resource, \PATHINFO_EXTENSION) && (!$type || 'php' === $type);
+        return \is_string($resource) && 'php' === pathinfo($resource, \PATHINFO_EXTENSION) && (! $type || 'php' === $type);
     }
 
     protected function callConfigurator(callable $callback, string $path, string $file): RouteCollection

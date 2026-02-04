@@ -2,10 +2,10 @@
 
 namespace Egulias\EmailValidator;
 
-use Egulias\EmailValidator\Result\Result;
-use Egulias\EmailValidator\Result\ValidEmail;
 use Egulias\EmailValidator\Result\InvalidEmail;
 use Egulias\EmailValidator\Result\Reason\ExpectingATEXT;
+use Egulias\EmailValidator\Result\Result;
+use Egulias\EmailValidator\Result\ValidEmail;
 
 abstract class Parser
 {
@@ -20,12 +20,13 @@ abstract class Parser
     protected $lexer;
 
     /**
-     * id-left "@" id-right
+     * id-left "@" id-right.
      */
     abstract protected function parseRightFromAt(): Result;
-    abstract protected function parseLeftFromAt(): Result;
-    abstract protected function preLeftParsing(): Result;
 
+    abstract protected function parseLeftFromAt(): Result;
+
+    abstract protected function preLeftParsing(): Result;
 
     public function __construct(EmailLexer $lexer)
     {
@@ -37,7 +38,7 @@ abstract class Parser
         $this->lexer->setInput($str);
 
         if ($this->lexer->hasInvalidTokens()) {
-            return new InvalidEmail(new ExpectingATEXT("Invalid tokens found"), $this->lexer->current->value);
+            return new InvalidEmail(new ExpectingATEXT('Invalid tokens found'), $this->lexer->current->value);
         }
 
         $preParsingResult = $this->preLeftParsing();
@@ -73,6 +74,6 @@ abstract class Parser
         $this->lexer->moveNext();
         $this->lexer->moveNext();
 
-        return !$this->lexer->current->isA(EmailLexer::S_AT);
+        return ! $this->lexer->current->isA(EmailLexer::S_AT);
     }
 }

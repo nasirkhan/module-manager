@@ -46,13 +46,13 @@ final class SocketCaster
             Caster::PREFIX_VIRTUAL.'blocked' => $info['blocked'],
         ];
 
-        if (!$lastError = socket_last_error($socket)) {
+        if (! $lastError = socket_last_error($socket)) {
             return $a;
         }
 
         static $errors;
 
-        if (!$errors) {
+        if (! $errors) {
             $errors = get_defined_constants(true)['sockets'] ?? [];
             $errors = array_flip(array_filter($errors, static fn ($k) => str_starts_with($k, 'SOCKET_E'), \ARRAY_FILTER_USE_KEY));
         }

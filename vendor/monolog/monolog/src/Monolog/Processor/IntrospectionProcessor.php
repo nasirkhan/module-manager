@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -13,11 +15,11 @@ namespace Monolog\Processor;
 
 use Monolog\Level;
 use Monolog\Logger;
-use Psr\Log\LogLevel;
 use Monolog\LogRecord;
+use Psr\Log\LogLevel;
 
 /**
- * Injects line/file:class/function where the log message came from
+ * Injects line/file:class/function where the log message came from.
  *
  * Warning: This only works if the handler processes the logs directly.
  * If you put the processor on a handler that is behind a FingersCrossedHandler
@@ -46,8 +48,8 @@ class IntrospectionProcessor implements ProcessorInterface
     ];
 
     /**
-     * @param string|int|Level $level               The minimum logging level at which this Processor will be triggered
-     * @param string[]         $skipClassesPartials
+     * @param  string|int|Level  $level  The minimum logging level at which this Processor will be triggered
+     * @param  string[]  $skipClassesPartials
      *
      * @phpstan-param value-of<Level::VALUES>|value-of<Level::NAMES>|Level|LogLevel::* $level
      */
@@ -101,11 +103,11 @@ class IntrospectionProcessor implements ProcessorInterface
         $record->extra = array_merge(
             $record->extra,
             [
-                'file'      => $trace[$i - 1]['file'] ?? null,
-                'line'      => $trace[$i - 1]['line'] ?? null,
-                'class'     => $trace[$i]['class'] ?? null,
-                'callType'  => $trace[$i]['type'] ?? null,
-                'function'  => $trace[$i]['function'] ?? null,
+                'file' => $trace[$i - 1]['file'] ?? null,
+                'line' => $trace[$i - 1]['line'] ?? null,
+                'class' => $trace[$i]['class'] ?? null,
+                'callType' => $trace[$i]['type'] ?? null,
+                'function' => $trace[$i]['function'] ?? null,
             ]
         );
 
@@ -113,11 +115,11 @@ class IntrospectionProcessor implements ProcessorInterface
     }
 
     /**
-     * @param array<mixed> $trace
+     * @param  array<mixed>  $trace
      */
     private function isTraceClassOrSkippedFunction(array $trace, int $index): bool
     {
-        if (!isset($trace[$index])) {
+        if (! isset($trace[$index])) {
             return false;
         }
 

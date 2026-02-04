@@ -11,7 +11,7 @@ use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
- * Server-side HTTP request
+ * Server-side HTTP request.
  *
  * Extends the Request definition to add methods for accessing incoming data,
  * specifically server parameters, cookies, matched path parameters, query
@@ -57,12 +57,12 @@ class ServerRequest extends Request implements ServerRequestInterface
     private $uploadedFiles = [];
 
     /**
-     * @param string                               $method       HTTP method
-     * @param string|UriInterface                  $uri          URI
-     * @param (string|string[])[]                  $headers      Request headers
-     * @param string|resource|StreamInterface|null $body         Request body
-     * @param string                               $version      Protocol version
-     * @param array                                $serverParams Typically the $_SERVER superglobal
+     * @param  string  $method  HTTP method
+     * @param  string|UriInterface  $uri  URI
+     * @param  (string|string[])[]  $headers  Request headers
+     * @param  string|resource|StreamInterface|null  $body  Request body
+     * @param  string  $version  Protocol version
+     * @param  array  $serverParams  Typically the $_SERVER superglobal
      */
     public function __construct(
         string $method,
@@ -80,7 +80,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     /**
      * Return an UploadedFile instance array.
      *
-     * @param array $files An array which respect $_FILES structure
+     * @param  array  $files  An array which respect $_FILES structure
      *
      * @throws InvalidArgumentException for unrecognized values
      */
@@ -110,8 +110,7 @@ class ServerRequest extends Request implements ServerRequestInterface
      * If the specification represents an array of values, this method will
      * delegate to normalizeNestedFileSpec() and return that return value.
      *
-     * @param array $value $_FILES struct
-     *
+     * @param  array  $value  $_FILES struct
      * @return UploadedFileInterface|UploadedFileInterface[]
      */
     private static function createUploadedFileFromSpec(array $value)
@@ -201,7 +200,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     {
         $uri = new Uri('');
 
-        $uri = $uri->withScheme(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http');
+        $uri = $uri->withScheme(! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http');
 
         $hasPort = false;
         if (isset($_SERVER['HTTP_HOST'])) {
@@ -220,7 +219,7 @@ class ServerRequest extends Request implements ServerRequestInterface
             $uri = $uri->withHost($_SERVER['SERVER_ADDR']);
         }
 
-        if (!$hasPort && isset($_SERVER['SERVER_PORT'])) {
+        if (! $hasPort && isset($_SERVER['SERVER_PORT'])) {
             $uri = $uri->withPort($_SERVER['SERVER_PORT']);
         }
 
@@ -234,7 +233,7 @@ class ServerRequest extends Request implements ServerRequestInterface
             }
         }
 
-        if (!$hasQuery && isset($_SERVER['QUERY_STRING'])) {
+        if (! $hasQuery && isset($_SERVER['QUERY_STRING'])) {
             $uri = $uri->withQuery($_SERVER['QUERY_STRING']);
         }
 

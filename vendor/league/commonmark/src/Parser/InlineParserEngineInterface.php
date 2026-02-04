@@ -21,7 +21,7 @@ use League\CommonMark\Node\Block\AbstractBlock;
 interface InlineParserEngineInterface
 {
     /**
-     * Parse the given contents as inlines and insert them into the given block
+     * Parse the given contents as inlines and insert them into the given block.
      */
     public function parse(string $contents, AbstractBlock $block): void;
 }

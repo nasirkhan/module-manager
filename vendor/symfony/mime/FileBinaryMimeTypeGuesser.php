@@ -27,7 +27,7 @@ class FileBinaryMimeTypeGuesser implements MimeTypeGuesserInterface
      *
      * The command output must start with the MIME type of the file.
      *
-     * @param string $cmd The command to run to get the MIME type of a file
+     * @param  string  $cmd  The command to run to get the MIME type of a file
      */
     public function __construct(
         private string $cmd = 'file -b --mime -- %s 2>/dev/null',
@@ -42,7 +42,7 @@ class FileBinaryMimeTypeGuesser implements MimeTypeGuesserInterface
             return $supported;
         }
 
-        if ('\\' === \DIRECTORY_SEPARATOR || !\function_exists('passthru') || !\function_exists('escapeshellarg')) {
+        if ('\\' === \DIRECTORY_SEPARATOR || ! \function_exists('passthru') || ! \function_exists('escapeshellarg')) {
             return $supported = false;
         }
 
@@ -55,11 +55,11 @@ class FileBinaryMimeTypeGuesser implements MimeTypeGuesserInterface
 
     public function guessMimeType(string $path): ?string
     {
-        if (!is_file($path) || !is_readable($path)) {
+        if (! is_file($path) || ! is_readable($path)) {
             throw new InvalidArgumentException(\sprintf('The "%s" file does not exist or is not readable.', $path));
         }
 
-        if (!$this->isGuesserSupported()) {
+        if (! $this->isGuesserSupported()) {
             throw new LogicException(\sprintf('The "%s" guesser is not supported.', __CLASS__));
         }
 
@@ -75,7 +75,7 @@ class FileBinaryMimeTypeGuesser implements MimeTypeGuesserInterface
 
         $type = trim(ob_get_clean());
 
-        if (!preg_match('#^([a-z0-9\-]+/[a-z0-9\-\+\.]+)#i', $type, $match)) {
+        if (! preg_match('#^([a-z0-9\-]+/[a-z0-9\-\+\.]+)#i', $type, $match)) {
             // it's not a type, but an error message
             return null;
         }

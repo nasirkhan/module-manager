@@ -10,7 +10,6 @@ use Egulias\EmailValidator\Warning\Warning;
 
 class MessageIDValidation implements EmailValidation
 {
-
     /**
      * @var Warning[]
      */
@@ -30,10 +29,12 @@ class MessageIDValidation implements EmailValidation
             if ($result->isInvalid()) {
                 /** @psalm-suppress PropertyTypeCoercion */
                 $this->error = $result;
+
                 return false;
             }
         } catch (\Exception $invalid) {
             $this->error = new InvalidEmail(new ExceptionFound($invalid), '');
+
             return false;
         }
 

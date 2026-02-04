@@ -55,7 +55,7 @@ trait MessageTrait
     {
         $header = strtolower($header);
 
-        if (!isset($this->headerNames[$header])) {
+        if (! isset($this->headerNames[$header])) {
             return [];
         }
 
@@ -107,7 +107,7 @@ trait MessageTrait
     {
         $normalized = strtolower($header);
 
-        if (!isset($this->headerNames[$normalized])) {
+        if (! isset($this->headerNames[$normalized])) {
             return $this;
         }
 
@@ -121,7 +121,7 @@ trait MessageTrait
 
     public function getBody(): StreamInterface
     {
-        if (!$this->stream) {
+        if (! $this->stream) {
             $this->stream = Utils::streamFor('');
         }
 
@@ -141,7 +141,7 @@ trait MessageTrait
     }
 
     /**
-     * @param (string|string[])[] $headers
+     * @param  (string|string[])[]  $headers
      */
     private function setHeaders(array $headers): void
     {
@@ -164,13 +164,12 @@ trait MessageTrait
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return string[]
      */
     private function normalizeHeaderValue($value): array
     {
-        if (!is_array($value)) {
+        if (! is_array($value)) {
             return $this->trimAndValidateHeaderValues([$value]);
         }
 
@@ -185,8 +184,7 @@ trait MessageTrait
      * header-field = field-name ":" OWS field-value OWS
      * OWS          = *( SP / HTAB )
      *
-     * @param mixed[] $values Header values
-     *
+     * @param  mixed[]  $values  Header values
      * @return string[] Trimmed header values
      *
      * @see https://datatracker.ietf.org/doc/html/rfc7230#section-3.2.4
@@ -194,7 +192,7 @@ trait MessageTrait
     private function trimAndValidateHeaderValues(array $values): array
     {
         return array_map(function ($value) {
-            if (!is_scalar($value) && null !== $value) {
+            if (! is_scalar($value) && null !== $value) {
                 throw new \InvalidArgumentException(sprintf(
                     'Header value must be scalar or null but %s provided.',
                     is_object($value) ? get_class($value) : gettype($value)
@@ -211,18 +209,18 @@ trait MessageTrait
     /**
      * @see https://datatracker.ietf.org/doc/html/rfc7230#section-3.2
      *
-     * @param mixed $header
+     * @param  mixed  $header
      */
     private function assertHeader($header): void
     {
-        if (!is_string($header)) {
+        if (! is_string($header)) {
             throw new \InvalidArgumentException(sprintf(
                 'Header name must be a string but %s provided.',
                 is_object($header) ? get_class($header) : gettype($header)
             ));
         }
 
-        if (!preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/D', $header)) {
+        if (! preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/D', $header)) {
             throw new \InvalidArgumentException(
                 sprintf('"%s" is not valid header name.', $header)
             );
@@ -252,7 +250,7 @@ trait MessageTrait
         // Clients must not send a request with line folding and a server sending folded headers is
         // likely very rare. Line folding is a fairly obscure feature of HTTP/1.1 and thus not accepting
         // folding is not likely to break any legitimate use case.
-        if (!preg_match('/^[\x20\x09\x21-\x7E\x80-\xFF]*$/D', $value)) {
+        if (! preg_match('/^[\x20\x09\x21-\x7E\x80-\xFF]*$/D', $value)) {
             throw new \InvalidArgumentException(
                 sprintf('"%s" is not valid header value.', $value)
             );

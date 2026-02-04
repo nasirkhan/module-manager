@@ -37,8 +37,7 @@ use Throwable;
  *     // Outputs "abc"
  *     $promise->then(function ($v) { echo $v; });
  *
- * @param callable $generatorFn Generator function to wrap into a promise.
- *
+ * @param  callable  $generatorFn  Generator function to wrap into a promise.
  * @return Promise
  *
  * @see https://github.com/petkaantonov/bluebird/blob/master/API.md#generators inspiration

@@ -63,13 +63,12 @@ class CarbonTimeZone extends DateTimeZone
     /**
      * Cast the current instance into the given class.
      *
-     * @param class-string<DateTimeZone> $className The $className::instance() method will be called to cast the current object.
-     *
+     * @param  class-string<DateTimeZone>  $className  The $className::instance() method will be called to cast the current object.
      * @return DateTimeZone|mixed
      */
     public function cast(string $className): mixed
     {
-        if (!method_exists($className, 'instance')) {
+        if (! method_exists($className, 'instance')) {
             if (is_a($className, DateTimeZone::class, true)) {
                 return new $className($this->getName());
             }
@@ -83,12 +82,11 @@ class CarbonTimeZone extends DateTimeZone
     /**
      * Create a CarbonTimeZone from mixed input.
      *
-     * @param DateTimeZone|string|int|false|null $object     original value to get CarbonTimeZone from it.
-     * @param DateTimeZone|string|int|false|null $objectDump dump of the object for error messages.
+     * @param  DateTimeZone|string|int|false|null  $object  original value to get CarbonTimeZone from it.
+     * @param  DateTimeZone|string|int|false|null  $objectDump  dump of the object for error messages.
+     * @return static|null
      *
      * @throws InvalidTimeZoneException
-     *
-     * @return static|null
      */
     public static function instance(
         DateTimeZone|string|int|false|null $object,
@@ -105,7 +103,7 @@ class CarbonTimeZone extends DateTimeZone
         }
 
         try {
-            if (!($timezone instanceof DateTimeZone)) {
+            if (! ($timezone instanceof DateTimeZone)) {
                 $name = static::getDateTimeZoneNameFromMixed($object);
                 $timezone = new static($name);
             }
@@ -122,8 +120,7 @@ class CarbonTimeZone extends DateTimeZone
     /**
      * Returns abbreviated name of the current timezone according to DST setting.
      *
-     * @param bool $dst
-     *
+     * @param  bool  $dst
      * @return string
      */
     public function getAbbreviatedName(bool $dst = false): string
@@ -159,8 +156,7 @@ class CarbonTimeZone extends DateTimeZone
      *
      * Returns abbreviated name of the current timezone according to DST setting.
      *
-     * @param bool $dst
-     *
+     * @param  bool  $dst
      * @return string
      */
     public function getAbbr(bool $dst = false): string
@@ -270,8 +266,7 @@ class CarbonTimeZone extends DateTimeZone
     /**
      * Create a CarbonTimeZone from mixed input.
      *
-     * @param DateTimeZone|string|int|null $object
-     *
+     * @param  DateTimeZone|string|int|null  $object
      * @return false|static
      */
     public static function create($object = null)
@@ -282,8 +277,7 @@ class CarbonTimeZone extends DateTimeZone
     /**
      * Create a CarbonTimeZone from int/float hour offset.
      *
-     * @param float $hourOffset number of hour of the timezone shift (can be decimal).
-     *
+     * @param  float  $hourOffset  number of hour of the timezone shift (can be decimal).
      * @return false|static
      */
     public static function createFromHourOffset(float $hourOffset)
@@ -294,8 +288,7 @@ class CarbonTimeZone extends DateTimeZone
     /**
      * Create a CarbonTimeZone from int/float minute offset.
      *
-     * @param float $minuteOffset number of total minutes of the timezone shift.
-     *
+     * @param  float  $minuteOffset  number of total minutes of the timezone shift.
      * @return false|static
      */
     public static function createFromMinuteOffset(float $minuteOffset)
@@ -306,8 +299,7 @@ class CarbonTimeZone extends DateTimeZone
     /**
      * Convert a total minutes offset into a standardized timezone offset string.
      *
-     * @param float $minutes number of total minutes of the timezone shift.
-     *
+     * @param  float  $minutes  number of total minutes of the timezone shift.
      * @return string
      */
     public static function getOffsetNameFromMinuteOffset(float $minutes): string

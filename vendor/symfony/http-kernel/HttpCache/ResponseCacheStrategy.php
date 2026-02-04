@@ -56,7 +56,7 @@ class ResponseCacheStrategy implements ResponseCacheStrategyInterface
 
     public function add(Response $response): void
     {
-        ++$this->embeddedResponses;
+        $this->embeddedResponses++;
 
         foreach (self::OVERRIDE_DIRECTIVES as $directive) {
             if ($response->headers->hasCacheControlDirective($directive)) {
@@ -92,11 +92,11 @@ class ResponseCacheStrategy implements ResponseCacheStrategyInterface
             && null === $sharedMaxAge
             && null === $expires;
 
-        if (!$isHeuristicallyCacheable || null !== $maxAge || null !== $expires) {
+        if (! $isHeuristicallyCacheable || null !== $maxAge || null !== $expires) {
             $this->storeRelativeAgeDirective('max-age', $maxAge, $expires, $age);
         }
 
-        if (!$isHeuristicallyCacheable || null !== $sharedMaxAge || null !== $expires) {
+        if (! $isHeuristicallyCacheable || null !== $sharedMaxAge || null !== $expires) {
             $this->storeRelativeAgeDirective('s-maxage', $sharedMaxAge, $expires, $age);
         }
 

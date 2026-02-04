@@ -84,7 +84,7 @@ class UuidV7 extends Uuid implements TimeBasedUidInterface
             // or 4 x 16-bit for x86 portability. We increment this random part by the next
             // 24-bit number in the self::$seedParts list and decrement self::$seedIndex.
 
-            if (!self::$seedIndex) {
+            if (! self::$seedIndex) {
                 $s = unpack(\PHP_INT_SIZE >= 8 ? 'L*' : 'l*', self::$seed = hash('sha512', self::$seed, true));
                 $s[] = ($s[1] >> 8 & 0xFF0000) | ($s[2] >> 16 & 0xFF00) | ($s[3] >> 24 & 0xFF);
                 $s[] = ($s[4] >> 8 & 0xFF0000) | ($s[5] >> 16 & 0xFF00) | ($s[6] >> 24 & 0xFF);

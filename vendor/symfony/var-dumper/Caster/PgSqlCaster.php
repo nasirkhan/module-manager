@@ -130,7 +130,7 @@ class PgSqlCaster
 
         $fields = pg_num_fields($result);
 
-        for ($i = 0; $i < $fields; ++$i) {
+        for ($i = 0; $i < $fields; $i++) {
             $field = [
                 'name' => pg_field_name($result, $i),
                 'table' => \sprintf('%s (OID: %s)', pg_field_table($result, $i), pg_field_table($result, $i, true)),

@@ -23,12 +23,12 @@ final class SMimeEncrypter extends SMime
     private int $cipher;
 
     /**
-     * @param string|string[] $certificate The path (or array of paths) of the file(s) containing the X.509 certificate(s)
-     * @param int|null        $cipher      A set of algorithms used to encrypt the message. Must be one of these PHP constants: https://php.net/openssl.ciphers
+     * @param  string|string[]  $certificate  The path (or array of paths) of the file(s) containing the X.509 certificate(s)
+     * @param  int|null  $cipher  A set of algorithms used to encrypt the message. Must be one of these PHP constants: https://php.net/openssl.ciphers
      */
     public function __construct(string|array $certificate, ?int $cipher = null)
     {
-        if (!\extension_loaded('openssl')) {
+        if (! \extension_loaded('openssl')) {
             throw new \LogicException('PHP extension "openssl" is required to use SMime.');
         }
 
@@ -48,15 +48,14 @@ final class SMimeEncrypter extends SMime
 
         $this->iteratorToFile($message->toIterable(), $bufferFile);
 
-        if (!@openssl_pkcs7_encrypt(stream_get_meta_data($bufferFile)['uri'], stream_get_meta_data($outputFile)['uri'], $this->certs, [], 0, $this->cipher)) {
+        if (! @openssl_pkcs7_encrypt(stream_get_meta_data($bufferFile)['uri'], stream_get_meta_data($outputFile)['uri'], $this->certs, [], 0, $this->cipher)) {
             throw new RuntimeException(\sprintf('Failed to encrypt S/Mime message. Error: "%s".', openssl_error_string()));
         }
 
         $mimePart = $this->convertMessageToSMimePart($outputFile, 'application', 'pkcs7-mime');
         $mimePart->getHeaders()
             ->addTextHeader('Content-Transfer-Encoding', 'base64')
-            ->addParameterizedHeader('Content-Disposition', 'attachment', ['name' => 'smime.p7m'])
-        ;
+            ->addParameterizedHeader('Content-Disposition', 'attachment', ['name' => 'smime.p7m']);
 
         return new Message($message->getHeaders(), $mimePart);
     }

@@ -39,8 +39,7 @@ final class EntryParser
      * That is, turn a raw environment variable entry into a name and possibly
      * a value. We wrap the answer in a result type.
      *
-     * @param string $entry
-     *
+     * @param  string  $entry
      * @return \GrahamCampbell\ResultType\Result<\Dotenv\Parser\Entry, string>
      */
     public static function parse(string $entry)
@@ -62,8 +61,7 @@ final class EntryParser
     /**
      * Split the compound string into parts.
      *
-     * @param string $line
-     *
+     * @param  string  $line
      * @return \GrahamCampbell\ResultType\Result<array{string, string|null},string>
      */
     private static function splitStringIntoParts(string $line)
@@ -88,8 +86,7 @@ final class EntryParser
      * That is, strip the optional quotes and leading "export" from the
      * variable name. We wrap the answer in a result type.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return \GrahamCampbell\ResultType\Result<string, string>
      */
     private static function parseName(string $name)
@@ -102,7 +99,7 @@ final class EntryParser
             $name = Str::substr($name, 1, -1);
         }
 
-        if (!self::isValidName($name)) {
+        if (! self::isValidName($name)) {
             /** @var \GrahamCampbell\ResultType\Result<string, string> */
             return Error::create(self::getErrorMessage('an invalid name', $name));
         }
@@ -114,8 +111,7 @@ final class EntryParser
     /**
      * Is the given variable name quoted?
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return bool
      */
     private static function isQuotedName(string $name)
@@ -133,8 +129,7 @@ final class EntryParser
     /**
      * Is the given variable name valid?
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return bool
      */
     private static function isValidName(string $name)
@@ -150,8 +145,7 @@ final class EntryParser
      * them. Formally, we run a finite state automaton with an output tape: a
      * transducer. We wrap the answer in a result type.
      *
-     * @param string $value
-     *
+     * @param  string  $value
      * @return \GrahamCampbell\ResultType\Result<\Dotenv\Parser\Value, string>
      */
     private static function parseValue(string $value)
@@ -183,9 +177,8 @@ final class EntryParser
     /**
      * Process the given token.
      *
-     * @param int    $state
-     * @param string $token
-     *
+     * @param  int  $state
+     * @param  string  $token
      * @return \GrahamCampbell\ResultType\Result<array{string, bool, int}, string>
      */
     private static function processToken(int $state, string $token)
@@ -265,7 +258,7 @@ final class EntryParser
                 if ($token === '#') {
                     /** @var \GrahamCampbell\ResultType\Result<array{string, bool, int}, string> */
                     return Success::create(['', false, self::COMMENT_STATE]);
-                } elseif (!\ctype_space($token)) {
+                } elseif (! \ctype_space($token)) {
                     /** @var \GrahamCampbell\ResultType\Result<array{string, bool, int}, string> */
                     return Error::create('unexpected whitespace');
                 } else {
@@ -283,9 +276,8 @@ final class EntryParser
     /**
      * Generate a friendly error message.
      *
-     * @param string $cause
-     * @param string $subject
-     *
+     * @param  string  $cause
+     * @param  string  $subject
      * @return string
      */
     private static function getErrorMessage(string $cause, string $subject)

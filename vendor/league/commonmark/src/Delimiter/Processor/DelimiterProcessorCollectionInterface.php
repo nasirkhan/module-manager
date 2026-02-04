@@ -24,21 +24,21 @@ use League\CommonMark\Exception\InvalidArgumentException;
 interface DelimiterProcessorCollectionInterface extends \Countable
 {
     /**
-     * Add the given delim processor to the collection
+     * Add the given delim processor to the collection.
      *
-     * @param DelimiterProcessorInterface $processor The delim processor to add
+     * @param  DelimiterProcessorInterface  $processor  The delim processor to add
      *
      * @throws InvalidArgumentException Exception will be thrown if attempting to add multiple processors for the same character
      */
     public function add(DelimiterProcessorInterface $processor): void;
 
     /**
-     * Returns the delim processor which handles the given character if one exists
+     * Returns the delim processor which handles the given character if one exists.
      */
     public function getDelimiterProcessor(string $char): ?DelimiterProcessorInterface;
 
     /**
-     * Returns an array of delimiter characters who have associated processors
+     * Returns an array of delimiter characters who have associated processors.
      *
      * @return string[]
      */

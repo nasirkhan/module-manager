@@ -9,24 +9,24 @@ use LogicException;
 class UnableToMountFilesystem extends LogicException implements FilesystemException
 {
     /**
-     * @param mixed $key
+     * @param  mixed  $key
      */
     public static function becauseTheKeyIsNotValid($key): UnableToMountFilesystem
     {
         return new UnableToMountFilesystem(
-            'Unable to mount filesystem, key was invalid. String expected, received: ' . gettype($key)
+            'Unable to mount filesystem, key was invalid. String expected, received: '.gettype($key)
         );
     }
 
     /**
-     * @param mixed $filesystem
+     * @param  mixed  $filesystem
      */
     public static function becauseTheFilesystemWasNotValid($filesystem): UnableToMountFilesystem
     {
         $received = is_object($filesystem) ? get_class($filesystem) : gettype($filesystem);
 
         return new UnableToMountFilesystem(
-            'Unable to mount filesystem, filesystem was invalid. Instance of ' . FilesystemOperator::class . ' expected, received: ' . $received
+            'Unable to mount filesystem, filesystem was invalid. Instance of '.FilesystemOperator::class.' expected, received: '.$received
         );
     }
 }

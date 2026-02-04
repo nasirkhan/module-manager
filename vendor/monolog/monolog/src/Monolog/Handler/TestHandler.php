@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -13,9 +15,9 @@ namespace Monolog\Handler;
 
 use Monolog\Level;
 use Monolog\Logger;
-use Psr\Log\LogLevel;
 use Monolog\LogRecord;
 use NoDiscard;
+use Psr\Log\LogLevel;
 
 /**
  * Used for testing purposes.
@@ -32,7 +34,6 @@ use NoDiscard;
  * @method bool hasNotice(array{message: string, context?: mixed[]}|string $recordAssertions)
  * @method bool hasInfo(array{message: string, context?: mixed[]}|string $recordAssertions)
  * @method bool hasDebug(array{message: string, context?: mixed[]}|string $recordAssertions)
- *
  * @method bool hasEmergencyRecords()
  * @method bool hasAlertRecords()
  * @method bool hasCriticalRecords()
@@ -41,7 +42,6 @@ use NoDiscard;
  * @method bool hasNoticeRecords()
  * @method bool hasInfoRecords()
  * @method bool hasDebugRecords()
- *
  * @method bool hasEmergencyThatContains(string $message)
  * @method bool hasAlertThatContains(string $message)
  * @method bool hasCriticalThatContains(string $message)
@@ -50,7 +50,6 @@ use NoDiscard;
  * @method bool hasNoticeThatContains(string $message)
  * @method bool hasInfoThatContains(string $message)
  * @method bool hasDebugThatContains(string $message)
- *
  * @method bool hasEmergencyThatMatches(string $regex)
  * @method bool hasAlertThatMatches(string $regex)
  * @method bool hasCriticalThatMatches(string $regex)
@@ -59,7 +58,6 @@ use NoDiscard;
  * @method bool hasNoticeThatMatches(string $regex)
  * @method bool hasInfoThatMatches(string $regex)
  * @method bool hasDebugThatMatches(string $regex)
- *
  * @method bool hasEmergencyThatPasses(callable $predicate)
  * @method bool hasAlertThatPasses(callable $predicate)
  * @method bool hasCriticalThatPasses(callable $predicate)
@@ -94,7 +92,7 @@ class TestHandler extends AbstractProcessingHandler
 
     public function reset(): void
     {
-        if (!$this->skipReset) {
+        if (! $this->skipReset) {
             $this->clear();
         }
     }
@@ -105,7 +103,7 @@ class TestHandler extends AbstractProcessingHandler
     }
 
     /**
-     * @param int|string|Level|LogLevel::* $level Logging level value or name
+     * @param  int|string|Level|LogLevel::*  $level  Logging level value or name
      *
      * @phpstan-param value-of<Level::VALUES>|value-of<Level::NAMES>|Level|LogLevel::* $level
      */
@@ -116,7 +114,7 @@ class TestHandler extends AbstractProcessingHandler
     }
 
     /**
-     * @param string|array $recordAssertions Either a message string or an array containing message and optionally context keys that will be checked against all records
+     * @param  string|array  $recordAssertions  Either a message string or an array containing message and optionally context keys that will be checked against all records
      *
      * @phpstan-param array{message: string, context?: mixed[]}|string $recordAssertions
      */
@@ -159,7 +157,7 @@ class TestHandler extends AbstractProcessingHandler
     {
         $level = Logger::toMonologLevel($level);
 
-        if (!isset($this->recordsByLevel[$level->value])) {
+        if (! isset($this->recordsByLevel[$level->value])) {
             return false;
         }
 
@@ -182,14 +180,14 @@ class TestHandler extends AbstractProcessingHandler
     }
 
     /**
-     * @param mixed[] $args
+     * @param  mixed[]  $args
      */
     #[NoDiscard]
     public function __call(string $method, array $args): bool
     {
         if ((bool) preg_match('/(.*)(Debug|Info|Notice|Warning|Error|Critical|Alert|Emergency)(.*)/', $method, $matches)) {
-            $genericMethod = $matches[1] . ('Records' !== $matches[3] ? 'Record' : '') . $matches[3];
-            $level = \constant(Level::class.'::' . $matches[2]);
+            $genericMethod = $matches[1].('Records' !== $matches[3] ? 'Record' : '').$matches[3];
+            $level = \constant(Level::class.'::'.$matches[2]);
             $callback = [$this, $genericMethod];
             if (\is_callable($callback)) {
                 $args[] = $level;
@@ -198,6 +196,6 @@ class TestHandler extends AbstractProcessingHandler
             }
         }
 
-        throw new \BadMethodCallException('Call to undefined method ' . \get_class($this) . '::' . $method . '()');
+        throw new \BadMethodCallException('Call to undefined method '.\get_class($this).'::'.$method.'()');
     }
 }

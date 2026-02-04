@@ -37,8 +37,8 @@ class SortableIterator implements \IteratorAggregate
     private \Closure|int $sort;
 
     /**
-     * @param \Traversable<string, \SplFileInfo> $iterator
-     * @param int|callable                       $sort     The sort type (SORT_BY_NAME, SORT_BY_TYPE, or a PHP callback)
+     * @param  \Traversable<string, \SplFileInfo>  $iterator
+     * @param  int|callable  $sort  The sort type (SORT_BY_NAME, SORT_BY_TYPE, or a PHP callback)
      *
      * @throws \InvalidArgumentException
      */

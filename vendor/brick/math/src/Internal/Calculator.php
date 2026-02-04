@@ -65,7 +65,7 @@ abstract readonly class Calculator
             return substr($n, 1);
         }
 
-        return '-' . $n;
+        return '-'.$n;
     }
 
     /**
@@ -127,9 +127,8 @@ abstract readonly class Calculator
     /**
      * Returns the quotient of the division of two numbers.
      *
-     * @param string $a The dividend.
-     * @param string $b The divisor, must not be zero.
-     *
+     * @param  string  $a  The dividend.
+     * @param  string  $b  The divisor, must not be zero.
      * @return string The quotient.
      *
      * @pure
@@ -139,9 +138,8 @@ abstract readonly class Calculator
     /**
      * Returns the remainder of the division of two numbers.
      *
-     * @param string $a The dividend.
-     * @param string $b The divisor, must not be zero.
-     *
+     * @param  string  $a  The dividend.
+     * @param  string  $b  The divisor, must not be zero.
      * @return string The remainder.
      *
      * @pure
@@ -151,9 +149,8 @@ abstract readonly class Calculator
     /**
      * Returns the quotient and remainder of the division of two numbers.
      *
-     * @param string $a The dividend.
-     * @param string $b The divisor, must not be zero.
-     *
+     * @param  string  $a  The dividend.
+     * @param  string  $b  The divisor, must not be zero.
      * @return array{string, string} An array containing the quotient and remainder.
      *
      * @pure
@@ -163,9 +160,8 @@ abstract readonly class Calculator
     /**
      * Exponentiates a number.
      *
-     * @param string $a The base number.
-     * @param int    $e The exponent, validated as an integer between 0 and MAX_POWER.
-     *
+     * @param  string  $a  The base number.
+     * @param  int  $e  The exponent, validated as an integer between 0 and MAX_POWER.
      * @return string The power.
      *
      * @pure
@@ -173,7 +169,7 @@ abstract readonly class Calculator
     abstract public function pow(string $a, int $e): string;
 
     /**
-     * @param string $b The modulus; must not be zero.
+     * @param  string  $b  The modulus; must not be zero.
      *
      * @pure
      */
@@ -189,7 +185,7 @@ abstract readonly class Calculator
      *
      * This method can be overridden by the concrete implementation if the underlying library has built-in support.
      *
-     * @param string $m The modulus; must not be negative or zero.
+     * @param  string  $m  The modulus; must not be negative or zero.
      *
      * @pure
      */
@@ -217,9 +213,9 @@ abstract readonly class Calculator
     /**
      * Raises a number into power with modulo.
      *
-     * @param string $base The base number.
-     * @param string $exp  The exponent; must be positive or zero.
-     * @param string $mod  The modulus; must be strictly positive.
+     * @param  string  $base  The base number.
+     * @param  string  $exp  The exponent; must be positive or zero.
+     * @param  string  $mod  The modulus; must be strictly positive.
      *
      * @pure
      */
@@ -283,9 +279,8 @@ abstract readonly class Calculator
      * This method can be overridden by the concrete implementation if the underlying library
      * has built-in support for base conversion.
      *
-     * @param string $number The number, positive or zero, non-empty, case-insensitively validated for the given base.
-     * @param int    $base   The base of the number, validated from 2 to 36.
-     *
+     * @param  string  $number  The number, positive or zero, non-empty, case-insensitively validated for the given base.
+     * @param  int  $base  The base of the number, validated from 2 to 36.
      * @return string The converted number, following the Calculator conventions.
      *
      * @pure
@@ -301,9 +296,8 @@ abstract readonly class Calculator
      * This method can be overridden by the concrete implementation if the underlying library
      * has built-in support for base conversion.
      *
-     * @param string $number The number to convert, following the Calculator conventions.
-     * @param int    $base   The base to convert to, validated from 2 to 36.
-     *
+     * @param  string  $number  The number to convert, following the Calculator conventions.
+     * @param  int  $base  The base to convert to, validated from 2 to 36.
      * @return string The converted number, lowercase.
      *
      * @pure
@@ -319,7 +313,7 @@ abstract readonly class Calculator
         $number = $this->toArbitraryBase($number, self::ALPHABET, $base);
 
         if ($negative) {
-            return '-' . $number;
+            return '-'.$number;
         }
 
         return $number;
@@ -328,11 +322,10 @@ abstract readonly class Calculator
     /**
      * Converts a non-negative number in an arbitrary base using a custom alphabet, to base 10.
      *
-     * @param string $number   The number to convert, validated as a non-empty string,
-     *                         containing only chars in the given alphabet/base.
-     * @param string $alphabet The alphabet that contains every digit, validated as 2 chars minimum.
-     * @param int    $base     The base of the number, validated from 2 to alphabet length.
-     *
+     * @param  string  $number  The number to convert, validated as a non-empty string,
+     *                          containing only chars in the given alphabet/base.
+     * @param  string  $alphabet  The alphabet that contains every digit, validated as 2 chars minimum.
+     * @param  int  $base  The base of the number, validated from 2 to alphabet length.
      * @return string The number in base 10, following the Calculator conventions.
      *
      * @pure
@@ -377,10 +370,9 @@ abstract readonly class Calculator
     /**
      * Converts a non-negative number to an arbitrary base using a custom alphabet.
      *
-     * @param string $number   The number to convert, positive or zero, following the Calculator conventions.
-     * @param string $alphabet The alphabet that contains every digit, validated as 2 chars minimum.
-     * @param int    $base     The base to convert to, validated from 2 to alphabet length.
-     *
+     * @param  string  $number  The number to convert, positive or zero, following the Calculator conventions.
+     * @param  string  $alphabet  The alphabet that contains every digit, validated as 2 chars minimum.
+     * @param  int  $base  The base to convert to, validated from 2 to alphabet length.
      * @return string The converted number in the given alphabet.
      *
      * @pure
@@ -409,9 +401,9 @@ abstract readonly class Calculator
      *
      * Rounding is performed when the remainder of the division is not zero.
      *
-     * @param string       $a            The dividend.
-     * @param string       $b            The divisor, must not be zero.
-     * @param RoundingMode $roundingMode The rounding mode.
+     * @param  string  $a  The dividend.
+     * @param  string  $b  The divisor, must not be zero.
+     * @param  RoundingMode  $roundingMode  The rounding mode.
      *
      * @throws RoundingNecessaryException If RoundingMode::Unnecessary is provided but rounding is necessary.
      *
@@ -573,9 +565,9 @@ abstract readonly class Calculator
     /**
      * Performs a bitwise operation on a decimal number.
      *
-     * @param 'and'|'or'|'xor' $operator The operator to use.
-     * @param string           $a        The left operand.
-     * @param string           $b        The right operand.
+     * @param  'and'|'or'|'xor'  $operator  The operator to use.
+     * @param  string  $a  The left operand.
+     * @param  string  $b  The right operand.
      *
      * @pure
      */
@@ -590,9 +582,9 @@ abstract readonly class Calculator
         $bLen = strlen($bBin);
 
         if ($aLen > $bLen) {
-            $bBin = str_repeat("\x00", $aLen - $bLen) . $bBin;
+            $bBin = str_repeat("\x00", $aLen - $bLen).$bBin;
         } elseif ($bLen > $aLen) {
-            $aBin = str_repeat("\x00", $bLen - $aLen) . $aBin;
+            $aBin = str_repeat("\x00", $bLen - $aLen).$aBin;
         }
 
         if ($aNeg) {
@@ -624,7 +616,7 @@ abstract readonly class Calculator
     }
 
     /**
-     * @param string $number A positive, binary number.
+     * @param  string  $number  A positive, binary number.
      *
      * @pure
      */
@@ -646,7 +638,7 @@ abstract readonly class Calculator
             $number[$i] = "\x00";
 
             if ($i === 0) {
-                $number = "\x01" . $number;
+                $number = "\x01".$number;
             }
         }
 
@@ -656,7 +648,7 @@ abstract readonly class Calculator
     /**
      * Converts a decimal number to a binary string.
      *
-     * @param string $number The number to convert, positive or zero, only digits.
+     * @param  string  $number  The number to convert, positive or zero, only digits.
      *
      * @pure
      */
@@ -675,7 +667,7 @@ abstract readonly class Calculator
     /**
      * Returns the positive decimal representation of a binary number.
      *
-     * @param string $bytes The bytes representing the number.
+     * @param  string  $bytes  The bytes representing the number.
      *
      * @pure
      */

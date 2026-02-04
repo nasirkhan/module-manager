@@ -92,7 +92,7 @@ class HtmlDumper extends CliDumper
 
     public function setTheme(string $themeName): void
     {
-        if (!isset(static::$themes[$themeName])) {
+        if (! isset(static::$themes[$themeName])) {
             throw new \InvalidArgumentException(\sprintf('Theme "%s" does not exist in class "%s".', $themeName, static::class));
         }
 
@@ -102,7 +102,7 @@ class HtmlDumper extends CliDumper
     /**
      * Configures display options.
      *
-     * @param array $displayOptions A map of display options to customize the behavior
+     * @param  array  $displayOptions  A map of display options to customize the behavior
      */
     public function setDisplayOptions(array $displayOptions): void
     {
@@ -821,7 +821,7 @@ class HtmlDumper extends CliDumper
 
     protected function style(string $style, string $value, array $attr = []): string
     {
-        if ('' === $value && ('label' !== $style || !isset($attr['file']) && !isset($attr['href']))) {
+        if ('' === $value && ('label' !== $style || ! isset($attr['file']) && ! isset($attr['href']))) {
             return '';
         }
 
@@ -869,7 +869,7 @@ class HtmlDumper extends CliDumper
             $dumpTitle = $v."\n".$dumpTitle;
             $v = \sprintf('<span class="%s">%s</span>', $ellipsisClass, substr($v, 0, -\strlen($label)));
 
-            if (!empty($attr['ellipsis-tail'])) {
+            if (! empty($attr['ellipsis-tail'])) {
                 $tail = \strlen(esc(substr($value, -$attr['ellipsis'], $attr['ellipsis-tail'])));
                 $v .= \sprintf('<span class="%s">%s</span><span class="sf-dump-ellipsis-tail">%s</span>', $ellipsisClass, substr($label, 0, $tail), substr($label, $tail));
             } else {
@@ -893,7 +893,7 @@ class HtmlDumper extends CliDumper
                 do {
                     if (("\r" === $c[$i] || "\n" === $c[$i]) !== $ns) {
                         $s .= '</span>'.$b;
-                        if ($ns = !$ns) {
+                        if ($ns = ! $ns) {
                             $s .= ' sf-dump-ns';
                         }
                         $s .= '">';
@@ -906,7 +906,7 @@ class HtmlDumper extends CliDumper
             }, $v)
         );
 
-        if (!($attr['binary'] ?? false)) {
+        if (! ($attr['binary'] ?? false)) {
             $v = preg_replace_callback(static::$unicodeCharsRx, function ($c) {
                 return '<span class=sf-dump-default>\u{'.strtoupper(dechex(mb_ord($c[0]))).'}</span>';
             }, $v);

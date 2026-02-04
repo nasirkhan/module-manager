@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -21,24 +21,24 @@ use function sprintf;
 use function strlen;
 
 /**
- * Provides common serialization functionality to fields
+ * Provides common serialization functionality to fields.
  *
  * @immutable
  */
 trait SerializableFieldsTrait
 {
     /**
-     * @param string $bytes The bytes that comprise the fields
+     * @param  string  $bytes  The bytes that comprise the fields
      */
     abstract public function __construct(string $bytes);
 
     /**
-     * Returns the bytes that comprise the fields
+     * Returns the bytes that comprise the fields.
      */
     abstract public function getBytes(): string;
 
     /**
-     * Returns a string representation of the object
+     * Returns a string representation of the object.
      */
     public function serialize(): string
     {
@@ -54,9 +54,9 @@ trait SerializableFieldsTrait
     }
 
     /**
-     * Constructs the object from a serialized string representation
+     * Constructs the object from a serialized string representation.
      *
-     * @param string $data The serialized string representation of the object
+     * @param  string  $data  The serialized string representation of the object
      */
     public function unserialize(string $data): void
     {
@@ -68,12 +68,12 @@ trait SerializableFieldsTrait
     }
 
     /**
-     * @param array{bytes?: string} $data
+     * @param  array{bytes?: string}  $data
      */
     public function __unserialize(array $data): void
     {
         // @codeCoverageIgnoreStart
-        if (!isset($data['bytes'])) {
+        if (! isset($data['bytes'])) {
             throw new ValueError(sprintf('%s(): Argument #1 ($data) is invalid', __METHOD__));
         }
         // @codeCoverageIgnoreEnd

@@ -27,7 +27,7 @@ class LinkStub extends ConstStub
     {
         $this->value = $label;
 
-        if (!\is_string($href ??= $label)) {
+        if (! \is_string($href ??= $label)) {
             return;
         }
         if (str_starts_with($href, 'file://')) {
@@ -40,7 +40,7 @@ class LinkStub extends ConstStub
 
             return;
         }
-        if (!is_file($href)) {
+        if (! is_file($href)) {
             return;
         }
         if ($line) {
@@ -62,7 +62,7 @@ class LinkStub extends ConstStub
 
     private function getComposerRoot(string $file, bool &$inVendor): string|false
     {
-        if (!isset(self::$vendorRoots)) {
+        if (! isset(self::$vendorRoots)) {
             self::$vendorRoots = [];
 
             foreach (get_declared_classes() as $class) {
@@ -88,8 +88,8 @@ class LinkStub extends ConstStub
         }
 
         $parent = $dir;
-        while (!@is_file($parent.'/composer.json')) {
-            if (!@file_exists($parent)) {
+        while (! @is_file($parent.'/composer.json')) {
+            if (! @file_exists($parent)) {
                 // open_basedir restriction in effect
                 break;
             }

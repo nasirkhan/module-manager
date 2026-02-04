@@ -27,7 +27,7 @@ use League\CommonMark\Xml\XmlNodeRendererInterface;
 final class CodeRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param Code $node
+     * @param  Code  $node
      *
      * {@inheritDoc}
      *

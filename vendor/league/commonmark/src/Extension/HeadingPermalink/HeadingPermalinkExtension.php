@@ -20,7 +20,7 @@ use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
 /**
- * Extension which automatically anchor links to heading elements
+ * Extension which automatically anchor links to heading elements.
  */
 final class HeadingPermalinkExtension implements ConfigurableExtensionInterface
 {

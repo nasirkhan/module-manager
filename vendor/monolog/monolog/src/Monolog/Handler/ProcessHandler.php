@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -55,10 +57,11 @@ class ProcessHandler extends AbstractProcessingHandler
     ];
 
     /**
-     * @param  string                    $command Command for the process to start. Absolute paths are recommended,
-     *                                            especially if you do not use the $cwd parameter.
-     * @param  string|null               $cwd     "Current working directory" (CWD) for the process to be executed in.
-     * @param  float                     $timeout The maximum timeout (in seconds) for the stream_select() function.
+     * @param  string  $command  Command for the process to start. Absolute paths are recommended,
+     *                           especially if you do not use the $cwd parameter.
+     * @param  string|null  $cwd  "Current working directory" (CWD) for the process to be executed in.
+     * @param  float  $timeout  The maximum timeout (in seconds) for the stream_select() function.
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(string $command, int|string|Level $level = Level::Debug, bool $bubble = true, ?string $cwd = null, float $timeout = 1.0)
@@ -78,7 +81,7 @@ class ProcessHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Writes the record down to the log of the implementing handler
+     * Writes the record down to the log of the implementing handler.
      *
      * @throws \UnexpectedValueException
      */
@@ -135,7 +138,7 @@ class ProcessHandler extends AbstractProcessingHandler
 
         if (\is_resource($this->process) === false || $errors !== '') {
             throw new \UnexpectedValueException(
-                sprintf('The process "%s" could not be opened: ' . $errors, $this->command)
+                sprintf('The process "%s" could not be opened: '.$errors, $this->command)
             );
         }
     }
@@ -151,6 +154,7 @@ class ProcessHandler extends AbstractProcessingHandler
         $errorPipes = [$this->pipes[2]];
 
         $seconds = (int) $this->timeout;
+
         return stream_select($errorPipes, $empty, $empty, $seconds, (int) (($this->timeout - $seconds) * 1000000));
     }
 
@@ -158,6 +162,7 @@ class ProcessHandler extends AbstractProcessingHandler
      * Reads the errors of the process, if there are any.
      *
      * @codeCoverageIgnore
+     *
      * @return string Empty string if there are no errors.
      */
     protected function readProcessErrors(): string

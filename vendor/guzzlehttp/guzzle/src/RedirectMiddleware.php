@@ -40,7 +40,7 @@ class RedirectMiddleware
     private $nextHandler;
 
     /**
-     * @param callable(RequestInterface, array): PromiseInterface $nextHandler Next handler to invoke.
+     * @param  callable(RequestInterface, array): PromiseInterface  $nextHandler  Next handler to invoke.
      */
     public function __construct(callable $nextHandler)
     {
@@ -57,7 +57,7 @@ class RedirectMiddleware
 
         if ($options['allow_redirects'] === true) {
             $options['allow_redirects'] = self::$defaultSettings;
-        } elseif (!\is_array($options['allow_redirects'])) {
+        } elseif (! \is_array($options['allow_redirects'])) {
             throw new \InvalidArgumentException('allow_redirects must be true, false, or array');
         } else {
             // Merge the default settings with the provided settings
@@ -80,7 +80,7 @@ class RedirectMiddleware
     public function checkRedirect(RequestInterface $request, array $options, ResponseInterface $response)
     {
         if (\strpos((string) $response->getStatusCode(), '3') !== 0
-            || !$response->hasHeader('Location')
+            || ! $response->hasHeader('Location')
         ) {
             return $response;
         }
@@ -107,7 +107,7 @@ class RedirectMiddleware
         $promise = $this($nextRequest, $options);
 
         // Add headers to be able to track history of redirects.
-        if (!empty($options['allow_redirects']['track_redirects'])) {
+        if (! empty($options['allow_redirects']['track_redirects'])) {
             return $this->withTracking(
                 $promise,
                 (string) $nextRequest->getUri(),
@@ -167,7 +167,7 @@ class RedirectMiddleware
         // would do.
         $statusCode = $response->getStatusCode();
         if ($statusCode == 303
-            || ($statusCode <= 302 && !$options['allow_redirects']['strict'])
+            || ($statusCode <= 302 && ! $options['allow_redirects']['strict'])
         ) {
             $safeMethods = ['GET', 'HEAD', 'OPTIONS'];
             $requestMethod = $request->getMethod();
@@ -219,7 +219,7 @@ class RedirectMiddleware
         );
 
         // Ensure that the redirect URI is allowed based on the protocols.
-        if (!\in_array($location->getScheme(), $protocols)) {
+        if (! \in_array($location->getScheme(), $protocols)) {
             throw new BadResponseException(\sprintf('Redirect URI, %s, does not use one of the allowed redirect protocols: %s', $location, \implode(', ', $protocols)), $request, $response);
         }
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/uuid library
+ * This file is part of the ramsey/uuid library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -32,7 +32,7 @@ use const STR_PAD_LEFT;
 
 /**
  * DceSecurityGenerator generates strings of binary data based on a local domain, local identifier, node ID, clock
- * sequence, and the current time
+ * sequence, and the current time.
  */
 class DceSecurityGenerator implements DceSecurityGeneratorInterface
 {
@@ -65,7 +65,7 @@ class DceSecurityGenerator implements DceSecurityGeneratorInterface
         ?Hexadecimal $node = null,
         ?int $clockSeq = null,
     ): string {
-        if (!in_array($localDomain, self::DOMAINS)) {
+        if (! in_array($localDomain, self::DOMAINS)) {
             throw new DceSecurityException('Local domain must be a valid DCE Security domain');
         }
 

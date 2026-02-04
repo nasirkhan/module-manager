@@ -24,7 +24,7 @@ final class EsmtpTransportFactory extends AbstractTransportFactory
 {
     public function create(Dsn $dsn): TransportInterface
     {
-        if (!\in_array($dsn->getScheme(), $this->getSupportedSchemes(), true)) {
+        if (! \in_array($dsn->getScheme(), $this->getSupportedSchemes(), true)) {
             throw new UnsupportedSchemeException($dsn, 'smtp', $this->getSupportedSchemes());
         }
 
@@ -44,7 +44,7 @@ final class EsmtpTransportFactory extends AbstractTransportFactory
         }
         $streamOptions = $stream->getStreamOptions();
 
-        if ('' !== $dsn->getOption('verify_peer') && !filter_var($dsn->getOption('verify_peer', true), \FILTER_VALIDATE_BOOL)) {
+        if ('' !== $dsn->getOption('verify_peer') && ! filter_var($dsn->getOption('verify_peer', true), \FILTER_VALIDATE_BOOL)) {
             $streamOptions['ssl']['verify_peer'] = false;
             $streamOptions['ssl']['verify_peer_name'] = false;
         }

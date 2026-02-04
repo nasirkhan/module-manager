@@ -31,7 +31,7 @@ final class HtmlInlineRenderer implements NodeRendererInterface, XmlNodeRenderer
     private ConfigurationInterface $config;
 
     /**
-     * @param HtmlInline $node
+     * @param  HtmlInline  $node
      *
      * {@inheritDoc}
      *

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the ramsey/collection library
+ * This file is part of the ramsey/collection library.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -80,6 +80,7 @@ namespace Ramsey\Collection\Map;
  *
  * @template K of array-key
  * @template T
+ *
  * @extends AbstractTypedMap<K, T>
  */
 class TypedMap extends AbstractTypedMap
@@ -88,9 +89,9 @@ class TypedMap extends AbstractTypedMap
      * Constructs a map object of the specified key and value types,
      * optionally with the specified data.
      *
-     * @param string $keyType The data type of the map's keys.
-     * @param string $valueType The data type of the map's values.
-     * @param array<K, T> $data The initial data to set for this map.
+     * @param  string  $keyType  The data type of the map's keys.
+     * @param  string  $valueType  The data type of the map's values.
+     * @param  array<K, T>  $data  The initial data to set for this map.
      */
     public function __construct(
         private readonly string $keyType,

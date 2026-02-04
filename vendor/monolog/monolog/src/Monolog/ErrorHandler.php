@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -16,7 +18,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
 /**
- * Monolog error handler
+ * Monolog error handler.
  *
  * A facility to enable logging of runtime errors, exceptions and fatal errors.
  *
@@ -26,7 +28,7 @@ use Psr\Log\LogLevel;
  */
 class ErrorHandler
 {
-    private Closure|null $previousExceptionHandler = null;
+    private ?Closure $previousExceptionHandler = null;
 
     /** @var array<class-string, LogLevel::*> an array of class name to LogLevel::* constant mapping */
     private array $uncaughtExceptionLevelMap = [];
@@ -43,10 +45,10 @@ class ErrorHandler
 
     private string $fatalLevel = LogLevel::ALERT;
 
-    private string|null $reservedMemory = null;
+    private ?string $reservedMemory = null;
 
     /** @var ?array{type: int, message: string, file: string, line: int, trace: mixed} */
-    private array|null $lastFatalData = null;
+    private ?array $lastFatalData = null;
 
     private const FATAL_ERRORS = [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR];
 
@@ -56,13 +58,13 @@ class ErrorHandler
     }
 
     /**
-     * Registers a new ErrorHandler for a given Logger
+     * Registers a new ErrorHandler for a given Logger.
      *
      * By default it will handle errors, exceptions and fatal errors
      *
-     * @param  array<int, LogLevel::*>|false          $errorLevelMap     an array of E_* constant to LogLevel::* constant mapping, or false to disable error handling
-     * @param  array<class-string, LogLevel::*>|false $exceptionLevelMap an array of class name to LogLevel::* constant mapping, or false to disable exception handling
-     * @param  LogLevel::*|null|false                 $fatalLevel        a LogLevel::* constant, null to use the default LogLevel::ALERT or false to disable fatal error handling
+     * @param  array<int, LogLevel::*>|false  $errorLevelMap  an array of E_* constant to LogLevel::* constant mapping, or false to disable error handling
+     * @param  array<class-string, LogLevel::*>|false  $exceptionLevelMap  an array of class name to LogLevel::* constant mapping, or false to disable exception handling
+     * @param  LogLevel::*|null|false  $fatalLevel  a LogLevel::* constant, null to use the default LogLevel::ALERT or false to disable fatal error handling
      * @return static
      */
     public static function register(LoggerInterface $logger, $errorLevelMap = [], $exceptionLevelMap = [], $fatalLevel = null): self
@@ -83,7 +85,7 @@ class ErrorHandler
     }
 
     /**
-     * @param  array<class-string, LogLevel::*> $levelMap an array of class name to LogLevel::* constant mapping
+     * @param  array<class-string, LogLevel::*>  $levelMap  an array of class name to LogLevel::* constant mapping
      * @return $this
      */
     public function registerExceptionHandler(array $levelMap = [], bool $callPrevious = true): self
@@ -93,7 +95,7 @@ class ErrorHandler
         });
         $this->uncaughtExceptionLevelMap = $levelMap;
         foreach ($this->defaultExceptionLevelMap() as $class => $level) {
-            if (!isset($this->uncaughtExceptionLevelMap[$class])) {
+            if (! isset($this->uncaughtExceptionLevelMap[$class])) {
                 $this->uncaughtExceptionLevelMap[$class] = $level;
             }
         }
@@ -105,7 +107,7 @@ class ErrorHandler
     }
 
     /**
-     * @param  array<int, LogLevel::*> $levelMap an array of E_* constant to LogLevel::* constant mapping
+     * @param  array<int, LogLevel::*>  $levelMap  an array of E_* constant to LogLevel::* constant mapping
      * @return $this
      */
     public function registerErrorHandler(array $levelMap = [], bool $callPrevious = true, int $errorTypes = -1, bool $handleOnlyReportedErrors = true): self
@@ -124,8 +126,8 @@ class ErrorHandler
     }
 
     /**
-     * @param  LogLevel::*|null $level              a LogLevel::* constant, null to use the default LogLevel::ALERT
-     * @param  int              $reservedMemorySize Amount of KBs to reserve in memory so that it can be freed when handling fatal errors giving Monolog some room in memory to get its job done
+     * @param  LogLevel::*|null  $level  a LogLevel::* constant, null to use the default LogLevel::ALERT
+     * @param  int  $reservedMemorySize  Amount of KBs to reserve in memory so that it can be freed when handling fatal errors giving Monolog some room in memory to get its job done
      * @return $this
      */
     public function registerFatalHandler($level = null, int $reservedMemorySize = 20): self
@@ -156,21 +158,21 @@ class ErrorHandler
     protected function defaultErrorLevelMap(): array
     {
         return [
-            E_ERROR             => LogLevel::CRITICAL,
-            E_WARNING           => LogLevel::WARNING,
-            E_PARSE             => LogLevel::ALERT,
-            E_NOTICE            => LogLevel::NOTICE,
-            E_CORE_ERROR        => LogLevel::CRITICAL,
-            E_CORE_WARNING      => LogLevel::WARNING,
-            E_COMPILE_ERROR     => LogLevel::ALERT,
-            E_COMPILE_WARNING   => LogLevel::WARNING,
-            E_USER_ERROR        => LogLevel::ERROR,
-            E_USER_WARNING      => LogLevel::WARNING,
-            E_USER_NOTICE       => LogLevel::NOTICE,
-            2048                => LogLevel::NOTICE, // E_STRICT
+            E_ERROR => LogLevel::CRITICAL,
+            E_WARNING => LogLevel::WARNING,
+            E_PARSE => LogLevel::ALERT,
+            E_NOTICE => LogLevel::NOTICE,
+            E_CORE_ERROR => LogLevel::CRITICAL,
+            E_CORE_WARNING => LogLevel::WARNING,
+            E_COMPILE_ERROR => LogLevel::ALERT,
+            E_COMPILE_WARNING => LogLevel::WARNING,
+            E_USER_ERROR => LogLevel::ERROR,
+            E_USER_WARNING => LogLevel::WARNING,
+            E_USER_NOTICE => LogLevel::NOTICE,
+            2048 => LogLevel::NOTICE, // E_STRICT
             E_RECOVERABLE_ERROR => LogLevel::ERROR,
-            E_DEPRECATED        => LogLevel::NOTICE,
-            E_USER_DEPRECATED   => LogLevel::NOTICE,
+            E_DEPRECATED => LogLevel::NOTICE,
+            E_USER_DEPRECATED => LogLevel::NOTICE,
         ];
     }
 
@@ -194,7 +196,7 @@ class ErrorHandler
             ($this->previousExceptionHandler)($e);
         }
 
-        if (!headers_sent() && \in_array(strtolower((string) \ini_get('display_errors')), ['0', '', 'false', 'off', 'none', 'no'], true)) {
+        if (! headers_sent() && \in_array(strtolower((string) \ini_get('display_errors')), ['0', '', 'false', 'off', 'none', 'no'], true)) {
             http_response_code(500);
         }
 
@@ -208,7 +210,7 @@ class ErrorHandler
         }
 
         // fatal error codes are ignored if a fatal error handler is present as well to avoid duplicate log entries
-        if (!$this->hasFatalErrorHandler || !\in_array($code, self::FATAL_ERRORS, true)) {
+        if (! $this->hasFatalErrorHandler || ! \in_array($code, self::FATAL_ERRORS, true)) {
             $level = $this->errorLevelMap[$code] ?? LogLevel::CRITICAL;
             $this->logger->log($level, self::codeToString($code).': '.$message, ['code' => $code, 'message' => $message, 'file' => $file, 'line' => $line]);
         } else {

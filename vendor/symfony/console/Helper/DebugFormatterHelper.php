@@ -46,7 +46,7 @@ class DebugFormatterHelper extends Helper
                 $message .= "\n";
                 unset($this->started[$id]['out']);
             }
-            if (!isset($this->started[$id]['err'])) {
+            if (! isset($this->started[$id]['err'])) {
                 $message .= \sprintf('%s<bg=red;fg=white> %s </> ', $this->getBorder($id), $errorPrefix);
                 $this->started[$id]['err'] = true;
             }
@@ -57,7 +57,7 @@ class DebugFormatterHelper extends Helper
                 $message .= "\n";
                 unset($this->started[$id]['err']);
             }
-            if (!isset($this->started[$id]['out'])) {
+            if (! isset($this->started[$id]['out'])) {
                 $message .= \sprintf('%s<bg=green;fg=white> %s </> ', $this->getBorder($id), $prefix);
                 $this->started[$id]['out'] = true;
             }
