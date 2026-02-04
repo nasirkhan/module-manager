@@ -26,8 +26,8 @@ class ModuleManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Modules are now auto-discovered via composer.json extra.laravel.providers
-        // $this->registerModules();
+        // Register modules based on modules_statuses.json
+        $this->registerModules();
 
         /*
          * Optional methods to load your package assets
@@ -128,15 +128,31 @@ class ModuleManagerServiceProvider extends ServiceProvider
 
     public function registerModules()
     {
-        if (! File::exists(config('module-manager.files.module-list'))) {
+        $statusFile = base_path('modules_statuses.json');
+
+        // Create default status file if it doesn't exist
+        if (! File::exists($statusFile)) {
+            $defaultModules = [
+                'Post' => true,
+                'Category' => true,
+                'Tag' => true,
+                'Menu' => true,
+            ];
+            File::put($statusFile, json_encode($defaultModules, JSON_PRETTY_PRINT));
+        }
+
+        $modules = json_decode(File::get($statusFile), true);
+
+        if (! is_array($modules)) {
             return;
         }
 
-        $modules = json_decode(File::get(config('module-manager.files.module-list')));
-
-        foreach ($modules as $module => $status) {
-            if ($status) {
-                $this->app->register('\Modules\\'.$module.'\Providers\\'.$module.'ServiceProvider');
+        foreach ($modules as $module => $enabled) {
+            if ($enabled) {
+                $providerClass = "Nasirkhan\\ModuleManager\\Modules\\{$module}\\Providers\\{$module}ServiceProvider";
+                if (class_exists($providerClass)) {
+                    $this->app->register($providerClass);
+                }
             }
         }
     }
