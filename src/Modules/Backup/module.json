@@ -1,0 +1,14 @@
+{
+    "name": "Backup",
+    "alias": "backup",
+    "description": "Database and file backup management with Spatie Laravel Backup integration",
+    "version": "1.0.0",
+    "keywords": ["backup", "restore", "database", "files", "spatie"],
+    "priority": 100,
+    "providers": [
+        "Nasirkhan\\ModuleManager\\Modules\\Backup\\Providers\\BackupServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
