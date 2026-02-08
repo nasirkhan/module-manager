@@ -84,7 +84,7 @@ class BackupController extends Controller
         logUserAccess($module_title.' '.$module_action);
 
         return view(
-            "backup::backups",
+            'backup::backups',
             compact('module_title', 'module_name', "{$module_name}", 'module_path', 'module_icon', 'module_action', 'module_name_singular')
         );
     }
