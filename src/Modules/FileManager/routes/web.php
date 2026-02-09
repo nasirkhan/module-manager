@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| File Manager Module Routes  
+| File Manager Module Routes
 |--------------------------------------------------------------------------
 |
 | These routes handle the Laravel File Manager functionality.
