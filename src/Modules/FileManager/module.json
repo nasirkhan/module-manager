@@ -1,0 +1,14 @@
+{
+    "name": "FileManager",
+    "alias": "filemanager",
+    "description": "Laravel File Manager integration for uploading and managing files and images",
+    "version": "1.0.0",
+    "keywords": ["filemanager", "upload", "files", "images", "media", "lfm"],
+    "priority": 90,
+    "providers": [
+        "Nasirkhan\\ModuleManager\\Modules\\FileManager\\Providers\\FileManagerServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
