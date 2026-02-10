@@ -16,17 +16,17 @@ class CurrentMenuDataSeeder extends Seeder
     {
         // Load menu data from the package
         $packageMenuData = __DIR__.'/data/menu_data.php';
-        
+
         // Also check for custom menu data in the application
         $appMenuData = base_path('database/seeders/Menu/data/menu_data.php');
-        
+
         $files = [];
-        
+
         // Always include package menu data if it exists
         if (file_exists($packageMenuData)) {
             $files[] = $packageMenuData;
         }
-        
+
         // Include application menu data if published/customized
         if (file_exists($appMenuData)) {
             $files[] = $appMenuData;
@@ -37,6 +37,7 @@ class CurrentMenuDataSeeder extends Seeder
             if (property_exists($this, 'command') && $this->command) {
                 $this->command->warn($message);
             }
+
             return;
         }
 
