@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Menu\\": ""
+            "Nasirkhan\\ModuleManager\\Modules\\Menu\\": ""
         }
     }
 }

@@ -152,11 +152,21 @@ class ModuleManagerServiceProvider extends ServiceProvider
         }
 
         foreach ($modules as $module => $enabled) {
-            if ($enabled) {
-                $providerClass = "Nasirkhan\\ModuleManager\\Modules\\{$module}\\Providers\\{$module}ServiceProvider";
-                if (class_exists($providerClass)) {
-                    $this->app->register($providerClass);
-                }
+            if ($enabled !== true) {
+                continue;
+            }
+
+            // Check if module is published (in Modules directory)
+            $publishedProviderClass = "Modules\\{$module}\\Providers\\{$module}ServiceProvider";
+
+            // Check if module is in vendor package
+            $vendorProviderClass = "Nasirkhan\\ModuleManager\\Modules\\{$module}\\Providers\\{$module}ServiceProvider";
+
+            // Prefer published modules over vendor modules
+            if (class_exists($publishedProviderClass)) {
+                $this->app->register($publishedProviderClass);
+            } elseif (class_exists($vendorProviderClass)) {
+                $this->app->register($vendorProviderClass);
             }
         }
     }
