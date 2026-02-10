@@ -1,0 +1,82 @@
+<?php
+
+namespace Nasirkhan\ModuleManager\Modules\Menu\database\seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Nasirkhan\ModuleManager\Modules\Menu\Models\Menu;
+use Nasirkhan\ModuleManager\Modules\Menu\Models\MenuItem;
+
+class CurrentMenuDataSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        // Load menu data from the package
+        $packageMenuData = __DIR__.'/data/menu_data.php';
+
+        // Also check for custom menu data in the application
+        $appMenuData = base_path('database/seeders/Menu/data/menu_data.php');
+
+        $files = [];
+
+        // Always include package menu data if it exists
+        if (file_exists($packageMenuData)) {
+            $files[] = $packageMenuData;
+        }
+
+        // Include application menu data if published/customized
+        if (file_exists($appMenuData)) {
+            $files[] = $appMenuData;
+        }
+
+        if (empty($files)) {
+            $message = 'No menu_data.php files found.';
+            if (property_exists($this, 'command') && $this->command) {
+                $this->command->warn($message);
+            }
+
+            return;
+        }
+
+        if (property_exists($this, 'command') && $this->command) {
+            $this->command->info('Seeding menus and menu items from PHP data...');
+        }
+
+        // Disable foreign key constraints
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        // Truncate existing data
+        MenuItem::truncate();
+        Menu::truncate();
+
+        $allMenus = [];
+        $allMenuItems = [];
+
+        foreach ($files as $file) {
+            $data = require $file;
+
+            if (isset($data['menus']) && is_array($data['menus'])) {
+                $allMenus = array_merge($allMenus, $data['menus']);
+            }
+            if (isset($data['menu_items']) && is_array($data['menu_items'])) {
+                $allMenuItems = array_merge($allMenuItems, $data['menu_items']);
+            }
+        }
+
+        // Seed menus
+        foreach ($allMenus as $menuData) {
+            Menu::create($menuData);
+        }
+
+        // Seed menu items
+        foreach ($allMenuItems as $itemData) {
+            MenuItem::create($itemData);
+        }
+
+        // Re-enable foreign key constraints
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+    }
+}

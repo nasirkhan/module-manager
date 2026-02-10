@@ -25,7 +25,7 @@ class {{moduleName}}Factory extends Factory
     public function definition()
     {
         return [
-            'name'              => substr($this->faker->text(15), 0, -1),
+            'name'              => $this->faker->unique()->words(2, true),
             'slug'              => '',
             'description'       => $this->faker->paragraph,
             'status'            => 1,

@@ -1,0 +1,14 @@
+{
+    "name": "Tag",
+    "alias": "tag",
+    "description": "Polymorphic tagging system for posts and other content",
+    "version": "1.0.0",
+    "keywords": ["tag", "label", "taxonomy", "polymorphic"],
+    "priority": 10,
+    "providers": [
+        "Modules\\Tag\\Providers\\TagServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

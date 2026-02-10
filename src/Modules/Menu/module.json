@@ -1,0 +1,14 @@
+{
+    "name": "Menu",
+    "alias": "menu",
+    "description": "Dynamic menu management with nested items and multiple locations",
+    "version": "1.0.0",
+    "keywords": ["menu", "navigation", "sidebar", "header", "footer"],
+    "priority": 5,
+    "providers": [
+        "Modules\\Menu\\Providers\\MenuServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

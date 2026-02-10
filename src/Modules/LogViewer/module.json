@@ -1,0 +1,14 @@
+{
+    "name": "LogViewer",
+    "alias": "logviewer",
+    "description": "Laravel log viewer module with Opcodesio Log Viewer integration for viewing and managing application logs",
+    "version": "1.0.0",
+    "keywords": ["log", "viewer", "logs", "debugging", "monitoring", "opcodesio"],
+    "priority": 150,
+    "providers": [
+        "Nasirkhan\\ModuleManager\\Modules\\LogViewer\\Providers\\LogViewerServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

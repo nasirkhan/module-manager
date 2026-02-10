@@ -4,6 +4,7 @@ namespace Nasirkhan\ModuleManager\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Nasirkhan\ModuleManager\Services\ModuleVersion;
 
 class ModuleDiffCommand extends Command
 {
@@ -38,9 +39,14 @@ class ModuleDiffCommand extends Command
             return self::FAILURE;
         }
 
+        // Get version info
+        $versionService = app(ModuleVersion::class);
+        $moduleData = $versionService->getModuleData($moduleName);
+        $version = $moduleData['version'] ?? 'unknown';
+
         // Check if module is published
         if (! File::exists($publishedPath)) {
-            $this->components->warn("Module '{$moduleName}' has not been published yet.");
+            $this->components->warn("Module '{$moduleName}' v{$version} has not been published yet.");
             $this->line('It\'s using the package version (updateable via composer).');
             $this->newLine();
             $this->line('To publish: <fg=green>php artisan module:publish '.$moduleName.'</>');
@@ -50,7 +56,17 @@ class ModuleDiffCommand extends Command
 
         // Compare versions
         $this->newLine();
-        $this->components->twoColumnDetail("<fg=bright-blue>Comparing Module:</> {$moduleName}", '');
+        $this->components->twoColumnDetail("<fg=bright-blue>Comparing Module:</> {$moduleName}", "v{$version}");
+
+        if (! empty($moduleData['description'])) {
+            $this->components->twoColumnDetail('<fg=gray>Description:</>', $moduleData['description']);
+        }
+
+        if (! empty($moduleData['requires'])) {
+            $deps = implode(', ', $moduleData['requires']);
+            $this->components->twoColumnDetail('<fg=gray>Dependencies:</>', $deps);
+        }
+
         $this->newLine();
 
         // Get file lists
@@ -63,12 +79,28 @@ class ModuleDiffCommand extends Command
 
         $hasChanges = false;
 
+        // Statistics
+        $stats = [
+            'total_package' => count($packageFiles),
+            'total_published' => count($publishedFiles),
+            'new_in_package' => count($onlyInPackage),
+            'removed_or_custom' => count($onlyInPublished),
+            'common' => count($common),
+        ];
+
         // Files only in package (new in package)
         if (! empty($onlyInPackage)) {
             $hasChanges = true;
-            $this->components->warn('New files in package (not in your version):');
-            foreach ($onlyInPackage as $file) {
-                $this->line("  <fg=green>+</> {$file}");
+            $this->components->warn("New files in package [{$stats['new_in_package']}]:");
+
+            // Group by directory
+            $grouped = $this->groupFilesByDirectory($onlyInPackage);
+
+            foreach ($grouped as $dir => $files) {
+                $this->line("  <fg=blue>{$dir}/</>");
+                foreach ($files as $file) {
+                    $this->line('    <fg=green>+</> '.basename($file));
+                }
             }
             $this->newLine();
         }
@@ -76,9 +108,16 @@ class ModuleDiffCommand extends Command
         // Files only in published (removed from package or custom)
         if (! empty($onlyInPublished)) {
             $hasChanges = true;
-            $this->components->info('Files only in your version:');
-            foreach ($onlyInPublished as $file) {
-                $this->line("  <fg=red>-</> {$file}");
+            $this->components->info("Files only in your version [{$stats['removed_or_custom']}]:");
+
+            // Group by directory
+            $grouped = $this->groupFilesByDirectory($onlyInPublished);
+
+            foreach ($grouped as $dir => $files) {
+                $this->line("  <fg=blue>{$dir}/</>");
+                foreach ($files as $file) {
+                    $this->line('    <fg=red>-</> '.basename($file));
+                }
             }
             $this->newLine();
         }
@@ -88,26 +127,42 @@ class ModuleDiffCommand extends Command
 
         if (! empty($modifiedFiles)) {
             $hasChanges = true;
-            $this->components->warn('Modified files:');
-            foreach ($modifiedFiles as $file) {
-                $this->line("  <fg=yellow>M</> {$file}");
+            $this->components->warn('Modified files ['.count($modifiedFiles).']:');
 
-                if ($this->option('detailed')) {
-                    $this->showFileDiff($packagePath.'/'.$file, $publishedPath.'/'.$file);
+            // Group by directory
+            $grouped = $this->groupFilesByDirectory($modifiedFiles);
+
+            foreach ($grouped as $dir => $files) {
+                $this->line("  <fg=blue>{$dir}/</>");
+                foreach ($files as $file) {
+                    $this->line('    <fg=yellow>M</> '.basename($file));
+
+                    if ($this->option('detailed')) {
+                        $this->showFileDiff($packagePath.'/'.$file, $publishedPath.'/'.$file);
+                    }
                 }
             }
             $this->newLine();
         }
 
+        // Display statistics
+        $this->components->twoColumnDetail('<fg=bright-blue>Statistics:</>', '');
+        $this->components->twoColumnDetail('  Total files in package', $stats['total_package']);
+        $this->components->twoColumnDetail('  Total files published', $stats['total_published']);
+        $this->components->twoColumnDetail('  Unchanged files', $stats['common'] - count($modifiedFiles));
+        $this->newLine();
+
         // Summary
         if (! $hasChanges) {
-            $this->components->info('No differences found. Your module matches the package version.');
+            $this->components->info('✓ No differences found. Your module matches the package version.');
         } else {
-            $this->components->warn('Recommendation:');
+            $this->components->warn('⚠ Recommendation:');
             $this->line('  Review the changes above and decide whether to:');
             $this->line('  - Manually merge new features from package');
             $this->line('  - Keep your customizations as-is');
             $this->line('  - Re-publish and re-apply customizations');
+            $this->newLine();
+            $this->line('  Use <fg=green>--detailed</> flag to see line-by-line differences');
         }
 
         $this->newLine();
@@ -152,6 +207,31 @@ class ModuleDiffCommand extends Command
         }
 
         return $modified;
+    }
+
+    /**
+     * Group files by directory.
+     */
+    protected function groupFilesByDirectory(array $files): array
+    {
+        $grouped = [];
+
+        foreach ($files as $file) {
+            $dir = dirname($file);
+            if ($dir === '.') {
+                $dir = 'root';
+            }
+
+            if (! isset($grouped[$dir])) {
+                $grouped[$dir] = [];
+            }
+
+            $grouped[$dir][] = $file;
+        }
+
+        ksort($grouped);
+
+        return $grouped;
     }
 
     /**

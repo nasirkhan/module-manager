@@ -6,10 +6,10 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
-use Modules\Post\Models\Post;
-use Modules\Tag\Models\Tag;
+use Nasirkhan\ModuleManager\Modules\Category\Models\Category;
+use Nasirkhan\ModuleManager\Modules\Post\Models\Post;
+use Nasirkhan\ModuleManager\Modules\Tag\Models\Tag;
 
 use function Laravel\Prompts\confirm;
 

@@ -7,9 +7,17 @@ use Illuminate\Support\ServiceProvider;
 use Nasirkhan\ModuleManager\Commands\AuthPermissionsCommand;
 use Nasirkhan\ModuleManager\Commands\InsertDemoDataCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleBuildCommand;
+use Nasirkhan\ModuleManager\Commands\ModuleCheckMigrationsCommand;
+use Nasirkhan\ModuleManager\Commands\ModuleDependenciesCommand;
+use Nasirkhan\ModuleManager\Commands\ModuleDetectUpdatesCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleDiffCommand;
+use Nasirkhan\ModuleManager\Commands\ModuleGenerateTestCommand;
+use Nasirkhan\ModuleManager\Commands\ModuleHelpCommand;
 use Nasirkhan\ModuleManager\Commands\ModulePublishCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleStatusCommand;
+use Nasirkhan\ModuleManager\Commands\ModuleTrackMigrationsCommand;
+use Nasirkhan\ModuleManager\Services\MigrationTracker;
+use Nasirkhan\ModuleManager\Services\ModuleVersion;
 
 class ModuleManagerServiceProvider extends ServiceProvider
 {
@@ -18,6 +26,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Register modules based on modules_statuses.json
         $this->registerModules();
 
         /*
@@ -32,6 +41,10 @@ class ModuleManagerServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('module-manager.php'),
             ], 'module-manager');
+
+            $this->publishes([
+                __DIR__.'/Modules/config/datatables.php' => config_path('datatables.php'),
+            ], ['config', 'datatables-config']);
 
             $this->publishes([
                 __DIR__.'/stubs' => base_path('stubs/laravel-starter-stubs'),
@@ -81,6 +94,12 @@ class ModuleManagerServiceProvider extends ServiceProvider
                     ModulePublishCommand::class,
                     ModuleStatusCommand::class,
                     ModuleDiffCommand::class,
+                    ModuleCheckMigrationsCommand::class,
+                    ModuleDependenciesCommand::class,
+                    ModuleTrackMigrationsCommand::class,
+                    ModuleDetectUpdatesCommand::class,
+                    ModuleGenerateTestCommand::class,
+                    ModuleHelpCommand::class,
 
                 ]);
             }
@@ -99,19 +118,45 @@ class ModuleManagerServiceProvider extends ServiceProvider
         $this->app->singleton('module-manager', function () {
             return new ModuleManager();
         });
+
+        // Register ModuleVersion service
+        $this->app->singleton(ModuleVersion::class, function () {
+            return new ModuleVersion();
+        });
+
+        // Register MigrationTracker service
+        $this->app->singleton(MigrationTracker::class, function () {
+            return new MigrationTracker();
+        });
     }
 
     public function registerModules()
     {
-        if (! File::exists(config('module-manager.files.module-list'))) {
+        $statusFile = base_path('modules_statuses.json');
+
+        // Create default status file if it doesn't exist
+        if (! File::exists($statusFile)) {
+            $defaultModules = [
+                'Post' => true,
+                'Category' => true,
+                'Tag' => true,
+                'Menu' => true,
+            ];
+            File::put($statusFile, json_encode($defaultModules, JSON_PRETTY_PRINT));
+        }
+
+        $modules = json_decode(File::get($statusFile), true);
+
+        if (! is_array($modules)) {
             return;
         }
 
-        $modules = json_decode(File::get(config('module-manager.files.module-list')));
-
-        foreach ($modules as $module => $status) {
-            if ($status) {
-                $this->app->register('\Modules\\'.$module.'\Providers\\'.$module.'ServiceProvider');
+        foreach ($modules as $module => $enabled) {
+            if ($enabled) {
+                $providerClass = "Nasirkhan\\ModuleManager\\Modules\\{$module}\\Providers\\{$module}ServiceProvider";
+                if (class_exists($providerClass)) {
+                    $this->app->register($providerClass);
+                }
             }
         }
     }

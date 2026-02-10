@@ -4,6 +4,7 @@ namespace Nasirkhan\ModuleManager\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Nasirkhan\ModuleManager\Services\ModuleVersion;
 
 class ModuleStatusCommand extends Command
 {
@@ -50,11 +51,17 @@ class ModuleStatusCommand extends Command
             return self::SUCCESS;
         }
 
+        $versionService = app(ModuleVersion::class);
         $rows = [];
 
         foreach ($allModules as $module) {
             $inPackage = in_array($module, $packageModules);
             $isPublished = in_array($module, $publishedModules);
+
+            // Get version info
+            $version = $versionService->getVersion($module) ?? 'unknown';
+            $moduleData = $versionService->getModuleData($module);
+            $dependencies = implode(', ', $moduleData['requires'] ?? []) ?: 'None';
 
             if ($isPublished) {
                 $location = '<fg=yellow>Modules/ (custom)</>';
@@ -72,8 +79,10 @@ class ModuleStatusCommand extends Command
 
             $rows[] = [
                 $module,
+                $version,
                 $location,
                 $customized,
+                $dependencies,
                 $updateStrategy,
             ];
         }
@@ -81,7 +90,7 @@ class ModuleStatusCommand extends Command
         $this->newLine();
         $this->components->twoColumnDetail('<fg=bright-blue>Module Status Overview</>', '');
         $this->table(
-            ['Module', 'Location', 'Customized', 'Update Strategy'],
+            ['Module', 'Version', 'Location', 'Customized', 'Dependencies', 'Update Strategy'],
             $rows
         );
 

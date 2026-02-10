@@ -1,0 +1,49 @@
+/vendor/
+/node_modules/
+composer.lock
+package-lock.json
+yarn.lock
+
+# IDE & Editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.phpintel/
+.phpstorm.meta.php
+_ide_helper.php
+_ide_helper_models.php
+.phpunit_cache
+.DS_Store
+Thumbs.db
+
+# Testing & Coverage
+/.phpunit.cache
+/build/
+/phpunit.xml
+/coverage/
+*.cache
+
+# PHP CS Fixer
+.php-cs-fixer.cache
+.php_cs.cache
+.php-cs-fixer.php
+
+# Laravel specific
+.env
+.env.backup
+.env.production
+*.log
+storage/*.key
+
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk

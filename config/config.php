@@ -43,6 +43,8 @@ return [
             'views_backend_trash' => ['Resources/views/backend/stubViews/trash.blade.stub.php', 'Resources/views/backend/stubViews/trash.blade.php'],
             'views_frontend_index' => ['Resources/views/frontend/stubViews/index.blade.stub.php', 'Resources/views/frontend/stubViews/index.blade.php'],
             'views_frontend_show' => ['Resources/views/frontend/stubViews/show.blade.stub.php', 'Resources/views/frontend/stubViews/show.blade.php'],
+            'test_feature' => ['Tests/Feature/stubBackendFeatureTest.stub.php', 'Tests/Feature/stubBackendFeatureTest.php', 'rename'],
+            'test_unit' => ['Tests/Unit/stubModelTest.stub.php', 'Tests/Unit/stubModelTest.php', 'rename'],
         ],
     ],
 

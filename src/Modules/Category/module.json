@@ -1,0 +1,14 @@
+{
+    "name": "Category",
+    "alias": "category",
+    "description": "Category management with nested set pattern",
+    "version": "1.0.0",
+    "keywords": ["category", "taxonomy", "classification"],
+    "priority": 10,
+    "providers": [
+        "Modules\\Category\\Providers\\CategoryServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
