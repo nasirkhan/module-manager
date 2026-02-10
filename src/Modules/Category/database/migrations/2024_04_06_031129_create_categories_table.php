@@ -31,9 +31,9 @@ return new class extends Migration
             $table->integer('order')->nullable();
             $table->string('status')->default(CategoryStatus::Active->name);
 
-            $table->integer('created_by')->unsigned()->nullable();
-            $table->integer('updated_by')->unsigned()->nullable();
-            $table->integer('deleted_by')->unsigned()->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

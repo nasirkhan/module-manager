@@ -30,7 +30,7 @@
 
             <div class="row mt-4">
                 <div class="col">
-                    @livewire('menu-item-component', ['menu_id' => request('menu_id')])
+                    @livewire('menu.menu-item-component', ['menu_id' => request('menu_id')])
                 </div>
             </div>
         </div>

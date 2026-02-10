@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('intro')->nullable();
             $table->longText('content')->nullable();
             $table->string('type')->nullable();
-            $table->integer('category_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->string('category_name')->nullable();
             $table->integer('is_featured')->nullable();
             $table->string('image')->nullable();
@@ -36,14 +36,14 @@ return new class extends Migration
             $table->integer('order')->nullable();
             $table->string('status')->default(PostStatus::Published->name);
 
-            $table->integer('moderated_by')->unsigned()->nullable();
+            $table->unsignedBigInteger('moderated_by')->nullable();
             $table->datetime('moderated_at')->nullable();
 
-            $table->integer('created_by')->unsigned()->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->string('created_by_name')->nullable();
             $table->string('created_by_alias')->nullable();
-            $table->integer('updated_by')->unsigned()->nullable();
-            $table->integer('deleted_by')->unsigned()->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
 
             $table->timestamp('published_at')->nullable();
             $table->timestamps();

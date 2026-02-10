@@ -34,7 +34,7 @@
 
             <div class="row mt-4">
                 <div class="col">
-                    @livewire("menu-item-component", ["menuItem" => $data ?? null])
+                    @livewire("menu.menu-item-component", ["menuItem" => $data ?? null])
                 </div>
             </div>
         </div>

@@ -179,13 +179,13 @@ class MenuServiceProvider extends ServiceProvider
         // Publish seeders so they can be customized
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                base_path('Modules/'.$this->moduleName.'/database/seeders') => database_path('seeders/'.$this->moduleName),
+                __DIR__.'/../database/seeders' => database_path('seeders/'.$this->moduleName),
             ], ['seeders', 'menu-seeders']);
         }
 
         // Register the seeder in the container for automatic discovery
         $this->app->singleton($this->moduleNameLower.'.database.seeder', function () {
-            return 'Modules\\'.$this->moduleName.'\\database\\seeders\\'.$this->moduleName.'DatabaseSeeder';
+            return 'Nasirkhan\\ModuleManager\\Modules\\'.$this->moduleName.'\\database\\seeders\\'.$this->moduleName.'DatabaseSeeder';
         });
 
         // Register a console command for seeding

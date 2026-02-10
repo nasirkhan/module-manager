@@ -165,7 +165,7 @@ class PostServiceProvider extends ServiceProvider
 
         // Register the seeder in the container for automatic discovery
         $this->app->singleton($this->moduleNameLower.'.database.seeder', function () {
-            return 'Nasirkhan\\\\ModuleManager\\\\Modules\\\\'.$this->moduleName.'\\database\\seeders\\'.$this->moduleName.'DatabaseSeeder';
+            return 'Nasirkhan\\ModuleManager\\Modules\\'.$this->moduleName.'\\database\\seeders\\'.$this->moduleName.'DatabaseSeeder';
         });
     }
 

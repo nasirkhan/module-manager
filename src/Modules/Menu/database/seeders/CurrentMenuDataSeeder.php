@@ -14,24 +14,34 @@ class CurrentMenuDataSeeder extends Seeder
      */
     public function run(): void
     {
-        // Find all menu_data.php files in Modules
-        $files = glob(base_path('Modules/*/database/seeders/data/menu_data.php'));
+        // Load menu data from the package
+        $packageMenuData = __DIR__.'/data/menu_data.php';
+        
+        // Also check for custom menu data in the application
+        $appMenuData = base_path('database/seeders/Menu/data/menu_data.php');
+        
+        $files = [];
+        
+        // Always include package menu data if it exists
+        if (file_exists($packageMenuData)) {
+            $files[] = $packageMenuData;
+        }
+        
+        // Include application menu data if published/customized
+        if (file_exists($appMenuData)) {
+            $files[] = $appMenuData;
+        }
 
         if (empty($files)) {
-            $message = 'No menu_data.php files found in Modules.';
+            $message = 'No menu_data.php files found.';
             if (property_exists($this, 'command') && $this->command) {
-                $this->command->error($message);
-            } else {
-                echo $message.PHP_EOL;
+                $this->command->warn($message);
             }
-
             return;
         }
 
         if (property_exists($this, 'command') && $this->command) {
             $this->command->info('Seeding menus and menu items from PHP data...');
-        } else {
-            echo 'Seeding menus and menu items from PHP data...'.PHP_EOL;
         }
 
         // Disable foreign key constraints

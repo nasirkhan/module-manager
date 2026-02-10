@@ -10,21 +10,13 @@ return new class extends Migration
      * Run the migrations.
      *
      * Add foreign key constraints and indexes to menu_items table.
+     * Note: menu_id and parent_id foreign keys are already defined in create_menu_items_table migration.
      */
     public function up(): void
     {
         Schema::table('menu_items', function (Blueprint $table) {
-            // Foreign key for menu relationship
-            $table->foreign('menu_id')
-                  ->references('id')
-                  ->on('menus')
-                  ->cascadeOnDelete(); // Delete items when menu is deleted
-
-            // Foreign key for parent (self-referencing for nested menus)
-            $table->foreign('parent_id')
-                  ->references('id')
-                  ->on('menu_items')
-                  ->cascadeOnDelete(); // Delete children when parent is deleted
+            // Note: menu_id and parent_id foreign keys already exist from the create migration
+            // We only add the audit trail foreign keys here
 
             // Foreign keys for audit trail
             $table->foreign('created_by')
@@ -45,7 +37,7 @@ return new class extends Migration
             // Indexes
             $table->index('menu_id');
             $table->index('parent_id');
-            $table->index('order');
+            $table->index('sort_order');
             $table->index('is_active');
             $table->index('status');
             $table->index('created_by');
@@ -53,7 +45,7 @@ return new class extends Migration
             $table->index('deleted_by');
 
             // Composite indexes for common queries
-            $table->index(['menu_id', 'parent_id', 'order'], 'menu_items_hierarchy_index');
+            $table->index(['menu_id', 'parent_id', 'sort_order'], 'menu_items_hierarchy_index');
             $table->index(['menu_id', 'is_active'], 'menu_items_active_index');
         });
     }
@@ -64,9 +56,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('menu_items', function (Blueprint $table) {
-            // Drop foreign keys
-            $table->dropForeign(['menu_id']);
-            $table->dropForeign(['parent_id']);
+            // Drop foreign keys (only audit trail ones)
             $table->dropForeign(['created_by']);
             $table->dropForeign(['updated_by']);
             $table->dropForeign(['deleted_by']);
@@ -76,7 +66,7 @@ return new class extends Migration
             $table->dropIndex('menu_items_active_index');
             $table->dropIndex(['menu_id']);
             $table->dropIndex(['parent_id']);
-            $table->dropIndex(['order']);
+            $table->dropIndex(['sort_order']);
             $table->dropIndex(['is_active']);
             $table->dropIndex(['status']);
             $table->dropIndex(['created_by']);
