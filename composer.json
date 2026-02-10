@@ -24,7 +24,8 @@
     "opcodesio/log-viewer": "^3.21",
     "sqids/sqids": "^0.5.0",
     "spatie/laravel-backup": "^9.2",
-    "unisharp/laravel-filemanager": "^2.0"
+    "unisharp/laravel-filemanager": "^2.0",
+    "yajra/laravel-datatables-oracle": "^12.0"
   },
   "require-dev": {},
   "autoload": {

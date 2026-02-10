@@ -23,6 +23,7 @@ class BackupServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerConfig();
         $this->registerViews();
         $this->app->register(RouteServiceProvider::class);
     }
@@ -35,6 +36,26 @@ class BackupServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }
+
+    /**
+     * Register config.
+     *
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $configPath = __DIR__.'/../config/backup.php';
+
+        // Merge module config with app config
+        $this->mergeConfigFrom($configPath, 'backup');
+
+        // Publish config for customization
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                $configPath => config_path('backup.php'),
+            ], ['config', 'backup-config', 'backup-module-config']);
+        }
     }
 
     /**

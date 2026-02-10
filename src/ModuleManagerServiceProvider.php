@@ -43,6 +43,10 @@ class ModuleManagerServiceProvider extends ServiceProvider
             ], 'module-manager');
 
             $this->publishes([
+                __DIR__.'/Modules/config/datatables.php' => config_path('datatables.php'),
+            ], ['config', 'datatables-config']);
+
+            $this->publishes([
                 __DIR__.'/stubs' => base_path('stubs/laravel-starter-stubs'),
             ], 'stubs');
 
