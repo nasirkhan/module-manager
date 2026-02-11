@@ -46,7 +46,7 @@ class SettingModelTest extends TestCase
 
         // Clear cache to ensure fresh check
         Setting::flushCache();
-        
+
         $this->assertNotFalse($result);
         $this->assertFalse(Setting::has('test_key'));
     }
