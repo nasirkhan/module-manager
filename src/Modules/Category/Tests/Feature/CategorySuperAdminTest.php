@@ -4,7 +4,6 @@ namespace Nasirkhan\ModuleManager\Modules\Category\Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Artisan;
 use Nasirkhan\ModuleManager\Modules\Category\Models\Category;
 use Tests\TestCase;
 
