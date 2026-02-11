@@ -3,14 +3,20 @@
 namespace Nasirkhan\ModuleManager\Modules\Settings\Tests\Feature;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Nasirkhan\ModuleManager\Modules\Settings\Models\Setting;
 use Tests\TestCase;
 
 class SettingTest extends TestCase
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        // Seed the database
+        $this->seed();
 
         $user = User::whereId(1)->first();
         $this->actingAs($user);
@@ -115,6 +121,10 @@ class SettingTest extends TestCase
         $this->assertTrue(Setting::has($key));
 
         Setting::remove($key);
+        
+        // Clear cache to ensure fresh check
+        Setting::flushCache();
+        
         $this->assertFalse(Setting::has($key));
     }
 }

@@ -19,9 +19,6 @@ class TagSuperAdminTest extends TestCase
         // seed the database
         $this->seed();
 
-        // Insert demo data for tags
-        Artisan::call('laravel-starter:insert-demo-data');
-
         // Get Super Admin
         $user = User::whereId(1)->first();
 
