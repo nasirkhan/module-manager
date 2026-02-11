@@ -73,16 +73,35 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            // // Indexes for Performance
-            // $table->index(['menu_id', 'parent_id', 'sort_order']);
-            // $table->index(['menu_id', 'is_visible', 'is_active']);
-            // $table->index(['type', 'status']);
-            // $table->index(['locale', 'translation_group']);
-            // $table->index(['visible_from', 'visible_until']);
-            // $table->index(['requires_auth', 'is_guest_accessible']);
+            // Foreign keys for audit trail
+            $table->foreign('created_by')
+                ->references('id')
+                ->on('users')
+                ->noActionOnDelete();
 
-            // // Composite index for hierarchy queries
-            // $table->index(['menu_id', 'depth', 'path']);
+            $table->foreign('updated_by')
+                ->references('id')
+                ->on('users')
+                ->noActionOnDelete();
+
+            $table->foreign('deleted_by')
+                ->references('id')
+                ->on('users')
+                ->noActionOnDelete();
+
+            // Indexes
+            $table->index('menu_id');
+            $table->index('parent_id');
+            $table->index('sort_order');
+            $table->index('is_active');
+            $table->index('status');
+            $table->index('created_by');
+            $table->index('updated_by');
+            $table->index('deleted_by');
+
+            // Composite indexes for common queries
+            $table->index(['menu_id', 'parent_id', 'sort_order'], 'menu_items_hierarchy_index');
+            $table->index(['menu_id', 'is_active'], 'menu_items_active_index');
         });
     }
 

@@ -35,6 +35,30 @@ return new class extends Migration
 
             $table->timestamps();
             $table->softDeletes();
+
+            // Foreign keys for audit trail
+            $table->foreign('created_by')
+                ->references('id')
+                ->on('users')
+                ->noActionOnDelete();
+
+            $table->foreign('updated_by')
+                ->references('id')
+                ->on('users')
+                ->noActionOnDelete();
+
+            $table->foreign('deleted_by')
+                ->references('id')
+                ->on('users')
+                ->noActionOnDelete();
+
+            // Indexes
+            $table->unique('slug');
+            $table->index('name'); // For search/autocomplete
+            $table->index('status');
+            $table->index('created_by');
+            $table->index('updated_by');
+            $table->index('deleted_by');
         });
     }
 

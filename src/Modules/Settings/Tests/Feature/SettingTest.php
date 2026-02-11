@@ -121,10 +121,10 @@ class SettingTest extends TestCase
         $this->assertTrue(Setting::has($key));
 
         Setting::remove($key);
-        
+
         // Clear cache to ensure fresh check
         Setting::flushCache();
-        
+
         $this->assertFalse(Setting::has($key));
     }
 }
