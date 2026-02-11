@@ -1,0 +1,22 @@
+{
+    "name": "nasirkhan/settings",
+    "description": "Settings module for Laravel applications",
+    "type": "laravel-module",
+    "authors": [
+        {
+            "name": "Nasir Khan",
+            "email": "nasir8891@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Nasirkhan\\ModuleManager\\Modules\\Settings\\": ""
+        }
+    }
+}
