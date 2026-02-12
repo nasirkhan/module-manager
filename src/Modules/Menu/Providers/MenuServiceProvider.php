@@ -2,6 +2,7 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Menu\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
@@ -50,6 +51,9 @@ class MenuServiceProvider extends ServiceProvider
         $this->registerCommands('Nasirkhan\ModuleManager\Modules\Menu\Console\Commands');
 
         $this->registerLivewireComponents();
+
+        // Register Blade components
+        $this->registerBladeComponents();
 
         // Register seeders
         $this->registerSeeders();
@@ -148,6 +152,19 @@ class MenuServiceProvider extends ServiceProvider
         }
 
         $this->commands($classes);
+    }
+
+    /**
+     * Register Blade components.
+     *
+     * @return void
+     */
+    protected function registerBladeComponents()
+    {
+        // Register anonymous Blade components
+        Blade::component('menu::components.dynamic-menu', 'menu-dynamic-menu');
+        Blade::component('menu::components.menu-item', 'menu-menu-item');
+        Blade::component('menu::components.footer-menu-item', 'menu-footer-menu-item');
     }
 
     /**
