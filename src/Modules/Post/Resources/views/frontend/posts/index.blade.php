@@ -24,7 +24,7 @@
                     ]);
                 @endphp
 
-                <x-frontend.card
+                <x-cube::card
                     :url="$details_url"
                     :name="$$module_name_singular->name"
                     :image="$$module_name_singular->image"
@@ -60,7 +60,7 @@
                         {{ $$module_name_singular->intro }}
                     </p>
                     <p>
-                        <x-frontend.badge
+                        <x-cube::badge
                             :url="route('frontend.categories.show', [
                                 encode_id($$module_name_singular->category_id),
                                 $$module_name_singular->category->slug,
@@ -70,13 +70,13 @@
                     </p>
                     <div class="mt-4">
                         @foreach ($$module_name_singular->tags as $tag)
-                            <x-frontend.badge
+                            <x-cube::badge
                                 :url="route('frontend.tags.show', [encode_id($tag->id), $tag->slug])"
                                 :text="$tag->name"
                             />
                         @endforeach
                     </div>
-                </x-frontend.card>
+                </x-cube::card>
             @endforeach
         </div>
         <div class="mt-8 w-full">

@@ -19,11 +19,11 @@
                     ]);
                 @endphp
 
-                <x-frontend.card :url="$details_url" :name="$$module_name_singular->name">
+                <x-cube::card :url="$details_url" :name="$$module_name_singular->name">
                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                         {{ $$module_name_singular->description }}
                     </p>
-                </x-frontend.card>
+                </x-cube::card>
             @endforeach
         </div>
         <div class="mt-8 w-full">
