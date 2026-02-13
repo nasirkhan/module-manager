@@ -24,7 +24,7 @@
                 </x-cube::card>
             @endforeach
         </div>
-        <div class="mt-8 w-full">
+        <div class="mt-8">
             {{ $$module_name->links() }}
         </div>
     </section>
