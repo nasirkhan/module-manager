@@ -5,7 +5,7 @@
 @endsection
 
 @section("content")
-    <x-frontend.header-block :title="__($$module_name_singular->name)">
+    <x-cube::header-block :title="__($$module_name_singular->name)">
         <x-slot:sub_title>
             <p class="mb-8 leading-relaxed">
                 <a
@@ -20,7 +20,7 @@
         <p class="mb-8 leading-relaxed">
             {{ $$module_name_singular->description }}
         </p>
-    </x-frontend.header-block>
+    </x-cube::header-block>
 
     <section class="bg-white p-6 text-gray-600 dark:bg-gray-700 dark:text-gray-300 sm:p-20">
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-1">

@@ -165,6 +165,7 @@ class MenuServiceProvider extends ServiceProvider
         Blade::component('menu::components.dynamic-menu', 'menu-dynamic-menu');
         Blade::component('menu::components.menu-item', 'menu-menu-item');
         Blade::component('menu::components.footer-menu-item', 'menu-footer-menu-item');
+        Blade::component('menu::components.nav-item', 'menu-nav-item');
     }
 
     /**

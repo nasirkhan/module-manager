@@ -83,25 +83,25 @@
             </li>
         @else
             <!-- Dropdown without children, treat as regular link -->
-            <x-frontend.nav-item 
+            <x-menu-nav-item 
                 :href="$url" 
                 :active="$isActive"
                 :target="$target"
             >
                 {{ $item->getDisplayTitle() }}
-            </x-frontend.nav-item>
+            </x-menu-nav-item>
         @endif
         @break
     
     @case('external')
     @case('link')
     @default
-        <x-frontend.nav-item 
+        <x-menu-nav-item 
             :href="$url" 
             :active="$isActive"
             :target="$target"
         >
             {{ $item->getDisplayTitle() }}
-        </x-frontend.nav-item>
+        </x-menu-nav-item>
         @break
 @endswitch
