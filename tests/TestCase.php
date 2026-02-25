@@ -37,9 +37,9 @@ abstract class TestCase extends Orchestra
     {
         $app['config']->set('database.default', 'testing');
         $app['config']->set('database.connections.testing', [
-            'driver'   => 'sqlite',
+            'driver' => 'sqlite',
             'database' => ':memory:',
-            'prefix'   => '',
+            'prefix' => '',
         ]);
 
         // Write an empty modules_statuses.json so no module service providers
@@ -49,4 +49,3 @@ abstract class TestCase extends Orchestra
         file_put_contents($statusFile, '{}');
     }
 }
-
