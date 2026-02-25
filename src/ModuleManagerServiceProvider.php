@@ -130,6 +130,28 @@ class ModuleManagerServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * Dynamically register enabled modules based on modules_statuses.json.
+     *
+     * modules_statuses.json lives in the root of the Laravel application and acts
+     * as the single source of truth for which modules are active. Each key is a
+     * module name (e.g. "Post", "Category") and each value is a boolean — true
+     * means the module's ServiceProvider will be registered on boot, false means
+     * it will be skipped entirely.
+     *
+     * Resolution order (highest priority first):
+     *   1. Published module  — Modules\{Module}\Providers\{Module}ServiceProvider
+     *      (placed there via `php artisan module:publish`)
+     *   2. Vendor module     — Nasirkhan\ModuleManager\Modules\{Module}\Providers\{Module}ServiceProvider
+     *      (ships with the nasirkhan/module-manager package)
+     *
+     * To enable or disable a module at runtime use:
+     *   php artisan module:enable  {Module}
+     *   php artisan module:disable {Module}
+     *
+     * A missing or malformed file results in a default set of core modules being
+     * written to disk automatically.
+     */
     public function registerModules()
     {
         $statusFile = base_path('modules_statuses.json');
