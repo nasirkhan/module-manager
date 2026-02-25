@@ -454,6 +454,28 @@ php artisan vendor:publish --tag=post-lang
 
 ---
 
+## 🏷️ Namespace Architecture
+
+Modules use different namespaces depending on whether they live in the vendor package or have been published.
+
+| Location | Namespace |
+|----------|-----------|
+| `vendor/nasirkhan/module-manager/src/Modules/` | `Nasirkhan\ModuleManager\Modules\{Module}\...` |
+| `Modules/` (published) | `Modules\{Module}\...` |
+
+When you run `php artisan module:publish`, the command automatically:
+- Replaces all namespace declarations, `use` statements, and string references in PHP files
+- Updates the module's `composer.json` PSR-4 autoload mapping
+- Published modules take precedence over vendor modules
+
+After publishing, run:
+```bash
+composer dump-autoload
+php artisan config:clear
+```
+
+---
+
 ## 🧪 Testing
 
 ### Running Module Tests
