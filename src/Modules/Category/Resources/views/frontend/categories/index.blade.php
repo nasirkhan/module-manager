@@ -5,9 +5,7 @@
 @endsection
 
 @section("content")
-    <x-frontend.header-block :title="__($module_title)">
-        <p class="mb-8 leading-relaxed">The list of {{ __($module_name) }}.</p>
-    </x-frontend.header-block>
+    <x-cube::header-block :title="__($module_title)" />
 
     <section class="bg-white p-6 text-gray-600 dark:bg-gray-700 sm:p-20">
         <div class="grid grid-cols-2 gap-6 sm:grid-cols-3">
@@ -19,11 +17,11 @@
                     ]);
                 @endphp
 
-                <x-frontend.card :url="$details_url" :name="$$module_name_singular->name">
+                <x-cube::card :url="$details_url" :name="$$module_name_singular->name">
                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                         {{ $$module_name_singular->description }}
                     </p>
-                </x-frontend.card>
+                </x-cube::card>
             @endforeach
         </div>
         <div class="mt-8 w-full">

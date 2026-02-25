@@ -103,10 +103,15 @@ class ModuleCheckMigrationsCommand extends Command
      */
     protected function getNewMigrations(string $module): array
     {
-        // Check package migrations path
-        $packagePath = base_path("Modules/{$module}/Database/Migrations");
+        // Prefer the locally published copy; fall back to the vendor package path.
+        $localPath = base_path("Modules/{$module}/Database/Migrations");
+        $vendorPath = base_path("vendor/nasirkhan/module-manager/src/Modules/{$module}/Database/Migrations");
 
-        if (! File::exists($packagePath)) {
+        if (File::exists($localPath)) {
+            $packagePath = $localPath;
+        } elseif (File::exists($vendorPath)) {
+            $packagePath = $vendorPath;
+        } else {
             return [];
         }
 

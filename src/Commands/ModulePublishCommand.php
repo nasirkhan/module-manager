@@ -57,6 +57,12 @@ class ModulePublishCommand extends Command
         // Copy module
         File::copyDirectory($sourcePath, $destinationPath);
 
+        // Replace namespaces in all PHP files
+        $this->replaceNamespaces($destinationPath, $moduleName);
+
+        // Update composer.json if exists
+        $this->updateComposerJson($destinationPath, $moduleName);
+
         // Update module status
         $this->updateModuleStatus($moduleName, true);
 
@@ -133,6 +139,83 @@ class ModulePublishCommand extends Command
 
         foreach ($modules as $module) {
             $this->line("  - {$module}");
+        }
+    }
+
+    /**
+     * Replace namespaces in all PHP files in the published module.
+     */
+    protected function replaceNamespaces(string $path, string $moduleName): void
+    {
+        $finder = new \Symfony\Component\Finder\Finder;
+        $finder->files()->name('*.php')->in($path);
+
+        $oldNamespace = 'Nasirkhan\\ModuleManager\\Modules\\'.$moduleName;
+        $newNamespace = 'Modules\\'.$moduleName;
+
+        // For string literals (in quotes) - double backslashes
+        $oldNamespaceQuoted = 'Nasirkhan\\\\ModuleManager\\\\Modules\\\\'.$moduleName;
+        $newNamespaceQuoted = 'Modules\\\\'.$moduleName;
+
+        foreach ($finder as $file) {
+            $content = File::get($file->getRealPath());
+
+            // Replace namespace declarations (normal backslashes)
+            $content = str_replace(
+                'namespace '.$oldNamespace,
+                'namespace '.$newNamespace,
+                $content
+            );
+
+            // Replace use statements (normal backslashes)
+            $content = str_replace(
+                'use '.$oldNamespace,
+                'use '.$newNamespace,
+                $content
+            );
+
+            // Replace quoted/escaped namespaces (in strings, arrays, etc.)
+            $content = str_replace(
+                $oldNamespaceQuoted,
+                $newNamespaceQuoted,
+                $content
+            );
+
+            // Replace single backslash in strings (with single quotes or after colon)
+            $content = preg_replace(
+                '/([\'"\s])'.preg_quote($oldNamespace, '/').'/',
+                '$1'.$newNamespace,
+                $content
+            );
+
+            File::put($file->getRealPath(), $content);
+        }
+    }
+
+    /**
+     * Update composer.json autoload namespace.
+     */
+    protected function updateComposerJson(string $path, string $moduleName): void
+    {
+        $composerFile = $path.'/composer.json';
+
+        if (! File::exists($composerFile)) {
+            return;
+        }
+
+        $composer = json_decode(File::get($composerFile), true);
+
+        // Update autoload PSR-4 namespace
+        if (isset($composer['autoload']['psr-4'])) {
+            $oldKey = 'Nasirkhan\\ModuleManager\\Modules\\'.$moduleName.'\\';
+            $newKey = 'Modules\\'.$moduleName.'\\';
+
+            if (isset($composer['autoload']['psr-4'][$oldKey])) {
+                $composer['autoload']['psr-4'][$newKey] = $composer['autoload']['psr-4'][$oldKey];
+                unset($composer['autoload']['psr-4'][$oldKey]);
+
+                File::put($composerFile, json_encode($composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            }
         }
     }
 }

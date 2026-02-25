@@ -25,8 +25,10 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->unique()->words(3, true);
+
         return [
-            'name' => substr($this->faker->text(15), 0, -1),
+            'name' => $name,
             'slug' => '',
             'description' => $this->faker->paragraph,
             'status' => $this->faker->randomElement(CategoryStatus::cases()),

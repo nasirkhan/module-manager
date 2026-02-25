@@ -5,14 +5,14 @@
 @endsection
 
 @section("content")
-    <x-frontend.header-block :title="__('Articles')">
+    <x-cube::header-block :title="__('Articles')">
         <p class="mb-8 leading-relaxed">
             We publish articles on a number of topics.
             <br />
             We encourage you to read our posts and let us know your feedback. It would be really help us to move
             forward.
         </p>
-    </x-frontend.header-block>
+    </x-cube::header-block>
 
     <section class="bg-white p-6 text-gray-600 dark:bg-gray-700 sm:p-20">
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
@@ -24,7 +24,7 @@
                     ]);
                 @endphp
 
-                <x-frontend.card
+                <x-cube::card
                     :url="$details_url"
                     :name="$$module_name_singular->name"
                     :image="$$module_name_singular->image"
@@ -60,7 +60,7 @@
                         {{ $$module_name_singular->intro }}
                     </p>
                     <p>
-                        <x-frontend.badge
+                        <x-cube::badge
                             :url="route('frontend.categories.show', [
                                 encode_id($$module_name_singular->category_id),
                                 $$module_name_singular->category->slug,
@@ -70,13 +70,13 @@
                     </p>
                     <div class="mt-4">
                         @foreach ($$module_name_singular->tags as $tag)
-                            <x-frontend.badge
+                            <x-cube::badge
                                 :url="route('frontend.tags.show', [encode_id($tag->id), $tag->slug])"
                                 :text="$tag->name"
                             />
                         @endforeach
                     </div>
-                </x-frontend.card>
+                </x-cube::card>
             @endforeach
         </div>
         <div class="mt-8 w-full">

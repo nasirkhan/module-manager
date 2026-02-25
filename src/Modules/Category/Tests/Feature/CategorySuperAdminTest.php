@@ -4,7 +4,6 @@ namespace Nasirkhan\ModuleManager\Modules\Category\Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Artisan;
 use Nasirkhan\ModuleManager\Modules\Category\Models\Category;
 use Tests\TestCase;
 
@@ -18,9 +17,6 @@ class CategorySuperAdminTest extends TestCase
 
         // seed the database
         $this->seed();
-
-        // Insert demo data for categories
-        Artisan::call('laravel-starter:insert-demo-data');
 
         // Get Super Admin
         $user = User::whereId(1)->first();

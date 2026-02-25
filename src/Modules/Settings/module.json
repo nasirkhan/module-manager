@@ -1,0 +1,14 @@
+{
+    "name": "Settings",
+    "alias": "settings",
+    "description": "Application settings management with customizable fields",
+    "version": "1.0.0",
+    "keywords": ["settings", "configuration", "options"],
+    "priority": 1,
+    "providers": [
+        "Nasirkhan\\ModuleManager\\Modules\\Settings\\Providers\\SettingsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
