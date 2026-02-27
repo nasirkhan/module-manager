@@ -52,11 +52,6 @@ return new class extends Migration
 
             // Foreign key for category relationship
             // Use nullOnDelete() so posts aren't deleted when category is deleted
-            $table->foreign('category_id')
-                ->references('id')
-                ->on('categories')
-                ->nullOnDelete();
-
             // Foreign keys for audit trail - use noActionOnDelete()
             // to preserve user ID even if user is deleted
             $table->foreign('created_by')

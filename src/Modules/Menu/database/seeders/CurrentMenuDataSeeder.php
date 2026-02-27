@@ -66,14 +66,14 @@ class CurrentMenuDataSeeder extends Seeder
             }
         }
 
-        // Seed menus
+        // Seed menus — forceCreate bypasses guarded 'id' so explicit IDs are preserved
         foreach ($allMenus as $menuData) {
-            Menu::create($menuData);
+            Menu::forceCreate($menuData);
         }
 
-        // Seed menu items
+        // Seed menu items — forceCreate preserves explicit id and parent_id values
         foreach ($allMenuItems as $itemData) {
-            MenuItem::create($itemData);
+            MenuItem::forceCreate($itemData);
         }
 
         // Re-enable foreign key constraints
