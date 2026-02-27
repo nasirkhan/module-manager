@@ -3,7 +3,7 @@
 namespace Nasirkhan\ModuleManager\Modules\Menu\database\seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\Menu;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\MenuItem;
 
@@ -45,8 +45,8 @@ class CurrentMenuDataSeeder extends Seeder
             $this->command->info('Seeding menus and menu items from PHP data...');
         }
 
-        // Disable foreign key constraints
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // Disable foreign key constraints (works on MySQL, SQLite, PostgreSQL)
+        Schema::disableForeignKeyConstraints();
 
         // Truncate existing data
         MenuItem::truncate();
@@ -77,6 +77,6 @@ class CurrentMenuDataSeeder extends Seeder
         }
 
         // Re-enable foreign key constraints
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        Schema::enableForeignKeyConstraints();
     }
 }
