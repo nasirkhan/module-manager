@@ -28,7 +28,7 @@
     
     @case('heading')
         <li>
-            <span class="block px-4 py-2 text-sm font-semibold text-gray-600 uppercase dark:text-gray-400">
+            <span class="block px-4 py-2 text-sm text-red-600 dark:text-gray-400">
                 {{ $item->getDisplayTitle() }}
             </span>
         </li>
@@ -39,7 +39,7 @@
             <li class="relative group ">
                 <button
                     type="button"
-                    class="border-transparent dark:border-transparent cursor-pointer flex items-center justify-between w-full md:w-auto border-b-2 px-3 py-2 font-semibold text-gray-800 transition duration-200 ease-in hover:border-gray-700 hover:opacity-75 dark:text-white dark:hover:border-gray-300 dark:hover:opacity-75 sm:my-0 sm:py-1"
+                    class="border-transparent dark:border-transparent cursor-pointer flex items-center justify-between w-full md:w-auto border-b-2 px-3 py-2 text-gray-800 transition duration-200 ease-in hover:border-gray-700 hover:opacity-75 dark:text-white dark:hover:border-gray-300 dark:hover:opacity-75 sm:my-0 sm:py-1"
                     data-dropdown-toggle="dropdown-{{ $item->id }}"
                     aria-expanded="false"
                     aria-haspopup="true"
@@ -61,7 +61,7 @@
                                     @if($childItem->type === 'divider')
                                         <div class="border-t border-gray-200 dark:border-gray-600 mx-2"></div>
                                     @elseif($childItem->type === 'heading')
-                                        <span class="block px-4 py-2 text-xs font-semibold text-gray-600 uppercase dark:text-gray-400">
+                                        <span class="block px-4 py-2 text-xs text-gray-600 dark:text-gray-400">
                                             {{ $childItem->getDisplayTitle() }}
                                         </span>
                                     @else
