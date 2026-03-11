@@ -12,20 +12,22 @@
         {!! $required_mark !!}
         <br />
 
-        @foreach ($field["options"] as $value => $label)
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input
-                        class="form-check-input"
-                        name="{{ $field["name"] }}"
-                        type="radio"
-                        value="{{ $value }}"
-                        @if(old($field['name'], setting($field['name'])) == $value) checked="checked" @endif
-                    />
-                    {{ __($label) }}
-                </label>
-            </div>
-        @endforeach
+        <div class="d-flex flex-wrap gap-3 align-items-center">
+            @foreach ($field["options"] as $value => $label)
+                <div class="form-check mb-0">
+                    <label class="form-check-label d-inline-flex align-items-center gap-1">
+                        <input
+                            class="form-check-input"
+                            name="{{ $field["name"] }}"
+                            type="radio"
+                            value="{{ $value }}"
+                            @if(old($field['name'], setting($field['name'])) == $value) checked="checked" @endif
+                        />
+                        {{ __($label) }}
+                    </label>
+                </div>
+            @endforeach
+        </div>
 
         @if ($errors->has($field["name"]))
             <small class="help-block">{{ $errors->first($field["name"]) }}</small>

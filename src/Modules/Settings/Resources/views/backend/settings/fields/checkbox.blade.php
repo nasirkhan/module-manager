@@ -17,6 +17,7 @@
             <input
                 name=" {{ $field["name"] }}"
                 type="checkbox"
+                class="form-check-input"
                 value="{{ \Illuminate\Support\Arr::get($field, "value", "1") }}"
                 @if (old($field['name'], setting($field['name']))) checked="checked" @endif
             />

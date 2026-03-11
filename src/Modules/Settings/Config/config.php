@@ -96,8 +96,22 @@ return [
             'title' => 'Social Profiles',
             'desc' => 'Link of all the online/social profiles.',
             'icon' => 'fas fa-users',
-
+            
             'elements' => [
+                [
+                    'type' => 'radio', // input fields type
+                    'data' => 'boolean', // data type, string, int, boolean
+                    'name' => 'show_footer_social_profiles', // unique name for field
+                    'label' => 'Show Footer Social Profiles', // you know what label it is
+                    'rules' => 'nullable', // validation rule of laravel
+                    'class' => '', // any class for input
+                    'value' => '1', // default value if you want
+                    'options' => [
+                        '1' => 'Show',
+                        '0' => 'Hide',
+                    ],
+                    'help' => 'Show or hide the footer social profiles in frontend.', // Help text for the input field.
+                ],
                 [
                     'type' => 'text', // input fields type
                     'data' => 'string', // data type, string, int, boolean
