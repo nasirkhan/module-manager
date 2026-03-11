@@ -96,7 +96,7 @@ return [
             'title' => 'Social Profiles',
             'desc' => 'Link of all the online/social profiles.',
             'icon' => 'fas fa-users',
-            
+
             'elements' => [
                 [
                     'type' => 'radio', // input fields type
