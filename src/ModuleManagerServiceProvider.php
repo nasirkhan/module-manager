@@ -2,6 +2,7 @@
 
 namespace Nasirkhan\ModuleManager;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Nasirkhan\ModuleManager\Commands\AuthPermissionsCommand;
@@ -118,17 +119,17 @@ class ModuleManagerServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('module-manager', function () {
-            return new ModuleManager();
+            return new ModuleManager;
         });
 
         // Register ModuleVersion service
         $this->app->singleton(ModuleVersion::class, function () {
-            return new ModuleVersion();
+            return new ModuleVersion;
         });
 
         // Register MigrationTracker service
         $this->app->singleton(MigrationTracker::class, function () {
-            return new MigrationTracker();
+            return new MigrationTracker;
         });
     }
 
@@ -169,7 +170,9 @@ class ModuleManagerServiceProvider extends ServiceProvider
             File::put($statusFile, json_encode($defaultModules, JSON_PRETTY_PRINT));
         }
 
-        $modules = json_decode(File::get($statusFile), true);
+        $modules = Cache::remember('module_statuses', 3600, function () use ($statusFile) {
+            return json_decode(File::get($statusFile), true);
+        });
 
         if (! is_array($modules)) {
             return;

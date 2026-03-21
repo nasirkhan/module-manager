@@ -3,7 +3,9 @@
 namespace Nasirkhan\ModuleManager\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Console\View\Components\Factory;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -19,7 +21,7 @@ class ModuleBuildCommand extends Command
     /**
      * The laravel component Factory instance.
      *
-     * @var \Illuminate\Console\View\Components\Factory
+     * @var Factory
      */
     protected $component;
 
@@ -287,6 +289,8 @@ class ModuleBuildCommand extends Command
         $content = (File::exists($destination)) ? File::get($destination) : '{}';
 
         File::put(base_path('modules_statuses.json'), json_encode(array_merge(json_decode($content, true), [$moduleName => true]), JSON_PRETTY_PRINT));
+
+        Cache::forget('module_statuses');
 
         $this->components->info("{$moduleName} - Module Created Successfully!");
     }

@@ -3,6 +3,7 @@
 namespace Nasirkhan\ModuleManager\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -62,6 +63,8 @@ class ModuleEnableCommand extends Command
             $content[$moduleName] = true;
         }
         File::put($destination, json_encode($content, JSON_PRETTY_PRINT));
+
+        Cache::forget('module_statuses');
 
         $this->components->info("Module {$moduleName} enabled successfully.");
     }
