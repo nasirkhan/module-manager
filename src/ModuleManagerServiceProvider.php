@@ -180,7 +180,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
         foreach ($modules as $module => $enabled) {
             // Support both a simple boolean (true/false) and the published module
             // metadata array written by module:publish (which includes an 'enabled' key).
-            $isEnabled = $enabled === true || (is_array($enabled) && ($enabled['enabled'] ?? false) === true);
+            $isEnabled = $enabled === true || (is_array($enabled) && ($enabled['enabled'] ?? true) === true);
 
             if (! $isEnabled) {
                 continue;

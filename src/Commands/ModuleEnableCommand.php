@@ -48,7 +48,7 @@ class ModuleEnableCommand extends Command
         }
 
         $isAlreadyEnabled = $content[$moduleName] === true
-            || (is_array($content[$moduleName]) && ($content[$moduleName]['enabled'] ?? false) === true);
+            || (is_array($content[$moduleName]) && ($content[$moduleName]['enabled'] ?? true) === true);
 
         if ($isAlreadyEnabled) {
             $this->components->info("Module {$moduleName} is already enabled.");
