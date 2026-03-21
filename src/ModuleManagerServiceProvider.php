@@ -5,6 +5,7 @@ namespace Nasirkhan\ModuleManager;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Nasirkhan\ModuleManager\Commands\AuthPermissionsCommand;
+use Nasirkhan\ModuleManager\Commands\ClearAllCommand;
 use Nasirkhan\ModuleManager\Commands\InsertDemoDataCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleBuildCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleCheckMigrationsCommand;
@@ -74,6 +75,9 @@ class ModuleManagerServiceProvider extends ServiceProvider
 
                     // Insert Demo Data Command
                     InsertDemoDataCommand::class,
+
+                    // Cache clearing command
+                    ClearAllCommand::class,
 
                     // Auth Permission Command
                     AuthPermissionsCommand::class,
@@ -174,7 +178,11 @@ class ModuleManagerServiceProvider extends ServiceProvider
         }
 
         foreach ($modules as $module => $enabled) {
-            if ($enabled !== true) {
+            // Support both a simple boolean (true/false) and the published module
+            // metadata array written by module:publish (which includes an 'enabled' key).
+            $isEnabled = $enabled === true || (is_array($enabled) && ($enabled['enabled'] ?? false) === true);
+
+            if (! $isEnabled) {
                 continue;
             }
 
