@@ -64,7 +64,7 @@ class ModuleBuildCommand extends Command
         $this->generate($moduleName, $force);
     }
 
-    public function generate($moduleName, $force)
+    public function generate(string $moduleName, bool $force): void
     {
         $this->components->info('Generating module: '.$moduleName);
         // $this->info('Generating module: '.$moduleName."\n");
@@ -114,7 +114,7 @@ class ModuleBuildCommand extends Command
         $this->call('permission:cache-reset');
     }
 
-    public function createFiles($moduleName, $basePath, $search, $replace, $force)
+    public function createFiles(string $moduleName, string $basePath, array $search, array $replace, bool $force): void
     {
         $moduleNamePlural = Str::plural($moduleName);
         $moduleNameLower = Str::lower($moduleName);
@@ -179,7 +179,7 @@ class ModuleBuildCommand extends Command
         }
     }
 
-    public function setFilePath($filetype, $filePath, $moduleName)
+    public function setFilePath(string $filetype, string $filePath, string $moduleName): string
     {
         $value = '';
         $moduleNamePlural = Str::plural($moduleName);
@@ -280,7 +280,7 @@ class ModuleBuildCommand extends Command
         return $filePath;
     }
 
-    public function enableModule($moduleName)
+    public function enableModule(string $moduleName): void
     {
         $destination = base_path('modules_statuses.json');
 
