@@ -47,13 +47,20 @@ class ModuleEnableCommand extends Command
             return;
         }
 
-        if ($content[$moduleName] === true) {
+        $isAlreadyEnabled = $content[$moduleName] === true
+            || (is_array($content[$moduleName]) && ($content[$moduleName]['enabled'] ?? false) === true);
+
+        if ($isAlreadyEnabled) {
             $this->components->info("Module {$moduleName} is already enabled.");
 
             return;
         }
 
-        $content[$moduleName] = true;
+        if (is_array($content[$moduleName])) {
+            $content[$moduleName]['enabled'] = true;
+        } else {
+            $content[$moduleName] = true;
+        }
         File::put($destination, json_encode($content, JSON_PRETTY_PRINT));
 
         $this->components->info("Module {$moduleName} enabled successfully.");

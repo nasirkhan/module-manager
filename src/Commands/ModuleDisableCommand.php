@@ -47,13 +47,20 @@ class ModuleDisableCommand extends Command
             return;
         }
 
-        if ($content[$moduleName] === false) {
+        $isAlreadyDisabled = $content[$moduleName] === false
+            || (is_array($content[$moduleName]) && ($content[$moduleName]['enabled'] ?? true) === false);
+
+        if ($isAlreadyDisabled) {
             $this->components->info("Module {$moduleName} is already disabled.");
 
             return;
         }
 
-        $content[$moduleName] = false;
+        if (is_array($content[$moduleName])) {
+            $content[$moduleName]['enabled'] = false;
+        } else {
+            $content[$moduleName] = false;
+        }
         File::put($destination, json_encode($content, JSON_PRETTY_PRINT));
 
         $this->components->info("Module {$moduleName} disabled successfully.");

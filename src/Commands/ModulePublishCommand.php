@@ -89,7 +89,13 @@ class ModulePublishCommand extends Command
             ? json_decode(File::get($statusFile), true)
             : [];
 
+        // Preserve existing enabled state if the module was already tracked as an array,
+        // otherwise default to true (publishing a module enables it).
+        $existing = $statuses[$module] ?? null;
+        $isEnabled = is_array($existing) ? ($existing['enabled'] ?? true) : true;
+
         $statuses[$module] = [
+            'enabled' => $isEnabled,
             'published' => $published,
             'published_at' => now()->toISOString(),
             'location' => 'user',
