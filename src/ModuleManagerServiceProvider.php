@@ -2,6 +2,7 @@
 
 namespace Nasirkhan\ModuleManager;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Nasirkhan\ModuleManager\Commands\AuthPermissionsCommand;
@@ -70,43 +71,41 @@ class ModuleManagerServiceProvider extends ServiceProvider
              * Registering package commands.
              * Register the command if we are using the application via the CLI.
              */
-            if ($this->app->runningInConsole()) {
-                $this->commands([
+            $this->commands([
 
-                    // Insert Demo Data Command
-                    InsertDemoDataCommand::class,
+                // Insert Demo Data Command
+                InsertDemoDataCommand::class,
 
-                    // Cache clearing command
-                    ClearAllCommand::class,
+                // Cache clearing command
+                ClearAllCommand::class,
 
-                    // Auth Permission Command
-                    AuthPermissionsCommand::class,
+                // Auth Permission Command
+                AuthPermissionsCommand::class,
 
-                    // Module Build Command to Create Module
-                    ModuleBuildCommand::class,
+                // Module Build Command to Create Module
+                ModuleBuildCommand::class,
 
-                    // Module Remove Command
-                    Commands\ModuleRemoveCommand::class,
+                // Module Remove Command
+                Commands\ModuleRemoveCommand::class,
 
-                    // Module Disable Command
-                    Commands\ModuleDisableCommand::class,
+                // Module Disable Command
+                Commands\ModuleDisableCommand::class,
 
-                    // Module Enable Command
-                    Commands\ModuleEnableCommand::class,
+                // Module Enable Command
+                Commands\ModuleEnableCommand::class,
 
-                    // Updateability Commands
-                    ModulePublishCommand::class,
-                    ModuleStatusCommand::class,
-                    ModuleDiffCommand::class,
-                    ModuleCheckMigrationsCommand::class,
-                    ModuleDependenciesCommand::class,
-                    ModuleTrackMigrationsCommand::class,
-                    ModuleDetectUpdatesCommand::class,
-                    ModuleGenerateTestCommand::class,
-                    ModuleHelpCommand::class,
+                // Updateability Commands
+                ModulePublishCommand::class,
+                ModuleStatusCommand::class,
+                ModuleDiffCommand::class,
+                ModuleCheckMigrationsCommand::class,
+                ModuleDependenciesCommand::class,
+                ModuleTrackMigrationsCommand::class,
+                ModuleDetectUpdatesCommand::class,
+                ModuleGenerateTestCommand::class,
+                ModuleHelpCommand::class,
 
-                ]);
-            }
+            ]);
         }
     }
 
@@ -120,17 +119,17 @@ class ModuleManagerServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('module-manager', function () {
-            return new ModuleManager();
+            return new ModuleManager;
         });
 
         // Register ModuleVersion service
         $this->app->singleton(ModuleVersion::class, function () {
-            return new ModuleVersion();
+            return new ModuleVersion;
         });
 
         // Register MigrationTracker service
         $this->app->singleton(MigrationTracker::class, function () {
-            return new MigrationTracker();
+            return new MigrationTracker;
         });
     }
 
@@ -171,7 +170,9 @@ class ModuleManagerServiceProvider extends ServiceProvider
             File::put($statusFile, json_encode($defaultModules, JSON_PRETTY_PRINT));
         }
 
-        $modules = json_decode(File::get($statusFile), true);
+        $modules = Cache::remember('module_statuses', 3600, function () use ($statusFile) {
+            return json_decode(File::get($statusFile), true);
+        });
 
         if (! is_array($modules)) {
             return;
@@ -180,7 +181,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
         foreach ($modules as $module => $enabled) {
             // Support both a simple boolean (true/false) and the published module
             // metadata array written by module:publish (which includes an 'enabled' key).
-            $isEnabled = $enabled === true || (is_array($enabled) && ($enabled['enabled'] ?? false) === true);
+            $isEnabled = $enabled === true || (is_array($enabled) && ($enabled['enabled'] ?? true) === true);
 
             if (! $isEnabled) {
                 continue;

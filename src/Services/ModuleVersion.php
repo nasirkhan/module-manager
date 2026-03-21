@@ -39,7 +39,10 @@ class ModuleVersion
      */
     public function getAllVersions(): array
     {
-        $modules = ['Post', 'Category', 'Tag', 'Menu'];
+        $modulesPath = __DIR__.'/../Modules';
+        $modules = File::exists($modulesPath)
+            ? array_map('basename', File::directories($modulesPath))
+            : [];
         $versions = [];
 
         foreach ($modules as $module) {

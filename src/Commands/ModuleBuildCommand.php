@@ -3,7 +3,9 @@
 namespace Nasirkhan\ModuleManager\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Console\View\Components\Factory;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -19,7 +21,7 @@ class ModuleBuildCommand extends Command
     /**
      * The laravel component Factory instance.
      *
-     * @var \Illuminate\Console\View\Components\Factory
+     * @var Factory
      */
     protected $component;
 
@@ -64,7 +66,7 @@ class ModuleBuildCommand extends Command
         $this->generate($moduleName, $force);
     }
 
-    public function generate($moduleName, $force)
+    public function generate(string $moduleName, bool $force): void
     {
         $this->components->info('Generating module: '.$moduleName);
         // $this->info('Generating module: '.$moduleName."\n");
@@ -114,7 +116,7 @@ class ModuleBuildCommand extends Command
         $this->call('permission:cache-reset');
     }
 
-    public function createFiles($moduleName, $basePath, $search, $replace, $force)
+    public function createFiles(string $moduleName, string $basePath, array $search, array $replace, bool $force): void
     {
         $moduleNamePlural = Str::plural($moduleName);
         $moduleNameLower = Str::lower($moduleName);
@@ -179,7 +181,7 @@ class ModuleBuildCommand extends Command
         }
     }
 
-    public function setFilePath($filetype, $filePath, $moduleName)
+    public function setFilePath(string $filetype, string $filePath, string $moduleName): string
     {
         $value = '';
         $moduleNamePlural = Str::plural($moduleName);
@@ -280,13 +282,15 @@ class ModuleBuildCommand extends Command
         return $filePath;
     }
 
-    public function enableModule($moduleName)
+    public function enableModule(string $moduleName): void
     {
         $destination = base_path('modules_statuses.json');
 
         $content = (File::exists($destination)) ? File::get($destination) : '{}';
 
-        File::put('modules_statuses.json', json_encode(array_merge(json_decode($content, true), [$moduleName => true]), JSON_PRETTY_PRINT));
+        File::put(base_path('modules_statuses.json'), json_encode(array_merge(json_decode($content, true), [$moduleName => true]), JSON_PRETTY_PRINT));
+
+        Cache::forget('module_statuses');
 
         $this->components->info("{$moduleName} - Module Created Successfully!");
     }
