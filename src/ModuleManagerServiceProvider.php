@@ -70,8 +70,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
              * Registering package commands.
              * Register the command if we are using the application via the CLI.
              */
-            if ($this->app->runningInConsole()) {
-                $this->commands([
+            $this->commands([
 
                     // Insert Demo Data Command
                     InsertDemoDataCommand::class,
@@ -106,7 +105,6 @@ class ModuleManagerServiceProvider extends ServiceProvider
                     ModuleHelpCommand::class,
 
                 ]);
-            }
         }
     }
 

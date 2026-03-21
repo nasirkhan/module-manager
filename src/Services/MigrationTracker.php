@@ -172,14 +172,18 @@ class MigrationTracker
     protected function ensureTrackingTableExists(): void
     {
         if (! Schema::hasTable($this->trackingTable)) {
-            Schema::create($this->trackingTable, function ($table) {
-                $table->id();
-                $table->string('module')->unique();
-                $table->string('version');
-                $table->json('migrations');
-                $table->timestamp('last_checked');
-                $table->timestamps();
-            });
+            try {
+                Schema::create($this->trackingTable, function ($table) {
+                    $table->id();
+                    $table->string('module')->unique();
+                    $table->string('version');
+                    $table->json('migrations');
+                    $table->timestamp('last_checked');
+                    $table->timestamps();
+                });
+            } catch (\Exception $e) {
+                throw new \RuntimeException("Failed to create module migration tracking table: {$e->getMessage()}", 0, $e);
+            }
         }
     }
 
@@ -189,7 +193,10 @@ class MigrationTracker
     public function updateAfterComposerUpdate(): void
     {
         $versionService = app(ModuleVersion::class);
-        $modules = ['Post', 'Category', 'Tag', 'Menu'];
+        $statusFile = base_path('modules_statuses.json');
+        $modules = File::exists($statusFile)
+            ? array_keys(json_decode(File::get($statusFile), true) ?? [])
+            : [];
 
         foreach ($modules as $module) {
             $version = $versionService->getVersion($module);

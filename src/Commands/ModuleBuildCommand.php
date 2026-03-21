@@ -286,7 +286,7 @@ class ModuleBuildCommand extends Command
 
         $content = (File::exists($destination)) ? File::get($destination) : '{}';
 
-        File::put('modules_statuses.json', json_encode(array_merge(json_decode($content, true), [$moduleName => true]), JSON_PRETTY_PRINT));
+        File::put(base_path('modules_statuses.json'), json_encode(array_merge(json_decode($content, true), [$moduleName => true]), JSON_PRETTY_PRINT));
 
         $this->components->info("{$moduleName} - Module Created Successfully!");
     }
