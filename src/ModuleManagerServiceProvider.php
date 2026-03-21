@@ -72,39 +72,39 @@ class ModuleManagerServiceProvider extends ServiceProvider
              */
             $this->commands([
 
-                    // Insert Demo Data Command
-                    InsertDemoDataCommand::class,
+                // Insert Demo Data Command
+                InsertDemoDataCommand::class,
 
-                    // Cache clearing command
-                    ClearAllCommand::class,
+                // Cache clearing command
+                ClearAllCommand::class,
 
-                    // Auth Permission Command
-                    AuthPermissionsCommand::class,
+                // Auth Permission Command
+                AuthPermissionsCommand::class,
 
-                    // Module Build Command to Create Module
-                    ModuleBuildCommand::class,
+                // Module Build Command to Create Module
+                ModuleBuildCommand::class,
 
-                    // Module Remove Command
-                    Commands\ModuleRemoveCommand::class,
+                // Module Remove Command
+                Commands\ModuleRemoveCommand::class,
 
-                    // Module Disable Command
-                    Commands\ModuleDisableCommand::class,
+                // Module Disable Command
+                Commands\ModuleDisableCommand::class,
 
-                    // Module Enable Command
-                    Commands\ModuleEnableCommand::class,
+                // Module Enable Command
+                Commands\ModuleEnableCommand::class,
 
-                    // Updateability Commands
-                    ModulePublishCommand::class,
-                    ModuleStatusCommand::class,
-                    ModuleDiffCommand::class,
-                    ModuleCheckMigrationsCommand::class,
-                    ModuleDependenciesCommand::class,
-                    ModuleTrackMigrationsCommand::class,
-                    ModuleDetectUpdatesCommand::class,
-                    ModuleGenerateTestCommand::class,
-                    ModuleHelpCommand::class,
+                // Updateability Commands
+                ModulePublishCommand::class,
+                ModuleStatusCommand::class,
+                ModuleDiffCommand::class,
+                ModuleCheckMigrationsCommand::class,
+                ModuleDependenciesCommand::class,
+                ModuleTrackMigrationsCommand::class,
+                ModuleDetectUpdatesCommand::class,
+                ModuleGenerateTestCommand::class,
+                ModuleHelpCommand::class,
 
-                ]);
+            ]);
         }
     }
 
