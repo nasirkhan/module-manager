@@ -36,16 +36,26 @@ class ModuleVersion
 
     /**
      * Get all modules with their versions.
+     *
+     * Merges published modules (Modules/) with vendor modules (src/Modules/),
+     * giving published modules precedence when the same module name appears in both.
      */
     public function getAllVersions(): array
     {
-        $modulesPath = __DIR__.'/../Modules';
-        $modules = File::exists($modulesPath)
-            ? array_map('basename', File::directories($modulesPath))
+        $vendorPath = __DIR__.'/../Modules';
+        $vendorModules = File::exists($vendorPath)
+            ? array_map('basename', File::directories($vendorPath))
             : [];
+
+        $publishedPath = base_path('Modules');
+        $publishedModules = File::exists($publishedPath)
+            ? array_map('basename', File::directories($publishedPath))
+            : [];
+
+        $allModules = array_unique(array_merge($vendorModules, $publishedModules));
         $versions = [];
 
-        foreach ($modules as $module) {
+        foreach ($allModules as $module) {
             $data = $this->getModuleData($module);
             $versions[$module] = [
                 'version' => $data['version'] ?? 'unknown',
@@ -147,9 +157,18 @@ class ModuleVersion
 
     /**
      * Get module path.
+     *
+     * Prefers the published module path (Modules/{module}) over the
+     * vendor package path so that customized modules are resolved first.
      */
     protected function getModulePath(string $moduleName): string
     {
+        $publishedPath = base_path('Modules/'.$moduleName);
+
+        if (File::exists($publishedPath)) {
+            return $publishedPath;
+        }
+
         return __DIR__.'/../Modules/'.$moduleName;
     }
 
