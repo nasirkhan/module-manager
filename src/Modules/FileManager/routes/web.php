@@ -12,6 +12,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['web', 'auth', 'can:view_backend'])->prefix('laravel-filemanager')->group(function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
-});
+// Routes are registered automatically by the nasirkhan/laravel-jodit package's service provider.

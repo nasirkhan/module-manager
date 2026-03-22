@@ -72,7 +72,13 @@
 
             {{ html()->label($field_lable, $field_name)->class("form-label")->for($field_name) }}
             {!! field_required($required) !!}
-            {{ html()->textarea($field_name)->placeholder($field_placeholder)->class("form-control")->attributes(["$required"]) }}
+            <x-jodit::editor
+                name="{{ $field_name }}"
+                id="{{ $field_name }}"
+                :value="old($field_name, $data->$field_name ?? '')"
+                :placeholder="$field_placeholder"
+                :required="(bool) $required"
+            />
         </div>
     </div>
 </div>
