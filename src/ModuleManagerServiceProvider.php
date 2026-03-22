@@ -26,7 +26,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application services.
      */
-    public function boot()
+    public function boot(): void
     {
         // Register modules based on modules_statuses.json
         $this->registerModules();
@@ -112,7 +112,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
     /**
      * Register the application services.
      */
-    public function register()
+    public function register(): void
     {
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'module-manager');
@@ -155,7 +155,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
      * A missing or malformed file results in a default set of core modules being
      * written to disk automatically.
      */
-    public function registerModules()
+    public function registerModules(): void
     {
         $statusFile = base_path('modules_statuses.json');
 

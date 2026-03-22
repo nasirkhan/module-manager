@@ -8,6 +8,10 @@
             "email": "{{composerAuthorEmail}}"
         }
     ],
+    "require": {
+        "php": "^8.3",
+        "laravel/framework": "^12.0 || ^13.0"
+    },
     "extra": {
         "laravel": {
             "providers": [],
