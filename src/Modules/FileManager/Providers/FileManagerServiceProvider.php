@@ -21,9 +21,8 @@ class FileManagerServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        $this->registerConfig();
         $this->app->register(RouteServiceProvider::class);
     }
 
@@ -35,26 +34,6 @@ class FileManagerServiceProvider extends ServiceProvider
     public function register()
     {
         //
-    }
-
-    /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
-    {
-        $configPath = __DIR__.'/../Config/lfm.php';
-
-        // Merge config from module (package defaults)
-        $this->mergeConfigFrom($configPath, 'lfm');
-
-        // Publish config for customization
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                $configPath => config_path('lfm.php'),
-            ], ['config', 'filemanager-config', 'lfm-config']);
-        }
     }
 
     /**
