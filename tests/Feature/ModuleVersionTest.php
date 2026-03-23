@@ -262,5 +262,95 @@ class ModuleVersionTest extends TestCase
         $this->assertFalse($result['all_satisfied']);
         $this->assertCount(2, $result['missing']);
         $this->assertEmpty($result['satisfied']);
+        $this->assertEmpty($result['circular']);
+    }
+
+    // -------------------------------------------------------------------------
+    // circular dependency detection
+    // -------------------------------------------------------------------------
+
+    #[Test]
+    public function it_detects_a_direct_circular_dependency(): void
+    {
+        // FakeModule requires itself directly
+        $this->makeModuleJson($this->publishedPath, [
+            'version' => '1.0.0',
+            'requires' => ['FakeModule'],
+        ]);
+
+        Log::shouldReceive('warning')->once()
+            ->withArgs(fn (string $msg) => str_contains($msg, 'circular'));
+
+        $service = app(ModuleVersion::class);
+        $result = $service->dependenciesSatisfied('FakeModule');
+
+        $this->assertFalse($result['all_satisfied']);
+        $this->assertCount(1, $result['circular']);
+        $this->assertSame('FakeModule', $result['circular'][0]['name']);
+        $this->assertStringContainsString('FakeModule', $result['circular'][0]['chain']);
+        $this->assertEmpty($result['missing']);
+    }
+
+    #[Test]
+    public function it_detects_a_transitive_circular_dependency(): void
+    {
+        // FakeModule → FakeModuleB → FakeModule
+        $pathB = base_path('Modules/FakeModuleB');
+
+        $this->makeModuleJson($this->publishedPath, [
+            'version' => '1.0.0',
+            'requires' => ['FakeModuleB'],
+        ]);
+        $this->makeModuleJson($pathB, [
+            'version' => '1.0.0',
+            'requires' => ['FakeModule'],
+        ]);
+
+        Log::shouldReceive('warning')->once()
+            ->withArgs(fn (string $msg) => str_contains($msg, 'circular'));
+
+        $service = app(ModuleVersion::class);
+        $result = $service->dependenciesSatisfied('FakeModule');
+
+        $this->assertFalse($result['all_satisfied']);
+        $this->assertCount(1, $result['circular']);
+
+        $chain = $result['circular'][0]['chain'];
+        $this->assertStringContainsString('FakeModule', $chain);
+        $this->assertStringContainsString('FakeModuleB', $chain);
+
+        File::deleteDirectory($pathB);
+    }
+
+    #[Test]
+    public function it_does_not_flag_linear_dependency_chain_as_circular(): void
+    {
+        // FakeModule → FakeModuleB → FakeModuleC  (no cycle)
+        $pathB = base_path('Modules/FakeModuleB');
+        $pathC = base_path('Modules/FakeModuleC');
+
+        $this->makeModuleJson($this->publishedPath, [
+            'version' => '1.0.0',
+            'requires' => ['FakeModuleB'],
+        ]);
+        $this->makeModuleJson($pathB, [
+            'version' => '2.0.0',
+            'requires' => ['FakeModuleC'],
+        ]);
+        $this->makeModuleJson($pathC, [
+            'version' => '3.0.0',
+        ]);
+
+        $service = app(ModuleVersion::class);
+        $result = $service->dependenciesSatisfied('FakeModule');
+
+        $this->assertTrue($result['all_satisfied']);
+        $this->assertEmpty($result['circular']);
+        $this->assertEmpty($result['missing']);
+        $this->assertCount(1, $result['satisfied']);
+        $this->assertSame('FakeModuleB', $result['satisfied'][0]['name']);
+
+        File::deleteDirectory($pathB);
+        File::deleteDirectory($pathC);
     }
 }

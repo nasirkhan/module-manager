@@ -131,14 +131,33 @@ class ModuleVersion
 
     /**
      * Check if all dependencies are satisfied.
+     *
+     * Returns a map with:
+     *   - satisfied  – dependencies that are installed
+     *   - missing    – dependencies that are not installed
+     *   - circular   – dependencies that form a cycle back to $moduleName
+     *   - all_satisfied – true only when missing and circular are both empty
      */
     public function dependenciesSatisfied(string $moduleName): array
     {
         $dependencies = $this->getDependencies($moduleName);
         $satisfied = [];
         $missing = [];
+        $circular = [];
 
         foreach ($dependencies as $dependency) {
+            $chain = $this->findCircularChain($dependency, $moduleName, [$moduleName, $dependency]);
+
+            if ($chain !== null) {
+                Log::warning("module-manager: circular dependency detected: {$chain}");
+                $circular[] = [
+                    'name' => $dependency,
+                    'chain' => $chain,
+                ];
+
+                continue;
+            }
+
             $depVersion = $this->getVersion($dependency);
 
             if ($depVersion) {
@@ -159,8 +178,41 @@ class ModuleVersion
         return [
             'satisfied' => $satisfied,
             'missing' => $missing,
-            'all_satisfied' => empty($missing),
+            'circular' => $circular,
+            'all_satisfied' => empty($missing) && empty($circular),
         ];
+    }
+
+    /**
+     * Recursively walk the dependency graph to check whether $target appears
+     * among the transitive dependencies of $current, indicating a cycle.
+     *
+     * @param  array<string>  $chain  Traversal path so far (used for reporting)
+     * @return string|null Human-readable cycle chain (e.g. "A → B → A"), or null if no cycle
+     */
+    protected function findCircularChain(string $current, string $target, array $chain): ?string
+    {
+        foreach ($this->getDependencies($current) as $dep) {
+            $newChain = [...$chain, $dep];
+
+            if ($dep === $target) {
+                return implode(' → ', $newChain);
+            }
+
+            // $dep is already in the traversal path but is not the target —
+            // it forms a different cycle; skip to avoid infinite recursion.
+            if (in_array($dep, $chain)) {
+                continue;
+            }
+
+            $result = $this->findCircularChain($dep, $target, $newChain);
+
+            if ($result !== null) {
+                return $result;
+            }
+        }
+
+        return null;
     }
 
     /**
