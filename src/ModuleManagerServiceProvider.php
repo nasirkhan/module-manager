@@ -170,9 +170,15 @@ class ModuleManagerServiceProvider extends ServiceProvider
             File::put($statusFile, json_encode($defaultModules, JSON_PRETTY_PRINT));
         }
 
-        $modules = Cache::remember('module_statuses', 3600, function () use ($statusFile) {
-            return json_decode(File::get($statusFile), true);
-        });
+        try {
+            $modules = Cache::remember('module_statuses', 3600, function () use ($statusFile) {
+                return json_decode(File::get($statusFile), true);
+            });
+        } catch (\Exception $e) {
+            // Cache backend is not ready yet (e.g. during package:discover before migrations run).
+            // Fall back to reading the file directly so bootstrapping never fails.
+            $modules = json_decode(File::get($statusFile), true);
+        }
 
         if (! is_array($modules)) {
             return;
