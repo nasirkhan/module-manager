@@ -4,6 +4,8 @@ namespace Nasirkhan\ModuleManager\Modules\Category\Http\Controllers\Backend;
 
 use App\Authorizable;
 use App\Http\Controllers\Backend\BackendBaseController;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -32,9 +34,9 @@ class CategoriesController extends BackendBaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @return Response
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -76,9 +78,9 @@ class CategoriesController extends BackendBaseController
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return Response
+     * @return View
      */
-    public function show($id)
+    public function show($id): View
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -105,9 +107,9 @@ class CategoriesController extends BackendBaseController
      * Update the specified resource in storage.
      *
      * @param  int  $id
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): RedirectResponse
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;

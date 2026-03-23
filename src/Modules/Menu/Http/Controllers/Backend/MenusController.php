@@ -4,6 +4,9 @@ namespace Nasirkhan\ModuleManager\Modules\Menu\Http\Controllers\Backend;
 
 use App\Authorizable;
 use App\Http\Controllers\Backend\BackendBaseController;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class MenusController extends BackendBaseController
@@ -34,7 +37,7 @@ class MenusController extends BackendBaseController
      * @param  int  $id
      * @return \Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function show($id): View
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -66,7 +69,7 @@ class MenusController extends BackendBaseController
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -111,7 +114,7 @@ class MenusController extends BackendBaseController
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(\Illuminate\Http\Request $request, $id)
+    public function update(Request $request, $id): RedirectResponse
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
