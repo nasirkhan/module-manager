@@ -3,6 +3,7 @@
 namespace Nasirkhan\ModuleManager\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Nasirkhan\ModuleManager\Services\MigrationTracker;
 use Nasirkhan\ModuleManager\Services\ModuleVersion;
 
@@ -44,7 +45,7 @@ class ModuleDetectUpdatesCommand extends Command
      */
     protected function detectAllUpdates(MigrationTracker $tracker, ModuleVersion $versionService): int
     {
-        $modules = ['Post', 'Category', 'Tag', 'Menu'];
+        $modules = array_keys(json_decode(File::get(base_path('modules_statuses.json')), true) ?? []);
         $hasUpdates = false;
 
         $this->newLine();
@@ -135,7 +136,7 @@ class ModuleDetectUpdatesCommand extends Command
 
         if ($comparison['status'] === 'not_tracked') {
             $this->components->warn("Module '{$module}' is not yet tracked.");
-            $this->line('Run: <fg=green>php artisan module:track-migrations {$module}</>');
+            $this->line("Run: <fg=green>php artisan module:track-migrations {$module}</>");
 
             return self::FAILURE;
         }

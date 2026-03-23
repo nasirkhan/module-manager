@@ -288,7 +288,12 @@ class ModuleBuildCommand extends Command
 
         $content = (File::exists($destination)) ? File::get($destination) : '{}';
 
-        File::put(base_path('modules_statuses.json'), json_encode(array_merge(json_decode($content, true), [$moduleName => true]), JSON_PRETTY_PRINT));
+        $decoded = json_decode($content, true);
+        if (! is_array($decoded)) {
+            $decoded = [];
+        }
+
+        File::put(base_path('modules_statuses.json'), json_encode(array_merge($decoded, [$moduleName => true]), JSON_PRETTY_PRINT));
 
         Cache::forget('module_statuses');
 

@@ -32,7 +32,9 @@ class ModuleGenerateTestCommand extends Command
         $name = $this->argument('name');
         $isUnit = $this->option('unit');
 
-        $modulePath = base_path("vendor/nasirkhan/module-manager/src/Modules/{$module}");
+        $publishedPath = base_path("Modules/{$module}");
+        $vendorPath = base_path("vendor/nasirkhan/module-manager/src/Modules/{$module}");
+        $modulePath = File::exists($publishedPath) ? $publishedPath : $vendorPath;
 
         if (! File::exists($modulePath)) {
             $this->components->error("Module '{$module}' not found.");

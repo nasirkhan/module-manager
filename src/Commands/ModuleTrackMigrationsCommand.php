@@ -3,6 +3,7 @@
 namespace Nasirkhan\ModuleManager\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Nasirkhan\ModuleManager\Services\MigrationTracker;
 use Nasirkhan\ModuleManager\Services\ModuleVersion;
 
@@ -45,7 +46,7 @@ class ModuleTrackMigrationsCommand extends Command
      */
     protected function trackAllModules(MigrationTracker $tracker, ModuleVersion $versionService): int
     {
-        $modules = ['Post', 'Category', 'Tag', 'Menu'];
+        $modules = array_keys(json_decode(File::get(base_path('modules_statuses.json')), true) ?? []);
 
         $this->newLine();
         $this->components->info('Tracking migration state for all modules...');

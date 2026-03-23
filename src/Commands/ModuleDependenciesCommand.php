@@ -3,6 +3,7 @@
 namespace Nasirkhan\ModuleManager\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Nasirkhan\ModuleManager\Services\ModuleVersion;
 
 class ModuleDependenciesCommand extends Command
@@ -41,7 +42,7 @@ class ModuleDependenciesCommand extends Command
      */
     protected function showAllDependencies(ModuleVersion $versionService): int
     {
-        $modules = ['Post', 'Category', 'Tag', 'Menu'];
+        $modules = array_keys(json_decode(File::get(base_path('modules_statuses.json')), true) ?? []);
         $allSatisfied = true;
 
         $this->newLine();

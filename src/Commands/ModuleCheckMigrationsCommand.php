@@ -41,7 +41,7 @@ class ModuleCheckMigrationsCommand extends Command
      */
     protected function checkAllModuleMigrations(): int
     {
-        $modules = ['Post', 'Category', 'Tag', 'Menu'];
+        $modules = array_keys(json_decode(File::get(base_path('modules_statuses.json')), true) ?? []);
         $hasNewMigrations = false;
 
         $this->newLine();

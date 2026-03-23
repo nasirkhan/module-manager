@@ -15,6 +15,7 @@ class ModulePublishCommandTest extends TestCase
     {
         File::deleteDirectory(base_path('Modules/FakeModule'));
         File::deleteDirectory(base_path('vendor/nasirkhan/module-manager/src/Modules/FakeModule'));
+        File::put(base_path('modules_statuses.json'), '{}');
 
         parent::tearDown();
     }
