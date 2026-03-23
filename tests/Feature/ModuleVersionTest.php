@@ -3,6 +3,7 @@
 namespace Nasirkhan\ModuleManager\Tests\Feature;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Nasirkhan\ModuleManager\Services\ModuleVersion;
 use Nasirkhan\ModuleManager\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
@@ -50,6 +51,37 @@ class ModuleVersionTest extends TestCase
         $service = app(ModuleVersion::class);
 
         $this->assertSame([], $service->getModuleData('FakeModule'));
+    }
+
+    #[Test]
+    public function it_returns_empty_array_and_logs_warning_for_malformed_module_json(): void
+    {
+        File::ensureDirectoryExists($this->publishedPath);
+        File::put("{$this->publishedPath}/module.json", 'not valid json {{{');
+
+        Log::shouldReceive('warning')
+            ->once()
+            ->withArgs(fn (string $msg) => str_contains($msg, 'FakeModule') && str_contains($msg, 'malformed'));
+
+        $service = app(ModuleVersion::class);
+        $result = $service->getModuleData('FakeModule');
+
+        $this->assertSame([], $result);
+    }
+
+    #[Test]
+    public function it_logs_warning_when_version_field_is_missing_from_module_json(): void
+    {
+        $this->makeModuleJson($this->publishedPath, ['name' => 'FakeModule', 'description' => 'No version']);
+
+        Log::shouldReceive('warning')
+            ->once()
+            ->withArgs(fn (string $msg) => str_contains($msg, 'FakeModule') && str_contains($msg, 'version'));
+
+        $service = app(ModuleVersion::class);
+        $result = $service->getModuleData('FakeModule');
+
+        $this->assertSame('FakeModule', $result['name']);
     }
 
     #[Test]

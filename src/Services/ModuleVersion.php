@@ -3,6 +3,7 @@
 namespace Nasirkhan\ModuleManager\Services;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class ModuleVersion
 {
@@ -31,7 +32,17 @@ class ModuleVersion
         $content = File::get($jsonPath);
         $data = json_decode($content, true);
 
-        return $data ?: [];
+        if (! is_array($data)) {
+            Log::warning("module-manager: malformed module.json for [{$moduleName}] — ".json_last_error_msg());
+
+            return [];
+        }
+
+        if (! isset($data['version'])) {
+            Log::warning("module-manager: module.json for [{$moduleName}] is missing the required 'version' field.");
+        }
+
+        return $data;
     }
 
     /**
