@@ -6,6 +6,10 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 class EventServiceProvider extends ServiceProvider
 {
-    protected $listen = [
-    ];
+    protected $listen = [];
+
+    protected function configureEmailVerification(): void
+    {
+        // Email verification is handled by the application's AppServiceProvider.
+    }
 }

@@ -3,6 +3,7 @@
 namespace Nasirkhan\ModuleManager\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 
 class ModulePublishCommand extends Command
@@ -103,6 +104,8 @@ class ModulePublishCommand extends Command
         ];
 
         File::put($statusFile, json_encode($statuses, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+        Cache::forget('module_statuses');
     }
 
     /**

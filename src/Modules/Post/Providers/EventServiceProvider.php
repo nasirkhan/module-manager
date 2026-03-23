@@ -21,4 +21,9 @@ class EventServiceProvider extends ServiceProvider
             IncrementPostHits::class,
         ],
     ];
+
+    protected function configureEmailVerification(): void
+    {
+        // Email verification is handled by the application's AppServiceProvider.
+    }
 }

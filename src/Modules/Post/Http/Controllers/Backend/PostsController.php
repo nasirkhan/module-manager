@@ -4,8 +4,8 @@ namespace Nasirkhan\ModuleManager\Modules\Post\Http\Controllers\Backend;
 
 use App\Authorizable;
 use App\Http\Controllers\Backend\BackendBaseController;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -43,7 +43,7 @@ class PostsController extends BackendBaseController
      *
      * @throws Exception If there is an error during the creation of the resource.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -98,7 +98,7 @@ class PostsController extends BackendBaseController
      *
      * @throws ModelNotFoundException If the resource is not found.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): RedirectResponse
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;

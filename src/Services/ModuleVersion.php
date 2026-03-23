@@ -3,6 +3,7 @@
 namespace Nasirkhan\ModuleManager\Services;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class ModuleVersion
 {
@@ -31,21 +32,52 @@ class ModuleVersion
         $content = File::get($jsonPath);
         $data = json_decode($content, true);
 
-        return $data ?: [];
+        if (! is_array($data)) {
+            Log::warning("module-manager: malformed module.json for [{$moduleName}] — ".json_last_error_msg());
+
+            return [];
+        }
+
+        if (! isset($data['version'])) {
+            Log::warning("module-manager: module.json for [{$moduleName}] is missing the required 'version' field.");
+        }
+
+        return $data;
     }
 
     /**
      * Get all modules with their versions.
+     *
+     * Merges published modules (Modules/) with vendor modules (src/Modules/),
+     * giving published modules precedence when the same module name appears in both.
+     * Only directories that contain a module.json file are included.
      */
     public function getAllVersions(): array
     {
-        $modulesPath = __DIR__.'/../Modules';
-        $modules = File::exists($modulesPath)
-            ? array_map('basename', File::directories($modulesPath))
-            : [];
+        $paths = [
+            __DIR__.'/../Modules',
+            base_path('Modules'),
+        ];
+
+        $discovered = [];
+        foreach ($paths as $path) {
+            if (! File::exists($path)) {
+                continue;
+            }
+
+            foreach (File::directories($path) as $directory) {
+                $moduleName = basename($directory);
+                if (File::exists($directory.'/module.json')) {
+                    // Published path (second) overrides vendor path (first)
+                    $discovered[$moduleName] = true;
+                }
+            }
+        }
+
+        $allModules = array_keys($discovered);
         $versions = [];
 
-        foreach ($modules as $module) {
+        foreach ($allModules as $module) {
             $data = $this->getModuleData($module);
             $versions[$module] = [
                 'version' => $data['version'] ?? 'unknown',
@@ -99,14 +131,33 @@ class ModuleVersion
 
     /**
      * Check if all dependencies are satisfied.
+     *
+     * Returns a map with:
+     *   - satisfied  – dependencies that are installed
+     *   - missing    – dependencies that are not installed
+     *   - circular   – dependencies that form a cycle back to $moduleName
+     *   - all_satisfied – true only when missing and circular are both empty
      */
     public function dependenciesSatisfied(string $moduleName): array
     {
         $dependencies = $this->getDependencies($moduleName);
         $satisfied = [];
         $missing = [];
+        $circular = [];
 
         foreach ($dependencies as $dependency) {
+            $chain = $this->findCircularChain($dependency, $moduleName, [$moduleName, $dependency]);
+
+            if ($chain !== null) {
+                Log::warning("module-manager: circular dependency detected: {$chain}");
+                $circular[] = [
+                    'name' => $dependency,
+                    'chain' => $chain,
+                ];
+
+                continue;
+            }
+
             $depVersion = $this->getVersion($dependency);
 
             if ($depVersion) {
@@ -127,8 +178,41 @@ class ModuleVersion
         return [
             'satisfied' => $satisfied,
             'missing' => $missing,
-            'all_satisfied' => empty($missing),
+            'circular' => $circular,
+            'all_satisfied' => empty($missing) && empty($circular),
         ];
+    }
+
+    /**
+     * Recursively walk the dependency graph to check whether $target appears
+     * among the transitive dependencies of $current, indicating a cycle.
+     *
+     * @param  array<string>  $chain  Traversal path so far (used for reporting)
+     * @return string|null Human-readable cycle chain (e.g. "A → B → A"), or null if no cycle
+     */
+    protected function findCircularChain(string $current, string $target, array $chain): ?string
+    {
+        foreach ($this->getDependencies($current) as $dep) {
+            $newChain = [...$chain, $dep];
+
+            if ($dep === $target) {
+                return implode(' → ', $newChain);
+            }
+
+            // $dep is already in the traversal path but is not the target —
+            // it forms a different cycle; skip to avoid infinite recursion.
+            if (in_array($dep, $chain)) {
+                continue;
+            }
+
+            $result = $this->findCircularChain($dep, $target, $newChain);
+
+            if ($result !== null) {
+                return $result;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -147,9 +231,18 @@ class ModuleVersion
 
     /**
      * Get module path.
+     *
+     * Prefers the published module path (Modules/{module}) over the
+     * vendor package path so that customized modules are resolved first.
      */
     protected function getModulePath(string $moduleName): string
     {
+        $publishedPath = base_path('Modules/'.$moduleName);
+
+        if (File::exists($publishedPath)) {
+            return $publishedPath;
+        }
+
         return __DIR__.'/../Modules/'.$moduleName;
     }
 

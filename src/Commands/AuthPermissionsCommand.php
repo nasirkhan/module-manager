@@ -40,7 +40,7 @@ class AuthPermissionsCommand extends Command
         // check if its remove
         if ($this->option('remove')) {
             // remove permission
-            if (Permission::where('name', 'LIKE', '%'.$this->getNameArgument())->delete()) {
+            if (Permission::whereIn('name', $this->generatePermissions())->delete()) {
                 $this->warn('Permissions '.implode(', ', $permissions).' deleted.');
             } else {
                 $this->warn('No permissions for '.$this->getNameArgument().' found!');

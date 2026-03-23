@@ -4,6 +4,8 @@ namespace Nasirkhan\ModuleManager\Modules\Menu\Http\Controllers\Backend;
 
 use App\Authorizable;
 use App\Http\Controllers\Backend\BackendBaseController;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\Menu;
@@ -35,7 +37,7 @@ class MenuItemsController extends BackendBaseController
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(): View
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -62,7 +64,7 @@ class MenuItemsController extends BackendBaseController
      *
      * @throws Exception If there is an error during the creation of the resource.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -94,7 +96,7 @@ class MenuItemsController extends BackendBaseController
      * @param  int  $id
      * @return \Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function show($id): View
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -122,7 +124,7 @@ class MenuItemsController extends BackendBaseController
      * @return Response
      * @return \Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit($id): View
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -154,7 +156,7 @@ class MenuItemsController extends BackendBaseController
      *
      * @throws ModelNotFoundException If the resource is not found.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): RedirectResponse
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;
@@ -188,7 +190,7 @@ class MenuItemsController extends BackendBaseController
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         $module_title = $this->module_title;
         $module_name = $this->module_name;

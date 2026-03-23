@@ -137,8 +137,13 @@ class PostServiceProvider extends ServiceProvider
      */
     protected function registerCommands($namespace = '')
     {
+        $consolePath = __DIR__.'/../Console';
+        if (! is_dir($consolePath)) {
+            return;
+        }
+
         $finder = new Finder; // from Symfony\Component\Finder;
-        $finder->files()->name('*.php')->in(__DIR__.'/../Console');
+        $finder->files()->name('*.php')->in($consolePath);
 
         $classes = [];
         foreach ($finder as $file) {

@@ -97,11 +97,11 @@ class MigrationTracker
                 })
                 ->toArray();
 
-            return array_filter($allMigrations, function ($migration) use ($ranMigrations) {
+            return array_values(array_filter($allMigrations, function ($migration) use ($ranMigrations) {
                 $migrationName = pathinfo($migration, PATHINFO_FILENAME);
 
                 return ! in_array($migrationName, $ranMigrations) && ! in_array($migration, $ranMigrations);
-            });
+            }));
         } catch (\Exception $e) {
             // If migrations table doesn't exist, all migrations are pending
             return $allMigrations;
