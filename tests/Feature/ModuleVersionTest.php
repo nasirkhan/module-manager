@@ -113,6 +113,18 @@ class ModuleVersionTest extends TestCase
     // -------------------------------------------------------------------------
 
     #[Test]
+    public function it_excludes_directories_without_module_json_from_all_versions(): void
+    {
+        // Directory exists but has no module.json
+        File::ensureDirectoryExists($this->publishedPath);
+
+        $service = app(ModuleVersion::class);
+        $versions = $service->getAllVersions();
+
+        $this->assertArrayNotHasKey('FakeModule', $versions);
+    }
+
+    #[Test]
     public function it_includes_published_modules_in_all_versions(): void
     {
         $this->makeModuleJson($this->publishedPath, ['version' => '4.0.0']);

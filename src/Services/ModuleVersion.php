@@ -39,20 +39,31 @@ class ModuleVersion
      *
      * Merges published modules (Modules/) with vendor modules (src/Modules/),
      * giving published modules precedence when the same module name appears in both.
+     * Only directories that contain a module.json file are included.
      */
     public function getAllVersions(): array
     {
-        $vendorPath = __DIR__.'/../Modules';
-        $vendorModules = File::exists($vendorPath)
-            ? array_map('basename', File::directories($vendorPath))
-            : [];
+        $paths = [
+            __DIR__.'/../Modules',
+            base_path('Modules'),
+        ];
 
-        $publishedPath = base_path('Modules');
-        $publishedModules = File::exists($publishedPath)
-            ? array_map('basename', File::directories($publishedPath))
-            : [];
+        $discovered = [];
+        foreach ($paths as $path) {
+            if (! File::exists($path)) {
+                continue;
+            }
 
-        $allModules = array_unique(array_merge($vendorModules, $publishedModules));
+            foreach (File::directories($path) as $directory) {
+                $moduleName = basename($directory);
+                if (File::exists($directory.'/module.json')) {
+                    // Published path (second) overrides vendor path (first)
+                    $discovered[$moduleName] = true;
+                }
+            }
+        }
+
+        $allModules = array_keys($discovered);
         $versions = [];
 
         foreach ($allModules as $module) {
