@@ -2,6 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/nasirkhan/module-manager.svg?style=flat-square)](https://packagist.org/packages/nasirkhan/module-manager)
 [![Total Downloads](https://img.shields.io/packagist/dt/nasirkhan/module-manager.svg?style=flat-square)](https://packagist.org/packages/nasirkhan/module-manager)
+[![StyleCI](https://github.styleci.io/repos/565720229/shield?branch=main&style=flat-square)](https://github.styleci.io/repos/565720229)
 
 A powerful module management package for [Laravel Starter](https://github.com/nasirkhan/laravel-starter), providing version tracking, migration management, dependency resolution, and comprehensive module lifecycle management.
 
