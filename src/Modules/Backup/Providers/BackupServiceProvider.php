@@ -21,7 +21,7 @@ class BackupServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->registerConfig();
         $this->registerViews();
@@ -33,7 +33,7 @@ class BackupServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }

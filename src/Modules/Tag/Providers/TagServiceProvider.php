@@ -23,7 +23,7 @@ class TagServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->registerTranslations();
         $this->registerConfig();
@@ -52,7 +52,7 @@ class TagServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         // Event Service Provider
         $this->app->register(EventServiceProvider::class);
