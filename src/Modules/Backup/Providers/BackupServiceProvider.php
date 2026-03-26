@@ -25,7 +25,7 @@ class BackupServiceProvider extends ServiceProvider
     {
         $this->registerConfig();
         $this->registerViews();
-        $this->app->register(RouteServiceProvider::class);
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
     }
 
     /**

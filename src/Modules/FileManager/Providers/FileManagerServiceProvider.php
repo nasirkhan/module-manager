@@ -23,7 +23,7 @@ class FileManagerServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->register(RouteServiceProvider::class);
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
     }
 
     /**

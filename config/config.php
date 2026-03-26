@@ -28,7 +28,6 @@ return [
             'command' => ['Console/Commands/StubCommand.stub.php', 'Console/Commands/StubCommand.php', 'rename'],
             'lang' => ['lang/en/text.stub.php', 'lang/en/text.php'],
             'models' => ['Models/stubModel.stub.php', 'Models/stubModel.php'],
-            'providersRoute' => ['Providers/RouteServiceProvider.stub.php', 'Providers/RouteServiceProvider.php'],
             'providersEvent' => ['Providers/EventServiceProvider.stub.php', 'Providers/EventServiceProvider.php'],
             'providers' => ['Providers/stubServiceProvider.stub.php', 'Providers/stubServiceProvider.php'],
             'route_web' => ['routes/web.stub.php', 'routes/web.php'],

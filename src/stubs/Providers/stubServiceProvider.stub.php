@@ -28,6 +28,7 @@ class {{moduleName}}ServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+        $this->loadRoutesFrom(base_path('{{namespace}}/{{moduleName}}/routes/web.php'));
         $this->loadMigrationsFrom(base_path('{{namespace}}/{{moduleName}}/database/migrations'));
 
         // register commands
@@ -41,8 +42,6 @@ class {{moduleName}}ServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register(RouteServiceProvider::class);
-
         // Event Service Provider
         $this->app->register(EventServiceProvider::class);
     }

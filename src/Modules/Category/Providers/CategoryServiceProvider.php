@@ -28,6 +28,7 @@ class CategoryServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
         // Load migrations from module
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
@@ -53,8 +54,6 @@ class CategoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register(RouteServiceProvider::class);
-
         // Event Service Provider
         $this->app->register(EventServiceProvider::class);
     }
