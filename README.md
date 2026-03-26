@@ -5,6 +5,11 @@
 
 A powerful module management package for [Laravel Starter](https://github.com/nasirkhan/laravel-starter), providing version tracking, migration management, dependency resolution, and comprehensive module lifecycle management.
 
+## Requirements
+
+- PHP ^8.3
+- Laravel ^12.0 || ^13.0
+
 ## 📦 Installation
 
 ```bash
