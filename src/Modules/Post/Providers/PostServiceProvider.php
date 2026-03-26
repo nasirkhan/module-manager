@@ -25,11 +25,12 @@ class PostServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
         // Load migrations from package
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
@@ -56,10 +57,8 @@ class PostServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        $this->app->register(RouteServiceProvider::class);
-
         // Event Service Provider
         $this->app->register(EventServiceProvider::class);
     }
