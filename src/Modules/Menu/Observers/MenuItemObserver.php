@@ -2,6 +2,7 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Menu\Observers;
 
+use Illuminate\Support\Facades\Log;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\Menu;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\MenuItem;
 
@@ -60,12 +61,12 @@ class MenuItemObserver
             Menu::clearMenuCache($menu->location);
 
             // Log the cache clear for debugging purposes
-            \Illuminate\Support\Facades\Log::debug("Menu cache cleared for location: {$menu->location} (MenuItem: {$menuItem->name})");
+            Log::debug("Menu cache cleared for location: {$menu->location} (MenuItem: {$menuItem->name})");
         } else {
             // If menu is not found, clear all menu caches to be safe
             Menu::clearAllMenuCaches();
 
-            \Illuminate\Support\Facades\Log::warning("Menu not found for MenuItem {$menuItem->id}, cleared all menu caches");
+            Log::warning("Menu not found for MenuItem {$menuItem->id}, cleared all menu caches");
         }
     }
 }

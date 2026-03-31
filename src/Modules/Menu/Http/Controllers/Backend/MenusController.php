@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Nasirkhan\ModuleManager\Modules\Menu\Models\Menu;
 
 class MenusController extends BackendBaseController
 {
@@ -35,7 +36,6 @@ class MenusController extends BackendBaseController
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\View\View
      */
     public function show($id): View
     {
@@ -67,7 +67,6 @@ class MenusController extends BackendBaseController
      * Prevents deletion if the menu has menu items.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id): RedirectResponse
     {
@@ -98,7 +97,7 @@ class MenusController extends BackendBaseController
         $$module_name_singular->delete();
 
         // Clear menu cache for this location
-        \Nasirkhan\ModuleManager\Modules\Menu\Models\Menu::clearMenuCache($location);
+        Menu::clearMenuCache($location);
 
         flash(Str::singular($module_title).' Deleted Successfully!')->success()->important();
 
@@ -110,9 +109,7 @@ class MenusController extends BackendBaseController
     /**
      * Updates a resource.
      *
-     * @param  Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id): RedirectResponse
     {
@@ -128,7 +125,7 @@ class MenusController extends BackendBaseController
         $$module_name_singular->update($request->all());
 
         // Clear menu cache for this location
-        \Nasirkhan\ModuleManager\Modules\Menu\Models\Menu::clearMenuCache($$module_name_singular->location);
+        Menu::clearMenuCache($$module_name_singular->location);
 
         flash(Str::singular($module_title)."' Updated Successfully")->success()->important();
 

@@ -4,8 +4,10 @@ namespace Nasirkhan\ModuleManager\Modules\Tag\Models;
 
 use App\Models\BaseModel;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Nasirkhan\ModuleManager\Modules\Tag\database\factories\TagFactory;
 use Nasirkhan\ModuleManager\Modules\Tag\Enums\TagStatus;
 
 class Tag extends BaseModel
@@ -44,10 +46,10 @@ class Tag extends BaseModel
     /**
      * Create a new factory instance for the model.
      *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * @return Factory
      */
     protected static function newFactory()
     {
-        return \Nasirkhan\ModuleManager\Modules\Tag\database\factories\TagFactory::new();
+        return TagFactory::new();
     }
 }

@@ -2,13 +2,15 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Post\database\factories;
 
+use App\Models\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Nasirkhan\ModuleManager\Modules\Post\Enums\PostStatus;
 use Nasirkhan\ModuleManager\Modules\Post\Enums\PostType;
+use Nasirkhan\ModuleManager\Modules\Post\Models\Post;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends Factory<Model>
  */
 class PostFactory extends Factory
 {
@@ -17,7 +19,7 @@ class PostFactory extends Factory
      *
      * @var string
      */
-    protected $model = \Nasirkhan\ModuleManager\Modules\Post\Models\Post::class;
+    protected $model = Post::class;
 
     /**
      * Define the model's default state.

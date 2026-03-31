@@ -3,9 +3,10 @@
 namespace Nasirkhan\ModuleManager;
 
 use Illuminate\Support\Facades\Facade;
+use Nasirkhan\ModuleManager\Skeleton\SkeletonClass;
 
 /**
- * @see \Nasirkhan\ModuleManager\Skeleton\SkeletonClass
+ * @see SkeletonClass
  */
 class ModuleManagerFacade extends Facade
 {

@@ -34,8 +34,6 @@ class MenuItemsController extends BackendBaseController
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\View\View
      */
     public function create(): View
     {
@@ -79,7 +77,7 @@ class MenuItemsController extends BackendBaseController
 
         // Clear menu cache when a new menu item is created
         if ($$module_name_singular->menu) {
-            \Nasirkhan\ModuleManager\Modules\Menu\Models\Menu::clearMenuCache($$module_name_singular->menu->location);
+            Menu::clearMenuCache($$module_name_singular->menu->location);
         }
 
         flash("New '".Str::singular($module_title)."' Added")->success()->important();
@@ -94,7 +92,6 @@ class MenuItemsController extends BackendBaseController
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\View\View
      */
     public function show($id): View
     {
@@ -122,7 +119,6 @@ class MenuItemsController extends BackendBaseController
      *
      * @param  int  $id
      * @return Response
-     * @return \Illuminate\Contracts\View\View
      */
     public function edit($id): View
     {
@@ -173,7 +169,7 @@ class MenuItemsController extends BackendBaseController
 
         // Clear menu cache when a menu item is updated
         if ($$module_name_singular->menu) {
-            \Nasirkhan\ModuleManager\Modules\Menu\Models\Menu::clearMenuCache($$module_name_singular->menu->location);
+            Menu::clearMenuCache($$module_name_singular->menu->location);
         }
 
         flash(Str::singular($module_title)."' Updated Successfully")->success()->important();
@@ -188,7 +184,6 @@ class MenuItemsController extends BackendBaseController
      * Destroys a record from the database.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id): RedirectResponse
     {

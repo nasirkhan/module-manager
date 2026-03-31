@@ -28,7 +28,7 @@ class ModuleDisableCommand extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): int
     {
         $moduleName = Str::ucfirst(Str::singular(Str::studly($this->argument('moduleName'))));
 
@@ -37,7 +37,7 @@ class ModuleDisableCommand extends Command
         if (! File::exists($destination)) {
             $this->components->error('Module status file not found.');
 
-            return;
+            return self::FAILURE;
         }
 
         $content = json_decode(File::get($destination), true);
@@ -45,7 +45,7 @@ class ModuleDisableCommand extends Command
         if (! isset($content[$moduleName])) {
             $this->components->error("Module {$moduleName} not found in status file.");
 
-            return;
+            return self::FAILURE;
         }
 
         $isAlreadyDisabled = $content[$moduleName] === false
@@ -54,7 +54,7 @@ class ModuleDisableCommand extends Command
         if ($isAlreadyDisabled) {
             $this->components->info("Module {$moduleName} is already disabled.");
 
-            return;
+            return self::SUCCESS;
         }
 
         if (is_array($content[$moduleName])) {
@@ -67,5 +67,7 @@ class ModuleDisableCommand extends Command
         Cache::forget('module_statuses');
 
         $this->components->info("Module {$moduleName} disabled successfully.");
+
+        return self::SUCCESS;
     }
 }

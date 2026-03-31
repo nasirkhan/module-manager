@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Modules\Comment\Models\Comment;
 use Nasirkhan\ModuleManager\Modules\Category\Models\Category;
 use Nasirkhan\ModuleManager\Modules\Post\Models\Post;
 use Nasirkhan\ModuleManager\Modules\Tag\Models\Tag;
@@ -28,9 +27,20 @@ class InsertDemoDataCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
-        Auth::loginUsingId(1);
+        /** @var class-string $userModel */
+        $userModel = config('auth.providers.users.model', 'App\Models\User');
+
+        $adminUser = $userModel::find(1);
+
+        if (! $adminUser) {
+            $this->error('No user with ID 1 found. Run migrations and seeders first.');
+
+            return self::FAILURE;
+        }
+
+        Auth::login($adminUser);
 
         $fresh = $this->option('fresh');
 
@@ -39,6 +49,8 @@ class InsertDemoDataCommand extends Command
         }
 
         $this->insert_demo_data();
+
+        return self::SUCCESS;
     }
 
     public function insert_demo_data()

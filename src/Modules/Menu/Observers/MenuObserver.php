@@ -2,6 +2,7 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Menu\Observers;
 
+use Illuminate\Support\Facades\Log;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\Menu;
 
 class MenuObserver
@@ -55,6 +56,6 @@ class MenuObserver
         Menu::clearMenuCache($menu->location);
 
         // Log the cache clear for debugging purposes
-        \Illuminate\Support\Facades\Log::debug("Menu cache cleared for location: {$menu->location}");
+        Log::debug("Menu cache cleared for location: {$menu->location}");
     }
 }

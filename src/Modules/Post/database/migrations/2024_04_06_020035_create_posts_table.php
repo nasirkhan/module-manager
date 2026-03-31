@@ -100,7 +100,7 @@ return new class extends Migration
         if (in_array($driver, ['mysql', 'mariadb'])) {
             try {
                 DB::statement('ALTER TABLE posts ADD FULLTEXT search_index (name, intro, content)');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Silently skip if fulltext is not supported
             }
         }
@@ -118,7 +118,7 @@ return new class extends Migration
         if (in_array($driver, ['mysql', 'mariadb'])) {
             try {
                 DB::statement('ALTER TABLE posts DROP INDEX IF EXISTS search_index');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Silently skip if index doesn't exist
             }
         }

@@ -2,11 +2,13 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Menu\database\factories;
 
+use App\Models\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Nasirkhan\ModuleManager\Modules\Menu\Models\Menu;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends Factory<Model>
  */
 class MenuFactory extends Factory
 {
@@ -15,7 +17,7 @@ class MenuFactory extends Factory
      *
      * @var string
      */
-    protected $model = \Nasirkhan\ModuleManager\Modules\Menu\Models\Menu::class;
+    protected $model = Menu::class;
 
     /**
      * Define the model's default state.

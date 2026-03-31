@@ -28,7 +28,7 @@ class ModuleEnableCommand extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): int
     {
         $moduleName = Str::ucfirst(Str::singular(Str::studly($this->argument('moduleName'))));
 
@@ -37,7 +37,7 @@ class ModuleEnableCommand extends Command
         if (! File::exists($destination)) {
             $this->components->error('Module status file not found.');
 
-            return;
+            return self::FAILURE;
         }
 
         $content = json_decode(File::get($destination), true);
@@ -45,7 +45,7 @@ class ModuleEnableCommand extends Command
         if (! isset($content[$moduleName])) {
             $this->components->error("Module {$moduleName} not found in status file.");
 
-            return;
+            return self::FAILURE;
         }
 
         $isAlreadyEnabled = $content[$moduleName] === true
@@ -54,7 +54,7 @@ class ModuleEnableCommand extends Command
         if ($isAlreadyEnabled) {
             $this->components->info("Module {$moduleName} is already enabled.");
 
-            return;
+            return self::SUCCESS;
         }
 
         if (is_array($content[$moduleName])) {
@@ -67,5 +67,7 @@ class ModuleEnableCommand extends Command
         Cache::forget('module_statuses');
 
         $this->components->info("Module {$moduleName} enabled successfully.");
+
+        return self::SUCCESS;
     }
 }

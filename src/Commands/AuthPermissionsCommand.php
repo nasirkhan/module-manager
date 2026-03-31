@@ -2,7 +2,6 @@
 
 namespace Nasirkhan\ModuleManager\Commands;
 
-use App\Models\Permission;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
@@ -33,14 +32,17 @@ class AuthPermissionsCommand extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): int
     {
+        /** @var class-string $permissionClass */
+        $permissionClass = config('permission.models.permission', 'App\Models\Permission');
+
         $permissions = $this->generatePermissions();
 
         // check if its remove
         if ($this->option('remove')) {
             // remove permission
-            if (Permission::whereIn('name', $this->generatePermissions())->delete()) {
+            if ($permissionClass::whereIn('name', $this->generatePermissions())->delete()) {
                 $this->warn('Permissions '.implode(', ', $permissions).' deleted.');
             } else {
                 $this->warn('No permissions for '.$this->getNameArgument().' found!');
@@ -48,11 +50,13 @@ class AuthPermissionsCommand extends Command
         } else {
             // create permissions
             foreach ($permissions as $permission) {
-                Permission::firstOrCreate(['name' => $permission]);
+                $permissionClass::firstOrCreate(['name' => $permission]);
             }
 
             $this->info('Permissions '.implode(', ', $permissions).' created.');
         }
+
+        return self::SUCCESS;
     }
 
     private function generatePermissions()

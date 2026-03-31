@@ -42,7 +42,15 @@ class ModuleDependenciesCommand extends Command
      */
     protected function showAllDependencies(ModuleVersion $versionService): int
     {
-        $modules = array_keys(json_decode(File::get(base_path('modules_statuses.json')), true) ?? []);
+        $statusFile = base_path('modules_statuses.json');
+
+        if (! File::exists($statusFile)) {
+            $this->components->error('Module status file not found. Run php artisan module:build to create it.');
+
+            return self::FAILURE;
+        }
+
+        $modules = array_keys(json_decode(File::get($statusFile), true) ?? []);
         $allSatisfied = true;
 
         $this->newLine();
@@ -58,6 +66,7 @@ class ModuleDependenciesCommand extends Command
                     "<fg=green>{$module}</> v{$moduleData['version']}",
                     '<fg=gray>No dependencies</>'
                 );
+
                 continue;
             }
 
