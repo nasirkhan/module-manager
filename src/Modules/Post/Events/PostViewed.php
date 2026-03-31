@@ -15,7 +15,9 @@ class PostViewed
      *
      * @return void
      */
-    public function __construct(public Post $post) {}
+    public function __construct(public Post $post)
+    {
+    }
 
     /**
      * Get the channels the event should be broadcast on.
