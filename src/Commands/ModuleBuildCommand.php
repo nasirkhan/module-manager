@@ -54,16 +54,16 @@ class ModuleBuildCommand extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): int
     {
         $force = $this->option('force');
-
-        $config = config('module-manager');
 
         // Module name | Single word | Ucfirst
         $moduleName = Str::ucfirst(Str::singular(Str::studly($this->argument('moduleName'))));
 
         $this->generate($moduleName, $force);
+
+        return self::SUCCESS;
     }
 
     public function generate(string $moduleName, bool $force): void

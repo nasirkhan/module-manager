@@ -33,8 +33,6 @@ class CategoriesController extends BackendBaseController
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse
     {
@@ -78,7 +76,6 @@ class CategoriesController extends BackendBaseController
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return View
      */
     public function show($id): View
     {
@@ -107,7 +104,6 @@ class CategoriesController extends BackendBaseController
      * Update the specified resource in storage.
      *
      * @param  int  $id
-     * @return RedirectResponse
      */
     public function update(Request $request, $id): RedirectResponse
     {

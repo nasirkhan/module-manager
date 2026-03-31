@@ -5,6 +5,7 @@ namespace Nasirkhan\ModuleManager\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Symfony\Component\Finder\Finder;
 
 class ModulePublishCommand extends Command
 {
@@ -156,7 +157,7 @@ class ModulePublishCommand extends Command
      */
     protected function replaceNamespaces(string $path, string $moduleName): void
     {
-        $finder = new \Symfony\Component\Finder\Finder;
+        $finder = new Finder;
         $finder->files()->name('*.php')->in($path);
 
         $oldNamespace = 'Nasirkhan\\ModuleManager\\Modules\\'.$moduleName;

@@ -41,7 +41,15 @@ class ModuleCheckMigrationsCommand extends Command
      */
     protected function checkAllModuleMigrations(): int
     {
-        $modules = array_keys(json_decode(File::get(base_path('modules_statuses.json')), true) ?? []);
+        $statusFile = base_path('modules_statuses.json');
+
+        if (! File::exists($statusFile)) {
+            $this->components->error('Module status file not found. Run php artisan module:build to create it.');
+
+            return self::FAILURE;
+        }
+
+        $modules = array_keys(json_decode(File::get($statusFile), true) ?? []);
         $hasNewMigrations = false;
 
         $this->newLine();

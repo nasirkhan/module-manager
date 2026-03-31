@@ -2,12 +2,14 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Category\database\factories;
 
+use App\Models\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Nasirkhan\ModuleManager\Modules\Category\Enums\CategoryStatus;
+use Nasirkhan\ModuleManager\Modules\Category\Models\Category;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends Factory<Model>
  */
 class CategoryFactory extends Factory
 {
@@ -16,7 +18,7 @@ class CategoryFactory extends Factory
      *
      * @var string
      */
-    protected $model = \Nasirkhan\ModuleManager\Modules\Category\Models\Category::class;
+    protected $model = Category::class;
 
     /**
      * Define the model's default state.

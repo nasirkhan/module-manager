@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
+use Nasirkhan\ModuleManager\Modules\Menu\Console\Commands\SeedMenuCommand;
 use Nasirkhan\ModuleManager\Modules\Menu\Livewire\MenuItemComponent;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\Menu;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\MenuItem;
@@ -28,8 +29,6 @@ class MenuServiceProvider extends ServiceProvider
 
     /**
      * Boot the application events.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -65,8 +64,6 @@ class MenuServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -213,7 +210,7 @@ class MenuServiceProvider extends ServiceProvider
         // Register a console command for seeding
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \Nasirkhan\ModuleManager\Modules\Menu\Console\Commands\SeedMenuCommand::class,
+                SeedMenuCommand::class,
             ]);
         }
     }

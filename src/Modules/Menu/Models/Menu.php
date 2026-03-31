@@ -3,10 +3,15 @@
 namespace Nasirkhan\ModuleManager\Modules\Menu\Models;
 
 use App\Models\BaseModel;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Nasirkhan\ModuleManager\Modules\Menu\database\factories\MenuFactory;
 
 class Menu extends BaseModel
 {
@@ -85,9 +90,9 @@ class Menu extends BaseModel
      * Caches menu structure for 1 hour (3600 seconds) to improve performance.
      *
      * @param  string  $location  The menu location identifier
-     * @param  \App\Models\User|null  $user  The user to check permissions for (null for guest)
+     * @param  User|null  $user  The user to check permissions for (null for guest)
      * @param  string|null  $locale  The locale to filter menus by (defaults to current locale)
-     * @return \Illuminate\Support\Collection Collection of processed menus with hierarchical items
+     * @return Collection Collection of processed menus with hierarchical items
      */
     /**
      * Get the current cache version for a location.
@@ -104,11 +109,11 @@ class Menu extends BaseModel
      * Caches menu structure for 1 hour (3600 seconds) to improve performance.
      *
      * @param  string  $location  The menu location identifier
-     * @param  \App\Models\User|null  $user  The user to check permissions for (null for guest)
+     * @param  User|null  $user  The user to check permissions for (null for guest)
      * @param  string|null  $locale  The locale to filter menus by (defaults to current locale)
-     * @return \Illuminate\Support\Collection Collection of processed menus with hierarchical items
+     * @return Collection Collection of processed menus with hierarchical items
      */
-    public static function getCachedMenuData(string $location, $user = null, ?string $locale = null): \Illuminate\Support\Collection
+    public static function getCachedMenuData(string $location, $user = null, ?string $locale = null): Collection
     {
         $locale = $locale ?? app()->getLocale();
         $defaultLocale = config('app.fallback_locale', 'en');
@@ -276,7 +281,7 @@ class Menu extends BaseModel
      */
     public function scopeAccessibleByUser($query, $user = null)
     {
-        $user = $user ?? \Illuminate\Support\Facades\Auth::user();
+        $user = $user ?? Auth::user();
 
         if (! $user) {
             return $query->where('is_public', true);
@@ -316,7 +321,7 @@ class Menu extends BaseModel
      */
     public function userCanSee($user = null): bool
     {
-        $user = $user ?? \Illuminate\Support\Facades\Auth::user();
+        $user = $user ?? Auth::user();
 
         // Check if public
         if ($this->is_public) {
@@ -346,10 +351,10 @@ class Menu extends BaseModel
     /**
      * Create a new factory instance for the model.
      *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * @return Factory
      */
     protected static function newFactory()
     {
-        return \Nasirkhan\ModuleManager\Modules\Menu\database\factories\MenuFactory::new();
+        return MenuFactory::new();
     }
 }

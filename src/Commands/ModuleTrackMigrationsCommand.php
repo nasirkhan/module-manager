@@ -46,7 +46,15 @@ class ModuleTrackMigrationsCommand extends Command
      */
     protected function trackAllModules(MigrationTracker $tracker, ModuleVersion $versionService): int
     {
-        $modules = array_keys(json_decode(File::get(base_path('modules_statuses.json')), true) ?? []);
+        $statusFile = base_path('modules_statuses.json');
+
+        if (! File::exists($statusFile)) {
+            $this->components->error('Module status file not found. Run php artisan module:build to create it.');
+
+            return self::FAILURE;
+        }
+
+        $modules = array_keys(json_decode(File::get($statusFile), true) ?? []);
 
         $this->newLine();
         $this->components->info('Tracking migration state for all modules...');

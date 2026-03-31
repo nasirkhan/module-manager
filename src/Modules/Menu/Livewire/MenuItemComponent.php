@@ -2,6 +2,8 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Menu\Livewire;
 
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\Menu;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\MenuItem;
@@ -288,7 +290,7 @@ class MenuItemComponent extends Component
 
             // Auto-generate slug if empty
             if (empty($this->slug) && ! empty($this->name)) {
-                $this->slug = \Illuminate\Support\Str::slug($this->name);
+                $this->slug = Str::slug($this->name);
             }
 
             $data = $this->prepareDataForSave();
@@ -316,7 +318,7 @@ class MenuItemComponent extends Component
             session()->flash('flash_success', $message);
 
             return redirect()->route($route, $params);
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } catch (ValidationException $e) {
             // Re-throw validation exceptions to show field errors
             throw $e;
         } catch (\Exception $e) {
@@ -392,7 +394,7 @@ class MenuItemComponent extends Component
     public function generateSlug()
     {
         if ($this->name) {
-            $this->slug = \Illuminate\Support\Str::slug($this->name);
+            $this->slug = Str::slug($this->name);
         }
     }
 

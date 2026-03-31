@@ -28,7 +28,7 @@ class ModuleRemoveCommand extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): int
     {
         $moduleName = Str::ucfirst(Str::singular(Str::studly($this->argument('moduleName'))));
         $config = config('module-manager');
@@ -38,14 +38,14 @@ class ModuleRemoveCommand extends Command
         if (! File::isDirectory($basePath)) {
             $this->components->error("Module {$moduleName} does not exist.");
 
-            return;
+            return self::FAILURE;
         }
 
         if (! $this->option('force')) {
             if (! $this->components->confirm("Are you sure you want to remove the module {$moduleName}? This will permanently delete all files and cannot be undone.")) {
                 $this->components->info('Operation cancelled.');
 
-                return;
+                return self::SUCCESS;
             }
         }
 
@@ -56,6 +56,8 @@ class ModuleRemoveCommand extends Command
         $this->removeModuleFromStatus($moduleName);
 
         $this->components->info("Module {$moduleName} removed successfully.");
+
+        return self::SUCCESS;
     }
 
     protected function removeModuleFromStatus($moduleName)

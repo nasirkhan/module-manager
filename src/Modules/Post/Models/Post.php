@@ -4,9 +4,11 @@ namespace Nasirkhan\ModuleManager\Modules\Post\Models;
 
 use App\Models\BaseModel;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Nasirkhan\ModuleManager\Modules\Post\database\factories\PostFactory;
 use Nasirkhan\ModuleManager\Modules\Post\Enums\PostStatus;
 use Nasirkhan\ModuleManager\Modules\Post\Models\Presenters\PostPresenter;
 use Spatie\Activitylog\LogOptions;
@@ -84,10 +86,10 @@ class Post extends BaseModel
     /**
      * Create a new factory instance for the model.
      *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * @return Factory
      */
     protected static function newFactory()
     {
-        return \Nasirkhan\ModuleManager\Modules\Post\database\factories\PostFactory::new();
+        return PostFactory::new();
     }
 }

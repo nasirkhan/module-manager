@@ -2,12 +2,14 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Tag\database\factories;
 
+use App\Models\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Nasirkhan\ModuleManager\Modules\Tag\Enums\TagStatus;
+use Nasirkhan\ModuleManager\Modules\Tag\Models\Tag;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends Factory<Model>
  */
 class TagFactory extends Factory
 {
@@ -16,7 +18,7 @@ class TagFactory extends Factory
      *
      * @var string
      */
-    protected $model = \Nasirkhan\ModuleManager\Modules\Tag\Models\Tag::class;
+    protected $model = Tag::class;
 
     /**
      * Define the model's default state.

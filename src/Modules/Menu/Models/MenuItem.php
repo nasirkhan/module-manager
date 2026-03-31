@@ -3,10 +3,13 @@
 namespace Nasirkhan\ModuleManager\Modules\Menu\Models;
 
 use App\Models\BaseModel;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
+use Nasirkhan\ModuleManager\Modules\Menu\database\factories\MenuItemFactory;
 
 class MenuItem extends BaseModel
 {
@@ -88,7 +91,7 @@ class MenuItem extends BaseModel
      */
     public function scopeAccessibleByUser($query, $user = null)
     {
-        $user = $user ?? \Illuminate\Support\Facades\Auth::user();
+        $user = $user ?? Auth::user();
 
         if (! $user) {
             // Guest users can only see items with no permissions
@@ -230,7 +233,7 @@ class MenuItem extends BaseModel
      */
     public function userCanSee($user = null): bool
     {
-        $user = $user ?? \Illuminate\Support\Facades\Auth::user();
+        $user = $user ?? Auth::user();
 
         // If not authenticated, only show items with no permissions
         if (! $user) {
@@ -263,10 +266,10 @@ class MenuItem extends BaseModel
     /**
      * Create a new factory instance for the model.
      *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * @return Factory
      */
     protected static function newFactory()
     {
-        return \Nasirkhan\ModuleManager\Modules\Menu\database\factories\MenuItemFactory::new();
+        return MenuItemFactory::new();
     }
 }
