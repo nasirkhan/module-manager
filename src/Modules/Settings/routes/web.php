@@ -18,7 +18,7 @@ use Nasirkhan\ModuleManager\Modules\Settings\Http\Controllers\SettingController;
  * Backend Routes
  * These routes need view-backend permission
  */
-Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 'can:view_backend']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['web', 'auth', 'can:view_backend']], function () {
     /*
      * Settings Routes
      */
