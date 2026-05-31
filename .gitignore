@@ -20,7 +20,6 @@ Thumbs.db
 # Testing & Coverage
 /.phpunit.cache
 /build/
-/phpunit.xml
 /coverage/
 *.cache
 
