@@ -1,0 +1,14 @@
+{
+    "name": "ActivityLog",
+    "alias": "activitylog",
+    "description": "Activity logging via spatie/laravel-activitylog",
+    "version": "1.0.0",
+    "keywords": ["activity", "log", "audit"],
+    "priority": 1,
+    "providers": [
+        "Nasirkhan\\ModuleManager\\Modules\\ActivityLog\\Providers\\ActivityLogServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

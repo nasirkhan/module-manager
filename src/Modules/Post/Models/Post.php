@@ -11,8 +11,8 @@ use Illuminate\Notifications\Notifiable;
 use Nasirkhan\ModuleManager\Modules\Post\database\factories\PostFactory;
 use Nasirkhan\ModuleManager\Modules\Post\Enums\PostStatus;
 use Nasirkhan\ModuleManager\Modules\Post\Models\Presenters\PostPresenter;
-use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class Post extends BaseModel
 {
@@ -29,7 +29,7 @@ class Post extends BaseModel
         return LogOptions::defaults()
             ->logUnguarded()
             ->logOnlyDirty()
-            ->dontSubmitEmptyLogs()
+            ->dontLogEmptyChanges()
             ->useLogName($this->table);
     }
 
