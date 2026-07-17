@@ -162,6 +162,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
         // Create default status file if it doesn't exist
         if (! File::exists($statusFile)) {
             $defaultModules = [
+                'ActivityLog' => true,
                 'Post' => true,
                 'Category' => true,
                 'Tag' => true,
@@ -174,7 +175,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
             $modules = Cache::remember('module_statuses', 3600, function () use ($statusFile) {
                 return json_decode(File::get($statusFile), true);
             });
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             // Cache backend is not ready yet (e.g. during package:discover before migrations run).
             // Fall back to reading the file directly so bootstrapping never fails.
             $modules = json_decode(File::get($statusFile), true);
