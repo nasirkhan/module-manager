@@ -13,112 +13,122 @@
         if ($shareImage && ! \Illuminate\Support\Str::startsWith($shareImage, ["http://", "https://"])) {
             $shareImage = asset($shareImage);
         }
+
+        $authorName = $$module_name_singular->created_by_alias
+            ?: $$module_name_singular->created_by_name;
     @endphp
 
-    <section class="body-font bg-gray-100 px-6 text-gray-600 sm:px-20 dark:bg-gray-800 dark:text-gray-400">
-        <div class="container mx-auto flex flex-col items-center py-8 sm:py-16 md:flex-row">
-            <div
-                class="flex flex-col items-center text-center sm:w-4/12 md:items-start md:pr-16 md:text-left lg:flex-grow lg:pr-24"
-            >
-                <h1 class="mb-4 text-3xl font-medium text-gray-800 sm:text-4xl dark:text-gray-200">
-                    {{ $$module_name_singular->name }}
-                </h1>
-                @if ($$module_name_singular->intro != "")
-                    <p class="mb-8 leading-relaxed">
-                        {{ $$module_name_singular->intro }}
-                    </p>
-                @endif
+    {{-- Hero: two-column on desktop --}}
+    <section class="bg-gray-100 px-6 text-gray-600 sm:px-10 dark:bg-gray-800 dark:text-gray-400">
+        <div class="mx-auto max-w-6xl py-10 sm:py-14">
 
-                @include("frontend.includes.messages")
-            </div>
-            <div class="mb-4 w-full sm:mb-0 sm:w-8/12">
-                <img
-                    class="rounded object-cover object-center shadow-md"
-                    src="{{ $$module_name_singular->image }}"
-                    alt="{{ $$module_name_singular->name }}"
-                />
+            <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-14">
+
+                {{-- Left: title, intro, meta --}}
+                <div class="flex flex-col lg:w-1/3">
+                    <h1 class="mb-4 text-3xl font-semibold leading-tight text-gray-800 sm:text-4xl dark:text-gray-100">
+                        {{ $$module_name_singular->name }}
+                    </h1>
+
+                    @if ($$module_name_singular->intro != "")
+                        <p class="mb-6 text-lg leading-relaxed text-gray-500 dark:text-gray-400">
+                            {{ $$module_name_singular->intro }}
+                        </p>
+                    @endif
+
+                    <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                        <span class="flex items-center gap-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            {{ $authorName }}
+                        </span>
+                        @if ($$module_name_singular->published_at)
+                            <span class="flex items-center gap-1.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                {{ $$module_name_singular->published_at->isoFormat("ll") }}
+                            </span>
+                        @endif
+                    </div>
+
+                    @include("frontend.includes.messages")
+                </div>
+
+                {{-- Right: featured image --}}
+                @if ($$module_name_singular->image)
+                    <div class="lg:w-2/3">
+                        <img
+                            class="max-h-[420px] w-full rounded-xl object-cover shadow-md"
+                            src="{{ $$module_name_singular->image }}"
+                            alt="{{ $$module_name_singular->name }}"
+                        />
+                    </div>
+                @endif
             </div>
         </div>
     </section>
 
-    <section class="px-6 py-6 sm:px-20 sm:py-10 dark:bg-gray-700 dark:text-gray-300">
-        <div class="container mx-auto flex flex-col md:flex-row">
-            <div class="flex flex-col sm:w-8/12 sm:pr-8 lg:flex-grow">
-                <div class="pb-5">
-                    <p>
+    {{-- Body --}}
+    <section class="px-6 py-10 sm:px-10 sm:py-14 dark:bg-gray-700 dark:text-gray-300">
+        <div class="mx-auto max-w-6xl">
+            <div class="flex flex-col gap-10 lg:flex-row">
+
+                {{-- Main content --}}
+                <div class="min-w-0 lg:flex-1">
+                    <div class="prose prose-gray max-w-none dark:prose-invert prose-headings:font-semibold prose-a:text-blue-600 prose-img:rounded-lg prose-img:shadow-sm">
                         {!! $$module_name_singular->content !!}
-                    </p>
-                </div>
-
-                <hr />
-
-                <div class="py-5">
-                    <div class="flex flex-col justify-between sm:flex-row">
-                        <div class="pb-2">
-                            {{ __("Written by") }}:
-                            {{ isset($$module_name_singular->created_by_alias) ? $$module_name_singular->created_by_alias : $$module_name_singular->created_by_name }}
-                        </div>
-                        <div class="pb-2">
-                            {{ __("Published at") }}: {{ $$module_name_singular->published_at->isoFormat("llll") }}
-                        </div>
                     </div>
-                </div>
 
-                <div class="flex flex-row justify-between py-5">
-                    <div>
-                        <span class="font-weight-bold">
-                            @lang("Category")
-                            :
-                        </span>
-                        <x-cube::badge
-                            :url="route('frontend.categories.show', [
-                                encode_id($$module_name_singular->category_id),
-                                $$module_name_singular->category->slug,
-                            ])"
-                            :text="$$module_name_singular->category->name"
+                    <hr class="my-8 dark:border-gray-600" />
+
+                    {{-- Category --}}
+                    <div class="mb-4 flex items-center gap-2">
+                        <span class="text-sm font-semibold text-gray-600 dark:text-gray-400">{{ __("Category") }}:</span>
+                        <a
+                            href="{{ route('frontend.categories.show', [encode_id($$module_name_singular->category_id), $$module_name_singular->category->slug]) }}"
+                            class="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700 hover:bg-blue-100 dark:bg-blue-900/40 dark:text-blue-300 dark:hover:bg-blue-900/60"
+                        >
+                            {{ $$module_name_singular->category->name }}
+                        </a>
+                    </div>
+
+                    {{-- Tags --}}
+                    @if (count($$module_name_singular->tags))
+                        <div class="mb-6 flex flex-wrap items-center gap-1">
+                            <span class="text-sm font-semibold text-gray-600 dark:text-gray-400">{{ __("Tags") }}:</span>
+                            @foreach ($$module_name_singular->tags as $tag)
+                                <x-cube::badge
+                                    :url="route('frontend.tags.show', [encode_id($tag->id), $tag->slug])"
+                                    :text="$tag->name"
+                                />
+                            @endforeach
+                        </div>
+                    @endif
+
+                    {{-- Share --}}
+                    <div class="mt-6">
+                        <x-sharekit::buttons
+                            theme="tailwind"
+                            label="{{ __('Share with others') }}"
+                            :url="$shareUrl"
+                            :title="$$module_name_singular->name"
+                            :description="$shareDescription"
+                            :image="$shareImage"
+                            :networks="['x', 'facebook', 'linkedin', 'whatsapp', 'telegram', 'email', 'copy', 'native']"
+                            size="sm"
+                            :show-heading="true"
                         />
                     </div>
                 </div>
 
-                @if (count($$module_name_singular->tags))
-                    <div class="py-5">
-                        <span class="font-weight-bold">
-                            @lang("Tags")
-                            :
-                        </span>
-
-                        @foreach ($$module_name_singular->tags as $tag)
-                            <x-cube::badge
-                                :url="route('frontend.tags.show', [encode_id($tag->id), $tag->slug])"
-                                :text="$tag->name"
-                            />
-                        @endforeach
+                {{-- Sidebar --}}
+                <aside class="w-full shrink-0 lg:w-72">
+                    <div class="sticky top-6">
+                        <livewire:post.frontend-recent-posts />
                     </div>
-                @endif
-
-                <div class="py-5">
-                    <x-sharekit::buttons
-                        theme="tailwind"
-                        label="{{ __('Share with others') }}"
-                        :url="$shareUrl"
-                        :title="$$module_name_singular->name"
-                        :description="$shareDescription"
-                        :image="$shareImage"
-                        :networks="['x', 'facebook', 'linkedin', 'whatsapp', 'telegram', 'email', 'copy', 'native']"
-                        size="sm"
-                        :show-heading="true"
-                    />
-                </div>
-
-                <div class="py-5">
-                    
-                </div>
-            </div>
-
-            <div class="flex flex-col sm:w-4/12">
-                <div class="py-5 sm:pt-0">
-                    <livewire:post.frontend-recent-posts />
-                </div>
+                </aside>
             </div>
         </div>
     </section>
