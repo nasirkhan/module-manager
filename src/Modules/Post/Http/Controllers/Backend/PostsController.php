@@ -60,7 +60,7 @@ class PostsController extends BackendBaseController
             'created_by_alias' => 'nullable|max:191',
             'intro' => 'required',
             'content' => 'required',
-            'image' => 'nullable|max:191',
+            'image' => 'nullable|image|max:2048',
             'category_id' => 'required|integer',
             'type' => Rule::enum(PostType::class),
             'is_featured' => 'required|integer',
@@ -74,11 +74,18 @@ class PostsController extends BackendBaseController
             'meta_og_image' => 'nullable|max:191',
         ]);
 
-        $data = Arr::except($validated_data, 'tags_list');
+        $imageFile = $validated_data['image'] ?? null;
+        $data = Arr::except($validated_data, ['tags_list', 'image']);
         $data['created_by_name'] = Auth::user()->name;
 
         $$module_name_singular = $module_model::create($data);
         $$module_name_singular->tags()->attach($request->input('tags_list'));
+
+        if ($imageFile) {
+            $media = $$module_name_singular->addMedia($imageFile)->toMediaCollection($module_name);
+            $$module_name_singular->image = $media->getUrl();
+            $$module_name_singular->save();
+        }
 
         flash("New '".Str::singular($module_title)."' Added")->success()->important();
 
@@ -115,7 +122,7 @@ class PostsController extends BackendBaseController
             'created_by_alias' => 'nullable|max:191',
             'intro' => 'required',
             'content' => 'required',
-            'image' => 'nullable|max:191',
+            'image' => 'nullable|image|max:2048',
             'category_id' => 'required|integer',
             'type' => Rule::enum(PostType::class),
             'is_featured' => 'required|integer',
@@ -129,11 +136,19 @@ class PostsController extends BackendBaseController
             'meta_og_image' => 'nullable|max:191',
         ]);
 
-        $data = Arr::except($validated_data, 'tags_list');
+        $imageFile = $validated_data['image'] ?? null;
+        $data = Arr::except($validated_data, ['tags_list', 'image']);
 
         $$module_name_singular = $module_model::findOrFail($id);
 
         $$module_name_singular->update($data);
+
+        if ($imageFile) {
+            $$module_name_singular->clearMediaCollection($module_name);
+            $media = $$module_name_singular->addMedia($imageFile)->toMediaCollection($module_name);
+            $$module_name_singular->image = $media->getUrl();
+            $$module_name_singular->save();
+        }
 
         if ($request->input('tags_list') === null) {
             $tags_list = [];
