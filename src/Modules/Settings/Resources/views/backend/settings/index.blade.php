@@ -5,58 +5,54 @@
 @endsection
 
 @section("breadcrumbs")
-    <x-backend.breadcrumbs>
-        <x-backend.breadcrumb-item type="active" icon="{{ $module_icon }}">
+    <x-cube::backend-breadcrumbs>
+        <x-cube::backend-breadcrumb-item type="active" icon="{{ $module_icon }}">
             {{ __($module_title) }}
-        </x-backend.breadcrumb-item>
-    </x-backend.breadcrumbs>
+        </x-cube::backend-breadcrumb-item>
+    </x-cube::backend-breadcrumbs>
 @endsection
 
 @section("content")
-    <div class="card">
-        <div class="card-body">
-            <x-backend.section-header
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+        <div class="p-6">
+            <x-cube::backend-section-header
                 :module_name="$module_name"
                 :module_title="$module_title"
                 :module_icon="$module_icon"
                 :module_action="$module_action"
             />
 
-            <div class="row mt-4">
-                <div class="col">
-                    {{ html()->form("POST", route("backend.$module_name.store"))->open() }}
+            <div class="mt-6">
+                {{ html()->form("POST", route("backend.$module_name.store"))->open() }}
 
-                    @if (count(config("settings.setting_fields", [])))
-                        @foreach (config("settings.setting_fields") as $section => $fields)
-                            <div class="card card-accent-primary mb-4">
-                                <div class="card-header">
-                                    <i class="{{ Arr::get($fields, "icon", "glyphicon glyphicon-flash") }}"></i>
-                                    &nbsp;{{ $fields["title"] }}
-                                </div>
-                                <div class="card-body">
-                                    <p class="text-muted">{{ $fields["desc"] }}</p>
-
-                                    <div class="row mt-3">
-                                        <div class="col">
-                                            @foreach ($fields["elements"] as $field)
-                                                @includeIf("settings::backend.settings.fields." . $field["type"])
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
+                @if (count(config("settings.setting_fields", [])))
+                    @foreach (config("settings.setting_fields") as $section => $fields)
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 mb-6">
+                            <div class="flex items-center gap-2 px-6 py-4 border-b border-gray-200 dark:border-gray-600">
+                                <i class="{{ Arr::get($fields, 'icon', 'fas fa-cog') }} text-gray-500 dark:text-gray-400"></i>
+                                <h3 class="text-base font-semibold text-gray-900 dark:text-white">{{ $fields["title"] }}</h3>
                             </div>
-                        @endforeach
-                    @endif
-
-                    <div class="row m-b-md">
-                        <div class="col-md-12">
-                            <x-backend.buttons.save />
+                            @if (!empty($fields["desc"]))
+                                <div class="px-6 pt-4 pb-0">
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ $fields["desc"] }}</p>
+                                </div>
+                            @endif
+                            <div class="p-6">
+                                @foreach ($fields["elements"] as $field)
+                                    @includeIf("settings::backend.settings.fields." . $field["type"])
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
+                @endif
 
-                    {{ html()->form()->close() }}
+                <div class="flex items-center mt-2">
+                    <x-cube::backend-button-save />
                 </div>
+
+                {{ html()->form()->close() }}
             </div>
         </div>
+        <div class="border-t border-gray-200 dark:border-gray-700 px-6 py-3"></div>
     </div>
 @endsection
