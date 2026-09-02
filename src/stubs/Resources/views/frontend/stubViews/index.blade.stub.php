@@ -34,8 +34,8 @@
 
         @endforeach
     </div>
-    <div class="d-flex justify-content-center w-100 mt-3">
-        {{$$module_name->links()}}
+    <div class="mt-6 flex justify-center">
+        {{ $$module_name->links() }}
     </div>
 </section>
 

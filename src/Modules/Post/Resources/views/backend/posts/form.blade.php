@@ -303,58 +303,45 @@
 </div>
 
 @push("after-scripts")
-    <!-- Select2 Library -->
-    <x-library.select2 />
-    <script type="module">
-        $(document).ready(function () {
-            $(document).on('select2:open', () => {
-                document.querySelector('.select2-search__field').focus();
-                document.querySelector('.select2-container--open .select2-search__field').focus();
-            });
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof window.TomSelect === 'undefined') return;
 
-            $('.select2-category').select2({
-                theme: 'bootstrap-5',
-                placeholder: '@lang("Select an option")',
-                minimumInputLength: 2,
+        var categoryEl = document.querySelector('.select2-category');
+        if (categoryEl) {
+            new window.TomSelect(categoryEl, {
+                valueField: 'id',
+                labelField: 'text',
+                searchField: 'text',
+                placeholder: '{{ __("Select an option") }}',
                 allowClear: true,
-                ajax: {
-                    url: '{{ route("backend.categories.index_list") }}',
-                    dataType: 'json',
-                    data: function (params) {
-                        return {
-                            q: $.trim(params.term),
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: data,
-                        };
-                    },
-                    cache: true,
-                },
+                load: function (query, callback) {
+                    if (query.length < 2) return callback();
+                    fetch('{{ route("backend.categories.index_list") }}?q=' + encodeURIComponent(query))
+                        .then(function (res) { return res.json(); })
+                        .then(function (data) { callback(data); })
+                        .catch(function () { callback(); });
+                }
             });
+        }
 
-            $('.select2-tags').select2({
-                theme: 'bootstrap-5',
-                placeholder: '@lang("Select an option")',
-                minimumInputLength: 2,
-                allowClear: true,
-                ajax: {
-                    url: '{{ route("backend.tags.index_list") }}',
-                    dataType: 'json',
-                    data: function (params) {
-                        return {
-                            q: $.trim(params.term),
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: data,
-                        };
-                    },
-                    cache: true,
-                },
+        var tagsEl = document.querySelector('.select2-tags');
+        if (tagsEl) {
+            new window.TomSelect(tagsEl, {
+                plugins: ['remove_button'],
+                valueField: 'id',
+                labelField: 'text',
+                searchField: 'text',
+                placeholder: '{{ __("Select an option") }}',
+                load: function (query, callback) {
+                    if (query.length < 2) return callback();
+                    fetch('{{ route("backend.tags.index_list") }}?q=' + encodeURIComponent(query))
+                        .then(function (res) { return res.json(); })
+                        .then(function (data) { callback(data); })
+                        .catch(function () { callback(); });
+                }
             });
-        });
-    </script>
+        }
+    });
+</script>
 @endpush

@@ -278,4 +278,15 @@
     </div>
 </div>
 
-<x-library.select2 />
+@push("after-scripts")
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof window.TomSelect === 'undefined') return;
+        document.querySelectorAll('.select2-permissions, .select2-roles').forEach(function (el) {
+            if (!el.tomselect) {
+                new window.TomSelect(el, { plugins: ['remove_button'] });
+            }
+        });
+    });
+</script>
+@endpush
