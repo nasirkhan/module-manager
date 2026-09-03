@@ -1,284 +1,264 @@
 {{-- Basic Information --}}
-<div class="row">
-    <div class="col-12 col-sm-4 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'name';
-            $field_lable = label_case($field_name);
-            $field_placeholder = 'e.g., Header Menu, Footer Menu';
-            $required = "required";
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
-        </div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+    <div>
+        <?php
+        $field_name = 'name';
+        $field_lable = label_case($field_name);
+        $field_placeholder = 'e.g., Header Menu, Footer Menu';
+        $required = "required";
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }} {!! field_required($required) !!}
+        </label>
+        {{ html()->text($field_name)->placeholder($field_placeholder)->class('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')->attributes(["$required"]) }}
     </div>
-    <div class="col-12 col-sm-4 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'slug';
-            $field_lable = label_case($field_name);
-            $field_placeholder = 'e.g., header-menu, footer-menu';
-            $required = "";
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
-        </div>
+    <div>
+        <?php
+        $field_name = 'slug';
+        $field_lable = label_case($field_name);
+        $field_placeholder = 'e.g., header-menu, footer-menu';
+        $required = "";
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }}
+        </label>
+        {{ html()->text($field_name)->placeholder($field_placeholder)->class('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500') }}
     </div>
-    <div class="col-12 col-sm-4 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'location';
-            $field_lable = label_case($field_name);
-            $field_placeholder = "-- Select location --";
-            $required = "required";
-            $select_options = [
-                'frontend-header' => 'Frontend Header',
-                'frontend-footer' => 'Frontend Footer',
-                'admin-sidebar' => 'Admin Sidebar',
-            ];
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-select')->attributes(["$required"]) }}
-        </div>
+    <div>
+        <?php
+        $field_name = 'location';
+        $field_lable = label_case($field_name);
+        $field_placeholder = "-- Select location --";
+        $required = "required";
+        $select_options = [
+            'frontend-header' => 'Frontend Header',
+            'frontend-footer' => 'Frontend Footer',
+            'admin-sidebar'   => 'Admin Sidebar',
+        ];
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }} {!! field_required($required) !!}
+        </label>
+        {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')->attributes(["$required"]) }}
     </div>
 </div>
 
-<div class="row">
-    <div class="col-12 col-sm-6 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'description';
-            $field_lable = label_case($field_name);
-            $field_placeholder = 'Brief description of this menu';
-            $required = "";
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->textarea($field_name)->placeholder($field_placeholder)->class('form-control')->rows(3)->attributes(["$required"]) }}
-        </div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <div>
+        <?php
+        $field_name = 'description';
+        $field_lable = label_case($field_name);
+        $field_placeholder = 'Brief description of this menu';
+        $required = "";
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }}
+        </label>
+        {{ html()->textarea($field_name)->placeholder($field_placeholder)->class('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')->rows(3) }}
     </div>
-    <div class="col-12 col-sm-6 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'note';
-            $field_lable = 'Admin Notes';
-            $field_placeholder = 'Internal notes for administrators';
-            $required = "";
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->textarea($field_name)->placeholder($field_placeholder)->class('form-control')->rows(3)->attributes(["$required"]) }}
-        </div>
+    <div>
+        <?php
+        $field_name = 'note';
+        $field_lable = 'Admin Notes';
+        $field_placeholder = 'Internal notes for administrators';
+        $required = "";
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }}
+        </label>
+        {{ html()->textarea($field_name)->placeholder($field_placeholder)->class('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')->rows(3) }}
     </div>
 </div>
 
 {{-- Display & Theme --}}
-<div class="row">
-    <div class="col-12 col-sm-4 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'theme';
-            $field_lable = label_case($field_name);
-            $field_placeholder = "-- Select theme --";
-            $required = "";
-            $select_options = [
-                'default' => 'Default',
-                'bootstrap' => 'Bootstrap',
-                'minimal' => 'Minimal',
-                'dark' => 'Dark Theme',
-                'custom' => 'Custom'
-            ];
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->select($field_name, $select_options)->class('form-select')->attributes(["$required"]) }}
-        </div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+    <div>
+        <?php
+        $field_name = 'theme';
+        $field_lable = label_case($field_name);
+        $required = "";
+        $select_options = [
+            'default'   => 'Default',
+            'bootstrap' => 'Bootstrap',
+            'minimal'   => 'Minimal',
+            'dark'      => 'Dark Theme',
+            'custom'    => 'Custom',
+        ];
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }}
+        </label>
+        {{ html()->select($field_name, $select_options)->class('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500') }}
     </div>
-    <div class="col-12 col-sm-4 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'css_classes';
-            $field_lable = 'CSS Classes';
-            $field_placeholder = 'e.g., navbar navbar-expand-lg';
-            $required = "";
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
-        </div>
+    <div>
+        <?php
+        $field_name = 'css_classes';
+        $field_lable = 'CSS Classes';
+        $field_placeholder = 'e.g., navbar navbar-expand-lg';
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }}
+        </label>
+        {{ html()->text($field_name)->placeholder($field_placeholder)->class('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500') }}
     </div>
-    <div class="col-12 col-sm-4 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'locale';
-            $field_lable = label_case($field_name);
-            $field_placeholder = "-- Select language --";
-            $required = "";
-            $select_options = [
-                'en' => 'English',
-                'es' => 'Spanish',
-                'fr' => 'French',
-                'de' => 'German',
-                'ar' => 'Arabic',
-                'hi' => 'Hindi'
-            ];
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-select')->attributes(["$required"]) }}
-        </div>
+    <div>
+        <?php
+        $field_name = 'locale';
+        $field_lable = label_case($field_name);
+        $field_placeholder = "-- Select language --";
+        $select_options = [
+            'en' => 'English',
+            'es' => 'Spanish',
+            'fr' => 'French',
+            'de' => 'German',
+            'ar' => 'Arabic',
+            'hi' => 'Hindi',
+        ];
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }}
+        </label>
+        {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500') }}
     </div>
 </div>
 
 {{-- Access Control --}}
-<div class="row">
-    <div class="col-12 mb-3">
-        <h5>Access Control</h5>
+<p class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">@lang('Access Control')</p>
+
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+    <div>
+        <?php
+        $field_name = 'is_public';
+        $field_lable = 'Public Menu';
+        $field_placeholder = "-- Select visibility --";
+        $select_options = [
+            '1' => 'Yes - Allow guests',
+            '0' => 'No - Require login',
+        ];
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }}
+        </label>
+        {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500') }}
     </div>
-    <div class="col-12 col-sm-4 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'is_public';
-            $field_lable = 'Public Menu';
-            $field_placeholder = "-- Select visibility --";
-            $required = "";
-            $select_options = [
-                '1' => 'Yes - Allow guests to see this menu',
-                '0' => 'No - Require authentication'
-            ];
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-select')->attributes(["$required"]) }}
-            <small class="form-text text-muted">Control guest access to this menu</small>
-        </div>
+    <div>
+        <?php
+        $field_name = 'permissions';
+        $field_lable = 'Required Permissions';
+        $select_options = [
+            'view_backend'    => 'View Backend',
+            'edit_content'    => 'Edit Content',
+            'manage_users'    => 'Manage Users',
+            'manage_settings' => 'Manage Settings',
+        ];
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }}
+        </label>
+        {{ html()->select($field_name . '[]', $select_options)->class('select2-permissions bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')->multiple() }}
     </div>
-    <div class="col-12 col-sm-4 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'permissions';
-            $field_lable = 'Required Permissions';
-            $field_placeholder = 'Select permissions';
-            $required = "";
-            // You can populate this from your permissions system
-            $select_options = [
-                'view_backend' => 'View Backend',
-                'edit_content' => 'Edit Content',
-                'manage_users' => 'Manage Users',
-                'manage_settings' => 'Manage Settings'
-            ];
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->select($field_name . '[]', $select_options)->class('form-select select2-permissions')->multiple()->attributes(["$required"]) }}
-            <small class="form-text text-muted">Users must have these permissions to see the menu</small>
-        </div>
-    </div>
-    <div class="col-12 col-sm-4 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'roles';
-            $field_lable = 'Required Roles';
-            $field_placeholder = 'Select roles';
-            $required = "";
-            // You can populate this from your roles system
-            $select_options = [
-                'super admin' => 'Super Admin',
-                'admin' => 'Admin',
-                'editor' => 'Editor',
-                'user' => 'User'
-            ];
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->select($field_name . '[]', $select_options)->class('form-select select2-roles')->multiple()->attributes(["$required"]) }}
-            <small class="form-text text-muted">Users must have one of these roles to see the menu</small>
-        </div>
+    <div>
+        <?php
+        $field_name = 'roles';
+        $field_lable = 'Required Roles';
+        $select_options = [
+            'super admin' => 'Super Admin',
+            'admin'       => 'Admin',
+            'editor'      => 'Editor',
+            'user'        => 'User',
+        ];
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }}
+        </label>
+        {{ html()->select($field_name . '[]', $select_options)->class('select2-roles bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')->multiple() }}
     </div>
 </div>
 
 {{-- Status & Visibility --}}
-<div class="row">
-    <div class="col-12 mb-3">
-        <h5>Status & Visibility</h5>
+<p class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">@lang('Status & Visibility')</p>
+
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+    <div>
+        <?php
+        $field_name = 'status';
+        $field_lable = label_case($field_name);
+        $field_placeholder = "-- Select status --";
+        $required = "required";
+        $select_options = [
+            '1' => 'Published',
+            '0' => 'Disabled',
+            '2' => 'Draft',
+        ];
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }} {!! field_required($required) !!}
+        </label>
+        {{ html()->select($field_name, $select_options)->class('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')->attributes(["$required"]) }}
     </div>
-    <div class="col-12 col-sm-3 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'status';
-            $field_lable = label_case($field_name);
-            $field_placeholder = "-- Select status --";
-            $required = "required";
-            $select_options = [
-                '1' => 'Published',
-                '0' => 'Disabled',
-                '2' => 'Draft'
-            ];
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->select($field_name, $select_options)->class('form-select')->attributes(["$required"]) }}
-        </div>
+    <div>
+        <?php
+        $field_name = 'is_active';
+        $field_lable = 'Active Status';
+        $field_placeholder = "-- Select status --";
+        $select_options = [
+            '1' => 'Yes - Active',
+            '0' => 'No - Inactive',
+        ];
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }}
+        </label>
+        {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500') }}
     </div>
-    <div class="col-12 col-sm-3 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'is_active';
-            $field_lable = 'Active Status';
-            $field_placeholder = "-- Select status --";
-            $required = "";
-            $select_options = [
-                '1' => 'Yes - Menu is active',
-                '0' => 'No - Menu is inactive'
-            ];
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-select')->attributes(["$required"]) }}
-        </div>
-    </div>
-    <div class="col-12 col-sm-3 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'is_visible';
-            $field_lable = 'Visibility';
-            $field_placeholder = "-- Select visibility --";
-            $required = "";
-            $select_options = [
-                '1' => 'Yes - Menu is visible',
-                '0' => 'No - Menu is hidden'
-            ];
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-select')->attributes(["$required"]) }}
-        </div>
+    <div>
+        <?php
+        $field_name = 'is_visible';
+        $field_lable = 'Visibility';
+        $field_placeholder = "-- Select visibility --";
+        $select_options = [
+            '1' => 'Yes - Visible',
+            '0' => 'No - Hidden',
+        ];
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }}
+        </label>
+        {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500') }}
     </div>
 </div>
 
-{{-- Menu Settings (JSON) --}}
-<div class="row">
-    <div class="col-12 mb-3">
-        <h5>Advanced Settings</h5>
+{{-- Advanced Settings --}}
+<p class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">@lang('Advanced Settings')</p>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <div>
+        <?php
+        $field_name = 'settings[max_depth]';
+        $field_lable = 'Maximum Depth';
+        $field_placeholder = '3';
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }}
+        </label>
+        {{ html()->number($field_name)->placeholder($field_placeholder)->class('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')->attributes(['min' => '1', 'max' => '10']) }}
+        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Maximum nesting level for menu items</p>
     </div>
-    <div class="col-12 col-sm-6 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'settings[max_depth]';
-            $field_lable = 'Maximum Depth';
-            $field_placeholder = '3';
-            $required = "";
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->number($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["min" => "1", "max" => "10", "$required"]) }}
-            <small class="form-text text-muted">Maximum nesting level for menu items</small>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 mb-3">
-        <div class="form-group">
-            <?php
-            $field_name = 'settings[cache_duration]';
-            $field_lable = 'Cache Duration (minutes)';
-            $field_placeholder = '60';
-            $required = "";
-            ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-            {{ html()->number($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["min" => "0", "$required"]) }}
-            <small class="form-text text-muted">How long to cache this menu (0 = no cache)</small>
-        </div>
+    <div>
+        <?php
+        $field_name = 'settings[cache_duration]';
+        $field_lable = 'Cache Duration (minutes)';
+        $field_placeholder = '60';
+        ?>
+        <label for="{{ $field_name }}" class="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white">
+            {{ $field_lable }}
+        </label>
+        {{ html()->number($field_name)->placeholder($field_placeholder)->class('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500')->attributes(['min' => '0']) }}
+        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">How long to cache this menu (0 = no cache)</p>
     </div>
 </div>
 
-@push("after-scripts")
+@push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof window.TomSelect === 'undefined') return;

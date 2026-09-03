@@ -3,7 +3,7 @@
 namespace Nasirkhan\ModuleManager\Modules\Post\Http\Controllers\Backend;
 
 use App\Authorizable;
-use App\Http\Controllers\Backend\BackendBaseController;
+use Nasirkhan\ModuleManager\Http\Controllers\Backend\BackendBaseController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,14 +42,17 @@ class PostsController extends BackendBaseController
         $module_name = $this->module_name;
         $module_path = $this->module_path;
         $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
         $module_name_singular = Str::singular($module_name);
         $module_action = 'List';
+
+        $$module_name = $module_model::paginate(15);
 
         logUserAccess($module_title.' '.$module_action);
 
         return view(
-            view: "{$module_path}.{$module_name}.index_datatable",
-            data: compact('module_title', 'module_name', 'module_path', 'module_icon', 'module_name_singular', 'module_action')
+            view: "{$module_path}.{$module_name}.index",
+            data: compact('module_title', 'module_name', 'module_path', 'module_icon', 'module_name_singular', 'module_action', "{$module_name}")
         );
     }
 

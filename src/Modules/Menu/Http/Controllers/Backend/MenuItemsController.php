@@ -3,7 +3,7 @@
 namespace Nasirkhan\ModuleManager\Modules\Menu\Http\Controllers\Backend;
 
 use App\Authorizable;
-use App\Http\Controllers\Backend\BackendBaseController;
+use Nasirkhan\ModuleManager\Http\Controllers\Backend\BackendBaseController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

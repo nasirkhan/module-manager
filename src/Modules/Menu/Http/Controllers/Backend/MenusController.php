@@ -3,7 +3,7 @@
 namespace Nasirkhan\ModuleManager\Modules\Menu\Http\Controllers\Backend;
 
 use App\Authorizable;
-use App\Http\Controllers\Backend\BackendBaseController;
+use Nasirkhan\ModuleManager\Http\Controllers\Backend\BackendBaseController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -30,6 +30,22 @@ class MenusController extends BackendBaseController
 
         // module model name, path
         $this->module_model = 'Nasirkhan\\ModuleManager\\Modules\\Menu\\Models\\Menu';
+    }
+
+    public function index(): View
+    {
+        extract($this->moduleContext());
+
+        $module_action = 'List';
+
+        $$module_name = $module_model::paginate(15);
+
+        logUserAccess($module_title.' '.$module_action);
+
+        return view(
+            view: "{$module_path}.{$module_name}.index",
+            data: compact('module_title', 'module_name', "{$module_name}", 'module_icon', 'module_name_singular', 'module_action')
+        );
     }
 
     /**

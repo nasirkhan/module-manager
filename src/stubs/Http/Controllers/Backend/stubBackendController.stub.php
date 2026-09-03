@@ -3,7 +3,7 @@
 namespace {{namespace}}\{{moduleName}}\Http\Controllers\Backend;
 
 use App\Authorizable;
-use App\Http\Controllers\Backend\BackendBaseController;
+use Nasirkhan\ModuleManager\Http\Controllers\Backend\BackendBaseController;
 
 class {{moduleNamePlural}}Controller extends BackendBaseController
 {
