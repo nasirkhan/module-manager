@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 *
 * --------------------------------------------------------------------
 */
+
 Route::group(['namespace' => '\Nasirkhan\ModuleManager\Modules\Post\Http\Controllers\Frontend', 'as' => 'frontend.', 'middleware' => 'web', 'prefix' => ''], function () {
     /*
      *
@@ -55,7 +56,7 @@ Route::group(['namespace' => '\Nasirkhan\ModuleManager\Modules\Post\Http\Control
      */
     $module_name = 'posts';
     $controller_name = 'PostsController';
-Route::get("$module_name/trashed", ['as' => "$module_name.trashed", 'uses' => "$controller_name@trashed"]);
+    Route::get("$module_name/trashed", ['as' => "$module_name.trashed", 'uses' => "$controller_name@trashed"]);
     Route::patch("$module_name/trashed/{id}", ['as' => "$module_name.restore", 'uses' => "$controller_name@restore"]);
     Route::resource("$module_name", "$controller_name");
 });
