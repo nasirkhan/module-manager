@@ -3,7 +3,6 @@
 namespace Nasirkhan\ModuleManager\Modules\Post\Http\Controllers\Backend;
 
 use App\Authorizable;
-use Nasirkhan\ModuleManager\Http\Controllers\Backend\BackendBaseController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,6 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Nasirkhan\ModuleManager\Http\Controllers\Backend\BackendBaseController;
 use Nasirkhan\ModuleManager\Modules\Post\Enums\PostStatus;
 use Nasirkhan\ModuleManager\Modules\Post\Enums\PostType;
 
