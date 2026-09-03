@@ -66,7 +66,7 @@ class TagsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($id, $slug = null)
     {
         $id = decode_id($id);
 
@@ -81,9 +81,11 @@ class TagsController extends Controller
 
         $$module_name_singular = $module_model::findOrFail($id);
 
+        $posts = $$module_name_singular->posts()->published()->with(['category', 'tags'])->latest('published_at')->paginate(9);
+
         return view(
             "$module_path.$module_name.show",
-            compact('module_title', 'module_name', 'module_icon', 'module_action', 'module_name_singular', "$module_name_singular")
+            compact('module_title', 'module_name', 'module_icon', 'module_action', 'module_name_singular', "$module_name_singular", 'posts')
         );
     }
 }
