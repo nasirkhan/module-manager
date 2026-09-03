@@ -3,11 +3,11 @@
 namespace Nasirkhan\ModuleManager\Modules\Category\Http\Controllers\Backend;
 
 use App\Authorizable;
-use Nasirkhan\ModuleManager\Http\Controllers\Backend\BackendBaseController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Nasirkhan\ModuleManager\Http\Controllers\Backend\BackendBaseController;
 
 class CategoriesController extends BackendBaseController
 {

@@ -55,7 +55,7 @@ Route::group(['namespace' => '\Nasirkhan\ModuleManager\Modules\Tag\Http\Controll
      */
     $module_name = 'tags';
     $controller_name = 'TagsController';
-Route::get("$module_name/trashed", ['as' => "$module_name.trashed", 'uses' => "$controller_name@trashed"]);
+    Route::get("$module_name/trashed", ['as' => "$module_name.trashed", 'uses' => "$controller_name@trashed"]);
     Route::patch("$module_name/trashed/{id}", ['as' => "$module_name.restore", 'uses' => "$controller_name@restore"]);
     Route::resource("$module_name", "$controller_name");
 });
