@@ -60,18 +60,20 @@
         </x-cube::select>
     </x-cube::group>
     <x-cube::group name="permissions" label="Required Permissions">
-        <x-cube::tom-select name="permissions[]" multiple>
+        <x-cube::select name="permissions">
+            <option value="">-- No permission required --</option>
             @foreach(['view_backend' => 'View Backend', 'edit_content' => 'Edit Content', 'manage_users' => 'Manage Users', 'manage_settings' => 'Manage Settings'] as $permValue => $permLabel)
-                <option value="{{ $permValue }}" @selected(in_array($permValue, (array) old('permissions', optional($data)->permissions ?? [])))>{{ $permLabel }}</option>
+                <option value="{{ $permValue }}" @selected(old('permissions', optional($data)->permissions ?? '') == $permValue)>{{ $permLabel }}</option>
             @endforeach
-        </x-cube::tom-select>
+        </x-cube::select>
     </x-cube::group>
     <x-cube::group name="roles" label="Required Roles">
-        <x-cube::tom-select name="roles[]" multiple>
+        <x-cube::select name="roles">
+            <option value="">-- No role required --</option>
             @foreach(['super admin' => 'Super Admin', 'admin' => 'Admin', 'editor' => 'Editor', 'user' => 'User'] as $roleValue => $roleLabel)
-                <option value="{{ $roleValue }}" @selected(in_array($roleValue, (array) old('roles', optional($data)->roles ?? [])))>{{ $roleLabel }}</option>
+                <option value="{{ $roleValue }}" @selected(old('roles', optional($data)->roles ?? '') == $roleValue)>{{ $roleLabel }}</option>
             @endforeach
-        </x-cube::tom-select>
+        </x-cube::select>
     </x-cube::group>
 </div>
 

@@ -63,8 +63,8 @@
 
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
     @php
-        $categoryOptions = ! empty($data) ? optional($data->category())->pluck('name', 'id') : collect();
-        $selectedCategories = ! empty($data) ? optional($data->category())->pluck('id')->toArray() : [];
+        $categoryOptions = \Nasirkhan\ModuleManager\Modules\Category\Models\Category::active()->orderBy('name')->pluck('name', 'id');
+        $selectedCategories = ! empty($data) ? [$data->category_id] : [];
     @endphp
     <x-cube::group name="category_id" :label="__('post::posts.category_id')" required>
         <x-cube::select name="category_id" required>
@@ -94,7 +94,7 @@
 
 <div class="mb-4">
     @php
-        $tagOptions = ! empty($data) ? optional($data->tags)->pluck('name', 'id') : collect();
+        $tagOptions = \Nasirkhan\ModuleManager\Modules\Tag\Models\Tag::active()->orderBy('name')->pluck('name', 'id');
         $selectedTags = ! empty($data) ? optional($data->tags)->pluck('id')->toArray() : [];
     @endphp
     <x-cube::group name="tags_list" :label="__('post::posts.tags')">
