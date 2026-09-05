@@ -30,19 +30,19 @@
             :module_action="$module_action"
         />
 
-        <div class="row mt-4">
-            <div class="col-12 col-sm-8">
+        <div class="flex flex-wrap mt-4 gap-4">
+            <div class="w-full sm:w-2/3">
                 <x-backend.section-show-table :data="$$module_name_singular" :module_name="$module_name" />
             </div>
-            <div class="col-12 col-sm-4">
-                <h5>
+            <div class="w-full sm:flex-1">
+                <h5 class="text-base font-semibold mb-2 dark:text-gray-400">
                     Posts
-                    <small>({{ count($posts) }})</small>
+                    <small class="text-sm font-normal text-gray-500">({{ count($posts) }})</small>
                 </h5>
-                <ul>
+                <ul class="list-disc list-inside space-y-1">
                     @foreach ($posts as $post)
                         <li>
-                            <a href="{{ route("backend.posts.show", [$post->id, $post->slug]) }}">
+                            <a href="{{ route("backend.posts.show", [$post->id, $post->slug]) }}" class="text-blue-600 hover:underline dark:text-blue-400">
                                 {{ $post->name }}
                             </a>
                         </li>
