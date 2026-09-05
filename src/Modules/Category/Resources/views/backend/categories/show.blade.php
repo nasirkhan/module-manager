@@ -31,7 +31,7 @@
         />
 
         <div class="flex flex-wrap mt-4 gap-4">
-            <div class="w-full sm:w-2/3">
+            <div class="w-full sm:w-1/2">
                 <x-backend.section-show-table :data="$$module_name_singular" :module_name="$module_name" />
             </div>
             <div class="w-full sm:flex-1">
