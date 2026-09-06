@@ -2,7 +2,7 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Menu\Http\Controllers\Backend;
 
-use App\Authorizable;
+use Nasirkhan\Admin\Traits\Authorizable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

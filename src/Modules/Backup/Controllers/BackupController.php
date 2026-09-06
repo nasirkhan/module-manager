@@ -2,7 +2,7 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Backup\Controllers;
 
-use App\Authorizable;
+use Nasirkhan\Admin\Traits\Authorizable;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Exception;

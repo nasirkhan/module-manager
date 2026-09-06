@@ -2,7 +2,7 @@
 
 namespace {{namespace}}\{{moduleName}}\Http\Controllers\Backend;
 
-use App\Authorizable;
+use Nasirkhan\Admin\Traits\Authorizable;
 use Nasirkhan\ModuleManager\Http\Controllers\Backend\BackendBaseController;
 
 class {{moduleNamePlural}}Controller extends BackendBaseController
