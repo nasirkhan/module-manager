@@ -2,11 +2,11 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Tag\Http\Controllers\Backend;
 
-use Nasirkhan\Admin\Traits\Authorizable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Nasirkhan\Admin\Traits\Authorizable;
 use Nasirkhan\ModuleManager\Http\Controllers\Backend\BackendBaseController;
 
 class TagsController extends BackendBaseController

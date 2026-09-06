@@ -2,7 +2,6 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Backup\Controllers;
 
-use Nasirkhan\Admin\Traits\Authorizable;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Exception;
@@ -14,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laracasts\Flash\Flash;
+use Nasirkhan\Admin\Traits\Authorizable;
 
 class BackupController extends Controller
 {
