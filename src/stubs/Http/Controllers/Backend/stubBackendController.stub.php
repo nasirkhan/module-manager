@@ -3,7 +3,7 @@
 namespace {{namespace}}\{{moduleName}}\Http\Controllers\Backend;
 
 use Nasirkhan\Admin\Traits\Authorizable;
-use Nasirkhan\ModuleManager\Http\Controllers\Backend\BackendBaseController;
+use Nasirkhan\Admin\Http\Controllers\BackendBaseController;
 
 class {{moduleNamePlural}}Controller extends BackendBaseController
 {

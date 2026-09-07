@@ -7,7 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Nasirkhan\Admin\Traits\Authorizable;
-use Nasirkhan\ModuleManager\Http\Controllers\Backend\BackendBaseController;
+use Nasirkhan\Admin\Http\Controllers\BackendBaseController;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\Menu;
 
 class MenuItemsController extends BackendBaseController
