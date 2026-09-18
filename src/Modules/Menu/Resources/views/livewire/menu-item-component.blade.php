@@ -68,7 +68,8 @@
                     @empty
                         <option value="" disabled>{{ __('No parent items available') }}</option>
                     @endforelse
-                @else
+                @endif
+                @if (! $menu_id)
                     <option value="" disabled>{{ __('Select a menu first') }}</option>
                 @endif
             </x-cube::select>
