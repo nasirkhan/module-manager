@@ -2,59 +2,77 @@
     $indent = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $level);
 @endphp
 
-<tr>
-    <td>{{ $item->sort_order }}</td>
-    <td>
+<tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+    <td class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">{{ $item->sort_order }}</td>
+    <td class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
         {!! $indent !!}
         @if($item->icon)
             <i class="{{ $item->icon }}"></i>
         @endif
         {{ $item->name }}
         @if($item->children->count() > 0)
-            <span class="badge bg-info ms-1">{{ $item->children->count() }} child{{ $item->children->count() > 1 ? 'ren' : '' }}</span>
+            <span class="inline-flex items-center px-1.5 py-0.5 text-xs font-medium text-white bg-sky-500 rounded ml-1">
+                {{ $item->children->count() }} child{{ $item->children->count() > 1 ? 'ren' : '' }}
+            </span>
         @endif
     </td>
-    <td>
-        <span class="badge bg-secondary">{{ ucfirst($item->type) }}</span>
+    <td class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+        <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-300 rounded">
+            {{ ucfirst($item->type) }}
+        </span>
     </td>
-    <td>
+    <td class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 text-xs">
         @if($item->url)
-            <span class="text-muted">URL:</span> {{ Str::limit($item->url, 30) }}
+            <span class="text-gray-400">URL:</span> {{ Str::limit($item->url, 30) }}
         @elseif($item->route_name)
-            <span class="text-muted">Route:</span> {{ $item->route_name }}
+            <span class="text-gray-400">Route:</span> {{ $item->route_name }}
         @else
-            <span class="text-muted">-</span>
+            <span class="text-gray-400">-</span>
         @endif
         @if($item->opens_new_tab)
-            <i class="fas fa-external-link-alt text-muted ms-1" title="Opens in new tab"></i>
+            <i class="fas fa-external-link-alt text-gray-400 ml-1" title="Opens in new tab"></i>
         @endif
     </td>
-    <td>
-        @if($item->is_active)
-            <span class="badge bg-success">{{ __('menu::text.active') }}</span>
-        @else
-            <span class="badge bg-warning">{{ __('menu::text.inactive') }}</span>
-        @endif
-        
-        @if($item->is_visible)
-            <span class="badge bg-primary">{{ __('menu::text.visible') }}</span>
-        @else
-            <span class="badge bg-secondary">{{ __('menu::text.hidden') }}</span>
-        @endif
+    <td class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+        <div class="flex flex-wrap gap-1">
+            @if($item->is_active)
+                <span class="inline-flex items-center px-1.5 py-0.5 text-xs font-medium text-white bg-green-600 rounded">{{ __('menu::text.active') }}</span>
+            @else
+                <span class="inline-flex items-center px-1.5 py-0.5 text-xs font-medium text-white bg-yellow-500 rounded">{{ __('menu::text.inactive') }}</span>
+            @endif
+            @if($item->is_visible)
+                <span class="inline-flex items-center px-1.5 py-0.5 text-xs font-medium text-white bg-blue-600 rounded">{{ __('menu::text.visible') }}</span>
+            @else
+                <span class="inline-flex items-center px-1.5 py-0.5 text-xs font-medium text-white bg-gray-500 rounded">{{ __('menu::text.hidden') }}</span>
+            @endif
+        </div>
     </td>
-    <td class="text-center">
-        <div class="btn-group btn-group-sm" role="group">
-            <a href="{{ route('backend.menuitems.show', $item->id) }}" class="btn btn-outline-primary btn-sm" title="View">
+    <td class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 text-center">
+        <div class="flex items-center justify-center gap-1">
+            <a
+                href="{{ route('backend.menuitems.show', $item->id) }}"
+                class="inline-flex items-center px-2 py-1 text-xs font-medium text-blue-700 border border-blue-700 rounded hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/20"
+                title="View"
+            >
                 <i class="fas fa-eye"></i>
             </a>
-            <a href="{{ route('backend.menuitems.edit', $item->id) }}" class="btn btn-outline-warning btn-sm" title="Edit">
+            <a
+                href="{{ route('backend.menuitems.edit', $item->id) }}"
+                class="inline-flex items-center px-2 py-1 text-xs font-medium text-yellow-700 border border-yellow-700 rounded hover:bg-yellow-50 dark:border-yellow-400 dark:text-yellow-400 dark:hover:bg-yellow-900/20"
+                title="Edit"
+            >
                 <i class="fas fa-edit"></i>
             </a>
             @if($item->children->count() == 0)
-                <form method="POST" action="{{ route('backend.menuitems.destroy', $item->id) }}" class="d-inline">
+                <form method="POST" action="{{ route('backend.menuitems.destroy', $item->id) }}" class="inline">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-outline-danger btn-sm" title="Delete" onclick="return confirm('Are you sure you want to delete this menu item?')">
+                    <button
+                        type="submit"
+                        class="inline-flex items-center px-2 py-1 text-xs font-medium text-red-700 border border-red-700 rounded hover:bg-red-50 dark:border-red-400 dark:text-red-400 dark:hover:bg-red-900/20"
+                        title="Delete"
+                        onclick="return confirm('Are you sure you want to delete this menu item?')"
+                    >
                         <i class="fas fa-trash"></i>
                     </button>
                 </form>

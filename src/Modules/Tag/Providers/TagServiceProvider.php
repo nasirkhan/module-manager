@@ -4,6 +4,8 @@ namespace Nasirkhan\ModuleManager\Modules\Tag\Providers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
+use Nasirkhan\ModuleManager\Modules\Tag\Livewire\Backend\TagsIndex;
 use Symfony\Component\Finder\Finder;
 
 class TagServiceProvider extends ServiceProvider
@@ -43,6 +45,9 @@ class TagServiceProvider extends ServiceProvider
 
         // Register seeders
         $this->registerSeeders();
+
+        // Register Livewire components
+        Livewire::component('tag.backend-tags-index', TagsIndex::class);
     }
 
     /**

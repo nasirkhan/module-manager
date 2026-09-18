@@ -35,4 +35,41 @@ return [
     'all_locales' => 'All Locales',
     'created_at' => 'Created At',
     'deleted_at' => 'Deleted At',
+
+    // Menu item show/edit
+    'menu' => 'Menu',
+    'parent' => 'Parent',
+    'sort_order' => 'Sort Order',
+    'published' => 'Published',
+    'disabled' => 'Disabled',
+    'draft' => 'Draft',
+    'back_to_menu' => 'Back to Menu',
+
+    // Navigation & Display section
+    'navigation_display' => 'Navigation & Display',
+    'url' => 'URL',
+    'route' => 'Route',
+    'icon' => 'Icon',
+    'badge' => 'Badge',
+    'opens_new_tab' => 'Opens in New Tab',
+    'css_classes' => 'CSS Classes',
+
+    // Access control section
+    'access_control' => 'Access Control',
+    'permissions' => 'Permissions',
+    'roles' => 'Roles',
+
+    // Description & SEO section
+    'description_seo' => 'Description & SEO',
+    'meta_title' => 'Meta Title',
+
+    // Additional data section
+    'additional_data' => 'Additional Data & Notes',
+    'custom_data' => 'Custom Data',
+    'html_attributes' => 'HTML Attributes',
+    'admin_notes' => 'Admin Notes',
+
+    // Child items / actions
+    'child_items' => 'Child Items',
+    'visit_link' => 'Visit Link',
 ];

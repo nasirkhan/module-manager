@@ -1,63 +1,18 @@
-@php
-    $required = Str::contains($field["rules"], "required") ? "required" : "";
-    $required_mark = $required != "" ? '<span class="text-danger"> <strong>*</strong> </span>' : "";
-@endphp
-
-<div class="form-group {{ $errors->has($field["name"]) ? " has-error" : "" }} mt-3">
-    <label for="{{ $field["name"] }}" class="form-label">
-        <strong>{{ __($field["label"]) }}</strong>
-        ({{ $field["name"] }})
-    </label>
-    {!! $required_mark !!}
-    <textarea
-        type="{{ $field["type"] }}"
-        name="{{ $field["name"] }}"
-        class="form-control {{ Arr::get($field, "class") }} {{ $errors->has($field["name"]) ? " is-invalid" : "" }}"
-        id="{{ $field["name"] }}"
-        placeholder="{{ $field["label"] }}"
+<div class="mb-5">
+    <x-cube::label :for="$field['name']" :required="Str::contains($field['rules'], 'required')">
+        {{ __($field['label']) }}
+        <span class="text-xs text-gray-500 dark:text-gray-400">({{ $field['name'] }})</span>
+    </x-cube::label>
+    <x-cube::textarea
+        name="{{ $field['name'] }}"
+        id="{{ $field['name'] }}"
+        :placeholder="__($field['label'])"
+        :required="Str::contains($field['rules'], 'required')"
+        :class="Arr::get($field, 'class', '')"
         rows="6"
-        {{ $required }}
-    >
-    @if (isset($field["display"]))
-
-
-
-
-
-
-@if ($field["display"] == "raw")
-
-
-
-
-
-
-{!! old($field["name"], setting($field["name"])) !!}
-@else
-
-
-
-
-
-
-{{ old($field["name"], setting($field["name"])) }}
-@endif
-@else
-
-
-
-
-
-
-{{ old($field["name"], setting($field["name"])) }}
-@endif
-    </textarea>
-
-    @if ($errors->has($field["name"]))
-        <small class="invalid-feedback">{{ $errors->first($field["name"]) }}</small>
+    >@if (isset($field['display']) && $field['display'] == 'raw'){!! old($field['name'], setting($field['name'])) !!}@else{{ old($field['name'], setting($field['name'])) }}@endif</x-cube::textarea>
+    @if (isset($field['help']))
+        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ $field['help'] }}</p>
     @endif
-
-    @if (isset($field["help"]))
-        <small id="email-{{ $field["name"] }}" class="form-text text-muted">{{ $field["help"] }}</small>
-    @endif
+    <x-cube::error :messages="$errors->get($field['name'])" />
 </div>

@@ -2,12 +2,12 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Menu\Http\Controllers\Backend;
 
-use App\Authorizable;
-use App\Http\Controllers\Backend\BackendBaseController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Nasirkhan\Admin\Http\Controllers\BackendBaseController;
+use Nasirkhan\Admin\Traits\Authorizable;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\Menu;
 
 class MenusController extends BackendBaseController
@@ -30,6 +30,22 @@ class MenusController extends BackendBaseController
 
         // module model name, path
         $this->module_model = 'Nasirkhan\\ModuleManager\\Modules\\Menu\\Models\\Menu';
+    }
+
+    public function index(): View
+    {
+        extract($this->moduleContext());
+
+        $module_action = 'List';
+
+        $$module_name = $module_model::paginate(15);
+
+        logUserAccess($module_title.' '.$module_action);
+
+        return view(
+            view: "{$module_path}.{$module_name}.index",
+            data: compact('module_title', 'module_name', "{$module_name}", 'module_icon', 'module_name_singular', 'module_action')
+        );
     }
 
     /**
@@ -83,7 +99,7 @@ class MenusController extends BackendBaseController
         if ($$module_name_singular->allItems()->count() > 0) {
             $itemCount = $$module_name_singular->allItems()->count();
 
-            flash("Cannot delete menu '".$$module_name_singular->name."'! This menu has {$itemCount} menu item(s). Please delete all menu items first.", 'warning');
+            flash("Cannot delete menu '".$$module_name_singular->name."'! This menu has {$itemCount} menu item(s). Please delete all menu items first.")->warning();
 
             logUserAccess($module_title.' '.$module_action.' Failed | Id: '.$$module_name_singular->id.' | Reason: Has menu items');
 

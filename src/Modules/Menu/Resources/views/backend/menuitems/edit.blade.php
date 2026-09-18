@@ -5,53 +5,40 @@
 @endsection
 
 @section("breadcrumbs")
-    <x-backend.breadcrumbs>
-        <x-backend.breadcrumb-item route='{{route("backend.menus.index")}}' icon="fa-solid fa-list">
+    <x-cube::backend-breadcrumbs>
+        <x-cube::backend-breadcrumb-item route='{{ route("backend.menus.index") }}' icon="fa-solid fa-list">
             {{ __('Menus') }}
-        </x-backend.breadcrumb-item>
-        @if($$module_name_singular->menu_id)
-            <x-backend.breadcrumb-item route='{{route("backend.menus.show", $$module_name_singular->menu_id)}}' icon="fa-solid fa-list">
-                {{ __('Menu Details') }}
-            </x-backend.breadcrumb-item>
+        </x-cube::backend-breadcrumb-item>
+        @if ($$module_name_singular->menu_id)
+            <x-cube::backend-breadcrumb-item route='{{ route("backend.menus.show", $$module_name_singular->menu_id) }}' icon="fa-solid fa-list">
+                {{ __('menu::text.menu_list') }}
+            </x-cube::backend-breadcrumb-item>
         @endif
-        <x-backend.breadcrumb-item type="active">{{ __($module_action) }} {{ __($module_title) }}</x-backend.breadcrumb-item>
-    </x-backend.breadcrumbs>
+        <x-cube::backend-breadcrumb-item type="active">{{ __($module_action) }} {{ __($module_title) }}</x-cube::backend-breadcrumb-item>
+    </x-cube::backend-breadcrumbs>
 @endsection
 
 @section("content")
-@php
-    $data = $$module_name_singular;
-@endphp
-    <div class="card">
-        <div class="card-body">
-            <x-backend.section-header
-                :data="$data"
-                :module_name="$module_name"
-                :module_title="$module_title"
-                :module_icon="$module_icon"
-                :module_action="$module_action"
-            />
+@php $data = $$module_name_singular; @endphp
 
-            <div class="row mt-4">
-                <div class="col">
-                    @livewire("menu.menu-item-component", ["menuItem" => $data ?? null])
-                </div>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="row">
-                <div class="col">
-                    @if ($data != "")
-                        <small class="text-muted float-end text-end">
-                            @lang("Updated at")
-                            : {{ $data->updated_at->diffForHumans() }},
-                            <br class="d-block d-sm-none" />
-                            @lang("Created at")
-                            : {{ $data->created_at->isoFormat("LLLL") }}
-                        </small>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
+<x-cube::backend-layout-edit :data="$data">
+
+    <x-cube::backend-section-header>
+        <i class="{{ $module_icon }} fa-fw"></i>
+        {{ $data->name }}
+        <small class="text-gray-500 dark:text-gray-400">{{ __($module_action) }}</small>
+
+        <x-slot name="toolbar">
+            <x-cube::backend-button-return-back :small="true" />
+            <x-cube::backend-button-show
+                title="{{ __('Show') }} {{ __($module_title) }}"
+                route='{!! route("backend.menuitems.show", $data) !!}'
+                :small="true"
+            />
+        </x-slot>
+    </x-cube::backend-section-header>
+
+    @livewire("menu.menu-item-component", ["menuItem" => $data])
+
+</x-cube::backend-layout-edit>
 @endsection

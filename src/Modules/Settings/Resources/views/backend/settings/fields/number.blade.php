@@ -1,25 +1,16 @@
-@php
-    $required = Str::contains($field["rules"], "required") ? "required" : "";
-    $required_mark = $required != "" ? '<span class="text-danger"> <strong>*</strong> </span>' : "";
-@endphp
-
-<div class="form-group {{ $errors->has($field["name"]) ? " has-error" : "" }} mt-3">
-    <label for="{{ $field["name"] }}" class="form-label">
-        <strong>{{ __($field["label"]) }}</strong>
-        ({{ $field["name"] }})
-    </label>
-    {!! $required_mark !!}
-    <input
-        type="{{ $field["type"] }}"
-        name="{{ $field["name"] }}"
-        value="{{ old($field["name"], setting($field["name"])) }}"
-        class="form-control {{ Arr::get($field, "class") }} {{ $errors->has($field["name"]) ? " is-invalid" : "" }}"
-        id="{{ $field["name"] }}"
-        placeholder="{{ $field["label"] }}"
-        {{ $required }}
+<div class="mb-5">
+    <x-cube::label :for="$field['name']" :required="Str::contains($field['rules'], 'required')">
+        {{ __($field['label']) }}
+        <span class="text-xs text-gray-500 dark:text-gray-400">({{ $field['name'] }})</span>
+    </x-cube::label>
+    <x-cube::input
+        type="{{ $field['type'] }}"
+        name="{{ $field['name'] }}"
+        id="{{ $field['name'] }}"
+        :value="old($field['name'], setting($field['name']))"
+        :placeholder="__($field['label'])"
+        :required="Str::contains($field['rules'], 'required')"
+        :class="Arr::get($field, 'class', '')"
     />
-
-    @if ($errors->has($field["name"]))
-        <small class="invalid-feedback">{{ $errors->first($field["name"]) }}</small>
-    @endif
+    <x-cube::error :messages="$errors->get($field['name'])" />
 </div>

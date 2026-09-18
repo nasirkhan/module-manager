@@ -4,6 +4,8 @@ namespace Nasirkhan\ModuleManager\Modules\Category\Providers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
+use Nasirkhan\ModuleManager\Modules\Category\Livewire\Backend\CategoriesIndex;
 use Symfony\Component\Finder\Finder;
 
 class CategoryServiceProvider extends ServiceProvider
@@ -43,6 +45,9 @@ class CategoryServiceProvider extends ServiceProvider
 
         // Register seeders
         $this->registerSeeders();
+
+        // Register Livewire components
+        Livewire::component('category.backend-categories-index', CategoriesIndex::class);
     }
 
     /**

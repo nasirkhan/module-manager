@@ -5,6 +5,7 @@ namespace Nasirkhan\ModuleManager\Modules\Post\Providers;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
+use Nasirkhan\ModuleManager\Modules\Post\Livewire\Backend\PostsIndex;
 use Nasirkhan\ModuleManager\Modules\Post\Livewire\Frontend\RecentPosts;
 use Symfony\Component\Finder\Finder;
 
@@ -177,6 +178,7 @@ class PostServiceProvider extends ServiceProvider
     protected function registerLivewireComponents()
     {
         // Register with proper namespace for module (use dot notation)
+        Livewire::component('post.backend-posts-index', PostsIndex::class);
         Livewire::component('post.frontend-recent-posts', RecentPosts::class);
 
         // Publish Livewire components (both class and view) for full customization
