@@ -99,7 +99,7 @@ class MenusController extends BackendBaseController
         if ($$module_name_singular->allItems()->count() > 0) {
             $itemCount = $$module_name_singular->allItems()->count();
 
-            flash("Cannot delete menu '".$$module_name_singular->name."'! This menu has {$itemCount} menu item(s). Please delete all menu items first.", 'warning');
+            flash("Cannot delete menu '".$$module_name_singular->name."'! This menu has {$itemCount} menu item(s). Please delete all menu items first.")->warning();
 
             logUserAccess($module_title.' '.$module_action.' Failed | Id: '.$$module_name_singular->id.' | Reason: Has menu items');
 
