@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5eae16a7d2f91a93ef5311dd4f0a3d01",
+    "content-hash": "36262d3ae939d9719329361d8b5c7332",
     "packages": [
         {
             "name": "brick/math",
@@ -2209,6 +2209,65 @@
                 }
             ],
             "time": "2026-01-02T08:56:05+00:00"
+        },
+        {
+            "name": "nasirkhan/laravel-admin",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nasirkhan/laravel-admin.git",
+                "reference": "5732d6541b6acf148bf791e91bff5ba39b670aaa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nasirkhan/laravel-admin/zipball/5732d6541b6acf148bf791e91bff5ba39b670aaa",
+                "reference": "5732d6541b6acf148bf791e91bff5ba39b670aaa",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^11|^12|^13",
+                "php": "^8.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Nasirkhan\\Admin\\AdminServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nasirkhan\\Admin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nasir Khan Saikat",
+                    "email": "nasir8891@gmail.com",
+                    "homepage": "https://github.com/nasirkhan",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Tailwind/Flowbite backend shell for Laravel — sidebar, header, breadcrumb layout",
+            "homepage": "https://github.com/nasirkhan/laravel-admin",
+            "keywords": [
+                "admin",
+                "backend",
+                "flowbite",
+                "laravel",
+                "layout",
+                "tailwind"
+            ],
+            "support": {
+                "issues": "https://github.com/nasirkhan/laravel-admin/issues",
+                "source": "https://github.com/nasirkhan/laravel-admin"
+            },
+            "time": "2026-09-03T17:05:36+00:00"
         },
         {
             "name": "nasirkhan/laravel-jodit",
@@ -6706,95 +6765,6 @@
                 }
             ],
             "time": "2026-04-26T05:33:54+00:00"
-        },
-        {
-            "name": "yajra/laravel-datatables-oracle",
-            "version": "v13.1.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yajra/laravel-datatables.git",
-                "reference": "299c07a7dae380e565bd328104965b6e02286c2f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/299c07a7dae380e565bd328104965b6e02286c2f",
-                "reference": "299c07a7dae380e565bd328104965b6e02286c2f",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/database": "^13",
-                "illuminate/filesystem": "^13",
-                "illuminate/http": "^13",
-                "illuminate/support": "^13",
-                "illuminate/view": "^13",
-                "php": "^8.3"
-            },
-            "require-dev": {
-                "algolia/algoliasearch-client-php": "^3.4.1",
-                "larastan/larastan": "^3.1.0",
-                "laravel/pint": "^1.14",
-                "laravel/scout": "^10.8.3",
-                "meilisearch/meilisearch-php": "^1.6.1",
-                "orchestra/testbench": "^11",
-                "rector/rector": "^2.0"
-            },
-            "suggest": {
-                "yajra/laravel-datatables-buttons": "Plugin for server-side exporting of dataTables.",
-                "yajra/laravel-datatables-editor": "Plugin to use DataTables Editor (requires a license).",
-                "yajra/laravel-datatables-export": "Plugin for server-side exporting using livewire and queue worker.",
-                "yajra/laravel-datatables-fractal": "Plugin for server-side response using Fractal.",
-                "yajra/laravel-datatables-html": "Plugin for server-side HTML builder of dataTables."
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "DataTables": "Yajra\\DataTables\\Facades\\DataTables"
-                    },
-                    "providers": [
-                        "Yajra\\DataTables\\DataTablesServiceProvider"
-                    ]
-                },
-                "branch-alias": {
-                    "dev-master": "13.x-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/helper.php"
-                ],
-                "psr-4": {
-                    "Yajra\\DataTables\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Arjay Angeles",
-                    "email": "aqangeles@gmail.com"
-                }
-            ],
-            "description": "jQuery DataTables API for Laravel",
-            "keywords": [
-                "datatables",
-                "jquery",
-                "laravel",
-                "yajra"
-            ],
-            "support": {
-                "issues": "https://github.com/yajra/laravel-datatables/issues",
-                "source": "https://github.com/yajra/laravel-datatables/tree/v13.1.5"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/sponsors/yajra",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-07-03T01:53:46+00:00"
         }
     ],
     "packages-dev": [
@@ -9806,8 +9776,5 @@
         "php": "^8.3 || ^8.4"
     },
     "platform-dev": {},
-    "platform-overrides": {
-        "php": "8.4.0"
-    },
     "plugin-api-version": "2.9.0"
 }
