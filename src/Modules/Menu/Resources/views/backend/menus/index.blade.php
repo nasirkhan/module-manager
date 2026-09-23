@@ -30,7 +30,6 @@
                             <th class="px-4 py-3">@lang("menu::text.name")</th>
                             <th class="px-4 py-3">@lang("menu::text.slug")</th>
                             <th class="px-4 py-3">@lang("menu::text.updated_at")</th>
-                            <th class="px-4 py-3">@lang("menu::text.created_by")</th>
                             <th class="px-4 py-3 text-right">@lang("menu::text.action")</th>
                         </tr>
                     </thead>
@@ -49,7 +48,6 @@
                                 </td>
                                 <td class="px-4 py-3">{{ $module_name_singular->slug }}</td>
                                 <td class="px-4 py-3">{{ $module_name_singular->updated_at->diffForHumans() }}</td>
-                                <td class="px-4 py-3">{{ $module_name_singular->created_by }}</td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center justify-end gap-1 flex-wrap">
                                         <x-cube::backend-button-edit

@@ -20,7 +20,6 @@
                         <th scope="col" class="px-6 py-3">#</th>
                         <th scope="col" class="px-6 py-3">@lang("{{moduleNameLower}}::text.name")</th>
                         <th scope="col" class="px-6 py-3">@lang("{{moduleNameLower}}::text.updated_at")</th>
-                        <th scope="col" class="px-6 py-3">@lang("{{moduleNameLower}}::text.created_by")</th>
                         <th scope="col" class="px-6 py-3 text-right">@lang("{{moduleNameLower}}::text.action")</th>
                     </tr>
                 </thead>
@@ -36,7 +35,6 @@
                             </x-cube::link>
                         </td>
                         <td class="px-6 py-4">{{ $module_name_singular->updated_at->diffForHumans() }}</td>
-                        <td class="px-6 py-4">{{ $module_name_singular->created_by }}</td>
                         <td class="px-6 py-4 text-right">
                             <div class="flex items-center justify-end gap-1">
                                 <x-cube::backend-button-edit
