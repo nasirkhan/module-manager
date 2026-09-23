@@ -5,16 +5,16 @@
 @endsection
 
 @section("breadcrumbs")
-    <x-backend.breadcrumbs>
-        <x-backend.breadcrumb-item route='{{ route("backend.$module_name.index") }}' icon="{{ $module_icon }}">
+    <x-cube::backend-breadcrumbs>
+        <x-cube::backend-breadcrumb-item route='{{ route("backend.$module_name.index") }}' icon="{{ $module_icon }}">
             {{ __($module_title) }}
-        </x-backend.breadcrumb-item>
-        <x-backend.breadcrumb-item type="active">{{ __($module_action) }}</x-backend.breadcrumb-item>
-    </x-backend.breadcrumbs>
+        </x-cube::backend-breadcrumb-item>
+        <x-cube::backend-breadcrumb-item type="active">{{ __($module_action) }}</x-cube::backend-breadcrumb-item>
+    </x-cube::backend-breadcrumbs>
 @endsection
 
 @section("content")
-    <x-backend.layouts.show
+    <x-cube::backend-layout-show
         :data="$$module_name_singular"
         :module_name="$module_name"
         :module_path="$module_path"
@@ -22,7 +22,7 @@
         :module_icon="$module_icon"
         :module_action="$module_action"
     >
-        <x-backend.section-header
+        <x-cube::backend-section-header
             :data="$$module_name_singular"
             :module_name="$module_name"
             :module_title="$module_title"
@@ -30,25 +30,25 @@
             :module_action="$module_action"
         />
 
-        <div class="row mt-4">
-            <div class="col-12 col-sm-8">
-                <x-backend.section-show-table :data="$$module_name_singular" :module_name="$module_name" />
+        <div class="mt-4 flex flex-wrap gap-4">
+            <div class="w-full sm:w-2/3">
+                <x-cube::backend-section-show-table :data="$$module_name_singular" :module_name="$module_name" />
             </div>
-            <div class="col-12 col-sm-4">
-                <h5>
+            <div class="w-full sm:flex-1">
+                <h5 class="mb-2 text-base font-semibold dark:text-gray-400">
                     Posts
-                    <small>({{ count($posts) }})</small>
+                    <small class="text-sm font-normal text-gray-500">({{ count($posts) }})</small>
                 </h5>
-                <ul>
+                <ul class="list-inside list-disc space-y-1">
                     @foreach ($posts as $post)
                         <li>
-                            <a href="{{ route("backend.posts.show", [$post->id, $post->slug]) }}">
+                            <x-cube::link href="{{ route('backend.posts.show', [$post->id, $post->slug]) }}">
                                 {{ $post->name }}
-                            </a>
+                            </x-cube::link>
                         </li>
                     @endforeach
                 </ul>
             </div>
         </div>
-    </x-backend.layouts.show>
+    </x-cube::backend-layout-show>
 @endsection

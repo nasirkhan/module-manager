@@ -30,7 +30,6 @@
                             <th class="px-4 py-3">@lang("post::text.name")</th>
                             <th class="px-4 py-3">@lang("post::text.slug")</th>
                             <th class="px-4 py-3">@lang("post::text.updated_at")</th>
-                            <th class="px-4 py-3">@lang("post::text.created_by")</th>
                             <th class="px-4 py-3 text-right">@lang("post::text.action")</th>
                         </tr>
                     </thead>
@@ -49,21 +48,18 @@
                                 </td>
                                 <td class="px-4 py-3">{{ $module_name_singular->slug }}</td>
                                 <td class="px-4 py-3">{{ $module_name_singular->updated_at->diffForHumans() }}</td>
-                                <td class="px-4 py-3">{{ $module_name_singular->created_by }}</td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center justify-end gap-1 flex-wrap">
-                                        <a
-                                            href="{!! route("backend.$module_name.edit", $module_name_singular) !!}"
-                                            wire:navigate
-                                            class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-                                            title="Edit {{ ucwords(Str::singular($module_name)) }}"
-                                        ><i class="fas fa-wrench fa-fw"></i></a>
-                                        <a
-                                            href="{!! route("backend.$module_name.show", $module_name_singular) !!}"
-                                            wire:navigate
-                                            class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-white bg-green-600 rounded-lg hover:bg-green-700"
-                                            title="Show {{ ucwords(Str::singular($module_name)) }}"
-                                        ><i class="fas fa-desktop fa-fw"></i></a>
+                                        <x-cube::backend-button-edit
+                                            :route="route('backend.'.$module_name.'.edit', $module_name_singular)"
+                                            :title="__('Edit') . ' ' . ucwords(Str::singular($module_name))"
+                                            small="true"
+                                        />
+                                        <x-cube::backend-button-show
+                                            :route="route('backend.'.$module_name.'.show', $module_name_singular)"
+                                            :title="__('Show') . ' ' . ucwords(Str::singular($module_name))"
+                                            small="true"
+                                        />
                                     </div>
                                 </td>
                             </tr>

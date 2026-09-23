@@ -19,27 +19,19 @@
         <small class="text-gray-500 dark:text-gray-400">{{ __($module_title) }}</small>
 
         <x-slot name="toolbar">
-            <x-cube::backend-button-return-back :small="true" />
-            <a
-                class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 m-0.5"
-                href="{{ route("backend.$module_name.index") }}"
+            <x-cube::backend-button-return-back small="" />
+            <x-cube::backend-button-list
+                route="{{ route("backend.$module_name.index") }}"
                 title="{{ __('menu::text.menu_list') }}"
-            >
-                <i class="fas fa-list"></i>
-                {{ __('menu::text.menu_list') }}
-            </a>
-            <a
-                class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 m-0.5"
-                href="{{ route('backend.menuitems.create', ['menu_id' => ${$module_name_singular}->id]) }}"
+            />
+            <x-cube::backend-button-create
+                route="{{ route('backend.menuitems.create', ['menu_id' => ${$module_name_singular}->id]) }}"
                 title="{{ __('menu::text.add_menu_item') }}"
-            >
-                <i class="fas fa-plus-circle"></i>
-                {{ __('menu::text.add_menu_item') }}
-            </a>
+                icon="fas fa-plus-circle"
+            />
             <x-cube::backend-button-edit
                 title="{{ __('Edit') }} {{ __($module_title) }}"
                 route='{!! route("backend.$module_name.edit", ${$module_name_singular}) !!}'
-                :small="true"
             />
         </x-slot>
     </x-cube::backend-section-header>
@@ -89,27 +81,25 @@
 
     <div class="mt-4">
         <div class="flex items-center justify-between mb-3">
-            <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide flex items-center gap-2">
+            <h5 class="text-base font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide flex items-center gap-2">
                 <i class="fas fa-list"></i>
                 {{ __('menu::text.menu_items') }}
-                <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium text-white bg-blue-600 rounded">
+                <span class="inline-flex items-center px-2 py-0.5 text-sm font-medium text-white bg-blue-600 rounded">
                     {{ ${$module_name_singular}->allItems->count() }}
                 </span>
             </h5>
-            <a
-                class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-green-600 rounded-lg hover:bg-green-700"
-                href="{{ route('backend.menuitems.create', ['menu_id' => ${$module_name_singular}->id]) }}"
-            >
-                <i class="fas fa-plus-circle mr-1"></i>
-                {{ __('menu::text.add_item') }}
-            </a>
+            <x-cube::backend-button-create
+                route="{{ route('backend.menuitems.create', ['menu_id' => ${$module_name_singular}->id]) }}"
+                title="{{ __('menu::text.add_item') }}"
+                icon="fas fa-plus-circle"
+            />
         </div>
 
         @if(${$module_name_singular}->items->count() > 0)
             <div class="overflow-x-auto">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border-collapse">
                     <thead>
-                        <tr class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <th class="px-4 py-3">{{ __('menu::text.order') }}</th>
                             <th class="px-4 py-3">{{ __('menu::text.name') }}</th>
                             <th class="px-4 py-3">{{ __('menu::text.type') }}</th>

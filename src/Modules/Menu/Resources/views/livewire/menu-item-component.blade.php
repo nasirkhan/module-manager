@@ -318,7 +318,7 @@
             type="button"
             wire:click="save"
             wire:loading.attr="disabled"
-            class="{{ $menuItem ? 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600' : 'bg-green-600 hover:bg-green-700 focus:ring-green-300' }} inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white focus:ring-4 disabled:opacity-60"
+            class="{{ $menuItem ? 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600' : 'bg-green-600 hover:bg-green-700' }} inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
         >
             <span wire:loading.remove wire:target="save">
                 <i class="fas {{ $menuItem ? 'fa-save' : 'fa-plus-circle' }}"></i>

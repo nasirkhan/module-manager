@@ -12,9 +12,6 @@
                 <x-cube::lw-table-th column="updated_at" :sort-col="$sortCol" :sort-dir="$sortDir">
                     @lang('post::text.updated_at')
                 </x-cube::lw-table-th>
-                <x-cube::lw-table-th>
-                    @lang('post::text.created_by')
-                </x-cube::lw-table-th>
                 <x-cube::lw-table-th class="text-right">
                     @lang('post::text.action')
                 </x-cube::lw-table-th>
@@ -32,7 +29,6 @@
                     </td>
                     <td class="px-4 py-3">{{ $post->slug }}</td>
                     <td class="px-4 py-3">{{ $post->updated_at->diffForHumans() }}</td>
-                    <td class="px-4 py-3">{{ $post->created_by_name ?? $post->created_by ?? '—' }}</td>
                     <td class="px-4 py-3">
                         @include('backend.includes.action_column', ['data' => $post, 'module_name' => 'posts'])
                     </td>

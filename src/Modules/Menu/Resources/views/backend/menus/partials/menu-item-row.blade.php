@@ -21,7 +21,7 @@
             {{ ucfirst($item->type) }}
         </span>
     </td>
-    <td class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 text-xs">
+    <td class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 text-sm">
         @if($item->url)
             <span class="text-gray-400">URL:</span> {{ Str::limit($item->url, 30) }}
         @elseif($item->route_name)
@@ -49,27 +49,22 @@
     </td>
     <td class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 text-center">
         <div class="flex items-center justify-center gap-1">
-            <a
-                href="{{ route('backend.menuitems.show', $item->id) }}"
-                class="inline-flex items-center px-2 py-1 text-xs font-medium text-blue-700 border border-blue-700 rounded hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/20"
-                title="View"
-            >
-                <i class="fas fa-eye"></i>
-            </a>
-            <a
-                href="{{ route('backend.menuitems.edit', $item->id) }}"
-                class="inline-flex items-center px-2 py-1 text-xs font-medium text-yellow-700 border border-yellow-700 rounded hover:bg-yellow-50 dark:border-yellow-400 dark:text-yellow-400 dark:hover:bg-yellow-900/20"
-                title="Edit"
-            >
-                <i class="fas fa-edit"></i>
-            </a>
+            <x-cube::backend-button-show
+                route="{{ route('backend.menuitems.show', $item->id) }}"
+                title="{{ __('View') }}"
+                icon="fas fa-eye"
+            />
+            <x-cube::backend-button-edit
+                route="{{ route('backend.menuitems.edit', $item->id) }}"
+                title="{{ __('Edit') }}"
+            />
             @if($item->children->count() == 0)
                 <form method="POST" action="{{ route('backend.menuitems.destroy', $item->id) }}" class="inline">
                     @csrf
                     @method('DELETE')
                     <button
                         type="submit"
-                        class="inline-flex items-center px-2 py-1 text-xs font-medium text-red-700 border border-red-700 rounded hover:bg-red-50 dark:border-red-400 dark:text-red-400 dark:hover:bg-red-900/20"
+                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-red-700 border border-red-700 rounded-lg hover:bg-red-50 dark:border-red-400 dark:text-red-400 dark:hover:bg-red-900/20 cursor-pointer"
                         title="Delete"
                         onclick="return confirm('Are you sure you want to delete this menu item?')"
                     >
