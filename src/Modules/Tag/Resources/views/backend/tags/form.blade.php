@@ -18,22 +18,17 @@
     </div>
 
     @if (isset($$module_name_singular) && $$module_name_singular->getMedia($module_name)->first())
-        <div>
-            <figure class="figure">
-                <a
-                    href="{{ asset($$module_name_singular->image) }}"
-                    data-lightbox="image-set"
-                    data-title="Path: {{ asset($$module_name_singular->image) }}"
-                >
+        <div class="pswp-gallery">
+            <figure>
+                <a href="{{ asset($$module_name_singular->image) }}" data-pswp-src="{{ asset($$module_name_singular->image) }}">
                     <img
                         src="{{ asset($$module_name_singular->getMedia($module_name)->first()->getUrl('thumb300')) }}"
-                        class="figure-img img-fluid img-thumbnail rounded"
+                        class="rounded img-thumbnail"
                         alt=""
                     />
                 </a>
             </figure>
         </div>
-        <x-library.lightbox />
     @endif
 </div>
 
