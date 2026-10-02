@@ -19,25 +19,22 @@
 
     @if ($data && $data->getMedia($module_name)->first())
         <div>
-            <figure class="figure">
-                <a
-                    href="{{ asset($data->image) }}"
-                    data-lightbox="image-set"
-                    data-title="Path: {{ asset($data->image) }}"
-                >
-                    <img
-                        src="{{ asset($data->getMedia($module_name)->first()->getUrl('thumb300')) }}"
-                        class="figure-img img-fluid img-thumbnail rounded"
-                        alt=""
-                    />
-                </a>
-            </figure>
+            <div class="pswp-gallery">
+                <figure>
+                    <a href="{{ asset($data->image) }}" data-pswp-src="{{ asset($data->image) }}">
+                        <img
+                            src="{{ asset($data->getMedia($module_name)->first()->getUrl('thumb300')) }}"
+                            class="rounded img-thumbnail"
+                            alt=""
+                        />
+                    </a>
+                </figure>
+            </div>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="image_remove" id="image_remove" name="image_remove" />
                 <label class="form-check-label" for="image_remove">Remove this image</label>
             </div>
         </div>
-        <x-library.lightbox />
     @endif
 </div>
 
