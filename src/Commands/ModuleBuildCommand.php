@@ -209,6 +209,11 @@ class ModuleBuildCommand extends Command
                 $filePath = str_replace('stubSeeders.php', $value, $filePath);
                 break;
 
+            case 'enum':
+                $value = $moduleName.'Status.php';
+                $filePath = str_replace('stubEnum.php', $value, $filePath);
+                break;
+
             case 'models':
                 $value = $moduleName.'.php';
                 $filePath = str_replace('stubModel.php', $value, $filePath);
@@ -227,6 +232,11 @@ class ModuleBuildCommand extends Command
             case 'controller_frontend':
                 $value = $moduleNamePlural.'Controller.php';
                 $filePath = str_replace('stubFrontendController.php', $value, $filePath);
+                break;
+
+            case 'livewire_backend':
+                $value = $moduleNamePlural.'Index.php';
+                $filePath = str_replace('stubLivewire.php', $value, $filePath);
                 break;
 
             case 'views_backend_index':
@@ -270,6 +280,11 @@ class ModuleBuildCommand extends Command
                 break;
 
             case 'views_frontend_show':
+                $value = $moduleNameLowerPlural;
+                $filePath = str_replace('stubViews', $value, $filePath);
+                break;
+
+            case 'views_livewire_backend_index':
                 $value = $moduleNameLowerPlural;
                 $filePath = str_replace('stubViews', $value, $filePath);
                 break;
