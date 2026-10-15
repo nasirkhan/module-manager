@@ -60,7 +60,7 @@
         </x-cube::group>
 
         <x-cube::group name="parent_id" label="{{ __('Parent Item') }}">
-            <x-cube::select wire:model="parent_id" name="parent_id" wire:key="parent-{{ $menu_id }}" {{ !$menu_id ? 'disabled' : '' }}>
+            <x-cube::select wire:model="parent_id" name="parent_id" wire:key="parent-{{ $menu_id }}" :disabled="!$menu_id">
                 <option value="">-- {{ __('No Parent (Root Level)') }} --</option>
                 @if ($menu_id)
                     @forelse ($parent_items as $id => $parentName)
