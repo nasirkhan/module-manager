@@ -3,105 +3,219 @@
 @php
     $url = $item->getFullUrl();
     $isActive = $item->isCurrentlyActive();
-    // Use optimized children check that doesn't trigger database queries
     $hasChildren = isset($item->children) && $item->children instanceof \Illuminate\Support\Collection && $item->children->isNotEmpty();
     $target = $item->opens_new_tab ? '_blank' : null;
     $htmlAttributes = $item->html_attributes ?? [];
-    
-    // Use the existing nav-item component styling by default
-    $baseCssClasses = '';
-    
-    // Merge additional HTML attributes
-    $attributes = array_merge($htmlAttributes, [
-        'class' => $baseCssClasses
-    ]);
-    
-    if ($target) {
-        $attributes['target'] = $target;
-    }
+    $icon = $item->icon;
+    $title = $item->getDisplayTitle();
+    // Used as aria-label when there is no visible text label
+    $accessibleLabel = $item->description ?: $title;
 @endphp
 
 @switch($item->type)
     @case('divider')
         <li class="border-t border-gray-200 dark:border-gray-600 my-1"></li>
         @break
-    
+
     @case('heading')
         <li>
             <span class="block px-4 py-2 text-sm text-red-600 dark:text-gray-400">
-                {{ $item->getDisplayTitle() }}
+                @if($icon)
+                    <i class="{{ $icon }} mr-1" aria-hidden="true"></i>
+                @endif
+                {{ $title }}
             </span>
         </li>
         @break
-    
+
     @case('dropdown')
         @if($hasChildren)
-            <li class="relative group ">
+            <li class="relative"
+                x-data="{ open: false }"
+            >
                 <button
                     type="button"
-                    class="border-transparent dark:border-transparent cursor-pointer flex items-center justify-between w-full md:w-auto border-b-2 px-3 py-2 font-semibold text-gray-800 transition duration-200 ease-in hover:border-gray-700 hover:opacity-75 dark:text-white dark:hover:border-gray-300 dark:hover:opacity-75 sm:my-0 sm:py-1"
-                    data-dropdown-toggle="dropdown-{{ $item->id }}"
-                    aria-expanded="false"
+                    @click="open = !open"
+                    :aria-expanded="open.toString()"
                     aria-haspopup="true"
-                    aria-label="Toggle {{ $item->getDisplayTitle() }} submenu"
+                    aria-label="Toggle {{ $accessibleLabel }} submenu"
+                    class="border-transparent dark:border-transparent cursor-pointer flex items-center justify-between w-full md:w-auto border-b-2 px-3 py-2 font-semibold text-gray-800 transition duration-200 ease-in hover:border-gray-700 hover:opacity-75 dark:text-white dark:hover:border-gray-300 dark:hover:opacity-75 sm:my-0 sm:py-1"
                 >
-                    <span>{{ $item->getDisplayTitle() }}</span>
-                    <svg class="w-6 h-6 ml-2.5 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    @if($icon)
+                        <i class="{{ $icon }} @if($title) mr-2 @endif" aria-hidden="true"></i>
+                    @endif
+                    @if($title)
+                        <span>{{ $title }}</span>
+                    @endif
+                    {{-- Chevron rotates 180° on mobile when open (accordion cue); stays flat on desktop --}}
+                    <svg
+                        class="w-6 h-6 @if($title) ml-2.5 @endif flex-shrink-0 transition-transform duration-200"
+                        :class="open ? 'rotate-180 md:rotate-0' : ''"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                    >
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 10 4 4 4-4"/>
                     </svg>
                 </button>
 
-                <!-- Dropdown menu -->
-                <div id="dropdown-{{ $item->id }}" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600 absolute top-full left-0 mt-1" role="menu" aria-label="{{ $item->getDisplayTitle() }} submenu">
+                <div
+                    x-show="open"
+                    x-cloak
+                    @click.outside="open = false"
+                    class="w-full mt-1 md:absolute md:top-full md:left-0 md:mt-1 md:z-10 md:w-56 bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-100 dark:border-gray-600"
+                    role="menu"
+                    aria-label="{{ $accessibleLabel }} submenu"
+                >
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" role="none">
                         @foreach(($item->children ?? collect()) as $childItem)
-                            {{-- Skip permission check if optimized mode (already filtered by parent) --}}
                             @if($optimized || $childItem->userCanSee())
-                                <li>
-                                    @if($childItem->type === 'divider')
-                                        <div class="border-t border-gray-200 dark:border-gray-600 mx-2"></div>
-                                    @elseif($childItem->type === 'heading')
-                                        <span class="block px-4 py-2 text-xs text-gray-600 dark:text-gray-400">
-                                            {{ $childItem->getDisplayTitle() }}
+                                @php
+                                    $hasGrandchildren = isset($childItem->children) && $childItem->children instanceof \Illuminate\Support\Collection && $childItem->children->isNotEmpty();
+                                    $childTitle = $childItem->getDisplayTitle();
+                                    $childAccessibleLabel = $childItem->description ?: $childTitle;
+                                @endphp
+
+                                @if($childItem->type === 'divider')
+                                    <li class="border-t border-gray-200 dark:border-gray-600 mx-2 my-1" role="separator"></li>
+                                @elseif($childItem->type === 'heading')
+                                    <li role="presentation">
+                                        <span class="block px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide dark:text-gray-400">
+                                            @if($childItem->icon)
+                                                <i class="{{ $childItem->icon }} mr-1" aria-hidden="true"></i>
+                                            @endif
+                                            {{ $childTitle }}
                                         </span>
-                                    @else
-                                        <a href="{{ $childItem->getFullUrl() }}" 
+                                    </li>
+                                @elseif($hasGrandchildren)
+                                    <li class="relative"
+                                        x-data="{ subopen: false }"
+                                        role="none"
+                                    >
+                                        <button
+                                            type="button"
+                                            @click.stop="subopen = !subopen"
+                                            class="flex items-center justify-between w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white {{ $childItem->isCurrentlyActive() ? 'text-blue-700 dark:text-blue-500' : '' }}"
+                                            aria-haspopup="true"
+                                            aria-label="{{ $childAccessibleLabel }} submenu"
+                                        >
+                                            <span class="flex items-center">
+                                                @if($childItem->icon)
+                                                    <i class="{{ $childItem->icon }} @if($childTitle) mr-2 @endif" aria-hidden="true"></i>
+                                                @endif
+                                                {{ $childTitle }}
+                                            </span>
+                                            <svg
+                                                class="w-4 h-4 ml-2 flex-shrink-0 transition-transform duration-200"
+                                                :class="subopen ? 'rotate-90 md:rotate-0' : ''"
+                                                aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
+                                            </svg>
+                                        </button>
+
+                                        <div
+                                            x-show="subopen"
+                                            x-cloak
+                                            class="w-full pl-4 md:pl-0 md:absolute md:left-full md:top-0 md:z-20 md:w-48 bg-white dark:bg-gray-700 rounded-lg shadow-lg border border-gray-100 dark:border-gray-600"
+                                            role="menu"
+                                            aria-label="{{ $childAccessibleLabel }} submenu"
+                                        >
+                                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" role="none">
+                                                @foreach($childItem->children as $grandchildItem)
+                                                    @if($optimized || $grandchildItem->userCanSee())
+                                                        @php
+                                                            $grandchildTitle = $grandchildItem->getDisplayTitle();
+                                                            $grandchildAccessibleLabel = $grandchildItem->description ?: $grandchildTitle;
+                                                        @endphp
+                                                        @if($grandchildItem->type === 'divider')
+                                                            <li class="border-t border-gray-200 dark:border-gray-600 mx-2 my-1" role="separator"></li>
+                                                        @elseif($grandchildItem->type === 'heading')
+                                                            <li role="presentation">
+                                                                <span class="block px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide dark:text-gray-400">
+                                                                    @if($grandchildItem->icon)
+                                                                        <i class="{{ $grandchildItem->icon }} mr-1" aria-hidden="true"></i>
+                                                                    @endif
+                                                                    {{ $grandchildTitle }}
+                                                                </span>
+                                                            </li>
+                                                        @else
+                                                            <li role="none">
+                                                                <a href="{{ $grandchildItem->getFullUrl() }}"
+                                                                   @if($grandchildItem->opens_new_tab) target="_blank" @else wire:navigate @endif
+                                                                   class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white {{ $grandchildItem->isCurrentlyActive() ? 'text-blue-700 dark:text-blue-500' : '' }}"
+                                                                   role="menuitem"
+                                                                   @if($grandchildItem->opens_new_tab) aria-label="{{ $grandchildAccessibleLabel }} (opens in new tab)"
+                                                                   @elseif(!$grandchildTitle && $grandchildAccessibleLabel) aria-label="{{ $grandchildAccessibleLabel }}"
+                                                                   @endif>
+                                                                    @if($grandchildItem->icon)
+                                                                        <i class="{{ $grandchildItem->icon }} @if($grandchildTitle) mr-2 @endif" aria-hidden="true"></i>
+                                                                    @endif
+                                                                    {{ $grandchildTitle }}
+                                                                    @if($grandchildItem->opens_new_tab)
+                                                                        <span class="sr-only">(opens in new tab)</span>
+                                                                    @endif
+                                                                </a>
+                                                            </li>
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @else
+                                    <li role="none">
+                                        <a href="{{ $childItem->getFullUrl() }}"
                                            @if($childItem->opens_new_tab) target="_blank" @else wire:navigate @endif
-                                           class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white {{ $childItem->isCurrentlyActive() ? 'text-blue-700 dark:text-blue-500' : '' }}"
-                                           @if($childItem->opens_new_tab) aria-label="{{ $childItem->getDisplayTitle() }} (opens in new tab)" @endif>
-                                            {{ $childItem->getDisplayTitle() }}
+                                           class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white {{ $childItem->isCurrentlyActive() ? 'text-blue-700 dark:text-blue-500' : '' }}"
+                                           role="menuitem"
+                                           @if($childItem->opens_new_tab) aria-label="{{ $childAccessibleLabel }} (opens in new tab)"
+                                           @elseif(!$childTitle && $childAccessibleLabel) aria-label="{{ $childAccessibleLabel }}"
+                                           @endif>
+                                            @if($childItem->icon)
+                                                <i class="{{ $childItem->icon }} @if($childTitle) mr-2 @endif" aria-hidden="true"></i>
+                                            @endif
+                                            {{ $childTitle }}
                                             @if($childItem->opens_new_tab)
                                                 <span class="sr-only">(opens in new tab)</span>
                                             @endif
                                         </a>
-                                    @endif
-                                </li>
+                                    </li>
+                                @endif
                             @endif
                         @endforeach
                     </ul>
                 </div>
             </li>
         @else
-            <!-- Dropdown without children, treat as regular link -->
-            <x-menu-nav-item 
-                :href="$url" 
+            {{-- Dropdown without children, treat as regular link --}}
+            <x-menu-nav-item
+                :href="$url"
                 :active="$isActive"
                 :target="$target"
+                :icon="$icon"
+                :label="$accessibleLabel"
             >
-                {{ $item->getDisplayTitle() }}
+                {{ $title }}
             </x-menu-nav-item>
         @endif
         @break
-    
+
     @case('external')
     @case('link')
     @default
-        <x-menu-nav-item 
-            :href="$url" 
+        <x-menu-nav-item
+            :href="$url"
             :active="$isActive"
             :target="$target"
+            :icon="$icon"
+            :label="$accessibleLabel"
         >
-            {{ $item->getDisplayTitle() }}
+            {{ $title }}
         </x-menu-nav-item>
         @break
 @endswitch

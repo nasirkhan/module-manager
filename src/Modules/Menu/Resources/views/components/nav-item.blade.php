@@ -3,9 +3,10 @@
 
 @props([
     "href" => route("home"),
-    "title",
     "active" => "",
     "target" => "_self",
+    "icon" => null,
+    "label" => null,
 ])
 
 <?php
@@ -16,8 +17,9 @@ if ($active) {
         "rounded-sm border-gray-700 bg-gray-200 hover:opacity-75 dark:border-gray-300 dark:bg-gray-700 sm:rounded-none sm:bg-transparent dark:sm:rounded-none dark:sm:bg-transparent";
 }
 
-// Add wire:navigate for internal links only (not external or new tab)
 $shouldNavigate = $target === '_self';
+$iconOnly = $icon && $slot->isEmpty();
+$accessibleLabel = $label ?? ($iconOnly ? '' : null);
 ?>
 
 <li>
@@ -26,10 +28,17 @@ $shouldNavigate = $target === '_self';
         href="{{ $href }}"
         target="{{ $target }}"
         @if($shouldNavigate) wire:navigate @endif
-        @if($target === '_blank') aria-label="{{ $slot }} (opens in new tab)" @endif
-    >
-        {{ $slot }}
         @if($target === '_blank')
+            aria-label="{{ $iconOnly ? ($accessibleLabel ?: '') : ($slot . ' (opens in new tab)') }}"
+        @elseif($iconOnly && $accessibleLabel)
+            aria-label="{{ $accessibleLabel }}"
+        @endif
+    >
+        @if($icon)
+            <i class="{{ $icon }}" aria-hidden="true"></i>
+        @endif
+        {{ $slot }}
+        @if($target === '_blank' && !$iconOnly)
             <span class="sr-only">(opens in new tab)</span>
         @endif
     </a>
