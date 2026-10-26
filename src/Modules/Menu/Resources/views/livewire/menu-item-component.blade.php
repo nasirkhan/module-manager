@@ -93,8 +93,9 @@
 
     <div class="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-3">
 
-        <x-cube::group name="name" label="{{ __('Display Name') }}" :required="true">
-            <x-cube::input wire:model.blur="name" type="text" name="name" placeholder="{{ __('e.g., Home, About Us, Contact') }}" required />
+        <x-cube::group name="name" label="{{ __('Display Name') }}">
+            <x-cube::input wire:model.blur="name" type="text" name="name" placeholder="{{ __('e.g., Home, About Us, Contact') }}" />
+            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('Leave empty to show icon only') }}</p>
         </x-cube::group>
 
         <x-cube::group name="slug" label="{{ __('Slug') }}">
@@ -163,8 +164,17 @@
     <div class="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-4">
 
         <x-cube::group name="icon" label="{{ __('Icon Class') }}">
-            <x-cube::input wire:model="icon" type="text" name="icon" placeholder="{{ __('e.g., fas fa-home') }}" />
-            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('FontAwesome or similar') }}</p>
+            <div class="flex items-center gap-2">
+                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-gray-50 text-gray-600 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                    @if($icon)
+                        <i class="{{ $icon }}"></i>
+                    @else
+                        <i class="fas fa-icons opacity-40"></i>
+                    @endif
+                </span>
+                <x-cube::input wire:model.live="icon" type="text" name="icon" placeholder="{{ __('e.g., fa-solid fa-magnifying-glass') }}" class="flex-1" />
+            </div>
+            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('FontAwesome class — leave Display Name empty for icon-only') }}</p>
         </x-cube::group>
 
         <x-cube::group name="badge_text" label="{{ __('Badge Text') }}">
