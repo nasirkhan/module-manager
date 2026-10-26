@@ -2,128 +2,89 @@
 
 namespace {{namespace}}\{{moduleName}}\Providers;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
+use {{namespace}}\{{moduleName}}\Livewire\Backend\{{moduleNamePlural}}Index;
 use Symfony\Component\Finder\Finder;
 
 class {{moduleName}}ServiceProvider extends ServiceProvider
 {
-    /**
-     * @var string
-     */
     protected $moduleName = '{{moduleName}}';
 
-    /**
-     * @var string
-     */
     protected $moduleNameLower = '{{moduleNameLower}}';
 
-    /**
-     * Boot the application events.
-     *
-     * @return void
-     */
     public function boot(): void
     {
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        $this->loadRoutesFrom(base_path('{{namespace}}/{{moduleName}}/routes/web.php'));
-        $this->loadMigrationsFrom(base_path('{{namespace}}/{{moduleName}}/database/migrations'));
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-        // register commands
-        $this->registerCommands('\{{namespace}}\{{moduleName}}\Console\Commands');
+        if ($this->app->runningInConsole()) {
+            $this->publishesMigrations([
+                __DIR__.'/../database/migrations' => database_path('migrations'),
+            ], ['migrations', '{{moduleNameLower}}-migrations']);
+        }
+
+        $this->registerCommands('{{namespace}}\{{moduleName}}\Console\Commands');
+        $this->registerSeeders();
+        $this->registerLivewireComponents();
     }
 
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
     public function register(): void
     {
-        // Event Service Provider
         $this->app->register(EventServiceProvider::class);
     }
 
-    /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
+    protected function registerConfig(): void
     {
-        $this->publishes([
-            base_path('{{namespace}}/{{moduleName}}/Config/config.php') => config_path($this->moduleNameLower.'.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            base_path('{{namespace}}/{{moduleName}}/Config/config.php'), $this->moduleNameLower
-        );
+        $configPath = __DIR__.'/../Config/config.php';
+
+        $this->mergeConfigFrom($configPath, $this->moduleNameLower);
+
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                $configPath => config_path($this->moduleNameLower.'.php'),
+            ], ['config', '{{moduleNameLower}}-config', '{{moduleNameLower}}-module-config']);
+        }
     }
 
-    /**
-     * Register views.
-     *
-     * @return void
-     */
-    public function registerViews()
+    public function registerViews(): void
     {
-        $viewPath = resource_path('views/modules/'.$this->moduleNameLower);
+        $sourcePath = __DIR__.'/../Resources/views';
 
-        $sourcePath = base_path('{{namespace}}/{{moduleName}}/Resources/views');
+        $this->loadViewsFrom($sourcePath, $this->moduleNameLower);
 
-        $this->publishes([
-            $sourcePath => $viewPath,
-        ], ['views', $this->moduleNameLower.'-module-views']);
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                $sourcePath => resource_path('views/vendor/'.$this->moduleNameLower),
+            ], ['views', '{{moduleNameLower}}-views', '{{moduleNameLower}}-module-views']);
 
-        $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
+            $this->publishes([
+                $sourcePath.'/livewire' => resource_path('views/vendor/'.$this->moduleNameLower.'/livewire'),
+            ], ['{{moduleNameLower}}-livewire-views']);
+        }
     }
 
-    /**
-     * Register translations.
-     *
-     * @return void
-     */
-    public function registerTranslations()
+    public function registerTranslations(): void
     {
-        $this->loadTranslationsFrom(__DIR__ . '/../lang', '{{moduleNameLower}}');
+        $this->loadTranslationsFrom(__DIR__.'/../lang', '{{moduleNameLower}}');
     }
 
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
+    public function provides(): array
     {
         return [];
     }
 
-    private function getPublishableViewPaths(): array
-    {
-        $paths = [];
-        foreach (Config::get('view.paths') as $path) {
-            if (is_dir($path.'/modules/'.$this->moduleNameLower)) {
-                $paths[] = $path.'/modules/'.$this->moduleNameLower;
-            }
-        }
-
-        return $paths;
-    }
-
-    /**
-     * Register commands.
-     *
-     * @param  string  $namespace
-     */
-    protected function registerCommands($namespace = '')
+    protected function registerCommands(string $namespace = ''): void
     {
         $consolePath = __DIR__.'/../Console';
         if (! is_dir($consolePath)) {
             return;
         }
 
-        $finder = new Finder(); // from Symfony\Component\Finder;
+        $finder = new Finder;
         $finder->files()->name('*.php')->in($consolePath);
 
         $classes = [];
@@ -133,5 +94,30 @@ class {{moduleName}}ServiceProvider extends ServiceProvider
         }
 
         $this->commands($classes);
+    }
+
+    protected function registerSeeders(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../database/seeders' => database_path('seeders/'.$this->moduleName),
+            ], ['seeders', '{{moduleNameLower}}-seeders']);
+        }
+
+        $this->app->singleton($this->moduleNameLower.'.database.seeder', function () {
+            return '{{namespace}}\\{{moduleName}}\\database\\seeders\\{{moduleName}}DatabaseSeeder';
+        });
+    }
+
+    protected function registerLivewireComponents(): void
+    {
+        Livewire::component('{{moduleNameLower}}.backend-{{moduleNameLowerPlural}}-index', {{moduleNamePlural}}Index::class);
+
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../Livewire' => app_path('Livewire/{{moduleName}}'),
+                __DIR__.'/../Resources/views/livewire' => resource_path('views/livewire/{{moduleNameLower}}'),
+            ], ['{{moduleNameLower}}-livewire-components']);
+        }
     }
 }

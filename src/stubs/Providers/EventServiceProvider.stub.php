@@ -6,17 +6,10 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 class EventServiceProvider extends ServiceProvider
 {
-    protected $listen = [
+    protected $listen = [];
 
-        /**
-         * Backend
-         */
-        'Modules\{{moduleName}}\Events\Backend\NewCreated' => [
-            'Modules\{{moduleName}}\Listeners\Backend\NewCreated\UpdateAllOnNewCreated',
-        ],
-        
-        /**
-         * Frontend
-         */
-    ];
+    protected function configureEmailVerification(): void
+    {
+        // Email verification is handled by the application's AppServiceProvider.
+    }
 }

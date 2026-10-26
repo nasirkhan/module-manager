@@ -194,3 +194,19 @@ MIT License. See [LICENSE](LICENSE) for details.
 | **Tag** | 1.0.0 | Polymorphic tagging system | — |
 | **Menu** | 1.0.0 | Dynamic menu with nested items | — |
 
+## Image previews on edit forms
+
+The Post, Category, and Tag module edit forms display a thumbnail of the currently saved image alongside the file input. When an image is attached, the form renders a PhotoSwipe-compatible gallery block that opens the full-size image in an overlay on click:
+
+```html
+<div class="pswp-gallery">
+    <figure>
+        <a href="/storage/posts/photo.jpg" data-pswp-src="/storage/posts/photo.jpg">
+            <img src="/storage/posts/photo-thumb300.jpg" class="rounded img-thumbnail" alt="" />
+        </a>
+    </figure>
+</div>
+```
+
+This markup is output by each module's `form.blade.php` partial. PhotoSwipe itself is initialised by the host application — [Laravel Starter](https://github.com/nasirkhan/laravel-starter) does this automatically in `resources/js/photoswipe.js`. If you use these modules in a custom host application, ensure PhotoSwipe is installed (`npm install photoswipe`) and initialised for any `.pswp-gallery` element.
+

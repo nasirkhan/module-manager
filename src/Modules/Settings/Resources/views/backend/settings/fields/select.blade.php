@@ -1,27 +1,19 @@
-@php
-    $required = Str::contains($field["rules"], "required") ? "required" : "";
-    $required_mark = $required != "" ? '<span class="text-danger"> <strong>*</strong> </span>' : "";
-@endphp
-
-<div class="form-group {{ $errors->has($field["name"]) ? " has-error" : "" }} mt-3">
-    <label for="{{ $field["name"] }}" class="form-label">
-        <strong>{{ __($field["label"]) }}</strong>
-        ({{ $field["name"] }})
-    </label>
-    {!! $required_mark !!}
-    <select
-        name="{{ $field["name"] }}"
-        class="form-control {{ Arr::get($field, "class") }} {{ $errors->has($field["name"]) ? " is-invalid" : "" }}"
-        id="{{ $field["name"] }}"
-        {{ $required }}
+<div class="mb-5">
+    <x-cube::label :for="$field['name']" :required="Str::contains($field['rules'], 'required')">
+        {{ __($field['label']) }}
+        <span class="text-xs text-gray-500 dark:text-gray-400">({{ $field['name'] }})</span>
+    </x-cube::label>
+    <x-cube::select
+        name="{{ $field['name'] }}"
+        id="{{ $field['name'] }}"
+        :required="Str::contains($field['rules'], 'required')"
+        :class="Arr::get($field, 'class', '')"
     >
-        @foreach (Arr::get($field, "options", []) as $val => $label)
+        @foreach (Arr::get($field, 'options', []) as $val => $label)
             <option @if (old($field['name'], setting($field['name'])) == $val) selected @endif value="{{ $val }}">
                 {{ $label }}
             </option>
         @endforeach
-    </select>
-    @if ($errors->has($field["name"]))
-        <small class="invalid-feedback">{{ $errors->first($field["name"]) }}</small>
-    @endif
+    </x-cube::select>
+    <x-cube::error :messages="$errors->get($field['name'])" />
 </div>

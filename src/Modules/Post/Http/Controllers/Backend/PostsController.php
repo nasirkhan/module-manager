@@ -2,14 +2,15 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Post\Http\Controllers\Backend;
 
-use App\Authorizable;
-use App\Http\Controllers\Backend\BackendBaseController;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Nasirkhan\Admin\Http\Controllers\BackendBaseController;
+use Nasirkhan\Admin\Traits\Authorizable;
 use Nasirkhan\ModuleManager\Modules\Post\Enums\PostStatus;
 use Nasirkhan\ModuleManager\Modules\Post\Enums\PostType;
 
@@ -33,6 +34,26 @@ class PostsController extends BackendBaseController
 
         // module model name, path
         $this->module_model = 'Nasirkhan\\ModuleManager\\Modules\\Post\\Models\\Post';
+    }
+
+    public function index(): View
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_path = $this->module_path;
+        $module_icon = $this->module_icon;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+        $module_action = 'List';
+
+        $$module_name = $module_model::paginate(15);
+
+        logUserAccess($module_title.' '.$module_action);
+
+        return view(
+            view: "{$module_path}.{$module_name}.index",
+            data: compact('module_title', 'module_name', 'module_path', 'module_icon', 'module_name_singular', 'module_action', "{$module_name}")
+        );
     }
 
     /**

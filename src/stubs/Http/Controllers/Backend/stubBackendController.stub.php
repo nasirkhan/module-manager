@@ -2,8 +2,8 @@
 
 namespace {{namespace}}\{{moduleName}}\Http\Controllers\Backend;
 
-use App\Authorizable;
-use App\Http\Controllers\Backend\BackendBaseController;
+use Nasirkhan\Admin\Traits\Authorizable;
+use Nasirkhan\Admin\Http\Controllers\BackendBaseController;
 
 class {{moduleNamePlural}}Controller extends BackendBaseController
 {

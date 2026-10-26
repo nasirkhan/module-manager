@@ -5,16 +5,16 @@
 @endsection
 
 @section("breadcrumbs")
-    <x-backend.breadcrumbs>
-        <x-backend.breadcrumb-item route='{{ route("backend.$module_name.index") }}' icon="{{ $module_icon }}">
+    <x-cube::backend-breadcrumbs>
+        <x-cube::backend-breadcrumb-item route='{{ route("backend.$module_name.index") }}' icon="{{ $module_icon }}">
             {{ __($module_title) }}
-        </x-backend.breadcrumb-item>
-        <x-backend.breadcrumb-item type="active">{{ __($module_action) }}</x-backend.breadcrumb-item>
-    </x-backend.breadcrumbs>
+        </x-cube::backend-breadcrumb-item>
+        <x-cube::backend-breadcrumb-item type="active">{{ __($module_action) }}</x-cube::backend-breadcrumb-item>
+    </x-cube::backend-breadcrumbs>
 @endsection
 
 @section("content")
-    <x-backend.layouts.show
+    <x-cube::backend-layout-show
         :data="$$module_name_singular"
         :module_name="$module_name"
         :module_path="$module_path"
@@ -22,7 +22,7 @@
         :module_icon="$module_icon"
         :module_action="$module_action"
     >
-        <x-backend.section-header
+        <x-cube::backend-section-header
             :data="$$module_name_singular"
             :module_name="$module_name"
             :module_title="$module_title"
@@ -30,37 +30,35 @@
             :module_action="$module_action"
         />
 
-        <div class="row mt-4">
-            <div class="col-12 col-sm-8">
-                <x-backend.section-show-table :data="$$module_name_singular" :module_name="$module_name" />
+        <div class="mt-4 flex flex-wrap gap-4">
+            <div class="w-full sm:w-2/3">
+                <x-cube::backend-section-show-table :data="$$module_name_singular" :module_name="$module_name" />
             </div>
-            <div class="col-12 col-sm-4">
-                <h5>Category</h5>
-                <ul>
+            <div class="w-full sm:flex-1">
+                <h5 class="mb-2 text-base font-semibold dark:text-gray-400">Category</h5>
+                <ul class="list-inside list-disc space-y-1">
                     <li>
-                        <a
-                            href="{{ route("backend.categories.show", [$$module_name_singular->category_id, $$module_name_singular->category->slug]) }}"
-                        >
+                        <x-cube::link href="{{ route('backend.categories.show', [$$module_name_singular->category_id, $$module_name_singular->category->slug]) }}">
                             {{ $$module_name_singular->category->name }}
-                        </a>
+                        </x-cube::link>
                     </li>
                 </ul>
 
-                <h5>
+                <h5 class="mb-2 mt-4 text-base font-semibold dark:text-gray-400">
                     Tags
-                    <small>({{ count($$module_name_singular->tags) }})</small>
+                    <small class="text-sm font-normal text-gray-500">({{ count($$module_name_singular->tags) }})</small>
                 </h5>
 
-                <ul>
+                <ul class="list-inside list-disc space-y-1">
                     @foreach ($$module_name_singular->tags as $tag)
                         <li>
-                            <a href="{{ route("backend.tags.show", [$tag->id, $tag->slug]) }}">
+                            <x-cube::link href="{{ route('backend.tags.show', [$tag->id, $tag->slug]) }}">
                                 {{ $tag->name }}
-                            </a>
+                            </x-cube::link>
                         </li>
                     @endforeach
                 </ul>
             </div>
         </div>
-    </x-backend.layouts.show>
+    </x-cube::backend-layout-show>
 @endsection

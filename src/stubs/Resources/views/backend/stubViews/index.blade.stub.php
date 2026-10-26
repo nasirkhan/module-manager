@@ -3,84 +3,72 @@
 @section('title') {{ __($module_action) }} {{ __($module_title) }} @endsection
 
 @section('breadcrumbs')
-<x-backend.breadcrumbs>
-    <x-backend.breadcrumb-item type="active" icon='{{ $module_icon }}'>{{ __($module_title) }}</x-backend.breadcrumb-item>
-</x-backend.breadcrumbs>
+<x-cube::backend-breadcrumbs>
+    <x-cube::backend-breadcrumb-item type="active" icon='{{ $module_icon }}'>{{ __($module_title) }}</x-cube::backend-breadcrumb-item>
+</x-cube::backend-breadcrumbs>
 @endsection
 
 @section('content')
-<div class="card">
-    <div class="card-body">
+<div class="rounded-lg bg-white shadow dark:bg-gray-800">
+    <div class="p-6">
+        <x-cube::backend-section-header :module_name="$module_name" :module_title="$module_title" :module_icon="$module_icon" :module_action="$module_action" />
 
-        <x-backend.section-header :module_name="$module_name" :module_title="$module_title" :module_icon="$module_icon" :module_action="$module_action" />
-
-        <div class="row mt-4">
-            <div class="col">
-                <table id="datatable" class="table table-bordered table-hover table-responsive-sm">
-                    <thead>
-                        <tr>
-                            <th>
-                                #
-                            </th>
-                            <th>
-                                @lang("{{moduleNameLower}}::text.name")
-                            </th>
-                            <th>
-                                @lang("{{moduleNameLower}}::text.slug")
-                            </th>
-                            <th>
-                                @lang("{{moduleNameLower}}::text.updated_at")
-                            </th>
-                            <th>
-                                @lang("{{moduleNameLower}}::text.created_by")
-                            </th>
-                            <th class="text-end">
-                                @lang("{{moduleNameLower}}::text.action")
-                            </th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach($$module_name as $module_name_singular)
-                        <tr>
-                            <td>
-                                {{ $module_name_singular->id }}
-                            </td>
-                            <td>
-                                <a href="{{ url("admin/$module_name", $module_name_singular->id) }}">{{ $module_name_singular->name }}</a>
-                            </td>
-                            <td>
-                                {{ $module_name_singular->slug }}
-                            </td>
-                            <td>
-                                {{ $module_name_singular->updated_at->diffForHumans() }}
-                            </td>
-                            <td>
-                                {{ $module_name_singular->created_by }}
-                            </td>
-                            <td class="text-end">
-                                <a href='{!!route("backend.$module_name.edit", $module_name_singular)!!}' class='btn btn-sm btn-primary mt-1' data-toggle="tooltip" title="Edit {{ ucwords(Str::singular($module_name)) }}"><i class="fas fa-wrench"></i></a>
-                                <a href='{!!route("backend.$module_name.show", $module_name_singular)!!}' class='btn btn-sm btn-success mt-1' data-toggle="tooltip" title="Show {{ ucwords(Str::singular($module_name)) }}"><i class="fas fa-tv"></i></a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+        <div class="mt-6 overflow-x-auto">
+            <table class="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+                <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">#</th>
+                        <th scope="col" class="px-6 py-3">@lang("{{moduleNameLower}}::text.name")</th>
+                        <th scope="col" class="px-6 py-3">@lang("{{moduleNameLower}}::text.updated_at")</th>
+                        <th scope="col" class="px-6 py-3 text-right">@lang("{{moduleNameLower}}::text.action")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($$module_name as $module_name_singular)
+                    <tr class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                            {{ $module_name_singular->id }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <x-cube::link href="{{ url('admin/'.$module_name, $module_name_singular->id) }}">
+                                {{ $module_name_singular->name }}
+                            </x-cube::link>
+                        </td>
+                        <td class="px-6 py-4">{{ $module_name_singular->updated_at->diffForHumans() }}</td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex items-center justify-end gap-1">
+                                <x-cube::backend-button-edit
+                                    :route="route('backend.'.$module_name.'.edit', $module_name_singular)"
+                                    :title="__('Edit') . ' ' . ucwords(Str::singular($module_name))"
+                                    small="true"
+                                />
+                                <x-cube::backend-button-show
+                                    :route="route('backend.'.$module_name.'.show', $module_name_singular)"
+                                    :title="__('Show') . ' ' . ucwords(Str::singular($module_name))"
+                                    small="true"
+                                />
+                                <form action="{{ route('backend.'.$module_name.'.destroy', $module_name_singular) }}" method="POST"
+                                    onsubmit="return confirm('{{ __('Are you sure?') }}')">
+                                    @csrf @method('DELETE')
+                                    <x-cube::button type="submit" variant="danger" size="sm"
+                                        :title="__('Delete') . ' ' . ucwords(Str::singular($module_name))">
+                                        <i class="fas fa-trash fa-fw" aria-hidden="true"></i>
+                                    </x-cube::button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
-    <div class="card-footer">
-        <div class="row">
-            <div class="col-7">
-                <div class="float-left">
-                    Total {{ $$module_name->total() }} {{ ucwords($module_name) }}
-                </div>
-            </div>
-            <div class="col-5">
-                <div class="float-end">
-                    {!! $$module_name->render() !!}
-                </div>
-            </div>
+    <div class="flex items-center justify-between border-t border-gray-200 px-6 py-4 dark:border-gray-700">
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+            {{ __('Total') }} {{ $$module_name->total() }} {{ ucwords($module_name) }}
+        </p>
+        <div>
+            {!! $$module_name->links() !!}
         </div>
     </div>
 </div>

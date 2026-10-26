@@ -2,12 +2,12 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Menu\Http\Controllers\Backend;
 
-use App\Authorizable;
-use App\Http\Controllers\Backend\BackendBaseController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Nasirkhan\Admin\Http\Controllers\BackendBaseController;
+use Nasirkhan\Admin\Traits\Authorizable;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\Menu;
 
 class MenuItemsController extends BackendBaseController
