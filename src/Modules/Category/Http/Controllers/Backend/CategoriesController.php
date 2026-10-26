@@ -5,6 +5,7 @@ namespace Nasirkhan\ModuleManager\Modules\Category\Http\Controllers\Backend;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Nasirkhan\Admin\Http\Controllers\BackendBaseController;
 use Nasirkhan\Admin\Traits\Authorizable;
@@ -178,5 +179,35 @@ class CategoriesController extends BackendBaseController
         logUserAccess($module_title.' '.$module_action.' | Id: '.$$module_name_singular->id);
 
         return redirect()->route("backend.{$module_name}.show", $$module_name_singular->id);
+    }
+
+    public function destroy($id): RedirectResponse
+    {
+        $module_title = $this->module_title;
+        $module_name = $this->module_name;
+        $module_model = $this->module_model;
+        $module_name_singular = Str::singular($module_name);
+
+        $module_action = 'destroy';
+
+        $record = $module_model::findOrFail($id);
+
+        if ($record->posts()->exists()) {
+            flash(label_case($module_name_singular).' cannot be deleted because it has posts linked to it.')->error()->important();
+
+            return redirect("admin/{$module_name}");
+        }
+
+        $$module_name_singular = DB::transaction(function () use ($record) {
+            $record->delete();
+
+            return $record;
+        });
+
+        flash(label_case($module_name_singular).' Deleted Successfully!')->success()->important();
+
+        logUserAccess($module_title.' '.$module_action.' | Id: '.$$module_name_singular->id);
+
+        return redirect("admin/{$module_name}");
     }
 }
