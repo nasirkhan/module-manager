@@ -217,13 +217,13 @@ class MenuItem extends BaseModel
      */
     public function getDisplayTitle(): string
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     /**
      * Set the display title (maps to 'name' field).
      */
-    public function setDisplayTitle(string $title): void
+    public function setDisplayTitle(?string $title): void
     {
         $this->name = $title;
     }

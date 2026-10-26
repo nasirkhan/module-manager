@@ -248,7 +248,7 @@ class MenuItemComponent extends Component
     {
         $rules = [
             'menu_id' => 'required|exists:menus,id',
-            'name' => 'required|string|max:255',
+            'name' => 'nullable|string|max:255',
             'type' => 'required|in:link,dropdown,divider,heading,external',
             'status' => 'required|in:0,1,2',
             'sort_order' => 'nullable|integer|min:0',
@@ -288,9 +288,10 @@ class MenuItemComponent extends Component
             // Validate JSON fields
             $this->validateJsonFields();
 
-            // Auto-generate slug if empty
             if (empty($this->slug) && ! empty($this->name)) {
                 $this->slug = Str::slug($this->name);
+            } elseif (empty($this->slug) && ! empty($this->icon)) {
+                $this->slug = Str::slug($this->icon);
             }
 
             $data = $this->prepareDataForSave();
@@ -366,7 +367,7 @@ class MenuItemComponent extends Component
             'menu_id' => $this->menu_id,
             'parent_id' => $this->parent_id ?: null,
             'type' => $this->type,
-            'name' => $this->name,
+            'name' => $this->name ?: null,
             'slug' => $this->slug,
             'sort_order' => $this->sort_order ?: 0,
             'url' => $this->url ?: null,
@@ -400,7 +401,6 @@ class MenuItemComponent extends Component
 
     public function updatedName()
     {
-        // Auto-generate slug when name changes (only if slug is empty)
         if (empty($this->slug) && ! empty($this->name)) {
             $this->generateSlug();
         }

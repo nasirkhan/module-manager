@@ -100,17 +100,14 @@
     <div class="row">
         <div class="col-sm-4 col-12 mb-3">
             <div class="form-group">
-                <label for="name" class="form-label">
-                    Display Name
-                    <span class="text-danger">*</span>
-                </label>
+                <label for="name" class="form-label">Display Name</label>
                 <input
                     type="text"
                     wire:model.blur="name"
                     class="form-control"
                     placeholder="e.g., Home, About Us, Contact"
-                    required
                 />
+                <small class="form-text text-muted">Leave empty to show icon only</small>
                 @error("name")
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -222,8 +219,17 @@
         <div class="col-sm-3 col-12 mb-3">
             <div class="form-group">
                 <label for="icon" class="form-label">Icon Class</label>
-                <input type="text" wire:model="icon" class="form-control" placeholder="e.g., fas fa-home" />
-                <small class="form-text text-muted">FontAwesome or similar icon class</small>
+                <div class="input-group">
+                    <span class="input-group-text" style="min-width: 2.5rem; justify-content: center;">
+                        @if($icon)
+                            <i class="{{ $icon }}"></i>
+                        @else
+                            <i class="fas fa-icons text-muted"></i>
+                        @endif
+                    </span>
+                    <input type="text" wire:model.live="icon" class="form-control" placeholder="e.g., fa-solid fa-magnifying-glass" />
+                </div>
+                <small class="form-text text-muted">FontAwesome class — leave Display Name empty for icon-only</small>
                 @error("icon")
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
