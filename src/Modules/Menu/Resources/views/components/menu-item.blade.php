@@ -7,9 +7,11 @@
     $target = $item->opens_new_tab ? '_blank' : null;
     $htmlAttributes = $item->html_attributes ?? [];
     $icon = $item->icon;
-    $title = $item->getDisplayTitle();
+    $showIcon = $item->shouldShowIcon();
+    $showText = $item->shouldShowText();
+    $title = $showText ? $item->getDisplayTitle() : '';
     // Used as aria-label when there is no visible text label
-    $accessibleLabel = $item->description ?: $title;
+    $accessibleLabel = $item->description ?: $item->getDisplayTitle();
 @endphp
 
 @switch($item->type)
@@ -20,10 +22,10 @@
     @case('heading')
         <li>
             <span class="block px-4 py-2 text-sm text-red-600 dark:text-gray-400">
-                @if($icon)
+                @if($icon && $showIcon)
                     <i class="{{ $icon }} mr-1" aria-hidden="true"></i>
                 @endif
-                {{ $title }}
+                @if($showText) {{ $item->getDisplayTitle() }} @endif
             </span>
         </li>
         @break
@@ -41,7 +43,7 @@
                     aria-label="Toggle {{ $accessibleLabel }} submenu"
                     class="border-transparent dark:border-transparent cursor-pointer flex items-center justify-between w-full md:w-auto border-b-2 px-3 py-2 font-semibold text-gray-800 transition duration-200 ease-in hover:border-gray-700 hover:opacity-75 dark:text-white dark:hover:border-gray-300 dark:hover:opacity-75 sm:my-0 sm:py-1"
                 >
-                    @if($icon)
+                    @if($icon && $showIcon)
                         <i class="{{ $icon }} @if($title) mr-2 @endif" aria-hidden="true"></i>
                     @endif
                     @if($title)
@@ -77,15 +79,21 @@
                                     $childAccessibleLabel = $childItem->description ?: $childTitle;
                                 @endphp
 
+                                @php
+                                    $childShowIcon = $childItem->shouldShowIcon();
+                                    $childShowText = $childItem->shouldShowText();
+                                    $childTitle = $childShowText ? $childItem->getDisplayTitle() : '';
+                                    $childAccessibleLabel = $childItem->description ?: $childItem->getDisplayTitle();
+                                @endphp
                                 @if($childItem->type === 'divider')
                                     <li class="border-t border-gray-200 dark:border-gray-600 mx-2 my-1" role="separator"></li>
                                 @elseif($childItem->type === 'heading')
                                     <li role="presentation">
                                         <span class="block px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide dark:text-gray-400">
-                                            @if($childItem->icon)
+                                            @if($childItem->icon && $childShowIcon)
                                                 <i class="{{ $childItem->icon }} mr-1" aria-hidden="true"></i>
                                             @endif
-                                            {{ $childTitle }}
+                                            @if($childShowText) {{ $childItem->getDisplayTitle() }} @endif
                                         </span>
                                     </li>
                                 @elseif($hasGrandchildren)
@@ -101,7 +109,7 @@
                                             aria-label="{{ $childAccessibleLabel }} submenu"
                                         >
                                             <span class="flex items-center">
-                                                @if($childItem->icon)
+                                                @if($childItem->icon && $childShowIcon)
                                                     <i class="{{ $childItem->icon }} @if($childTitle) mr-2 @endif" aria-hidden="true"></i>
                                                 @endif
                                                 {{ $childTitle }}
@@ -132,15 +140,21 @@
                                                             $grandchildTitle = $grandchildItem->getDisplayTitle();
                                                             $grandchildAccessibleLabel = $grandchildItem->description ?: $grandchildTitle;
                                                         @endphp
+                                                        @php
+                                                            $grandchildShowIcon = $grandchildItem->shouldShowIcon();
+                                                            $grandchildShowText = $grandchildItem->shouldShowText();
+                                                            $grandchildTitle = $grandchildShowText ? $grandchildItem->getDisplayTitle() : '';
+                                                            $grandchildAccessibleLabel = $grandchildItem->description ?: $grandchildItem->getDisplayTitle();
+                                                        @endphp
                                                         @if($grandchildItem->type === 'divider')
                                                             <li class="border-t border-gray-200 dark:border-gray-600 mx-2 my-1" role="separator"></li>
                                                         @elseif($grandchildItem->type === 'heading')
                                                             <li role="presentation">
                                                                 <span class="block px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide dark:text-gray-400">
-                                                                    @if($grandchildItem->icon)
+                                                                    @if($grandchildItem->icon && $grandchildShowIcon)
                                                                         <i class="{{ $grandchildItem->icon }} mr-1" aria-hidden="true"></i>
                                                                     @endif
-                                                                    {{ $grandchildTitle }}
+                                                                    @if($grandchildShowText) {{ $grandchildItem->getDisplayTitle() }} @endif
                                                                 </span>
                                                             </li>
                                                         @else
@@ -152,7 +166,7 @@
                                                                    @if($grandchildItem->opens_new_tab) aria-label="{{ $grandchildAccessibleLabel }} (opens in new tab)"
                                                                    @elseif(!$grandchildTitle && $grandchildAccessibleLabel) aria-label="{{ $grandchildAccessibleLabel }}"
                                                                    @endif>
-                                                                    @if($grandchildItem->icon)
+                                                                    @if($grandchildItem->icon && $grandchildShowIcon)
                                                                         <i class="{{ $grandchildItem->icon }} @if($grandchildTitle) mr-2 @endif" aria-hidden="true"></i>
                                                                     @endif
                                                                     {{ $grandchildTitle }}
@@ -176,7 +190,7 @@
                                            @if($childItem->opens_new_tab) aria-label="{{ $childAccessibleLabel }} (opens in new tab)"
                                            @elseif(!$childTitle && $childAccessibleLabel) aria-label="{{ $childAccessibleLabel }}"
                                            @endif>
-                                            @if($childItem->icon)
+                                            @if($childItem->icon && $childShowIcon)
                                                 <i class="{{ $childItem->icon }} @if($childTitle) mr-2 @endif" aria-hidden="true"></i>
                                             @endif
                                             {{ $childTitle }}
@@ -197,10 +211,10 @@
                 :href="$url"
                 :active="$isActive"
                 :target="$target"
-                :icon="$icon"
+                :icon="$showIcon ? $icon : null"
                 :label="$accessibleLabel"
             >
-                {{ $title }}
+                @if($showText) {{ $item->getDisplayTitle() }} @endif
             </x-menu-nav-item>
         @endif
         @break
@@ -212,10 +226,10 @@
             :href="$url"
             :active="$isActive"
             :target="$target"
-            :icon="$icon"
+            :icon="$showIcon ? $icon : null"
             :label="$accessibleLabel"
         >
-            {{ $title }}
+            @if($showText) {{ $item->getDisplayTitle() }} @endif
         </x-menu-nav-item>
         @break
 @endswitch

@@ -41,6 +41,10 @@ class MenuItemComponent extends Component
 
     public $opens_new_tab = 0;
 
+    public $show_icon = 1;
+
+    public $show_text = 1;
+
     public $css_classes;
 
     public $html_attributes;
@@ -206,6 +210,9 @@ class MenuItemComponent extends Component
         $this->badge_text = $this->menuItem->badge_text;
         $this->badge_color = $this->menuItem->badge_color;
         $this->opens_new_tab = $this->menuItem->opens_new_tab ? 1 : 0;
+        $displaySettings = $this->menuItem->display_settings ?? [];
+        $this->show_icon = ($displaySettings['show_icon'] ?? true) ? 1 : 0;
+        $this->show_text = ($displaySettings['show_text'] ?? true) ? 1 : 0;
         $this->css_classes = $this->menuItem->css_classes;
         $this->html_attributes = $this->menuItem->html_attributes;
         $this->permissions = $this->menuItem->permissions ?? [];
@@ -235,6 +242,8 @@ class MenuItemComponent extends Component
         $this->is_active = 1;
         $this->is_visible = 1;
         $this->opens_new_tab = 0;
+        $this->show_icon = 1;
+        $this->show_text = 1;
         $this->sort_order = 0;
 
         // Clear errors
@@ -378,6 +387,10 @@ class MenuItemComponent extends Component
             'badge_text' => $this->badge_text ?: null,
             'badge_color' => $this->badge_color ?: null,
             'opens_new_tab' => (bool) $this->opens_new_tab,
+            'display_settings' => [
+                'show_icon' => (bool) $this->show_icon,
+                'show_text' => (bool) $this->show_text,
+            ],
             'css_classes' => $this->css_classes ?: null,
             'html_attributes' => $this->html_attributes ?: null,
             'permissions' => $this->permissions ?: null,

@@ -17,10 +17,10 @@
     @case('heading')
         <li>
             <span class="mx-2 text-sm font-semibold text-gray-600 uppercase dark:text-gray-400 md:mx-3">
-                @if($item->icon)
+                @if($item->icon && $item->shouldShowIcon())
                     <i class="{{ $item->icon }} mr-1" aria-hidden="true"></i>
                 @endif
-                {{ $title }}
+                @if($item->shouldShowText()) {{ $title }} @endif
             </span>
         </li>
         @break
@@ -35,10 +35,10 @@
                    @if($item->opens_new_tab) aria-label="{{ $accessibleLabel }} (opens in new tab)"
                    @elseif(!$title && $accessibleLabel) aria-label="{{ $accessibleLabel }}"
                    @endif>
-                    @if($item->icon)
+                    @if($item->icon && $item->shouldShowIcon())
                         <i class="{{ $item->icon }} @if($title) mr-1 @endif" aria-hidden="true"></i>
                     @endif
-                    {{ $title }}
+                    @if($item->shouldShowText()) {{ $title }} @endif
                     @if($item->opens_new_tab)
                         <span class="sr-only">(opens in new tab)</span>
                     @endif
@@ -47,8 +47,9 @@
             @foreach($item->children as $childItem)
                 @if(($optimized || $childItem->userCanSee()) && $childItem->type !== 'divider')
                     @php
-                        $childTitle = $childItem->getDisplayTitle();
-                        $childAccessibleLabel = $childItem->description ?: $childTitle;
+                        $childShowText = $childItem->shouldShowText();
+                        $childTitle = $childShowText ? $childItem->getDisplayTitle() : '';
+                        $childAccessibleLabel = $childItem->description ?: $childItem->getDisplayTitle();
                     @endphp
                     <li>
                         <a class="mx-2 hover:underline md:mx-3 text-sm {{ $childItem->isCurrentlyActive() ? 'font-semibold' : '' }}"
@@ -58,7 +59,7 @@
                            @if($childItem->opens_new_tab) aria-label="{{ $childAccessibleLabel }} (opens in new tab)"
                            @elseif(!$childTitle && $childAccessibleLabel) aria-label="{{ $childAccessibleLabel }}"
                            @endif>
-                            @if($childItem->icon)
+                            @if($childItem->icon && $childItem->shouldShowIcon())
                                 <i class="{{ $childItem->icon }} @if($childTitle) mr-1 @endif" aria-hidden="true"></i>
                             @endif
                             {{ $childTitle }}
@@ -76,10 +77,10 @@
                    @if($target) target="{{ $target }}" @endif
                    @if(!$item->opens_new_tab && $url !== '#') wire:navigate.hover @endif
                    @if(!$title && $accessibleLabel) aria-label="{{ $accessibleLabel }}" @endif>
-                    @if($item->icon)
+                    @if($item->icon && $item->shouldShowIcon())
                         <i class="{{ $item->icon }} @if($title) mr-1 @endif" aria-hidden="true"></i>
                     @endif
-                    {{ $title }}
+                    @if($item->shouldShowText()) {{ $title }} @endif
                 </a>
             </li>
         @endif
@@ -96,10 +97,10 @@
                @if($item->opens_new_tab) aria-label="{{ $accessibleLabel }} (opens in new tab)"
                @elseif(!$title && $accessibleLabel) aria-label="{{ $accessibleLabel }}"
                @endif>
-                @if($item->icon)
+                @if($item->icon && $item->shouldShowIcon())
                     <i class="{{ $item->icon }} @if($title) mr-1 @endif" aria-hidden="true"></i>
                 @endif
-                {{ $title }}
+                @if($item->shouldShowText()) {{ $title }} @endif
                 @if($item->opens_new_tab)
                     <span class="sr-only">(opens in new tab)</span>
                 @endif

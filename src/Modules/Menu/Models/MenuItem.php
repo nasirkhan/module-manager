@@ -32,6 +32,7 @@ class MenuItem extends BaseModel
             'roles' => 'array',
             'custom_data' => 'array',
             'opens_new_tab' => 'boolean',
+            'display_settings' => 'array',
             'is_visible' => 'boolean',
             'is_active' => 'boolean',
         ];
@@ -212,6 +213,24 @@ class MenuItem extends BaseModel
     /**
      * Check if menu item is visible based on time conditions.
      */
+    /**
+     * Whether to render the icon for this item.
+     * Defaults to false so existing rows (null display_settings) show text only.
+     */
+    public function shouldShowIcon(): bool
+    {
+        return (bool) ($this->display_settings['show_icon'] ?? false);
+    }
+
+    /**
+     * Whether to render the text label for this item.
+     * Defaults to true so existing rows (null display_settings) show text only.
+     */
+    public function shouldShowText(): bool
+    {
+        return (bool) ($this->display_settings['show_text'] ?? true);
+    }
+
     /**
      * Get the display title (using 'name' field from database).
      */

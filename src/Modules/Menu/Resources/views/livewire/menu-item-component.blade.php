@@ -204,6 +204,50 @@
 
     <div class="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
 
+        <x-cube::group name="show_icon" label="{{ __('Show Icon') }}">
+            <div x-data="{ value: $wire.entangle('show_icon') }" class="mt-1 flex items-center gap-3">
+                <button
+                    type="button"
+                    role="switch"
+                    x-on:click="value = value ? 0 : 1"
+                    x-bind:aria-checked="value ? 'true' : 'false'"
+                    x-bind:class="value ? 'bg-indigo-600' : 'bg-gray-200 dark:bg-gray-700'"
+                    class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                >
+                    <span
+                        aria-hidden="true"
+                        x-bind:class="value ? 'translate-x-5' : 'translate-x-0'"
+                        class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                    ></span>
+                </button>
+                <span class="text-sm text-gray-700 dark:text-gray-300">{{ __('Display the icon for this item') }}</span>
+            </div>
+        </x-cube::group>
+
+        <x-cube::group name="show_text" label="{{ __('Show Text') }}">
+            <div x-data="{ value: $wire.entangle('show_text') }" class="mt-1 flex items-center gap-3">
+                <button
+                    type="button"
+                    role="switch"
+                    x-on:click="value = value ? 0 : 1"
+                    x-bind:aria-checked="value ? 'true' : 'false'"
+                    x-bind:class="value ? 'bg-indigo-600' : 'bg-gray-200 dark:bg-gray-700'"
+                    class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                >
+                    <span
+                        aria-hidden="true"
+                        x-bind:class="value ? 'translate-x-5' : 'translate-x-0'"
+                        class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                    ></span>
+                </button>
+                <span class="text-sm text-gray-700 dark:text-gray-300">{{ __('Display the text label for this item') }}</span>
+            </div>
+        </x-cube::group>
+
+    </div>
+
+    <div class="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+
         <x-cube::group name="css_classes" label="{{ __('CSS Classes') }}">
             <x-cube::input wire:model="css_classes" type="text" name="css_classes" placeholder="{{ __('nav-item active highlighted') }}" />
         </x-cube::group>
@@ -225,20 +269,20 @@
     <div class="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
 
         <x-cube::group name="permissions" label="{{ __('Required Permissions') }}">
-            <x-cube::select wire:model="permissions" name="permissions" multiple class="h-28">
+            <x-cube::tom-select wire:model="permissions" name="permissions" :multiple="true">
                 @foreach ($available_permissions as $permission => $permName)
-                    <option value="{{ $permission }}">{{ $permName }}</option>
+                    <option value="{{ $permission }}" @selected(in_array($permission, (array) $permissions))>{{ $permName }}</option>
                 @endforeach
-            </x-cube::select>
+            </x-cube::tom-select>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('Users must have these permissions') }}</p>
         </x-cube::group>
 
         <x-cube::group name="roles" label="{{ __('Required Roles') }}">
-            <x-cube::select wire:model="roles" name="roles" multiple class="h-28">
+            <x-cube::tom-select wire:model="roles" name="roles" :multiple="true">
                 @foreach ($available_roles as $role => $roleName)
-                    <option value="{{ $role }}">{{ $roleName }}</option>
+                    <option value="{{ $role }}" @selected(in_array($role, (array) $roles))>{{ $roleName }}</option>
                 @endforeach
-            </x-cube::select>
+            </x-cube::tom-select>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('Users must have one of these roles') }}</p>
         </x-cube::group>
 
