@@ -2,9 +2,13 @@
 
 namespace Nasirkhan\ModuleManager\Modules\Menu\Providers;
 
+use Illuminate\Console\Events\CommandStarting;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Nasirkhan\ModuleManager\Modules\Menu\Console\Commands\SeedMenuCommand;
@@ -60,6 +64,43 @@ class MenuServiceProvider extends ServiceProvider
 
         // Register model observers for automatic cache clearing
         $this->registerObservers();
+
+        $this->notifyIfMigrationPending();
+    }
+
+    /**
+     * Warn about pending migrations via the console and the admin backend.
+     * The check is cached for 5 minutes; the migration's up() clears it immediately.
+     */
+    protected function notifyIfMigrationPending(): void
+    {
+        $isPending = Cache::remember('menu.migration.display_settings', 300, function () {
+            try {
+                return Schema::hasTable('menu_items')
+                    && ! Schema::hasColumn('menu_items', 'display_settings');
+            } catch (\Throwable) {
+                return false;
+            }
+        });
+
+        if (! $isPending) {
+            return;
+        }
+
+        if ($this->app->runningInConsole()) {
+            Event::listen(CommandStarting::class, function (CommandStarting $event): void {
+                $event->output->writeln('');
+                $event->output->writeln(' <bg=yellow;fg=black> MENU MODULE </> Pending migration detected: <comment>add_display_settings_to_menu_items</comment>');
+                $event->output->writeln(' Run <info>php artisan migrate</info> to apply it.');
+                $event->output->writeln('');
+            });
+        } else {
+            View::composer('admin::layouts.admin', function ($view): void {
+                $warnings = $view->getData()['pendingMigrationWarnings'] ?? [];
+                $warnings[] = 'Menu module: run <code>php artisan migrate</code> to add the <code>display_settings</code> column.';
+                $view->with('pendingMigrationWarnings', $warnings);
+            });
+        }
     }
 
     /**
