@@ -41,12 +41,12 @@
         </x-cube::group>
     </div>
 
-    @if (isset($$module_name_singular) && $$module_name_singular->getMedia($module_name)->first())
+    @if ($data && $data->getMedia($module_name)->first())
         <div class="pswp-gallery">
             <figure>
-                <a href="{{ asset($$module_name_singular->image) }}" data-pswp-src="{{ asset($$module_name_singular->image) }}">
+                <a href="{{ asset($data->image) }}" data-pswp-src="{{ asset($data->image) }}">
                     <img
-                        src="{{ asset($$module_name_singular->getMedia($module_name)->first()->getUrl('thumb300')) }}"
+                        src="{{ asset($data->getMedia($module_name)->first()->getUrl('thumb300')) }}"
                         class="rounded img-thumbnail"
                         alt=""
                     />
