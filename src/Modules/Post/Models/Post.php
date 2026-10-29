@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Nasirkhan\ModuleManager\Modules\Post\database\factories\PostFactory;
 use Nasirkhan\ModuleManager\Modules\Post\Enums\PostStatus;
+use Nasirkhan\ModuleManager\Modules\Post\Enums\PostType;
 use Nasirkhan\ModuleManager\Modules\Post\Models\Presenters\PostPresenter;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
@@ -23,6 +24,14 @@ class Post extends BaseModel
     use SoftDeletes;
 
     protected $table = 'posts';
+
+    protected function casts(): array
+    {
+        return array_merge(parent::casts(), [
+            'status' => PostStatus::class,
+            'type' => PostType::class,
+        ]);
+    }
 
     public function getActivitylogOptions(): LogOptions
     {

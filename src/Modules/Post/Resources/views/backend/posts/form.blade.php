@@ -58,7 +58,7 @@
 
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
     @php
-        $categoryOptions = \Nasirkhan\ModuleManager\Modules\Category\Models\Category::active()->orderBy('name')->pluck('name', 'id');
+        $categoryOptions = \Nasirkhan\ModuleManager\Modules\Category\Models\Category::orderBy('name')->pluck('name', 'id');
         $selectedCategories = ! empty($data) ? [$data->category_id] : [];
     @endphp
     <x-cube::group name="category_id" :label="__('post::posts.category_id')" required>
