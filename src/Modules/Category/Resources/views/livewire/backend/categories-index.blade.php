@@ -26,7 +26,7 @@
                     </td>
                     <td class="px-4 py-3">{{ $category->updated_at->diffForHumans() }}</td>
                     <td class="px-4 py-3">
-                        @include('backend.includes.action_column', ['data' => $category, 'module_name' => 'categories'])
+                        @include('admin::includes.action_column', ['data' => $category, 'module_name' => 'categories'])
                     </td>
                 </tr>
             @empty

@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Laracasts\Flash\Flash;
 use Nasirkhan\Admin\Traits\Authorizable;
 
 class BackupController extends Controller
@@ -132,7 +131,7 @@ class BackupController extends Controller
 
             return redirect()->back();
         } catch (Exception $e) {
-            Flash::error($e->getMessage());
+            flash($e->getMessage())->error()->important();
 
             return redirect()->back();
         }
