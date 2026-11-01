@@ -5,6 +5,7 @@ namespace Nasirkhan\ModuleManager\Modules\Post\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Nasirkhan\ModuleManager\Modules\Post\Events\PostViewed;
 
 class PostsController extends Controller
 {
@@ -80,6 +81,8 @@ class PostsController extends Controller
         $module_action = 'Show';
 
         $$module_name_singular = $module_model::whereId($id)->with('category', 'tags')->first();
+
+        PostViewed::dispatch($$module_name_singular);
 
         return view(
             "$module_path.$module_name.show",

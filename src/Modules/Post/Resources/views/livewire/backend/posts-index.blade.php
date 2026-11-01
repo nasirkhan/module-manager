@@ -2,7 +2,9 @@
     <x-cube::lw-table :rows="$posts" search-placeholder="{{ __('Search by name or slug…') }}">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <x-cube::lw-table-th class="w-12">#</x-cube::lw-table-th>
+                <x-cube::lw-table-th column="id" :sort-col="$sortCol" :sort-dir="$sortDir" class="w-12">
+                    #
+                </x-cube::lw-table-th>
                 <x-cube::lw-table-th column="name" :sort-col="$sortCol" :sort-dir="$sortDir">
                     @lang('post::text.name')
                 </x-cube::lw-table-th>
