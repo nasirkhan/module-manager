@@ -26,7 +26,7 @@
                     </td>
                     <td class="px-4 py-3">{{ $tag->updated_at->diffForHumans() }}</td>
                     <td class="px-4 py-3">
-                        @include('backend.includes.action_column', ['data' => $tag, 'module_name' => 'tags'])
+                        @include('admin::includes.action_column', ['data' => $tag, 'module_name' => 'tags'])
                     </td>
                 </tr>
             @empty

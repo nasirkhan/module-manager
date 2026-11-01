@@ -30,7 +30,7 @@
                     <td class="px-4 py-3">{{ $post->slug }}</td>
                     <td class="px-4 py-3">{{ $post->updated_at->diffForHumans() }}</td>
                     <td class="px-4 py-3">
-                        @include('backend.includes.action_column', ['data' => $post, 'module_name' => 'posts'])
+                        @include('admin::includes.action_column', ['data' => $post, 'module_name' => 'posts'])
                     </td>
                 </tr>
             @empty

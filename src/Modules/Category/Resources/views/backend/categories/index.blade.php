@@ -22,67 +22,7 @@
                 :module_action="$module_action"
             />
 
-            <div class="overflow-x-auto mt-4">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th class="px-4 py-3">#</th>
-                            <th class="px-4 py-3">@lang("category::text.name")</th>
-                            <th class="px-4 py-3">@lang("category::text.slug")</th>
-                            <th class="px-4 py-3">@lang("category::text.updated_at")</th>
-                            <th class="px-4 py-3 text-right">@lang("category::text.action")</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($$module_name as $module_name_singular)
-                            <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-4 py-3 text-gray-900 dark:text-white">
-                                    {{ $module_name_singular->id }}
-                                </td>
-                                <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">
-                                    <a
-                                        href="{{ url("admin/$module_name", $module_name_singular->id) }}"
-                                        wire:navigate
-                                        class="hover:text-blue-600 dark:hover:text-blue-400"
-                                    >{{ $module_name_singular->name }}</a>
-                                </td>
-                                <td class="px-4 py-3">{{ $module_name_singular->slug }}</td>
-                                <td class="px-4 py-3">{{ $module_name_singular->updated_at->diffForHumans() }}</td>
-                                <td class="px-4 py-3">
-                                    <div class="flex items-center justify-end gap-1 flex-wrap">
-                                        <x-cube::backend-button-edit
-                                            :route="route('backend.'.$module_name.'.edit', $module_name_singular)"
-                                            :title="__('Edit') . ' ' . ucwords(Str::singular($module_name))"
-                                            small="true"
-                                        />
-                                        <x-cube::backend-button-show
-                                            :route="route('backend.'.$module_name.'.show', $module_name_singular)"
-                                            :title="__('Show') . ' ' . ucwords(Str::singular($module_name))"
-                                            small="true"
-                                        />
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="px-4 py-8 text-center text-gray-400 dark:text-gray-500">
-                                    @lang("No categories found.")
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="border-t border-gray-200 dark:border-gray-700 px-6 py-3">
-            <div class="flex items-center justify-between">
-                <div class="text-sm text-gray-500 dark:text-gray-400">
-                    Total {{ $$module_name->total() }} {{ ucwords($module_name) }}
-                </div>
-                <div>
-                    {!! $$module_name->render() !!}
-                </div>
-            </div>
+            @livewire(\Nasirkhan\ModuleManager\Modules\Category\Livewire\Backend\CategoriesIndex::class)
         </div>
     </div>
 @endsection
