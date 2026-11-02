@@ -52,7 +52,7 @@ class CategoriesController extends Controller
 
         $module_action = 'List';
 
-        $$module_name = $module_model::latest()->paginate();
+        $$module_name = $module_model::active()->latest()->paginate();
 
         return view(
             "$module_path.$module_name.index",
@@ -79,7 +79,7 @@ class CategoriesController extends Controller
 
         $module_action = 'Show';
 
-        $$module_name_singular = $module_model::findOrFail($id);
+        $$module_name_singular = $module_model::active()->findOrFail($id);
 
         $posts = $$module_name_singular->posts()->published()->with(['category', 'tags'])->latest('published_at')->paginate(9);
 

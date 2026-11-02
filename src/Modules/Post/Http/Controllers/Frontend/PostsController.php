@@ -53,7 +53,7 @@ class PostsController extends Controller
 
         $module_action = 'List';
 
-        $$module_name = $module_model::latest()->with('category', 'tags')->paginate();
+        $$module_name = $module_model::published()->latest('published_at')->with('category', 'tags')->paginate();
 
         return view(
             "$module_path.$module_name.index",
@@ -80,7 +80,7 @@ class PostsController extends Controller
 
         $module_action = 'Show';
 
-        $$module_name_singular = $module_model::whereId($id)->with('category', 'tags')->first();
+        $$module_name_singular = $module_model::published()->with('category', 'tags')->findOrFail($id);
 
         PostViewed::dispatch($$module_name_singular);
 
