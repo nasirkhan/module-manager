@@ -11,8 +11,8 @@
                 <x-cube::lw-table-th column="slug" :sort-col="$sortCol" :sort-dir="$sortDir">
                     @lang('post::text.slug')
                 </x-cube::lw-table-th>
-                <x-cube::lw-table-th column="updated_at" :sort-col="$sortCol" :sort-dir="$sortDir">
-                    @lang('post::text.updated_at')
+                <x-cube::lw-table-th column="category_name" :sort-col="$sortCol" :sort-dir="$sortDir">
+                    @lang('post::posts.category_id')
                 </x-cube::lw-table-th>
                 <x-cube::lw-table-th class="text-right">
                     @lang('post::text.action')
@@ -30,7 +30,7 @@
                         >{{ $post->name }}</a>
                     </td>
                     <td class="px-4 py-3">{{ $post->slug }}</td>
-                    <td class="px-4 py-3">{{ $post->updated_at->diffForHumans() }}</td>
+                    <td class="px-4 py-3">{{ $post->category_name ?? '—' }}</td>
                     <td class="px-4 py-3">
                         @include('admin::includes.action_column', ['data' => $post, 'module_name' => 'posts'])
                     </td>

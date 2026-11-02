@@ -10,7 +10,7 @@ use Nasirkhan\ModuleManager\Modules\Post\Models\Post;
 #[Title('Posts')]
 class PostsIndex extends LwTable
 {
-    public string $sortCol = 'updated_at';
+    public string $sortCol = 'id';
 
     public string $sortDir = 'desc';
 
