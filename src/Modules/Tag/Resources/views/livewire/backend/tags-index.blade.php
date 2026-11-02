@@ -2,7 +2,9 @@
     <x-cube::lw-table :rows="$tags" search-placeholder="{{ __('Search by name…') }}">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <x-cube::lw-table-th class="w-12">#</x-cube::lw-table-th>
+                <x-cube::lw-table-th column="id" :sort-col="$sortCol" :sort-dir="$sortDir" class="w-12">
+                    #
+                </x-cube::lw-table-th>
                 <x-cube::lw-table-th column="name" :sort-col="$sortCol" :sort-dir="$sortDir">
                     @lang('tag::text.name')
                 </x-cube::lw-table-th>
@@ -18,10 +20,10 @@
             @forelse ($tags as $tag)
                 <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="px-4 py-3 text-gray-900 dark:text-white">{{ $tag->id }}</td>
-                    <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <td class="px-4 py-3">
                         <a
                             href="{{ route('backend.tags.show', $tag) }}"
-                            class="hover:text-blue-600 dark:hover:text-blue-400"
+                            class="font-semibold text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400"
                         >{{ $tag->name }}</a>
                     </td>
                     <td class="px-4 py-3">{{ $tag->updated_at->diffForHumans() }}</td>
