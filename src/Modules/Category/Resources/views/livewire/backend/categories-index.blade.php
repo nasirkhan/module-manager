@@ -20,10 +20,10 @@
             @forelse ($categories as $category)
                 <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="px-4 py-3 text-gray-900 dark:text-white">{{ $category->id }}</td>
-                    <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    <td class="px-4 py-3">
                         <a
                             href="{{ route('backend.categories.show', $category) }}"
-                            class="hover:text-blue-600 dark:hover:text-blue-400"
+                            class="font-semibold text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400"
                         >{{ $category->name }}</a>
                     </td>
                     <td class="px-4 py-3">{{ $category->updated_at->diffForHumans() }}</td>

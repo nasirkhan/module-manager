@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Nasirkhan\ModuleManager\Modules\Menu\Console\Commands\SeedMenuCommand;
+use Nasirkhan\ModuleManager\Modules\Menu\Livewire\Backend\MenusIndex;
 use Nasirkhan\ModuleManager\Modules\Menu\Livewire\MenuItemComponent;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\Menu;
 use Nasirkhan\ModuleManager\Modules\Menu\Models\MenuItem;
@@ -218,6 +219,7 @@ class MenuServiceProvider extends ServiceProvider
     protected function registerLivewireComponents()
     {
         // Register with proper namespace for module (use dot notation)
+        Livewire::component('menu.backend-menus-index', MenusIndex::class);
         Livewire::component('menu.menu-item-component', MenuItemComponent::class);
 
         // Publish Livewire components (both class and view) for full customization
