@@ -42,14 +42,11 @@
 
         <x-slot name="toolbar">
             <x-cube::backend-button-return-back :small="true" />
-            <a
-                class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 dark:text-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700 m-0.5"
-                href="{{ route('backend.menus.show', $$module_name_singular->menu_id) }}"
-                wire:navigate
+            <x-cube::backend-button-list
+                :route="route('backend.menus.show', $$module_name_singular->menu_id)"
+                icon="fas fa-arrow-left"
                 title="Back to Menu"
-            >
-                <i class="fas fa-arrow-left"></i>&nbsp;{{ __('menu::text.back_to_menu') }}
-            </a>
+            >{{ __('menu::text.back_to_menu') }}</x-cube::backend-button-list>
             <x-cube::backend-button-edit
                 title="{{ __('Edit') }} {{ __($module_title) }}"
                 route='{!! route("backend.menuitems.edit", $$module_name_singular) !!}'

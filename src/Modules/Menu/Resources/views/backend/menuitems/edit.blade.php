@@ -21,7 +21,7 @@
 @section("content")
 @php $data = $$module_name_singular; @endphp
 
-<x-cube::backend-layout-edit :data="$data">
+<x-cube::backend-layout-edit :data="$data" :module_name="$module_name">
 
     <x-cube::backend-section-header>
         <i class="{{ $module_icon }} fa-fw"></i>
