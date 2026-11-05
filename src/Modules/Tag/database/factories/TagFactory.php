@@ -31,7 +31,7 @@ class TagFactory extends Factory
             'name' => $this->faker->unique()->words(2, true),
             'slug' => '',
             'description' => $this->faker->paragraph,
-            'status' => $this->faker->randomElement(TagStatus::cases()),
+            'status' => TagStatus::Active,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
