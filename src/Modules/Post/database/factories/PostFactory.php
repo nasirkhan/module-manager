@@ -36,7 +36,7 @@ class PostFactory extends Factory
             'type' => $this->faker->randomElement(PostType::getAllNames()),
             'is_featured' => $this->faker->randomElement([1, 0]),
             'image' => 'https://picsum.photos/1200/630?random='.rand(1, 50),
-            'status' => $this->faker->randomElement(PostStatus::getAllNames()),
+            'status' => PostStatus::Published,
             'category_id' => $this->faker->numberBetween(1, 5),
             'meta_title' => '',
             'meta_keywords' => '',

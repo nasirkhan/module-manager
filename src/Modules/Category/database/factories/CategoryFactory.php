@@ -33,7 +33,7 @@ class CategoryFactory extends Factory
             'name' => $name,
             'slug' => '',
             'description' => $this->faker->paragraph,
-            'status' => $this->faker->randomElement(CategoryStatus::cases()),
+            'status' => CategoryStatus::Active,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
