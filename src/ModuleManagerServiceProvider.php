@@ -18,6 +18,7 @@ use Nasirkhan\ModuleManager\Commands\ModuleHelpCommand;
 use Nasirkhan\ModuleManager\Commands\ModulePublishCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleStatusCommand;
 use Nasirkhan\ModuleManager\Commands\ModuleTrackMigrationsCommand;
+use Nasirkhan\ModuleManager\Commands\UpgradeMediaPathsCommand;
 use Nasirkhan\ModuleManager\Services\MigrationTracker;
 use Nasirkhan\ModuleManager\Services\ModuleVersion;
 
@@ -100,6 +101,9 @@ class ModuleManagerServiceProvider extends ServiceProvider
                 ModuleDetectUpdatesCommand::class,
                 ModuleGenerateTestCommand::class,
                 ModuleHelpCommand::class,
+
+                // Host-relative media-path upgrade helper (v9)
+                UpgradeMediaPathsCommand::class,
 
             ]);
         }

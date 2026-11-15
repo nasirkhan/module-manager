@@ -8,11 +8,9 @@
     @php
         $shareUrl = route("frontend.posts.show", [encode_id($$module_name_singular->id), $$module_name_singular->slug]);
         $shareDescription = $$module_name_singular->meta_description ?: $$module_name_singular->intro;
-        $shareImage = $$module_name_singular->meta_og_image ?: $$module_name_singular->image;
-
-        if ($shareImage && ! \Illuminate\Support\Str::startsWith($shareImage, ["http://", "https://"])) {
-            $shareImage = asset($shareImage);
-        }
+        $shareImage = $$module_name_singular->meta_og_image
+            ? \App\Models\BaseModel::imageUrlFromPath($$module_name_singular->meta_og_image)
+            : $$module_name_singular->image_full_url;
 
         $authorName = $$module_name_singular->created_by_alias
             ?: $$module_name_singular->created_by_name;

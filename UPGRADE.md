@@ -4,7 +4,61 @@ This guide covers breaking changes and migration steps between major versions of
 
 ## Table of Contents
 - [General Upgrade Tips](#general-upgrade-tips)
+- [Upgrading to 9.0 from 8.x](#upgrading-to-90-from-8x)
 - [Upgrading to 7.0 from 6.x](#upgrading-to-70-from-6x)
+
+---
+
+## Upgrading to 9.0 from 8.x
+
+Image columns (`categories.image`, `posts.image`, `tags.image`) are now stored
+as **host-relative paths** (e.g. `/storage/5/cover.jpg`) instead of absolute
+URLs. This keeps stored media valid when the app's domain changes.
+
+A guided command automates the upgrade:
+
+```bash
+php artisan module-manager:upgrade-media-paths
+```
+
+It runs three steps:
+
+1. **Host trait check** — verifies `App\Models\Traits\HasHashedMediaTrait`
+   exposes `imagePathFromUrl()` and `imageUrlFromPath()`. Both ship with the
+   matching Laravel Starter release; if missing, add them before upgrading
+   (the models call them and will otherwise fatal at runtime).
+2. **Data backfill** — rewrites existing absolute URLs in the database to
+   relative paths via the bundled migrations (offers to run `migrate`).
+3. **Call-site scan** — reports any code reading `->image` where an **absolute**
+   URL is required (og:image, feeds, sitemaps, mail). These are listed, never
+   rewritten automatically.
+
+Flags: `--dry-run` (report only), `--scan-only` (skip trait/migration checks).
+
+### Breaking change: absolute-URL reads
+
+Blade `<img src>` and anything wrapped in `asset()` keep working — the browser
+resolves a relative path, and `asset()` expands it. **Only** places that need a
+fully-qualified URL must change:
+
+```blade
+{{-- before --}}
+<meta property="og:image" content="{{ $post->image }}">
+
+{{-- after --}}
+<meta property="og:image" content="{{ $post->image_full_url }}">
+```
+
+A new `image_full_url` accessor (on `App\Models\BaseModel`) returns the absolute
+URL, expanding relative paths and passing legacy absolute rows through unchanged.
+
+### Manual steps
+
+```bash
+php artisan migrate        # applies the backfill (or let the command do it)
+```
+
+Then review every `HIGH` entry from the call-site scan.
 
 ---
 
