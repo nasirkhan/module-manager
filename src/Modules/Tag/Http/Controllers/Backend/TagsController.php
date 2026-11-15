@@ -84,7 +84,7 @@ class TagsController extends BackendBaseController
 
         if ($request->image) {
             $media = $$module_name_singular->addMedia($request->file('image'))->toMediaCollection($module_name);
-            $$module_name_singular->image = $media->getUrl();
+            $$module_name_singular->image = $module_model::imagePathFromUrl($media->getUrl());
             $$module_name_singular->save();
         }
 
@@ -164,7 +164,7 @@ class TagsController extends BackendBaseController
             }
             $media = $$module_name_singular->addMedia($request->file('image'))->toMediaCollection($module_name);
 
-            $$module_name_singular->image = $media->getUrl();
+            $$module_name_singular->image = $module_model::imagePathFromUrl($media->getUrl());
 
             $$module_name_singular->save();
         }

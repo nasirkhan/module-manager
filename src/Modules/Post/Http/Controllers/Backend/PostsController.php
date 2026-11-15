@@ -104,7 +104,7 @@ class PostsController extends BackendBaseController
 
         if ($imageFile) {
             $media = $$module_name_singular->addMedia($imageFile)->toMediaCollection($module_name);
-            $$module_name_singular->image = $media->getUrl();
+            $$module_name_singular->image = $module_model::imagePathFromUrl($media->getUrl());
             $$module_name_singular->save();
         }
 
@@ -167,7 +167,7 @@ class PostsController extends BackendBaseController
         if ($imageFile) {
             $$module_name_singular->clearMediaCollection($module_name);
             $media = $$module_name_singular->addMedia($imageFile)->toMediaCollection($module_name);
-            $$module_name_singular->image = $media->getUrl();
+            $$module_name_singular->image = $module_model::imagePathFromUrl($media->getUrl());
             $$module_name_singular->save();
         }
 

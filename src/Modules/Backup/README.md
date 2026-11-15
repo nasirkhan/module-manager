@@ -43,10 +43,8 @@ Navigate to: `/admin/backups`
 
 ### Permissions Required
 
-- `view_backups` - View backup list
+- `view_backups` - View and download backup files
 - `add_backups` - Create new backups
-- `create_backups` - Create new backups
-- `download_backups` - Download backup files
 - `delete_backups` - Delete backup files
 
 ### Creating Backups

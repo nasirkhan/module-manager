@@ -54,7 +54,7 @@
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center justify-end gap-1 flex-wrap">
-                                        @can("download_" . $module_name)
+                                        @can("view_" . $module_name)
                                             <a
                                                 href="{{ route("backend.$module_name.download", $backup["file_name"]) }}"
                                                 class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
