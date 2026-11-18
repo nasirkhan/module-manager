@@ -10,11 +10,12 @@
 namespace App\Models {
     use Illuminate\Database\Eloquent\Model;
 
-    class BaseModel extends Model {}
+    class BaseModel extends Model
+    {
+    }
 }
 
 namespace Nasirkhan\ModuleManager\Tests\Unit {
-
     use Illuminate\Http\Request;
     use Illuminate\Routing\Route;
     use Illuminate\Support\Collection;
