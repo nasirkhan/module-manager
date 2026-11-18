@@ -196,7 +196,18 @@ class MenuItem extends BaseModel
 
         // Check if route name matches
         if ($this->route_name && $currentRoute->getName() === $this->route_name) {
-            return true;
+            $parametersMatch = true;
+
+            foreach (($this->route_parameters ?? []) as $key => $value) {
+                if ((string) $currentRoute->parameter($key) !== (string) $value) {
+                    $parametersMatch = false;
+                    break;
+                }
+            }
+
+            if ($parametersMatch) {
+                return true;
+            }
         }
 
         // Check if URL matches

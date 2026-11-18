@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.0.0]
 
+### Fixed
+- `MenuItem::isCurrentlyActive()` now compares `route_parameters` against the current route, so sibling items that share a route name but differ by a parameter (e.g. two `frontend.pages.show` items with different `slug` values) no longer all highlight as active at once — only the item matching the current route's parameters does
+
 ### Added
 - `spatie/laravel-activitylog ^5.0` as a direct dependency — previously a direct dependency of `laravel-starter`, it is used by the `Post` model (`LogsActivity` trait) and belongs at the package level
 - `intervention/image-laravel ^4.0` as a direct dependency — required by `nasirkhan/laravel-jodit` for image resize, crop, and EXIF sanitization operations in the Jodit file browser connector
